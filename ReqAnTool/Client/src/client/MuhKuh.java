@@ -7,5 +7,6 @@ public class MuhKuh {
     
     public void print() {
         System.out.println("MuhKuh macht muh");
+        // Penis
     }
 }
