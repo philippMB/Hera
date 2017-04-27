@@ -3,7 +3,8 @@ package Model_Interfaces;
 public interface IXMLManager
 {
 
-  int exportAnalysis();
+  int exportAnalysis(IRequirementAnalysis analysis, String address);
 
-  public int importAnalysis();
+  public IRequirementAnalysis importAnalysis();
+
 }
