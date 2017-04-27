@@ -1,4 +1,4 @@
-package client;
+package Model;
 
 public class ProductApplication {
 }
