@@ -17,9 +17,10 @@ public class XMLManager
   }
 
   @Override
-  public IRequirementAnalysis importAnalysis()
+  public IRequirementAnalysis importAnalysis(String address)
   {
     // TODO Implement this method
     return null;
   }
+
 }
