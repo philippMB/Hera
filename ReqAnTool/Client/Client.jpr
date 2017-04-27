@@ -85,6 +85,16 @@
                   <url path="."/>
                </list>
             </hash>
+            <hash>
+               <list n="url-path">
+                  <url path="Ressources/"/>
+               </list>
+            </hash>
+            <hash>
+               <list n="url-path">
+                  <url path="Resources/"/>
+               </list>
+            </hash>
          </list>
          <list n="url-path"/>
       </hash>
