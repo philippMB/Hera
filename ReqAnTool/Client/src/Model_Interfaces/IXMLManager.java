@@ -1,4 +1,4 @@
-package resources;
+package Model_Interfaces;
 
 public interface IXMLManager
 {

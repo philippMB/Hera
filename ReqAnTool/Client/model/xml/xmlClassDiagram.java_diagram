@@ -203,7 +203,7 @@
       <property xmi:type='DI:Property' key='EvenRowColor' value='#eef2f5'/>
       <property xmi:type='DI:Property' key='font' value='SansSerif,plain,11'/>
       <property xmi:type='DI:Property' key='showPackage' value='false'/>
-      <semanticModel xmi:type='DI:CoreSemanticModelBridge' element='JAVA:JIDI;;resources;;###;;IXMLManager' presentation='SYMBOLIC'/>
+      <semanticModel xmi:type='DI:CoreSemanticModelBridge' element='JAVA:JIDI;;Model_Interfaces;;###;;IXMLManager' presentation='SYMBOLIC'/>
       <size xmi:type='DI:Dimension' height='120.0' width='120.0'/>
     </contained>
     <property xmi:type='DI:Property' key='minLayoutDistance' value='100'/>
