@@ -1,4 +1,5 @@
 package Model;
 
-public class GlossaryEntry {
+public class GlossaryEntry 
+{
 }

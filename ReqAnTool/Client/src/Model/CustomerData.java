@@ -6,4 +6,9 @@ public class CustomerData {
     private int zip;
     private String city;
     private String country;
+
+    private PersonalData customer;
+
+    private PersonalData projectManager;
+
 }
