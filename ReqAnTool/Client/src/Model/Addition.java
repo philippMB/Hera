@@ -1,4 +1,8 @@
 package Model;
 
-public class Addition {
+import Model_Interfaces.IAddition;
+
+public class Addition 
+    implements IAddition
+{
 }

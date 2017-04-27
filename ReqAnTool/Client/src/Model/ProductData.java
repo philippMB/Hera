@@ -1,4 +1,9 @@
 package Model;
 
-public class ProductData {
+import Model_Interfaces.IProductData;
+
+public class ProductData 
+    implements IProductData
+{
+    
 }

@@ -1,4 +1,8 @@
 package Model;
 
-public class CostEstimation {
+import Model_Interfaces.ICostEstimation;
+
+public class CostEstimation 
+    implements ICostEstimation
+{
 }
