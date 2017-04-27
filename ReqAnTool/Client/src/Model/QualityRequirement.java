@@ -5,8 +5,7 @@ import Model_Interfaces.IQualityRequirement;
 public class QualityRequirement
     implements IQualityRequirement
 {
-    public QualityRequirement()
-    {
-        super();
-    }
+
+    private String criteria;
+    private Score value;
 }
