@@ -2,9 +2,16 @@ package Model;
 
 import Model_Interfaces.INFRequirement;
 
-public class NFRequirement 
+import java.util.List;
+
+public class NFRequirement
+    extends Requirement
     implements INFRequirement
 {
+
+    private String titel;
+    private String actor;
+    private String description;
 
     @Override
     public String getID()

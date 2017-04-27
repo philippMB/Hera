@@ -6,6 +6,8 @@ public class ProductApplication
     implements IProductApplication 
 {
 
+    private String description;
+
     @Override
     public String getDescription()
     {

@@ -2,9 +2,16 @@ package Model;
 
 import Model_Interfaces.IFRequirement;
 
-public class FRequirement 
+import java.util.List;
+
+public class FRequirement
+    extends Requirement
     implements IFRequirement
 {
+
+    private String titel;
+    private String actor;
+    private String description;
 
     @Override
     public String getID()
