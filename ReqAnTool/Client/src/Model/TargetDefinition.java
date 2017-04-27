@@ -2,7 +2,7 @@ package Model;
 
 import Model_Interfaces.ITargetDefinition;
 
-public class TargetDefinition 
+public class TargetDefinition
     implements ITargetDefinition
 {
 

@@ -1,10 +1,14 @@
 package Model;
 
+import Model_Interfaces.IRequirementAnalysis;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class RequirementAnalysis {
+public class RequirementAnalysis
+    implements IRequirementAnalysis
+{
     private Date createDate;
     private String titel;
     private String customerDescription;
@@ -43,6 +47,10 @@ public class RequirementAnalysis {
      */
     private List myGlossaryEntries;
 
+    /**
+     * @associates <{Model.QualityRequirement}>
+     */
+    private List myQualityRequirements;
 
 
     public Status checkReference(String _alteID, String _neueID) {
