@@ -2,6 +2,9 @@ package Model;
 
 import Model_Interfaces.IFRequirement;
 
+import Model_Interfaces.IRequirement;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class FRequirement
@@ -9,7 +12,7 @@ public class FRequirement
     implements IFRequirement
 {
 
-    private String titel;
+    private String title;
     private String actor;
     private String description;
 
@@ -41,4 +44,10 @@ public class FRequirement
         return null;
     }
 
+    @Override
+    public ArrayList<IRequirement> getReferences()
+    {
+        // TODO Implement this method
+        return null;
+    }
 }
