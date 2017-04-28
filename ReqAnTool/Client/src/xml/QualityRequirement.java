@@ -4,7 +4,4 @@ public class QualityRequirement
 {
 
 }
-public class QualityRequirement
-{
 
-}
