@@ -1831,7 +1831,7 @@
           <contained xmi:type='DI:GraphNode' xmi:id='id494896ef-2aa5-41e6-97b4-3a209c3e55bd'>
             <contained xmi:type='DI:GraphNode' xmi:id='id248afa03-b18d-46b3-857b-39d304839fcd'>
               <property xmi:type='DI:Property' key='id' value='classifierSingleCell'/>
-              <property xmi:type='DI:Property' key='preferredWidth' value='0.0'/>
+              <property xmi:type='DI:Property' key='preferredWidth' value='105.0'/>
               <property xmi:type='DI:Property' key='visible' value='true'/>
               <property xmi:type='DI:Property' key='editable' value='true'/>
               <property xmi:type='DI:Property' key='fixedWidth' value='false'/>
@@ -1863,7 +1863,7 @@
           <contained xmi:type='DI:GraphNode' xmi:id='idacc3d8b1-c75a-4bb1-bfc0-9a276f041d49'>
             <contained xmi:type='DI:GraphNode' xmi:id='id9e419477-7cf4-485d-9513-7b0e2debaa53'>
               <property xmi:type='DI:Property' key='id' value='classifierSingleCell'/>
-              <property xmi:type='DI:Property' key='preferredWidth' value='0.0'/>
+              <property xmi:type='DI:Property' key='preferredWidth' value='379.0'/>
               <property xmi:type='DI:Property' key='visible' value='true'/>
               <property xmi:type='DI:Property' key='editable' value='true'/>
               <property xmi:type='DI:Property' key='fixedWidth' value='false'/>
