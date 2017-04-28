@@ -3586,7 +3586,7 @@
           <contained xmi:type='DI:GraphNode' xmi:id='id655359fa-e791-4562-a718-4a58a91a8a68'>
             <contained xmi:type='DI:GraphNode' xmi:id='id5947c645-9d4d-4309-9ce2-2c3e6fcf8f25'>
               <property xmi:type='DI:Property' key='id' value='classifierSingleCell'/>
-              <property xmi:type='DI:Property' key='preferredWidth' value='134.0'/>
+              <property xmi:type='DI:Property' key='preferredWidth' value='219.0'/>
               <property xmi:type='DI:Property' key='visible' value='true'/>
               <property xmi:type='DI:Property' key='editable' value='true'/>
               <property xmi:type='DI:Property' key='fixedWidth' value='false'/>
