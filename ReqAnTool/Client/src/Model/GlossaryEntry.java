@@ -2,7 +2,7 @@ package Model;
 
 import Model_Interfaces.IGlossaryEntry;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class GlossaryEntry
     implements IGlossaryEntry
@@ -17,5 +17,5 @@ public class GlossaryEntry
     /**
      * @associates <{Model.GlossaryEntry}>
      */
-    private List crossReferences;
+    private ArrayList<GlossaryEntry> crossReferences;
 }

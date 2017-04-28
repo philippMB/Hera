@@ -2,6 +2,7 @@ package Model;
 
 import Model_Interfaces.IRequirementAnalysis;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -17,40 +18,46 @@ public class RequirementAnalysis
     private TargetDefinition myTargetDefinition;
     private CustomerData myCustomerData;
 
+
     /**
      * @associates <{Model.FRequirement}>
      */
+    private ArrayList<FRequirement> myFRequirements;
 
-    private List myFRequirements;
     /**
      * @associates <{Model.ProductData}>
      */
-    private List myProductData;
+    private ArrayList<ProductData> myProductData;
 
     /**
      * @associates <{Model.NFRequirement}>
      */
-    private List myNFRequirements;
-    
+    private ArrayList<NFRequirement> myNFRequirements;
+
     /**
      * @associates <{Model.CostEstimation}>
      */
-    private List myCostEstimation;
+    private ArrayList<CostEstimation> myCostEstimation;
 
     /**
      * @associates <{Model.Addition}>
      */
-    private List myAddition;
+    private ArrayList<Addition> myAddition;
 
     /**
      * @associates <{Model.GlossaryEntry}>
      */
-    private List myGlossaryEntries;
+    private ArrayList<GlossaryEntry> myGlossaryEntries;
 
     /**
      * @associates <{Model.QualityRequirement}>
      */
-    private List myQualityRequirements;
+    private ArrayList<QualityRequirement> myQualityRequirements;
+
+    /**
+     * @associates <{Model.WeightFactor}>
+     */
+    private ArrayList<WeightFactor> myWeightFactors;
 
 
     public Status checkReference(String _alteID, String _neueID) {

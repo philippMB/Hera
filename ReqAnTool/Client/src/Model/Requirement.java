@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Requirement 
@@ -10,5 +11,5 @@ public abstract class Requirement
     /**
      * @associates <{Model.Requirement}>
      */
-    private List references;
+    private ArrayList<Requirement> references;
 }
