@@ -15,7 +15,7 @@ public interface IModelSetData
     boolean editProdData(String oldID, String id, String content, String attribute, String maxCount,
                          String[] references);
 
-    boolean remFReqByID(Strind id);
+    boolean remFReqByID(String id);
 
     boolean remNFReqByID(String id);
 
@@ -52,4 +52,8 @@ public interface IModelSetData
                            String obscurities, String label);
 
     public boolean remGlossEntryByTerm(String term);
+
+    public boolean addCostEstimation();
+
+    public boolean remCostEstimation();
 }

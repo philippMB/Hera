@@ -10,14 +10,11 @@ import Model_Interfaces.IProductApplication;
 import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
 import Model_Interfaces.IRequirementAnalysis;
-
 import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.IWeightFactor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public class RequirementAnalysis
     implements IRequirementAnalysis
@@ -34,18 +31,17 @@ public class RequirementAnalysis
     /**
      * @associates <{Model.FRequirement}>
      */
-    private ArrayList<FRequirement> myFRequirements;
+    private IRequirementList<IFRequirement> myFRequirements;
 
     /**
      * @associates <{Model.ProductData}>
      */
-    private ArrayList<ProductData> myProductData;
+    private IRequirementList<IProductData> myProductData;
 
     /**
      * @associates <{Model.NFRequirement}>
      */
-    private ArrayList<NFRequirement> myNFRequirements;
-
+    private IRequirementList<INFRequirement> myNFRequirements;
 
     /**
      * @associates <{Model.Addition}>
@@ -67,6 +63,7 @@ public class RequirementAnalysis
      */
     private ArrayList<WeightFactor> myWeightFactors;
     private CostEstimation myCostEstimation;
+    private Configuration myConfig;
 
 
     public Status checkReference(String _alteID, String _neueID) {
@@ -117,14 +114,14 @@ public class RequirementAnalysis
     }
 
     @Override
-    public ArrayList<IFRequirement> getFRequirements()
+    public IRequirementList<IFRequirement> getFRequirements()
     {
         // TODO Implement this method
         return null;
     }
 
     @Override
-    public ArrayList<INFRequirement> getNFRequirements()
+    public IRequirementList<INFRequirement> getNFRequirements()
     {
         // TODO Implement this method
         return null;
@@ -138,7 +135,7 @@ public class RequirementAnalysis
     }
 
     @Override
-    public ArrayList<IProductData> getProductData()
+    public IRequirementList<IProductData> getProductData()
     {
         // TODO Implement this method
         return null;

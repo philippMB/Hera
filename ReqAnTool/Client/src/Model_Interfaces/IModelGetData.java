@@ -10,11 +10,15 @@ public interface IModelGetData
 
     public ICostEstimation getCostEstimation();
 
-    public IAdditon getAddition();
+    public IAddition getAddition();
 
     public IProductApplication getProdApp();
 
     public IQualityRequirement getQualReqByCriteria(String criteria);
 
     public ITargetDefinition getTargetDef();
+
+    public IWeightFactor getOptWeightFactor();
+
+    public IWeightFactor getWeightFactor();
 }
