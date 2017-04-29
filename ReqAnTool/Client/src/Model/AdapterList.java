@@ -1,5 +1,7 @@
 package Model;
 
+import Model_Interfaces.IRequirementList;
+
 import java.util.ArrayList;
 
 public class AdapterList<T>

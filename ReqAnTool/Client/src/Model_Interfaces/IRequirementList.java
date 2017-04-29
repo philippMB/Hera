@@ -1,4 +1,4 @@
-package Model;
+package Model_Interfaces;
 
 public interface IRequirementList<T>
 {

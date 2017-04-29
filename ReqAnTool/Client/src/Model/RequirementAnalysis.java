@@ -12,6 +12,7 @@ import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
 import Model_Interfaces.IRequirementAnalysis;
 
+import Model_Interfaces.IRequirementList;
 import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.IWeightFactor;
 
