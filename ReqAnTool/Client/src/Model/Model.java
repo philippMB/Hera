@@ -8,4 +8,8 @@ public class Model
 {
 
     private RequirementAnalysis myRequirementAnalysis;
+
+    public Model()
+    {
+    }
 }

@@ -46,10 +46,6 @@ public class RequirementAnalysis
      */
     private ArrayList<NFRequirement> myNFRequirements;
 
-    /**
-     * @associates <{Model.CostEstimation}>
-     */
-    private ArrayList<CostEstimation> myCostEstimation;
 
     /**
      * @associates <{Model.Addition}>
@@ -70,6 +66,7 @@ public class RequirementAnalysis
      * @associates <{Model.WeightFactor}>
      */
     private ArrayList<WeightFactor> myWeightFactors;
+    private CostEstimation myCostEstimation;
 
 
     public Status checkReference(String _alteID, String _neueID) {
@@ -113,7 +110,7 @@ public class RequirementAnalysis
     }
 
     @Override
-    public ArrayList<ICostEstimation> getCostEstimation()
+    public ICostEstimation getCostEstimation()
     {
         // TODO Implement this method
         return null;
