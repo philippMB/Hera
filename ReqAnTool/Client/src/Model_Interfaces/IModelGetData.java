@@ -2,11 +2,19 @@ package Model_Interfaces;
 
 public interface IModelGetData
 {
-    public IRequirement getReqByID();
+    IRequirement getReqByID(String ID);
 
     public ICustomerData getCustomerData();
 
-    public IGlossaryEntry getGlossaryEntryByTerm();
+    IGlossaryEntry getGlossaryEntryByTerm(String term);
 
     public ICostEstimation getCostEstimation();
+
+    public IAdditon getAddition();
+
+    public IProductApplication getProdApp();
+
+    public IQualityRequirement getQualReqByCriteria(String criteria);
+
+    public ITargetDefinition getTargetDef();
 }
