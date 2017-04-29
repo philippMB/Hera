@@ -68,26 +68,23 @@
       <string v="oracle.bm.commonIde.data.project.ModelerProjectSettings/modelersContentSet"/>
       <string v="oracle.toplink.workbench.addin/toplinkContentSet"/>
    </list>
-   <value n="defaultPackage" v="client"/>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
+         <string v="EJB-Modeling"/>
          <string v="Java"/>
+         <string v="Java-Modeling"/>
       </list>
    </hash>
-   <hash n="oracle.jdeveloper.compiler.OjcConfiguration">
-      <value n="webIANAEncoding" v="UTF-8"/>
-   </hash>
-   <hash n="oracle.jdeveloper.model.PathsConfiguration">
-      <hash n="javaContentSet">
+   <hash n="oracle.jdeveloper.model.J2eeSettings">
+      <hash n="webContentSet">
          <list n="pattern-filters">
+            <string v="-WEB-INF/temp/"/>
+            <string v="-WEB-INF/classes/"/>
             <string v="+**"/>
          </list>
          <list n="url-path">
-            <url path="src/"/>
+            <url path="public_html/"/>
          </list>
       </hash>
-   </hash>
-   <hash n="oracle.jdevimpl.config.JProjectPaths">
-      <url n="outputDirectory" path="classes/"/>
    </hash>
 </jpr:project>

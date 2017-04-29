@@ -5,7 +5,6 @@ package Model_Interfaces;
  */
 public interface IFRequirement {
 
-    public String getID();
 
     public String getTitle();
 
