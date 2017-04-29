@@ -1,4 +1,4 @@
-package client;
+package View;
 
 public class EditingFactory {
     
@@ -17,6 +17,7 @@ public class EditingFactory {
     
     public FormWindow editObjectInView(Object o){
         FormWindow retWindow = null;
+        /*
         if(o instanceof nichtfunktionaleAnforderung){
             retWindow = new NFABearbeitenView();
         }
@@ -26,6 +27,7 @@ public class EditingFactory {
         if(o instanceof Produktdatum){
             retWindow = new PBearbeitenView();
         }
+        */
         return retWindow;
     }
 }
