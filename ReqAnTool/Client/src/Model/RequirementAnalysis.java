@@ -1,5 +1,6 @@
 package Model;
 
+
 import Model_Interfaces.IAddition;
 import Model_Interfaces.ICostEstimation;
 import Model_Interfaces.ICustomerData;
@@ -10,6 +11,7 @@ import Model_Interfaces.IProductApplication;
 import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
 import Model_Interfaces.IRequirementAnalysis;
+
 import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.IWeightFactor;
 
@@ -107,21 +109,14 @@ public class RequirementAnalysis
     }
 
     @Override
-    public ICostEstimation getCostEstimation()
+    public AdapterList<IFRequirement> getFRequirements()
     {
         // TODO Implement this method
         return null;
     }
 
     @Override
-    public IRequirementList<IFRequirement> getFRequirements()
-    {
-        // TODO Implement this method
-        return null;
-    }
-
-    @Override
-    public IRequirementList<INFRequirement> getNFRequirements()
+    public AdapterList<INFRequirement> getNFRequirements()
     {
         // TODO Implement this method
         return null;
@@ -135,7 +130,7 @@ public class RequirementAnalysis
     }
 
     @Override
-    public IRequirementList<IProductData> getProductData()
+    public AdapterList<IProductData> getProductData()
     {
         // TODO Implement this method
         return null;
@@ -178,6 +173,13 @@ public class RequirementAnalysis
 
     @Override
     public ICustomerData getCustomerData()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ICostEstimation getCostEstimation()
     {
         // TODO Implement this method
         return null;

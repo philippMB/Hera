@@ -139,7 +139,7 @@ public class Model
     }
 
     @Override
-    public boolean remFReqByID(Strind id)
+    public boolean remFReqByID(String id)
     {
         // TODO Implement this method
         return false;
