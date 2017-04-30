@@ -5,6 +5,6 @@ public interface IXMLManager
 
   public int exportAnalysis(IRequirementAnalysis analysis, String address);
 
-  IRequirementAnalysis importAnalysis(String address);
+  public IRequirementAnalysis importAnalysis(String address);
 
 }
