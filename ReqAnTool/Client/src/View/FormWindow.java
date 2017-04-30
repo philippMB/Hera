@@ -3,20 +3,27 @@ package View;
 import javax.swing.*;
 import java.util.Observer;
 
-public abstract class FormWindow extends JFrame implements Observer{
-    
-    protected boolean _changedID;
-    protected Object _myReq;
-    protected JPanelBuilder _myBuilder;
+public abstract class FormWindow <Type>
+    extends JFrame
+{
 
-    public FormWindow(){
+    protected Type myReq;
+    protected JPanelBuilder myBuilder;
+
+
+    public FormWindow()
+    {
         this(null);
     }
 
-    public FormWindow(Object pReq){
-        _myReq = pReq;
-        _changedID = false;
-        _myBuilder = JPanelBuilderFactory.getInstance().createPanelBuilder(this);
+    public FormWindow(Type pReq)
+    {
+        myReq = pReq;
+        setSize(250,500);   //Ungefähre Größe, damit Factory richtigen Builder erzeugen kann
+        myBuilder = JPanelBuilderFactory.getInstance().createPanelBuilder(this);
+        init();
     }
+
+    protected abstract void init();
 
 }

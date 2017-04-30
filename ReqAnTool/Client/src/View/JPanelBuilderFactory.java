@@ -1,6 +1,7 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class JPanelBuilderFactory {
     
@@ -11,17 +12,29 @@ public class JPanelBuilderFactory {
     }
     
     public static JPanelBuilderFactory getInstance(){
-        if(_myFactory == null){
+        if(_myFactory == null)
+        {
             _myFactory = new JPanelBuilderFactory();
         }
         return _myFactory;
     }
     
-    public JPanelBuilder createPanelBuilder(JFrame v) {
+    public JPanelBuilder createPanelBuilder(Container v) {
         //instanceof-Selection
         JPanelBuilder localBuilder = null;
-        if( v instanceof FormWindow) {
-            localBuilder = new FormulaBuilder();
+        if(v.getWidth() > 300)
+        {
+            localBuilder = new TabBuilder();
+        }
+        else{
+            if(v.getHeight() <= 300)
+            {
+                localBuilder = new DialogBuilder();
+            }
+            else
+            {
+                localBuilder = new FormulaBuilder();
+            }
         }
         return localBuilder;
     }
