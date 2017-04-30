@@ -2,6 +2,11 @@ package Model;
 
 import Model_Interfaces.ICostEstimation;
 
+import Model_Interfaces.IDataFP;
+import Model_Interfaces.IRequirement;
+
+import Model_Interfaces.ITransactionFP;
+
 import java.util.ArrayList;
 
 public class CostEstimation 
@@ -9,16 +14,15 @@ public class CostEstimation
 {
     private double FPcount;
     private double manMonthCount;
-
     /**
      * @associates <{Model.TransactionFP}>
      */
-    private ArrayList<TransactionFP> myTransactionFPs;
-
+    private ArrayList<ITransactionFP> myTransactionFPs;
     /**
      * @associates <{Model.DataFP}>
      */
-    private ArrayList<DataFP> myDataFPs;
+    private ArrayList<IDataFP> myDataFPs;
+
 
     @Override
     public void calculateFP()
@@ -42,5 +46,17 @@ public class CostEstimation
     public double getManMonth()
     {
         return manMonthCount;
+    }
+
+    @Override
+    public ArrayList<IDataFP> getDataFPs()
+    {
+        return myDataFPs;
+    }
+
+    @Override
+    public ArrayList<ITransactionFP> getTransactionFPs()
+    {
+        return myTransactionFPs;
     }
 }
