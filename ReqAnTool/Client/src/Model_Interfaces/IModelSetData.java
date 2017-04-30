@@ -25,11 +25,9 @@ public interface IModelSetData
                          String custName, String custMail, String custPhone, String pmName, String pmMail,
                          String pmPhone);
 
-    boolean addTargetDef(String description);
 
     boolean editTargetDef(String description);
 
-    boolean addProdApp(String description);
 
     boolean editProdApp(String description);
 

@@ -35,4 +35,18 @@ public interface IApplications
     public boolean calcOptWeightFactor();
 
     public boolean existsOptWeightFactor();
+
+    public boolean checkIDFormat(String id);
+
+    public boolean checkMailFormat(String mail);
+
+    public boolean checkPhoneFormat(String phone);
+
+    public boolean checkAddressFormat(String addr);
+
+    public boolean checkCountry(String country);
+
+    public boolean checkZIP(int zip);
+
+    public boolean checkDET_FTR_RET(int value);
 }
