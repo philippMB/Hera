@@ -2,7 +2,7 @@ package Model_Interfaces;
 
 public interface IModelSetData
 {
-    
+
     public boolean addFReq(String id, String title, String actor, String description, String[] references);
 
     public boolean addNFReq(String id, String title, String actor, String description, String[] references);

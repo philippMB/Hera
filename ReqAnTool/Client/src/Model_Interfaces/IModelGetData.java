@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface IModelGetData
 {
-    
+
     public IFRequirement getFReqByID(String id);
 
     public ICustomerData getCustomerData();
