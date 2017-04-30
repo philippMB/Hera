@@ -7,12 +7,10 @@ public interface IFRequirement
     extends IRequirement
 {
 
-
     public String getTitle();
 
     public String getActor();
 
     public String getDescription();
-
 
 }
