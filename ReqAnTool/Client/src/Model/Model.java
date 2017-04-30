@@ -4,20 +4,26 @@ import Model_Interfaces.IAddition;
 import Model_Interfaces.IApplications;
 import Model_Interfaces.ICostEstimation;
 import Model_Interfaces.ICustomerData;
+import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IGlossaryEntry;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IModelSetData;
+import Model_Interfaces.INFRequirement;
 import Model_Interfaces.IProductApplication;
+import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
 import Model_Interfaces.IRequirement;
 import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.IWeightFactor;
+
+import java.util.ArrayList;
 
 public class Model
     implements IModelGetData, IModelSetData, IApplications
 {
 
     private RequirementAnalysis myRequirementAnalysis;
+    private Configuration myConfig;
 
     public Model()
     {
@@ -60,13 +66,6 @@ public class Model
     }
 
     @Override
-    public boolean addProdApp(String description)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
     public boolean addProdData(String id, String content, String attribute, String maxCount, String[] references)
     {
         // TODO Implement this method
@@ -75,13 +74,6 @@ public class Model
 
     @Override
     public boolean addQualReq(String criteria, String value)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
-    public boolean addTargetDef(String description)
     {
         // TODO Implement this method
         return false;
@@ -269,7 +261,7 @@ public class Model
     }
 
     @Override
-    public IAddition getAddition()
+    public ArrayList<IAddition> getAllAddition()
     {
         // TODO Implement this method
         return null;
@@ -295,14 +287,7 @@ public class Model
         // TODO Implement this method
         return null;
     }
-
-    @Override
-    public IWeightFactor getOptWeightFactor()
-    {
-        // TODO Implement this method
-        return null;
-    }
-
+    
     @Override
     public IProductApplication getProdApp()
     {
@@ -318,21 +303,7 @@ public class Model
     }
 
     @Override
-    public IRequirement getReqByID(String ID)
-    {
-        // TODO Implement this method
-        return null;
-    }
-
-    @Override
     public ITargetDefinition getTargetDef()
-    {
-        // TODO Implement this method
-        return null;
-    }
-
-    @Override
-    public IWeightFactor getWeightFactor()
     {
         // TODO Implement this method
         return null;
@@ -435,5 +406,96 @@ public class Model
     {
         // TODO Implement this method
         return false;
+    }
+
+    @Override
+    public IAddition getAdditionByTitle(String title)
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ArrayList<IFRequirement> getAllFReq()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ArrayList<IGlossaryEntry> getAllGlossEntry()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ArrayList<INFRequirement> getAllNFReq()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ArrayList<IProductData> getAllProdData()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ArrayList<IQualityRequirement> getAllQualReq()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ArrayList<IWeightFactor> getAllWeightFactor()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public IWeightFactor getWeightFactorByTitle(String title)
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public ArrayList<IWeightFactor> getAllOptWeightFactor()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public IWeightFactor getOptWeightFactorByTitle()
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public IFRequirement getFReqByID(String ID)
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public INFRequirement getNFReqByID(String ID)
+    {
+        // TODO Implement this method
+        return null;
+    }
+
+    @Override
+    public IProductData getProductDataByID(String ID)
+    {
+        // TODO Implement this method
+        return null;
     }
 }

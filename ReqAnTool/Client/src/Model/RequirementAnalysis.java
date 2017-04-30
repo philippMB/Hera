@@ -11,7 +11,6 @@ import Model_Interfaces.IProductApplication;
 import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
 import Model_Interfaces.IRequirementAnalysis;
-
 import Model_Interfaces.IRequirementList;
 import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.IWeightFactor;
@@ -66,7 +65,6 @@ public class RequirementAnalysis
      */
     private ArrayList<WeightFactor> myWeightFactors;
     private CostEstimation myCostEstimation;
-    private Configuration myConfig;
 
 
     public Status checkReference(String _alteID, String _neueID) {

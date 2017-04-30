@@ -1,8 +1,10 @@
 package Model_Interfaces;
 
+import java.util.ArrayList;
+
 public interface IModelGetData
 {
-    IRequirement getReqByID(String ID);
+    public IFRequirement getFReqByID(String ID);
 
     public ICustomerData getCustomerData();
 
@@ -10,7 +12,7 @@ public interface IModelGetData
 
     public ICostEstimation getCostEstimation();
 
-    public IAddition getAddition();
+    public IAddition getAdditionByTitle(String title);
 
     public IProductApplication getProdApp();
 
@@ -18,7 +20,27 @@ public interface IModelGetData
 
     public ITargetDefinition getTargetDef();
 
-    public IWeightFactor getOptWeightFactor();
+    public IWeightFactor getOptWeightFactorByTitle();
 
-    public IWeightFactor getWeightFactor();
+    IWeightFactor getWeightFactorByTitle(String title);
+
+    public ArrayList<IFRequirement> getAllFReq();
+
+    public ArrayList<INFRequirement> getAllNFReq();
+
+    public ArrayList<IProductData> getAllProdData();
+
+    public ArrayList<IGlossaryEntry> getAllGlossEntry();
+
+    public ArrayList<IQualityRequirement> getAllQualReq();
+
+    public ArrayList<IAddition> getAllAddition();
+
+    public ArrayList<IWeightFactor> getAllWeightFactor();
+    
+    public ArrayList<IWeightFactor> getAllOptWeightFactor();
+
+    public INFRequirement getNFReqByID(String ID);
+
+    public IProductData getProductDataByID(String ID);
 }

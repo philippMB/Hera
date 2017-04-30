@@ -17,9 +17,13 @@ public class AdapterList<T>
     }
 
     @Override
-    public boolean search()
+    public boolean isIncluded()
     {
         // TODO Implement this method
         return false;
+    }
+
+    public T getReqByID(String id)
+    {
     }
 }
