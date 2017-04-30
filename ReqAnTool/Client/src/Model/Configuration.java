@@ -1,5 +1,7 @@
 package Model;
 
+import Model_Interfaces.IWeightFactor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class Configuration
     /**
      * @associates <{Model.WeightFactor}>
      */
-    private ArrayList<WeightFactor> optWeightFactor;
+    private ArrayList<IWeightFactor> optWeightFactor;
 
     private void getComplexityMatrix()
     {
@@ -19,6 +21,17 @@ public class Configuration
 
     private void getComplexityWeightMatrix()
     {
+    }
+
+    public ArrayList<IWeightFactor> getOptWeightFactors()
+    {
+        return optWeightFactor;
+    }
+    
+    public IWeightFactor getOptWeightFactorsByTitle(String title)
+    {
+        // TODO
+        return null;
     }
 
     public void adjustOptWeightFactors()

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface IModelGetData
 {
-    public IFRequirement getFReqByID(String ID);
+    public IFRequirement getFReqByID(String id);
 
     public ICustomerData getCustomerData();
 
@@ -20,7 +20,7 @@ public interface IModelGetData
 
     public ITargetDefinition getTargetDef();
 
-    public IWeightFactor getOptWeightFactorByTitle();
+    public IWeightFactor getOptWeightFactorByTitle(String title);
 
     IWeightFactor getWeightFactorByTitle(String title);
 
@@ -40,7 +40,7 @@ public interface IModelGetData
     
     public ArrayList<IWeightFactor> getAllOptWeightFactor();
 
-    public INFRequirement getNFReqByID(String ID);
+    public INFRequirement getNFReqByID(String id);
 
-    public IProductData getProductDataByID(String ID);
+    public IProductData getProductDataByID(String id);
 }

@@ -1,6 +1,7 @@
 package Model;
 
 import Model_Interfaces.IQualityRequirement;
+import Model_Interfaces.Score;
 
 public class QualityRequirement
     implements IQualityRequirement
@@ -12,14 +13,12 @@ public class QualityRequirement
     @Override
     public String getCriteria()
     {
-        // TODO Implement this method
-        return null;
+        return criteria;
     }
 
     @Override
     public Score getValue()
     {
-        // TODO Implement this method
-        return null;
+        return value;
     }
 }

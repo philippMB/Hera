@@ -25,162 +25,189 @@ public class RequirementAnalysis
     private String title;
     private String customerDescription;
     private double actualState;    
-    private ProductApplication myProductApplication;
-    private TargetDefinition myTargetDefinition;
-    private CustomerData myCustomerData;
-
-
+    private IProductApplication myProductApplication;
+    private ITargetDefinition myTargetDefinition;
+    private ICostEstimation myCostEstimation;
+    private ICustomerData myCustomerData;
     /**
      * @associates <{Model.FRequirement}>
      */
-    private IRequirementList<IFRequirement> myFRequirements;
-
+    private AdapterList<IFRequirement> myFRequirements;
     /**
      * @associates <{Model.ProductData}>
      */
-    private IRequirementList<IProductData> myProductData;
-
+    private AdapterList<IProductData> myProductData;
     /**
      * @associates <{Model.NFRequirement}>
      */
-    private IRequirementList<INFRequirement> myNFRequirements;
-
+    private AdapterList<INFRequirement> myNFRequirements;
     /**
      * @associates <{Model.Addition}>
      */
-    private ArrayList<Addition> myAddition;
-
+    private ArrayList<IAddition> myAdditions;
     /**
      * @associates <{Model.GlossaryEntry}>
      */
-    private ArrayList<GlossaryEntry> myGlossaryEntries;
-
+    private ArrayList<IGlossaryEntry> myGlossaryEntries;
     /**
      * @associates <{Model.QualityRequirement}>
      */
-    private ArrayList<QualityRequirement> myQualityRequirements;
-
+    private ArrayList<IQualityRequirement> myQualityRequirements;
     /**
      * @associates <{Model.WeightFactor}>
      */
-    private ArrayList<WeightFactor> myWeightFactors;
-    private CostEstimation myCostEstimation;
+    private ArrayList<IWeightFactor> myWeightFactors;
 
 
-    public Status checkReference(String _alteID, String _neueID) {
-        return null;
+    public boolean checkReference(String _alteID, String _neueID) {
+        return false;
     }
 
     public boolean isIDunique(String _id) {
         return true;
     }
 
-    public Status optimizeWeightFactor() {
-        return null;
+    public boolean optimizeWeightFactor() {
+        return false;
     }
 
     @Override
     public double getActualState()
     {
-        // TODO Implement this method
-        return 0.0;
+        return actualState;
     }
 
     @Override
     public Date getCreateDate()
     {
-        // TODO Implement this method
-        return null;
+        return createDate;
     }
 
     @Override
     public String getCustomerDescription()
     {
-        // TODO Implement this method
-        return null;
+        return customerDescription;
     }
 
     @Override
     public ArrayList<IAddition> getAdditions()
     {
-        // TODO Implement this method
-        return null;
+        return myAdditions;
     }
 
     @Override
     public AdapterList<IFRequirement> getFRequirements()
     {
-        // TODO Implement this method
-        return null;
+        return myFRequirements;
     }
 
     @Override
     public AdapterList<INFRequirement> getNFRequirements()
     {
-        // TODO Implement this method
-        return null;
+        return myNFRequirements;
     }
 
     @Override
     public ArrayList<IGlossaryEntry> getGlossaryEntries()
     {
-        // TODO Implement this method
-        return null;
+        return myGlossaryEntries;
     }
 
     @Override
     public AdapterList<IProductData> getProductData()
     {
-        // TODO Implement this method
-        return null;
+        return myProductData;
     }
 
     @Override
     public ArrayList<IQualityRequirement> getQualityRequirements()
     {
-        // TODO Implement this method
-        return null;
+        return myQualityRequirements;
     }
 
     @Override
     public ArrayList<IWeightFactor> getWeightFactors()
     {
-        // TODO Implement this method
-        return null;
+        return myWeightFactors;
     }
 
     @Override
     public String getTitle()
     {
-        // TODO Implement this method
-        return null;
+        return title;
     }
 
     @Override
     public ITargetDefinition getTargetDefinition()
     {
-        // TODO Implement this method
-        return null;
+        return myTargetDefinition;
     }
 
     @Override
     public IProductApplication getProductApplication()
     {
-        // TODO Implement this method
-        return null;
+        return myProductApplication;
     }
 
     @Override
     public ICustomerData getCustomerData()
     {
-        // TODO Implement this method
-        return null;
+        return myCustomerData;
     }
 
     @Override
     public ICostEstimation getCostEstimation()
     {
-        // TODO Implement this method
+        return myCostEstimation;
+    }
+
+    @Override
+    public IGlossaryEntry getGlossaryEntriesByTerm(String term)
+    {
+        // TODO
         return null;
     }
+
+    @Override
+    public IQualityRequirement getQualityRequirementsByCriteria(String criteria)
+    {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public IAddition getAdditionByTitle(String title)
+    {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public IWeightFactor getWeightFactorByTitle(String title)
+    {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public IFRequirement getFRequirementByID(String id)
+    {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public INFRequirement getNFRequirementByID(String id)
+    {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public IProductData getProductDataByID(String id)
+    {
+        // TODO
+        return null;
+    }
+    
 }

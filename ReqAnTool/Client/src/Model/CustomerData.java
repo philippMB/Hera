@@ -20,77 +20,67 @@ public class CustomerData
     public String getPMName()
     {
         // TODO Implement this method
-        return null;
+        return projectManager.getName();
     }
 
     @Override
     public String getPMPNumber()
     {
-        // TODO Implement this method
-        return null;
+        return projectManager.getPhoneNumber();
     }
 
     @Override
     public String getPMEMail()
     {
-        // TODO Implement this method
-        return null;
+        return projectManager.getMailAddress();
     }
 
     @Override
     public String getCName()
     {
-        // TODO Implement this method
-        return null;
+        return customer.getName();
     }
 
     @Override
     public String getCNumber()
     {
-        // TODO Implement this method
-        return null;
+        return customer.getPhoneNumber();
     }
 
     @Override
     public String getCEMail()
     {
-        // TODO Implement this method
-        return null;
+        return customer.getMailAddress();
     }
 
     @Override
     public String getCompanyName()
     {
-        // TODO Implement this method
-        return null;
+        return companyName;
     }
 
     @Override
     public String getCompanyStreet()
     {
-        // TODO Implement this method
-        return null;
+        return companyStreet;
     }
 
     @Override
     public int getCompanyPLZ()
     {
-        // TODO Implement this method
-        return 0;
+        return zip;
     }
 
     @Override
-    public String getCompany()
+    public String getCompanyCity()
     {
-        // TODO Implement this method
-        return null;
+        return city;
     }
 
     @Override
     public String getCompanyCountry()
     {
-        // TODO Implement this method
-        return null;
+        return country;
     }
 
 }

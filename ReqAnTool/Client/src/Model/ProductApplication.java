@@ -11,8 +11,7 @@ public class ProductApplication
     @Override
     public String getDescription()
     {
-        // TODO Implement this method
-        return null;
+        return description;
     }
 
 }

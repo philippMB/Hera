@@ -23,7 +23,7 @@ public interface ICustomerData {
 
     public int getCompanyPLZ();
 
-    public String getCompany();
+    public String getCompanyCity();
 
     public String getCompanyCountry();
 

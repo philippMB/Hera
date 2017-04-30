@@ -11,14 +11,12 @@ public class Addition
     @Override
     public String getDescription()
     {
-        // TODO Implement this method
-        return null;
+        return description;
     }
 
     @Override
     public String getTitle()
     {
-        // TODO Implement this method
-        return null;
+        return title;
     }
 }

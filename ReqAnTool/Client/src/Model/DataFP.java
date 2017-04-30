@@ -1,5 +1,6 @@
 package Model;
 
+import Model_Interfaces.ClassOfDataFP;
 import Model_Interfaces.IDataFP;
 import Model_Interfaces.IRequirement;
 
@@ -15,28 +16,25 @@ public class DataFP
     @Override
     public int getDET()
     {
-        // TODO Implement this method
-        return 0;
+        return det;
     }
 
     @Override
     public int getRET()
     {
-        // TODO Implement this method
-        return 0;
+        return ret;
     }
 
     @Override
     public IRequirement getReference()
     {
-        // TODO Implement this method
-        return null;
+        return reference;
     }
 
     @Override
     public ClassOfDataFP getType()
     {
-        // TODO Implement this method
-        return null;
+        // TODO returntype
+        return type;
     }
 }

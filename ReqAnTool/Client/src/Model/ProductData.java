@@ -19,35 +19,19 @@ public class ProductData
     @Override
     public String getAttribute()
     {
-        // TODO Implement this method
-        return null;
+        return attribute;
     }
 
     @Override
     public String getContent()
     {
-        // TODO Implement this method
-        return null;
+        return content;
     }
 
     @Override
     public String getMaxCount()
     {
-        // TODO Implement this method
-        return null;
+        return maxCount;
     }
-
-    @Override
-    public String getID()
-    {
-        // TODO Implement this method
-        return null;
-    }
-
-    @Override
-    public ArrayList<IRequirement> getReferences()
-    {
-        // TODO Implement this method
-        return null;
-    }
+    
 }

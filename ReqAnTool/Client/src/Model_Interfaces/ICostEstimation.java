@@ -9,7 +9,7 @@ public interface ICostEstimation {
     
     public void calculateManMonth();
     
-    public void getFunctionPoints();
+    public double getFunctionPoints();
     
-    public void getManMonth();
+    public double getManMonth();
 }

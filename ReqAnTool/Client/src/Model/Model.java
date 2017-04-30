@@ -22,7 +22,7 @@ public class Model
     implements IModelGetData, IModelSetData, IApplications
 {
 
-    private RequirementAnalysis myRequirementAnalysis;
+    private RequirementAnalysis myReqAn;
     private Configuration myConfig;
 
     public Model()
@@ -263,50 +263,43 @@ public class Model
     @Override
     public ArrayList<IAddition> getAllAddition()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getAdditions();
     }
 
     @Override
     public ICostEstimation getCostEstimation()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getCostEstimation();
     }
 
     @Override
     public ICustomerData getCustomerData()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getCustomerData();
     }
 
     @Override
     public IGlossaryEntry getGlossaryEntryByTerm(String term)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getGlossaryEntriesByTerm(term);
     }
     
     @Override
     public IProductApplication getProdApp()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getProductApplication();
     }
 
     @Override
     public IQualityRequirement getQualReqByCriteria(String criteria)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getQualityRequirementsByCriteria(criteria);
     }
 
     @Override
     public ITargetDefinition getTargetDef()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getTargetDefinition();
     }
 
     @Override
@@ -411,91 +404,82 @@ public class Model
     @Override
     public IAddition getAdditionByTitle(String title)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getAdditionByTitle(title);
     }
 
     @Override
     public ArrayList<IFRequirement> getAllFReq()
     {
-        // TODO Implement this method
-        return null;
+        // TODO
+        return myReqAn.getFRequirements();
     }
 
     @Override
     public ArrayList<IGlossaryEntry> getAllGlossEntry()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getGlossaryEntries();
     }
 
     @Override
     public ArrayList<INFRequirement> getAllNFReq()
     {
         // TODO Implement this method
-        return null;
+        return myReqAn.getNFRequirements();
     }
 
     @Override
     public ArrayList<IProductData> getAllProdData()
     {
         // TODO Implement this method
-        return null;
+        return myReqAn.getProductData();
     }
 
     @Override
     public ArrayList<IQualityRequirement> getAllQualReq()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getQualityRequirements();
     }
 
     @Override
     public ArrayList<IWeightFactor> getAllWeightFactor()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getWeightFactors();
     }
 
     @Override
     public IWeightFactor getWeightFactorByTitle(String title)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getWeightFactorByTitle(title);
     }
 
     @Override
     public ArrayList<IWeightFactor> getAllOptWeightFactor()
     {
-        // TODO Implement this method
-        return null;
+        return myConfig.getOptWeightFactors();
     }
 
     @Override
-    public IWeightFactor getOptWeightFactorByTitle()
+    public IWeightFactor getOptWeightFactorByTitle(String title)
     {
-        // TODO Implement this method
-        return null;
+        return myConfig.getOptWeightFactorsByTitle(title);
     }
 
     @Override
-    public IFRequirement getFReqByID(String ID)
+    public IFRequirement getFReqByID(String id)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getFRequirementByID(id);
     }
 
     @Override
-    public INFRequirement getNFReqByID(String ID)
+    public INFRequirement getNFReqByID(String id)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.getNFRequirementByID(id);
     }
 
     @Override
-    public IProductData getProductDataByID(String ID)
+    public IProductData getProductDataByID(String id)
     {
         // TODO Implement this method
-        return null;
+        return myReqAn.getProductDataByID(id);
     }
 }

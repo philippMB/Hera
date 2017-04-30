@@ -33,14 +33,14 @@ public class CostEstimation
     }
 
     @Override
-    public void getFunctionPoints()
+    public double getFunctionPoints()
     {
-        // TODO Implement this method
+        return FPcount;
     }
 
     @Override
-    public void getManMonth()
+    public double getManMonth()
     {
-        // TODO Implement this method
+        return manMonthCount;
     }
 }

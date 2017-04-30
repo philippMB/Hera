@@ -2,6 +2,8 @@ package Model;
 
 import Model_Interfaces.IGlossaryEntry;
 
+import Model_Interfaces.IRequirement;
+
 import java.util.ArrayList;
 
 public class GlossaryEntry
@@ -17,54 +19,60 @@ public class GlossaryEntry
     /**
      * @associates <{Model.GlossaryEntry}>
      */
-    private ArrayList<GlossaryEntry> crossReferences;
+    private ArrayList<IGlossaryEntry> crossReferences;
 
     @Override
     public String getTerm()
     {
-        // TODO Implement this method
-        return null;
+        return term;
     }
 
     @Override
     public String getSense()
     {
-        // TODO Implement this method
-        return null;
+        return sense;
     }
 
     @Override
     public String getBoundary()
     {
-        // TODO Implement this method
-        return null;
+        return boundary;
     }
 
     @Override
     public String getLabel()
     {
-        // TODO Implement this method
-        return null;
+        return label;
     }
 
     @Override
     public String getValidity()
     {
-        // TODO Implement this method
-        return null;
+        return validity;
     }
 
     @Override
     public String getObscurities()
     {
-        // TODO Implement this method
-        return null;
+        return obscurities;
+    }
+
+    @Override
+    public String[] getReferenceTerms()
+    {
+        String[] terms = new String[crossReferences.size()];
+        int i = 0;
+        for (IGlossaryEntry ref : crossReferences)
+        {
+            terms[i] = ref.getTerm();
+            i++;
+        }
+        return terms;
     }
 
     @Override
     public ArrayList<IGlossaryEntry> getReferences()
     {
-        // TODO Implement this method
-        return null;
+        return crossReferences;
     }
 }

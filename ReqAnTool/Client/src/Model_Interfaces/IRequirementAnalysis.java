@@ -41,4 +41,19 @@ public interface IRequirementAnalysis
     
     public ICustomerData getCustomerData();
     
+    public IGlossaryEntry getGlossaryEntriesByTerm(String term);
+    
+    public IQualityRequirement getQualityRequirementsByCriteria(String criteria);
+    
+    public IAddition getAdditionByTitle(String title);
+    
+    public IWeightFactor getWeightFactorByTitle(String title);
+    
+    public IFRequirement getFRequirementByID(String id);
+    
+    public INFRequirement getNFRequirementByID(String id);
+    
+    public IProductData getProductDataByID(String id);
+
+    
 }

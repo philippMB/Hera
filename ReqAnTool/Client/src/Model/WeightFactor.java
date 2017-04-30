@@ -12,21 +12,18 @@ public class WeightFactor
     @Override
     public String getTitle()
     {
-        // TODO Implement this method
-        return null;
+        return title;
     }
 
     @Override
     public int getValue()
     {
-        // TODO Implement this method
-        return 0;
+        return score;
     }
 
     @Override
     public int getMaxValue()
     {
-        // TODO Implement this method
-        return 0;
+        return maxValue;
     }
 }

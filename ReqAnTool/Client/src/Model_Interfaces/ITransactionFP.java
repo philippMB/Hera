@@ -1,6 +1,5 @@
 package Model_Interfaces;
 
-import Model.ClassOfTransactionFP;
 
 /**
  * Created by phlippe on 26.04.17.

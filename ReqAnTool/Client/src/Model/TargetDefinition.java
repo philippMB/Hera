@@ -11,8 +11,7 @@ public class TargetDefinition
     @Override
     public String getDescription()
     {
-        // TODO Implement this method
-        return null;
+        return description;
     }
 
 }

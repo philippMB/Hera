@@ -9,17 +9,35 @@ public abstract class Requirement
     implements IRequirement
 {
 
-    protected String id;
-
+    private String id;
     /**
      * @associates <{Model.Requirement}>
      */
-    private ArrayList<Requirement> references;
+    private ArrayList<IRequirement> references;
     
     @Override
-    public abstract String getID();
+    public String getID()
+    {
+        return id;
+    }
 
     @Override
-    public abstract ArrayList<IRequirement> getReferences();
+    public ArrayList<IRequirement> getReferences()
+    {
+        return references;
+    }
+    
+    @Override
+    public String[] getReferenceIDs()
+    {
+        String[] ids = new String[references.size()];
+        int i = 0;
+        for (IRequirement req : references)
+        {
+            ids[i] = req.getID();
+            i++;
+        }
+        return ids;
+    }
 
 }
