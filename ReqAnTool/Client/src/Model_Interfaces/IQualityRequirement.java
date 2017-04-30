@@ -9,8 +9,5 @@ public interface IQualityRequirement
 {
     public String getCriteria();
 
-    /**
-     * @return
-     */
     public Score getValue();
 }

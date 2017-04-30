@@ -39,9 +39,9 @@ public class CustomerData
     return PMPNumber;
   }
 
-  public String getPMEMail()
+  public String getPMEmail()
   {
-    return PMEMail;
+    return PMEmail;
   }
 
   public String getCName()

@@ -5,7 +5,6 @@ package Model_Interfaces;
  */
 public interface IProductData 
 {
-    
     public String getAttribute();
     
     public String getContent();
