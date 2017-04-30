@@ -2,18 +2,18 @@ package Model_Interfaces;
 
 public interface IApplications
 {
-    boolean existsID(String id);
+    
+    public boolean existsID(String id);
 
-    int saveReqAn(String path);
+    public int saveReqAn(String path);
 
     public int deleteReqAn();
 
     public boolean isReqAnUnsaved();
 
-    boolean checkReferenceOnID(String id);
+    public boolean checkReferenceOnID(String id);
 
     public boolean isIDUnique(String id);
-
 
     public boolean existsActualState();
 
@@ -21,7 +21,7 @@ public interface IApplications
 
     public boolean existsManMonthCount();
 
-    boolean setDataFP(String type, String id, int det, int ret);
+    public boolean setDataFP(String type, String id, int det, int ret);
 
     public boolean setTransactionFP(String type, String ref, int det, int ftr);
 
@@ -49,4 +49,5 @@ public interface IApplications
     public boolean checkZIP(int zip);
 
     public boolean checkDET_FTR_RET(int value);
+
 }

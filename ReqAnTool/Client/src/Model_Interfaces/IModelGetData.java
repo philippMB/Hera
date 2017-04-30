@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public interface IModelGetData
 {
-    public IFRequirement getFReqByID(String ID);
+    
+    public IFRequirement getFReqByID(String id);
 
     public ICustomerData getCustomerData();
 
-    IGlossaryEntry getGlossaryEntryByTerm(String term);
+    public IGlossaryEntry getGlossaryEntryByTerm(String term);
 
     public ICostEstimation getCostEstimation();
 
@@ -20,9 +21,9 @@ public interface IModelGetData
 
     public ITargetDefinition getTargetDef();
 
-    public IWeightFactor getOptWeightFactorByTitle();
+    public IWeightFactor getOptWeightFactorByTitle(String title);
 
-    IWeightFactor getWeightFactorByTitle(String title);
+    public IWeightFactor getWeightFactorByTitle(String title);
 
     public ArrayList<IFRequirement> getAllFReq();
 
@@ -40,7 +41,8 @@ public interface IModelGetData
     
     public ArrayList<IWeightFactor> getAllOptWeightFactor();
 
-    public INFRequirement getNFReqByID(String ID);
+    public INFRequirement getNFReqByID(String id);
 
-    public IProductData getProductDataByID(String ID);
+    public IProductData getProductDataByID(String id);
+    
 }

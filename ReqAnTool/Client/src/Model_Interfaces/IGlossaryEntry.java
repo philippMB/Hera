@@ -22,4 +22,6 @@ public interface IGlossaryEntry
     
     public ArrayList<IGlossaryEntry> getReferences();
     
+    public String[] getReferenceTerms();
+    
 }
