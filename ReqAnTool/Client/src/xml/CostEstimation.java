@@ -20,4 +20,15 @@ public class CostEstimation
   {
     return manMonth;
   }
+  
+  // für JavaBeans
+  public void setFunctionPoints(double functionPoints)
+  {
+    this.functionPoints = functionPoints;
+  }
+
+  public void setManMonth(double manMonth)
+  {
+    this.manMonth = manMonth;
+  }
 }

@@ -48,4 +48,36 @@ public class GlossaryEntry
   {
     return obscurities;
   }
+  
+  // für JavaBeans
+
+  public void setTerm(String term)
+  {
+    this.term = term;
+  }
+
+  public void setSense(String sense)
+  {
+    this.sense = sense;
+  }
+
+  public void setBoundary(String boundary)
+  {
+    this.boundary = boundary;
+  }
+
+  public void setLabel(String label)
+  {
+    this.label = label;
+  }
+
+  public void setValidity(String validity)
+  {
+    this.validity = validity;
+  }
+
+  public void setObscurities(String obscurities)
+  {
+    this.obscurities = obscurities;
+  }
 }

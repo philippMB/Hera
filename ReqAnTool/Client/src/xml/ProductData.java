@@ -27,4 +27,21 @@ public class ProductData
   {
     return maxCount;
   }
+  
+  // für JavaBeans
+
+  public void setAttribute(String attribute)
+  {
+    this.attribute = attribute;
+  }
+
+  public void setContent(String content)
+  {
+    this.content = content;
+  }
+
+  public void setMaxCount(String maxCount)
+  {
+    this.maxCount = maxCount;
+  }
 }

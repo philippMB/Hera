@@ -11,9 +11,8 @@ import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
 import Model_Interfaces.IRequirementAnalysis;
 import Model_Interfaces.ITargetDefinition;
+import Model_Interfaces.ITransactionFP;
 import Model_Interfaces.IWeightFactor;
-
-import com.sun.org.apache.bcel.internal.classfile.PMGClass;
 
 import java.util.ArrayList;
 
@@ -67,7 +66,14 @@ public class CustomXMLFormat
 
   private void addDataFP(IRequirementAnalysis data)
   {
-
+    ICostEstimation costEst = data.getCostEstimation();
+    for(IDataFP obj : costEst.getDataFPs())
+    {
+      int det = obj.getDET();
+      int ret = obj.getRET();
+      DataFP funcPoint = new DataFP(det, ret);
+      dataFuncPointList.add(funcPoint);
+    }
   }
   
   private void addNonFuncRequirements(IRequirementAnalysis data)
@@ -138,7 +144,14 @@ public class CustomXMLFormat
   
   private void addTransactionFP(IRequirementAnalysis data)
   {
-    
+    ICostEstimation costEst = data.getCostEstimation();
+    for(ITransactionFP obj : costEst.getTransactionFPs())
+    {
+      int ftr = obj.getFTR();
+      int det = obj.getDET();
+      TransactionFP funcPoint = new TransactionFP(det, ftr);
+      transactionFPList.add(funcPoint);
+    }
   }
   
   private void addWeightFactor(IRequirementAnalysis data)
@@ -147,9 +160,8 @@ public class CustomXMLFormat
     {
       String title = obj.getTitle();
       int value = obj.getValue();
-      int minValue = obj.getMinValue();
       int maxValue = obj.getMaxValue();
-      WeightFactor wFac = new WeightFactor(title, value, minValue, maxValue);
+      WeightFactor wFac = new WeightFactor(title, value, maxValue);
       weightFactorList.add(wFac);
     }
   }
@@ -175,5 +187,126 @@ public class CustomXMLFormat
     String description = targetDef.getDescription();
     this.targetDef = new TargetDefinition(description);
   }
-  
+
+// Um es JavaBeans zu machen, Refaktoring: obere Methoden austauschen
+  public void setFuncRequirementList(ArrayList<FRequirement> funcRequirementList)
+  {
+    this.funcRequirementList = funcRequirementList;
+  }
+
+  public ArrayList<FRequirement> getFuncRequirementList()
+  {
+    return funcRequirementList;
+  }
+
+  public void setDataFuncPointList(ArrayList<DataFP> dataFuncPointList)
+  {
+    this.dataFuncPointList = dataFuncPointList;
+  }
+
+  public ArrayList<DataFP> getDataFuncPointList()
+  {
+    return dataFuncPointList;
+  }
+
+  public void setNonFuncRequirementList(ArrayList<NFRequirement> nonFuncRequirementList)
+  {
+    this.nonFuncRequirementList = nonFuncRequirementList;
+  }
+
+  public ArrayList<NFRequirement> getNonFuncRequirementList()
+  {
+    return nonFuncRequirementList;
+  }
+
+  public void setCustData(CustomerData custData)
+  {
+    this.custData = custData;
+  }
+
+  public CustomerData getCustData()
+  {
+    return custData;
+  }
+
+  public void setGlossary(ArrayList<GlossaryEntry> glossary)
+  {
+    this.glossary = glossary;
+  }
+
+  public ArrayList<GlossaryEntry> getGlossary()
+  {
+    return glossary;
+  }
+
+  public void setProductDataList(ArrayList<ProductData> productDataList)
+  {
+    this.productDataList = productDataList;
+  }
+
+  public ArrayList<ProductData> getProductDataList()
+  {
+    return productDataList;
+  }
+
+  public void setQualityRequirementList(ArrayList<QualityRequirement> qualityRequirementList)
+  {
+    this.qualityRequirementList = qualityRequirementList;
+  }
+
+  public ArrayList<QualityRequirement> getQualityRequirementList()
+  {
+    return qualityRequirementList;
+  }
+
+  public void setTransactionFPList(ArrayList<TransactionFP> transactionFPList)
+  {
+    this.transactionFPList = transactionFPList;
+  }
+
+  public ArrayList<TransactionFP> getTransactionFPList()
+  {
+    return transactionFPList;
+  }
+
+  public void setWeightFactorList(ArrayList<WeightFactor> weightFactorList)
+  {
+    this.weightFactorList = weightFactorList;
+  }
+
+  public ArrayList<WeightFactor> getWeightFactorList()
+  {
+    return weightFactorList;
+  }
+
+  public void setCostEstimation(CostEstimation costEstimation)
+  {
+    this.costEstimation = costEstimation;
+  }
+
+  public CostEstimation getCostEstimation()
+  {
+    return costEstimation;
+  }
+
+  public void setProductApplication(ProductApplication productApplication)
+  {
+    this.productApplication = productApplication;
+  }
+
+  public ProductApplication getProductApplication()
+  {
+    return productApplication;
+  }
+
+  public void setTargetDef(TargetDefinition targetDef)
+  {
+    this.targetDef = targetDef;
+  }
+
+  public TargetDefinition getTargetDef()
+  {
+    return targetDef;
+  }
+
 }

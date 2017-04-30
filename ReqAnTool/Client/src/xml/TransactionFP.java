@@ -3,12 +3,12 @@ package xml;
 public class TransactionFP
 {
   private int det;
-  private int fet;
+  private int ftr;
 
-  public TransactionFP(int det, int fet)
+  public TransactionFP(int det, int ftr)
   {
     this.det = det;
-    this.fet = fet;
+    this.ftr = ftr;
   }
 
   public int getDet()
@@ -16,8 +16,19 @@ public class TransactionFP
     return det;
   }
 
-  public int getFet()
+  public int getFtr()
   {
-    return fet;
+    return ftr;
+  }
+  
+  // für JavaBeans
+  public void setDet(int det)
+  {
+    this.det = det;
+  }
+
+  public void setFtr(int ftr)
+  {
+    this.ftr = ftr;
   }
 }

@@ -4,14 +4,12 @@ public class WeightFactor
 {
   private String title;
   private int value;
-  private int minValue;
   private int maxValue;
   
-  public WeightFactor(String title, int value, int minValue, int maxValue)
+  public WeightFactor(String title, int value, int maxValue)
   {
     this.title = title;
     this.value = value;
-    this.minValue = minValue;
     this.maxValue = maxValue;
   }
 
@@ -25,13 +23,24 @@ public class WeightFactor
     return value;
   }
 
-  public int getMinValue()
-  {
-    return minValue;
-  }
-
   public int getMaxValue()
   {
     return maxValue;
+  }
+  
+  // für JavaBeans
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+
+  public void setValue(int value)
+  {
+    this.value = value;
+  }
+
+  public void setMaxValue(int maxValue)
+  {
+    this.maxValue = maxValue;
   }
 }

@@ -33,17 +33,17 @@ public class XMLExporter
       System.out.println("Failed to create xml factory.");
       return null;
     }
-    // TODO picker via method
+    // TODO picker via method/parameter
     xmlData = xmlFactory.xmlFormat(1);
     if(xmlData == null)
     {
       System.out.println("Failed to create xml formatter.");
       return null;
     }
-    
+    // Rückgabe
     ret = xmlData.createFragments(analysis);
     
-    return ret;
+    return xmlData;
   }
 
   private int saveTo(String address, IXMLFormat xmlData)

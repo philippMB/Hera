@@ -20,4 +20,15 @@ public class DataFP
   {
     return ret;
   }
+
+  // für JavaBeans
+  public void setDet(int det)
+  {
+    this.det = det;
+  }
+
+  public void setRet(int ret)
+  {
+    this.ret = ret;
+  }
 }

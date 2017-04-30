@@ -13,4 +13,10 @@ public class TargetDefinition
   {
     return description;
   }
+  
+  // für JavaBeans
+  public void setDescription(String description)
+  {
+    this.description = description;
+  }
 }

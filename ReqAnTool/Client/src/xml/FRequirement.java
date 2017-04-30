@@ -27,4 +27,20 @@ public class FRequirement
   {
     return description;
   }
+  
+  // für JavaBeans
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+
+  public void setActor(String actor)
+  {
+    this.actor = actor;
+  }
+
+  public void setDescription(String description)
+  {
+    this.description = description;
+  }
 }

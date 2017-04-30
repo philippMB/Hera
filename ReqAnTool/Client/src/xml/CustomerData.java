@@ -54,9 +54,9 @@ public class CustomerData
     return CNumber;
   }
 
-  public String getCEMail()
+  public String getCEmail()
   {
-    return CEMail;
+    return CEmail;
   }
 
   public String getCompanyName()
@@ -77,5 +77,67 @@ public class CustomerData
   public String getCompanyCountry()
   {
     return CompanyCountry;
+  }
+  
+  // für JavaBeans
+
+  public void setPMName(String PMName)
+  {
+    this.PMName = PMName;
+  }
+
+  public void setPMPNumber(String PMPNumber)
+  {
+    this.PMPNumber = PMPNumber;
+  }
+
+  public void setPMEmail(String PMEmail)
+  {
+    this.PMEmail = PMEmail;
+  }
+
+  public void setCName(String CName)
+  {
+    this.CName = CName;
+  }
+
+  public void setCNumber(String CNumber)
+  {
+    this.CNumber = CNumber;
+  }
+
+  public void setCEmail(String CEmail)
+  {
+    this.CEmail = CEmail;
+  }
+
+  public void setCompanyName(String CompanyName)
+  {
+    this.CompanyName = CompanyName;
+  }
+
+  public void setCompanyStreet(String CompanyStreet)
+  {
+    this.CompanyStreet = CompanyStreet;
+  }
+
+  public void setCompanyPLZ(int CompanyPLZ)
+  {
+    this.CompanyPLZ = CompanyPLZ;
+  }
+
+  public void setCompany(String Company)
+  {
+    this.Company = Company;
+  }
+
+  public String getCompany()
+  {
+    return Company;
+  }
+
+  public void setCompanyCountry(String CompanyCountry)
+  {
+    this.CompanyCountry = CompanyCountry;
   }
 }
