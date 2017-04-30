@@ -1,10 +1,12 @@
 package xml;
 
+import Model_Interfaces.IRequirementAnalysis;
+
 import java.util.ArrayList;
 
-public class XMLReadyFormat
+public class CustomXMLFormat
+  implements IXMLFormat
 {
-
   private ArrayList<FRequirement> funcRequirementList;
   private ArrayList<DataFP> dataFuncPointList;
   private ArrayList<NFRequirement> nonFuncRequirementList;
@@ -17,4 +19,11 @@ public class XMLReadyFormat
   private ArrayList<CostEstimation> costEstimationList;
   private ArrayList<ProductApplication> productApplicationList;
   private TargetDefinition targetDef;
+
+  @Override
+  public int createFragments(IRequirementAnalysis rawData)
+  {
+    // TODO Implement this method
+    return 0;
+  }
 }

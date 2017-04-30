@@ -8,19 +8,23 @@ public class XMLManager
 {
   private XMLImporter importer;
   private XMLExporter exporter;
+  private int ret = 0;
+  private IRequirementAnalysis requirementAnalysis;
 
   @Override
   public int exportAnalysis(IRequirementAnalysis analysis, String address)
   {
-    // TODO Implement this method
-    return 0;
+    exporter = new XMLExporter();
+    ret = exporter.save(analysis, address);
+    return ret;
   }
 
   @Override
   public IRequirementAnalysis importAnalysis(String address)
   {
-    // TODO Implement this method
-    return null;
+    importer = new XMLImporter();
+    requirementAnalysis = importer.load(address);
+    return requirementAnalysis;
   }
 
 }

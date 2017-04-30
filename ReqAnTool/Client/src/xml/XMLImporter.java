@@ -1,5 +1,7 @@
 package xml;
 
+import Model_Interfaces.IRequirementAnalysis;
+
 public class XMLImporter
 {
 
