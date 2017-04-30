@@ -23,7 +23,81 @@ public class CustomXMLFormat
   @Override
   public int createFragments(IRequirementAnalysis rawData)
   {
-    // TODO Implement this method
+    addFuncRequirements();
+    addDataFP();
+    addNonFuncRequirements();
+    addCustomerData();
+    addGlossary();
+    addProductData();
+    addQualityRequirements();
+    addTransactionFP();
+    addWeightFactor();
+    addCostEstimation();
+    addProductApplication();
+    addTargetDefinition();
+    
+    // Rückgabe?
     return 0;
   }
+  
+  private void addFuncRequirements()
+  {
+    
+  }
+
+  private void addDataFP()
+  {
+    
+  }
+  
+  private void addNonFuncRequirements()
+  {
+    
+  }
+  
+  private void addCustomerData()
+  {
+    
+  }
+  
+  private void addGlossary()
+  {
+    
+  }
+  
+  private void addProductData()
+  {
+    
+  }
+  
+  private void addQualityRequirements()
+  {
+    
+  }
+  
+  private void addTransactionFP()
+  {
+    
+  }
+  
+  private void addWeightFactor()
+  {
+    
+  }
+  
+  private void addCostEstimation()
+  {
+    
+  }
+  
+  private void addProductApplication()
+  {
+    
+  }
+  
+  private void addTargetDefinition()
+  {
+    
+  }
+  
 }
