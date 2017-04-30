@@ -1,19 +1,16 @@
 package View;
 
-import javax.swing.*;
+import View_Interfaces.IProductApplicationTab;
+
 import java.awt.*;
 
 /**
  * Created by phlippe on 28.04.17.
  */
 public class ProductApplicationTab
-	extends TabPanel
+	extends TextTab
+	implements IProductApplicationTab
 {
-
-	private JTextArea textAreaDescription;
-	private JButton buttonSave;
-	private JButton buttonDelete;
-
 
 	public ProductApplicationTab()
 	{
@@ -23,20 +20,10 @@ public class ProductApplicationTab
 	@Override
 	protected void init()
 	{
-		String[] buttonNames = {"Speichern","Löschen"};
-
 		myBuilder.addTitle("Produkteinsatz");
-		textAreaDescription = myBuilder.addNamedTextArea(null,"");
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonSave = myButtons[0];
-		buttonDelete = myButtons[1];
+		buildTextPanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
-	}
-
-	public String getDescriptionText()
-	{
-		return textAreaDescription.getText();
 	}
 
 }

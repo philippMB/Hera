@@ -1,19 +1,19 @@
 package View;
 
+import View_Interfaces.IProductEnvironmentTab;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.Observable;
 
 /**
  * Created by phlippe on 28.04.17.
  */
 public class ProductEnvironmentTab
-		extends TabPanel
+	extends TextTab
+	implements IProductEnvironmentTab
 {
-
-	private JTextArea textAreaDescription;
-	private JButton buttonSave;
-	private JButton buttonDelete;
-
 
 	public ProductEnvironmentTab()
 	{
@@ -23,20 +23,10 @@ public class ProductEnvironmentTab
 	@Override
 	protected void init()
 	{
-		String[] buttonNames = {"Speichern","Löschen"};
-
 		myBuilder.addTitle("Produktumgebung");
-		textAreaDescription = myBuilder.addNamedTextArea(null,"");
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonSave = myButtons[0];
-		buttonDelete = myButtons[1];
+		buildTextPanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
-	}
-
-	public String getDescriptionText()
-	{
-		return textAreaDescription.getText();
 	}
 
 }

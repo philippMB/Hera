@@ -9,7 +9,6 @@ public interface IWeightFactor {
 
     public int getValue();
 
-    public int getMinValue();
 
     public int getMaxValue();
 

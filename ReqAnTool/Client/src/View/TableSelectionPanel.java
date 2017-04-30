@@ -1,6 +1,6 @@
 package View;
 
-import Controller_Interfaces.ButtonActions;
+import Controller_Interfaces.ViewActions;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -81,28 +81,30 @@ public class TableSelectionPanel
 		add(buttonDelete,constraints);
 	}
 
+	public String getSelectedItem()
+	{
+		return (String)myDropdownList.getSelectedItem();
+	}
+
 	public void addSelectedItemToTable()
 	{
 		tableEntries.add((String)myDropdownList.getSelectedItem());
+		repaint();
 	}
 
 	public void deleteSelectedItemFromTable()
 	{
 		tableEntries.remove(myTable.getSelectedRow());
-	}
-
-	public JComboBox<String> getMyDropdownList()
-	{
-		return myDropdownList;
+		repaint();
 	}
 
 	public void setSelectables(String[] selectables)
 	{
 		myDropdownList.setModel(new DefaultComboBoxModel<>(selectables));
-		testTableEntries();
+		checkTableEntries();
 	}
 
-	private void testTableEntries()
+	private void checkTableEntries()
 	{
 		String[] tableEntries = getTableEntries();
 
@@ -129,12 +131,6 @@ public class TableSelectionPanel
 		myTableModel.removeRow(rowIndex);
 	}
 
-	public JTable getTable()
-	{
-
-		return myTable;
-	}
-
 	public String[] getTableEntries()
 	{
 		String[] myEntries = new String[myTable.getRowCount()];
@@ -147,24 +143,20 @@ public class TableSelectionPanel
 		return myEntries;
 	}
 
-	public JButton getButtonDelete()
+	public void setTableEntries(String[] tableEntries)
 	{
-
-		return buttonDelete;
-	}
-
-	public JButton getButtonAdd()
-	{
-		return buttonAdd;
+		String[][] widerTableEntries = new String[1][tableEntries.length];
+		widerTableEntries[0] = tableEntries;
+		myTable.setModel(new DefaultTableModel(widerTableEntries,null));
 	}
 
 	public void addController(ActionListener actionListener)
 	{
 		buttonAdd.addActionListener(actionListener);
-		buttonAdd.setActionCommand(ButtonActions.TABLE_SELECTION_ADD.toString());
+		buttonAdd.setActionCommand(ViewActions.TABLE_SELECTION_ADD.toString());
 
 		buttonDelete.addActionListener(actionListener);
-		buttonDelete.setActionCommand(ButtonActions.TABLE_SELECTION_DELETE.toString());
+		buttonDelete.setActionCommand(ViewActions.TABLE_SELECTION_DELETE.toString());
 	}
 
 }

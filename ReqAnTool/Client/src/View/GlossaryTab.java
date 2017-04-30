@@ -1,0 +1,65 @@
+package View;
+
+import Model_Interfaces.IGlossaryEntry;
+import Model_Interfaces.IModelGetData;
+import Model_Interfaces.IProductData;
+import View.TableTab;
+import View_Interfaces.IGlossaryTab;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Observable;
+
+/**
+ * Created by phlippe on 29.04.17.
+ */
+public class GlossaryTab
+	extends TableTab
+	implements IGlossaryTab
+{
+
+	public GlossaryTab(IModelGetData model)
+	{
+		super(model, "Glossar");
+	}
+
+	@Override
+	protected void init()
+	{
+		myBuilder.addTitle("Glossar");
+		buildTablePanel();
+
+		add(myBuilder.getResult(), BorderLayout.CENTER);
+	}
+
+	@Override
+	protected String[][] getTableEntries()
+	{
+		String[][] tableEntries;
+		ArrayList<IGlossaryEntry> allGlossaryEntries = myModel.getAllGlossaryEntries();
+
+		tableEntries = new String[allGlossaryEntries.size()][getColumnNames().length];
+
+		for(int row = 0; row < tableEntries.length; row++)
+		{
+			IGlossaryEntry glossaryEntryAtRow = allGlossaryEntries.get(row);
+			tableEntries[row][0] = glossaryEntryAtRow.getTerm();
+			tableEntries[row][1] = glossaryEntryAtRow.getSense();
+			tableEntries[row][2] = convertListToSingleString(glossaryEntryAtRow.getReferencesTerm());
+		}
+
+		return tableEntries;
+	}
+
+	@Override
+	protected String[] getColumnNames()
+	{
+		return new String[]{"Begriff","Bedeutung","Querverweise"};
+	}
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		updateTable();
+	}
+}

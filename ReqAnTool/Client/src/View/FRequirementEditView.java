@@ -1,61 +1,62 @@
 package View;
 
-import Controller_Interfaces.ButtonActions;
 import Model_Interfaces.IFRequirement;
+import Model_Interfaces.IModelGetData;
+import Model_Interfaces.IRequirement;
 import View_Interfaces.IFRequirementEditView;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.util.Observable;
 
 public class FRequirementEditView
-    extends FormWindow <IFRequirement>
+    extends RequirementFormView
 	implements IFRequirementEditView
 {
 
+	private IFRequirement myReq;
 	private JTextField fieldTitle;
     private JTextField fieldID;
     private JTextField fieldActor;
     private JTextArea fieldDescription;
-    private JButton buttonSave;
-    private JButton buttonCancel;
-    private TableSelectionPanel tableSelectionLinks;
 
-    public FRequirementEditView()
+
+    public FRequirementEditView(IModelGetData model)
 	{
-        super();
-    }
+		this(model,null,true);
+	}
 
-//    public FRequirementEditView(IModel myModel)
-//	{
-//        super(req);
-//    }
+    public FRequirementEditView(IModelGetData model, String ID, boolean isEditable)
+	{
+        super(model,isEditable);
+        if(ID != null)
+		{
+			myReq = myModel.getFReqByID(ID);
+		}
+		else
+		{
+			myReq = null;
+			//Falls keine ID übergeben wird, muss die View editierbar sein
+			if(!isEditable)
+			{
+				this.isEditable = true;
+			}
+		}
+        init();
+    }
 
     @Override
     protected void init()
     {
-        String[] buttonNames = {"Speichern","Abbrechen"};
-		String[] requirementFields = {"","","",""};
-		if(myReq != null)
-		{
-			requirementFields[0] = myReq.getTitle();
-			requirementFields[1] = myReq.getID();
-			requirementFields[2] = myReq.getActor();
-			requirementFields[3] = myReq.getDescription();
-		}
-
-		setSize(100,500);
         setResizable(false);
 
         myBuilder.addTitle("Edit Requirement");
-        fieldTitle = myBuilder.addNamedTextField("Titel:", requirementFields[0]);
-        fieldID = myBuilder.addNamedTextField("ID:", requirementFields[1]);
-		fieldActor = myBuilder.addNamedTextField("Akteur:", requirementFields[2]);
-		tableSelectionLinks = myBuilder.addTableSelection("Verweise",buttonNames,new String[0]);
-		fieldDescription = myBuilder.addNamedTextArea("Beschreibung", requirementFields[3]);
-        JButton[] lButton = myBuilder.addButtonBar(buttonNames);
-        buttonSave = lButton[0];
-        buttonCancel = lButton[1];
+        fieldTitle = myBuilder.addNamedTextField("Titel:","",isEditable);
+        fieldID = myBuilder.addNamedTextField("ID:","",isEditable);
+		fieldActor = myBuilder.addNamedTextField("Akteur:", "",isEditable);
+		buildLinkTable();
+		fieldDescription = myBuilder.addNamedTextArea("Beschreibung", "",isEditable);
+		buildButtonBar();
+
+		updateAll();
 
         getContentPane().add(myBuilder.getResult());
         pack();
@@ -85,7 +86,7 @@ public class FRequirementEditView
 	@Override
 	public String[] getLinkEntry()
 	{
-		return tableSelectionLinks.getTableEntries();
+		return getTableEntries();
 	}
 
 	@Override
@@ -95,26 +96,27 @@ public class FRequirementEditView
 	}
 
 	@Override
-	public void addController(ActionListener actionListener)
+	protected void updateFields()
 	{
-		buttonSave.addActionListener(actionListener);
-		buttonSave.setActionCommand(ButtonActions.SAVE.toString());
-
-		buttonCancel.addActionListener(actionListener);
-		buttonCancel.setActionCommand(ButtonActions.CANCEL.toString());
-
-		tableSelectionLinks.addController(actionListener);
+		if(!isEditable)
+		{
+			fieldID.setText(myReq.getID());
+			fieldTitle.setText(myReq.getTitle());
+			fieldActor.setText(myReq.getActor());
+			fieldDescription.setText(myReq.getDescription());
+		}
 	}
 
 	@Override
-	public void destruct()
+	public IRequirement getMyRequirement()
 	{
-
+		return myReq;
 	}
 
 	@Override
-	public void update(Observable o, Object arg)
+	protected void setIDEntry(String ID)
 	{
-
+		fieldID.setText(ID);
 	}
+
 }
