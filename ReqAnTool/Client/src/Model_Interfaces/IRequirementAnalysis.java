@@ -1,8 +1,5 @@
 package Model_Interfaces;
 
-import Model.AdapterList;
-import Model.IRequirementList;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,13 +19,13 @@ public interface IRequirementAnalysis
 
     public ICostEstimation getCostEstimation();
 
-    public AdapterList<IFRequirement> getFRequirements();
+    public ArrayList<IFRequirement> getFRequirements();
     
-    public AdapterList<INFRequirement> getNFRequirements();
+    public ArrayList<INFRequirement> getNFRequirements();
     
     public ArrayList<IGlossaryEntry> getGlossaryEntries();
     
-    public AdapterList<IProductData> getProductData();
+    public ArrayList<IProductData> getProductData();
     
     public ArrayList<IQualityRequirement> getQualityRequirements();
     

@@ -15,7 +15,7 @@ public interface ICustomerData {
 
     public String getCNumber();
 
-    public String getCEMail();
+    public String getCEmail();
 
     public String getCompanyName();
 

@@ -7,7 +7,7 @@ public class CustomerData
   private String PMEmail;
   private String CName;
   private String CNumber;
-  private String CEMail;
+  private String CEmail;
   private String CompanyName;
   private String CompanyStreet;
   private int CompanyPLZ;
@@ -21,7 +21,7 @@ public class CustomerData
     this.PMEmail = PMEmail;
     this.CName = CName;
     this.CNumber = CNumber;
-    this.CEMail = CEmail;
+    this.CEmail = CEmail;
     this.CompanyName = CompanyName;
     this.CompanyStreet = CompanyStreet;
     this.CompanyPLZ = CompanyPLZ;

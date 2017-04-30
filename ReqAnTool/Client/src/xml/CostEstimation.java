@@ -2,21 +2,21 @@ package xml;
 
 public class CostEstimation
 {
-  private int functionPoints;
-  private int manMonth;
+  private double functionPoints;
+  private double manMonth;
 
-  public CostEstimation(int functionPoints, int manMonth)
+  public CostEstimation(double functionPoints, double manMonth)
   {
     this.functionPoints = functionPoints;
     this.manMonth = manMonth;
   }
 
-  public int getFunctionPoints()
+  public double getFunctionPoints()
   {
     return functionPoints;
   }
 
-  public int getManMonth()
+  public double getManMonth()
   {
     return manMonth;
   }
