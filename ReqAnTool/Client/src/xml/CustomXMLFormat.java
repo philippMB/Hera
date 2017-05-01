@@ -22,15 +22,37 @@ import javax.xml.bind.annotation.*;
 public class CustomXMLFormat
   implements IXMLFormat
 {
-  // new fehlt!
+  // new fehlt?
+  @XmlElementWrapper
+  @XmlElement(name="ReqList")
   private ArrayList<FRequirement> funcRequirementList;
+  
+  @XmlElementWrapper
+  @XmlElement(name="DataFP")
   private ArrayList<DataFP> dataFuncPointList;
+  
+  @XmlElementWrapper
+  @XmlElement(name="NonFReq")
   private ArrayList<NFRequirement> nonFuncRequirementList;
+  
+  
   private CustomerData custData;
+  
+  @XmlElementWrapper
+  @XmlElement(name="Glossary")
   private ArrayList<GlossaryEntry> glossary;
   private ArrayList<ProductData> productDataList;
+  
+  @XmlElementWrapper
+  @XmlElement(name="Quality")
   private ArrayList<QualityRequirement> qualityRequirementList;
+  
+  @XmlElementWrapper
+  @XmlElement(name="TransactionList")
   private ArrayList<TransactionFP> transactionFPList;
+  
+  @XmlElementWrapper
+  @XmlElement(name="Weight")
   private ArrayList<WeightFactor> weightFactorList;
   private CostEstimation costEstimation;
   private ProductApplication productApplication;

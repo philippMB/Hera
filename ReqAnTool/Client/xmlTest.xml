@@ -1,54 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <RequirementAnalysis>
     <funcRequirementList>
-        <actor>PHLIPPE</actor>
-        <description>Ich hätte da mal ne allgemeine Frage zu Ihrer Vorlesung</description>
-        <title>Höhe</title>
+        <ReqList>
+            <actor>PHLIPPE</actor>
+            <description>Ich hätte da mal ne allgemeine Frage zu Ihrer Vorlesung</description>
+            <title>Höhe</title>
+        </ReqList>
+        <ReqList>
+            <actor>PHLIPPE</actor>
+            <description>Häääää?</description>
+            <title>Breite</title>
+        </ReqList>
+        <ReqList>
+            <actor>PHLIPPE</actor>
+            <description>Raaaaus!</description>
+            <title>Länge</title>
+        </ReqList>
     </funcRequirementList>
-    <funcRequirementList>
-        <actor>PHLIPPE</actor>
-        <description>Häääää?</description>
-        <title>Breite</title>
-    </funcRequirementList>
-    <funcRequirementList>
-        <actor>PHLIPPE</actor>
-        <description>Raaaaus!</description>
-        <title>Länge</title>
-    </funcRequirementList>
     <dataFuncPointList>
-        <det>32</det>
-        <ret>42</ret>
-    </dataFuncPointList>
-    <dataFuncPointList>
-        <det>323</det>
-        <ret>142</ret>
-    </dataFuncPointList>
-    <dataFuncPointList>
-        <det>932</det>
-        <ret>422</ret>
-    </dataFuncPointList>
-    <dataFuncPointList>
-        <det>42</det>
-        <ret>421</ret>
-    </dataFuncPointList>
-    <dataFuncPointList>
-        <det>372</det>
-        <ret>451</ret>
+        <DataFP>
+            <det>32</det>
+            <ret>42</ret>
+        </DataFP>
+        <DataFP>
+            <det>323</det>
+            <ret>142</ret>
+        </DataFP>
+        <DataFP>
+            <det>932</det>
+            <ret>422</ret>
+        </DataFP>
+        <DataFP>
+            <det>42</det>
+            <ret>421</ret>
+        </DataFP>
+        <DataFP>
+            <det>372</det>
+            <ret>451</ret>
+        </DataFP>
     </dataFuncPointList>
     <nonFuncRequirementList>
-        <actor>MBILLH</actor>
-        <description>Also, wie viele Katzen passen hier rein?</description>
-        <title>Tiefe</title>
-    </nonFuncRequirementList>
-    <nonFuncRequirementList>
-        <actor>MBILLH</actor>
-        <description>Was?</description>
-        <title>Hölle</title>
-    </nonFuncRequirementList>
-    <nonFuncRequirementList>
-        <actor>MBILLH</actor>
-        <description>Was?</description>
-        <title>Himmel</title>
+        <NonFReq>
+            <actor>MBILLH</actor>
+            <description>Also, wie viele Katzen passen hier rein?</description>
+            <title>Tiefe</title>
+        </NonFReq>
+        <NonFReq>
+            <actor>MBILLH</actor>
+            <description>Was?</description>
+            <title>Hölle</title>
+        </NonFReq>
+        <NonFReq>
+            <actor>MBILLH</actor>
+            <description>Was?</description>
+            <title>Himmel</title>
+        </NonFReq>
     </nonFuncRequirementList>
     <custData>
         <CEmail>p.enis@googlemail.com</CEmail>
@@ -64,28 +70,30 @@
         <PMPNumber>1234567</PMPNumber>
     </custData>
     <glossary>
-        <boundary>Schaft</boundary>
-        <label>p.enis</label>
-        <obscurities>No!</obscurities>
-        <sense>High</sense>
-        <term>Penis</term>
-        <validity>valid!</validity>
-    </glossary>
-    <glossary>
-        <boundary>Brücke</boundary>
-        <label>v.gina</label>
-        <obscurities>Was?</obscurities>
-        <sense>High</sense>
-        <term>Vaniga</term>
-        <validity>valid!</validity>
-    </glossary>
-    <glossary>
-        <boundary>dumm</boundary>
-        <label>dümmer</label>
-        <obscurities>Prtoket</obscurities>
-        <sense>low</sense>
-        <term>Bohl</term>
-        <validity>Peter</validity>
+        <Glossary>
+            <boundary>Schaft</boundary>
+            <label>p.enis</label>
+            <obscurities>No!</obscurities>
+            <sense>High</sense>
+            <term>Penis</term>
+            <validity>valid!</validity>
+        </Glossary>
+        <Glossary>
+            <boundary>Brücke</boundary>
+            <label>v.gina</label>
+            <obscurities>Was?</obscurities>
+            <sense>High</sense>
+            <term>Vaniga</term>
+            <validity>valid!</validity>
+        </Glossary>
+        <Glossary>
+            <boundary>dumm</boundary>
+            <label>dümmer</label>
+            <obscurities>Prtoket</obscurities>
+            <sense>low</sense>
+            <term>Bohl</term>
+            <validity>Peter</validity>
+        </Glossary>
     </glossary>
     <productDataList>
         <attribute>Mister</attribute>
@@ -98,41 +106,47 @@
         <maxCount>Türksau</maxCount>
     </productDataList>
     <qualityRequirementList>
-        <criteria>Robustheit</criteria>
-    </qualityRequirementList>
-    <qualityRequirementList>
-        <criteria>Sicherheit</criteria>
-    </qualityRequirementList>
-    <qualityRequirementList>
-        <criteria>Bedienbarkeit</criteria>
-    </qualityRequirementList>
-    <qualityRequirementList>
-        <criteria>Portabilität</criteria>
-    </qualityRequirementList>
-    <qualityRequirementList>
-        <criteria>Wartbarkeit</criteria>
+        <Quality>
+            <criteria>Robustheit</criteria>
+        </Quality>
+        <Quality>
+            <criteria>Sicherheit</criteria>
+        </Quality>
+        <Quality>
+            <criteria>Bedienbarkeit</criteria>
+        </Quality>
+        <Quality>
+            <criteria>Portabilität</criteria>
+        </Quality>
+        <Quality>
+            <criteria>Wartbarkeit</criteria>
+        </Quality>
     </qualityRequirementList>
     <transactionFPList>
-        <det>4</det>
-        <ftr>2</ftr>
-    </transactionFPList>
-    <transactionFPList>
-        <det>42</det>
-        <ftr>12</ftr>
-    </transactionFPList>
-    <transactionFPList>
-        <det>43</det>
-        <ftr>25</ftr>
+        <TransactionList>
+            <det>4</det>
+            <ftr>2</ftr>
+        </TransactionList>
+        <TransactionList>
+            <det>42</det>
+            <ftr>12</ftr>
+        </TransactionList>
+        <TransactionList>
+            <det>43</det>
+            <ftr>25</ftr>
+        </TransactionList>
     </transactionFPList>
     <weightFactorList>
-        <maxValue>321</maxValue>
-        <title>Egal</title>
-        <value>42</value>
-    </weightFactorList>
-    <weightFactorList>
-        <maxValue>341</maxValue>
-        <title>Oder</title>
-        <value>12</value>
+        <Weight>
+            <maxValue>321</maxValue>
+            <title>Egal</title>
+            <value>42</value>
+        </Weight>
+        <Weight>
+            <maxValue>341</maxValue>
+            <title>Oder</title>
+            <value>12</value>
+        </Weight>
     </weightFactorList>
     <costEstimation>
         <functionPoints>42.2</functionPoints>

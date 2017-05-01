@@ -95,8 +95,8 @@ public class TestMain
     fp.writeToFile("test", format);
     System.out.println("Ich war hier");
     
-    CustomXMLFormat ncf;
+    /*CustomXMLFormat ncf;
     ncf = fp.readFromFile("bums");
-    System.out.println("Ich war nochmal hier");
+    System.out.println("Ich war nochmal hier");*/
   }
 }
