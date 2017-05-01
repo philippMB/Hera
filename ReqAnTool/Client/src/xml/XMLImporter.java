@@ -9,12 +9,12 @@ public class XMLImporter
 
   private IRequirementAnalysis unmarshall()
   {
-
+    return null;
   }
 
   public IRequirementAnalysis load(String address)
   {
-    return 0;
+    return null;
   }
 
   private int loadFrom(String address)

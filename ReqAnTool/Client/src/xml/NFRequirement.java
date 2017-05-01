@@ -29,6 +29,12 @@ public class NFRequirement
   }
 
   // für JavaBeans
+  
+  public NFRequirement()
+  {
+    
+  }
+  
   public void setTitle(String title)
   {
     this.title = title;

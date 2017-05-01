@@ -50,6 +50,11 @@ public class GlossaryEntry
   }
   
   // für JavaBeans
+  
+  public GlossaryEntry()
+  {
+    
+  }
 
   public void setTerm(String term)
   {

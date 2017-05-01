@@ -16,6 +16,11 @@ public class QualityRequirement
   
   // für JavaBeans
 
+  public QualityRequirement()
+  {
+    
+  }
+
   public void setCriteria(String criteria)
   {
     this.criteria = criteria;

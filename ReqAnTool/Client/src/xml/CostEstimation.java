@@ -22,6 +22,12 @@ public class CostEstimation
   }
   
   // für JavaBeans
+  
+  public CostEstimation()
+  {
+     
+  }
+  
   public void setFunctionPoints(double functionPoints)
   {
     this.functionPoints = functionPoints;

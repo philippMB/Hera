@@ -15,6 +15,12 @@ public class TargetDefinition
   }
   
   // für JavaBeans
+  
+  public TargetDefinition()
+  {
+    
+  }
+  
   public void setDescription(String description)
   {
     this.description = description;

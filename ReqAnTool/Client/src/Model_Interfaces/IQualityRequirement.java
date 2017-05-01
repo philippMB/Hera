@@ -1,6 +1,6 @@
 package Model_Interfaces;
 
-import Model.Score;
+//import Model.Score;
 
 /**
  * Created by phlippe on 26.04.17.
@@ -9,5 +9,5 @@ public interface IQualityRequirement
 {
     public String getCriteria();
 
-    public Score getValue();
+    //public Score getValue();
 }

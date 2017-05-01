@@ -29,6 +29,12 @@ public class WeightFactor
   }
   
   // für JavaBeans
+  
+  public WeightFactor()
+  {
+    
+  }
+  
   public void setTitle(String title)
   {
     this.title = title;

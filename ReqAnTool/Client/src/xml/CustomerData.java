@@ -80,6 +80,11 @@ public class CustomerData
   }
   
   // für JavaBeans
+  
+  public CustomerData()
+  {
+    
+  }
 
   public void setPMName(String PMName)
   {

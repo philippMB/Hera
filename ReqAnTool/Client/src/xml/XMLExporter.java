@@ -2,6 +2,10 @@ package xml;
 
 import Model_Interfaces.IRequirementAnalysis;
 
+import java.io.FileNotFoundException;
+
+import javax.xml.bind.JAXBException;
+
 public class XMLExporter
 {
 
@@ -10,7 +14,7 @@ public class XMLExporter
   private XMLFormatFactory xmlFactory;
   private int ret = 0;
   
-  public int save(IRequirementAnalysis analysis, String address)
+  public int save(IRequirementAnalysis analysis, String address) throws JAXBException, FileNotFoundException
   {
     xmlData = marshall(analysis);
     
@@ -47,6 +51,7 @@ public class XMLExporter
   }
 
   private int saveTo(String address, IXMLFormat xmlData)
+    throws JAXBException, FileNotFoundException
   {
     fileOperator = new FileOperator();
     if(fileOperator == null)

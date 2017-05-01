@@ -15,6 +15,12 @@ public class ProductApplication
   }
   
   // für JavaBeans
+  
+  public ProductApplication()
+  {
+    
+  }
+  
   public void setDescription(String description)
   {
     this.description = description;

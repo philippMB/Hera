@@ -14,11 +14,15 @@ import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.ITransactionFP;
 import Model_Interfaces.IWeightFactor;
 
-import java.util.ArrayList;
+import java.util.*;
+import javax.xml.bind.annotation.*;
 
+@XmlRootElement(name="RequirementAnalysis")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CustomXMLFormat
   implements IXMLFormat
 {
+  // new fehlt!
   private ArrayList<FRequirement> funcRequirementList;
   private ArrayList<DataFP> dataFuncPointList;
   private ArrayList<NFRequirement> nonFuncRequirementList;

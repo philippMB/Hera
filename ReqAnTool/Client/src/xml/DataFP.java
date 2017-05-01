@@ -22,6 +22,12 @@ public class DataFP
   }
 
   // für JavaBeans
+  
+  public DataFP()
+  {
+    
+  }
+  
   public void setDet(int det)
   {
     this.det = det;

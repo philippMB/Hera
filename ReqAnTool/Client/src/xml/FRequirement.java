@@ -29,6 +29,12 @@ public class FRequirement
   }
   
   // für JavaBeans
+  
+  public FRequirement()
+  {
+    
+  }
+  
   public void setTitle(String title)
   {
     this.title = title;

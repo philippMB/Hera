@@ -22,6 +22,12 @@ public class TransactionFP
   }
   
   // für JavaBeans
+  
+  public TransactionFP()
+  {
+    
+  }
+  
   public void setDet(int det)
   {
     this.det = det;

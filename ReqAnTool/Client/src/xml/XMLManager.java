@@ -3,6 +3,10 @@ package xml;
 import Model_Interfaces.IXMLManager;
 import Model_Interfaces.IRequirementAnalysis;
 
+import java.io.FileNotFoundException;
+
+import javax.xml.bind.JAXBException;
+
 public class XMLManager
   implements IXMLManager
 {
@@ -12,7 +16,7 @@ public class XMLManager
   private IRequirementAnalysis requirementAnalysis;
 
   @Override
-  public int exportAnalysis(IRequirementAnalysis analysis, String address)
+  public int exportAnalysis(IRequirementAnalysis analysis, String address) throws JAXBException, FileNotFoundException
   {
     exporter = new XMLExporter();
     ret = exporter.save(analysis, address);

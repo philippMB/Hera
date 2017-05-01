@@ -29,6 +29,11 @@ public class ProductData
   }
   
   // für JavaBeans
+  
+  public ProductData()
+  {
+    
+  }
 
   public void setAttribute(String attribute)
   {
