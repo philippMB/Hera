@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <RequirementAnalysis>
-    <funcRequirementList>
-        <ReqList>
+    <Functional_Requirements>
+        <Requirement>
             <actor>PHLIPPE</actor>
             <description>Ich hätte da mal ne allgemeine Frage zu Ihrer Vorlesung</description>
             <title>Höhe</title>
-        </ReqList>
-        <ReqList>
+        </Requirement>
+        <Requirement>
             <actor>PHLIPPE</actor>
             <description>Häääää?</description>
             <title>Breite</title>
-        </ReqList>
-        <ReqList>
+        </Requirement>
+        <Requirement>
             <actor>PHLIPPE</actor>
             <description>Raaaaus!</description>
             <title>Länge</title>
-        </ReqList>
-    </funcRequirementList>
-    <dataFuncPointList>
-        <DataFP>
+        </Requirement>
+    </Functional_Requirements>
+    <Data_FunctionPoints>
+        <FunctionPoint>
             <det>32</det>
             <ret>42</ret>
-        </DataFP>
-        <DataFP>
+        </FunctionPoint>
+        <FunctionPoint>
             <det>323</det>
             <ret>142</ret>
-        </DataFP>
-        <DataFP>
+        </FunctionPoint>
+        <FunctionPoint>
             <det>932</det>
             <ret>422</ret>
-        </DataFP>
-        <DataFP>
+        </FunctionPoint>
+        <FunctionPoint>
             <det>42</det>
             <ret>421</ret>
-        </DataFP>
-        <DataFP>
+        </FunctionPoint>
+        <FunctionPoint>
             <det>372</det>
             <ret>451</ret>
-        </DataFP>
-    </dataFuncPointList>
-    <nonFuncRequirementList>
-        <NonFReq>
+        </FunctionPoint>
+    </Data_FunctionPoints>
+    <Non-Functional_Requirements>
+        <Requirement>
             <actor>MBILLH</actor>
             <description>Also, wie viele Katzen passen hier rein?</description>
             <title>Tiefe</title>
-        </NonFReq>
-        <NonFReq>
+        </Requirement>
+        <Requirement>
             <actor>MBILLH</actor>
             <description>Was?</description>
             <title>Hölle</title>
-        </NonFReq>
-        <NonFReq>
+        </Requirement>
+        <Requirement>
             <actor>MBILLH</actor>
             <description>Was?</description>
             <title>Himmel</title>
-        </NonFReq>
-    </nonFuncRequirementList>
-    <custData>
+        </Requirement>
+    </Non-Functional_Requirements>
+    <CustomerData>
         <CEmail>p.enis@googlemail.com</CEmail>
         <CName>Peter Enis</CName>
         <CNumber>098765432</CNumber>
@@ -68,33 +68,33 @@
         <PMEmail>hörst@gmx.de</PMEmail>
         <PMName>Horst Schröder</PMName>
         <PMPNumber>1234567</PMPNumber>
-    </custData>
-    <glossary>
-        <Glossary>
+    </CustomerData>
+    <Glossary>
+        <Glossary_Entry>
             <boundary>Schaft</boundary>
             <label>p.enis</label>
             <obscurities>No!</obscurities>
             <sense>High</sense>
             <term>Penis</term>
             <validity>valid!</validity>
-        </Glossary>
-        <Glossary>
+        </Glossary_Entry>
+        <Glossary_Entry>
             <boundary>Brücke</boundary>
             <label>v.gina</label>
             <obscurities>Was?</obscurities>
             <sense>High</sense>
             <term>Vaniga</term>
             <validity>valid!</validity>
-        </Glossary>
-        <Glossary>
+        </Glossary_Entry>
+        <Glossary_Entry>
             <boundary>dumm</boundary>
             <label>dümmer</label>
             <obscurities>Prtoket</obscurities>
             <sense>low</sense>
             <term>Bohl</term>
             <validity>Peter</validity>
-        </Glossary>
-    </glossary>
+        </Glossary_Entry>
+    </Glossary>
     <productDataList>
         <attribute>Mister</attribute>
         <content>Strahlenschutz</content>
@@ -105,57 +105,57 @@
         <content>alte</content>
         <maxCount>Türksau</maxCount>
     </productDataList>
-    <qualityRequirementList>
-        <Quality>
+    <Quality_Requirements>
+        <Requirement>
             <criteria>Robustheit</criteria>
-        </Quality>
-        <Quality>
+        </Requirement>
+        <Requirement>
             <criteria>Sicherheit</criteria>
-        </Quality>
-        <Quality>
+        </Requirement>
+        <Requirement>
             <criteria>Bedienbarkeit</criteria>
-        </Quality>
-        <Quality>
+        </Requirement>
+        <Requirement>
             <criteria>Portabilität</criteria>
-        </Quality>
-        <Quality>
+        </Requirement>
+        <Requirement>
             <criteria>Wartbarkeit</criteria>
-        </Quality>
-    </qualityRequirementList>
-    <transactionFPList>
-        <TransactionList>
+        </Requirement>
+    </Quality_Requirements>
+    <Transaction_FunctionPoints>
+        <FunctionPoint>
             <det>4</det>
             <ftr>2</ftr>
-        </TransactionList>
-        <TransactionList>
+        </FunctionPoint>
+        <FunctionPoint>
             <det>42</det>
             <ftr>12</ftr>
-        </TransactionList>
-        <TransactionList>
+        </FunctionPoint>
+        <FunctionPoint>
             <det>43</det>
             <ftr>25</ftr>
-        </TransactionList>
-    </transactionFPList>
-    <weightFactorList>
-        <Weight>
+        </FunctionPoint>
+    </Transaction_FunctionPoints>
+    <Weightfactors>
+        <Factor>
             <maxValue>321</maxValue>
             <title>Egal</title>
             <value>42</value>
-        </Weight>
-        <Weight>
+        </Factor>
+        <Factor>
             <maxValue>341</maxValue>
             <title>Oder</title>
             <value>12</value>
-        </Weight>
-    </weightFactorList>
-    <costEstimation>
+        </Factor>
+    </Weightfactors>
+    <Cost_Estimation>
         <functionPoints>42.2</functionPoints>
         <manMonth>77.3</manMonth>
-    </costEstimation>
-    <productApplication>
+    </Cost_Estimation>
+    <Product_Application>
         <description>Mein Haus, mein Block, mein wasweißich</description>
-    </productApplication>
-    <targetDef>
+    </Product_Application>
+    <Target_Definition>
         <description>Was soll das?</description>
-    </targetDef>
+    </Target_Definition>
 </RequirementAnalysis>

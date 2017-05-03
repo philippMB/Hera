@@ -23,39 +23,45 @@ public class CustomXMLFormat
   implements IXMLFormat
 {
   // new fehlt?
-  @XmlElementWrapper
-  @XmlElement(name="ReqList")
+  @XmlElementWrapper(name="Functional_Requirements")
+  @XmlElement(name="Requirement")
   private ArrayList<FRequirement> funcRequirementList;
   
-  @XmlElementWrapper
-  @XmlElement(name="DataFP")
+  @XmlElementWrapper(name="Data_FunctionPoints")
+  @XmlElement(name="FunctionPoint")
   private ArrayList<DataFP> dataFuncPointList;
   
-  @XmlElementWrapper
-  @XmlElement(name="NonFReq")
+  @XmlElementWrapper(name="Non-Functional_Requirements")
+  @XmlElement(name="Requirement")
   private ArrayList<NFRequirement> nonFuncRequirementList;
   
-  
+  @XmlElement(name="CustomerData")
   private CustomerData custData;
   
-  @XmlElementWrapper
-  @XmlElement(name="Glossary")
+  @XmlElementWrapper(name="Glossary")
+  @XmlElement(name="Glossary_Entry")
   private ArrayList<GlossaryEntry> glossary;
   private ArrayList<ProductData> productDataList;
   
-  @XmlElementWrapper
-  @XmlElement(name="Quality")
+  @XmlElementWrapper(name="Quality_Requirements")
+  @XmlElement(name="Requirement")
   private ArrayList<QualityRequirement> qualityRequirementList;
   
-  @XmlElementWrapper
-  @XmlElement(name="TransactionList")
+  @XmlElementWrapper(name="Transaction_FunctionPoints")
+  @XmlElement(name="FunctionPoint")
   private ArrayList<TransactionFP> transactionFPList;
   
-  @XmlElementWrapper
-  @XmlElement(name="Weight")
+  @XmlElementWrapper(name="Weightfactors")
+  @XmlElement(name="Factor")
   private ArrayList<WeightFactor> weightFactorList;
+  
+  @XmlElement(name="Cost_Estimation")
   private CostEstimation costEstimation;
+  
+  @XmlElement(name="Product_Application")
   private ProductApplication productApplication;
+  
+  @XmlElement(name="Target_Definition")
   private TargetDefinition targetDef;
 
   @Override

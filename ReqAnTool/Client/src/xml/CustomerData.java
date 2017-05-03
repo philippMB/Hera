@@ -1,5 +1,7 @@
 package xml;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 public class CustomerData
 {
   private String PMName;
