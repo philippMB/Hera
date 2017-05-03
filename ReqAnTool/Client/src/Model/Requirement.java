@@ -28,14 +28,12 @@ public abstract class Requirement
     }
     
     @Override
-    public String[] getReferenceIDs()
+    public ArrayList<String> getReferenceIDs()
     {
-        String[] ids = new String[references.size()];
-        int i = 0;
+        ArrayList<String> ids = new ArrayList<String>();
         for (IRequirement req : references)
         {
-            ids[i] = req.getID();
-            i++;
+            ids.add(req.getID());
         }
         return ids;
     }

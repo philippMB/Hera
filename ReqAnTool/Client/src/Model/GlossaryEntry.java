@@ -58,14 +58,12 @@ public class GlossaryEntry
     }
 
     @Override
-    public String[] getReferenceTerms()
+    public ArrayList<String> getReferenceTerms()
     {
-        String[] terms = new String[crossReferences.size()];
-        int i = 0;
+        ArrayList<String> terms = new ArrayList<String>();
         for (IGlossaryEntry ref : crossReferences)
         {
-            terms[i] = ref.getTerm();
-            i++;
+            terms.add(ref.getTerm());
         }
         return terms;
     }
