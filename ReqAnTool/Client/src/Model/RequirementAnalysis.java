@@ -34,15 +34,15 @@ public class RequirementAnalysis
     /**
      * @associates <{Model.FRequirement}>
      */
-    private AdapterList<IFRequirement> myFRequirements;
+    private RequirementList<IFRequirement> myFRequirements;
     /**
      * @associates <{Model.ProductData}>
      */
-    private AdapterList<IProductData> myProductData;
+    private RequirementList<IProductData> myProductData;
     /**
      * @associates <{Model.NFRequirement}>
      */
-    private AdapterList<INFRequirement> myNFRequirements;
+    private RequirementList<INFRequirement> myNFRequirements;
     /**
      * @associates <{Model.Addition}>
      */
@@ -63,11 +63,11 @@ public class RequirementAnalysis
         this.myCustomerData = new CustomerData(pmName, pmMail, pmPhone);
         this.myAdditions = new ArrayList<IAddition>();
         this.myCostEstimation = new CostEstimation();
-        this.myFRequirements = new AdapterList<IFRequirement>();
+        this.myFRequirements = new RequirementList<IFRequirement>();
         this.myGlossaryEntries = new ArrayList<IGlossaryEntry>();
-        this.myNFRequirements = new AdapterList<INFRequirement>();
+        this.myNFRequirements = new RequirementList<INFRequirement>();
         this.myProductApplication = new ProductApplication();
-        this.myProductData = new AdapterList<IProductData>();
+        this.myProductData = new RequirementList<IProductData>();
         this.myQualityRequirements = new ArrayList<IQualityRequirement>();
         this.myTargetDefinition = new TargetDefinition();
         this.createDate = new Date();
@@ -92,6 +92,23 @@ public class RequirementAnalysis
         return isIncluded;
     }
     
+    protected boolean solveReferences(ArrayList<String> references)
+    {
+        boolean solved = true;
+        int flag = 0;
+        for (String ref : references)
+        {
+            if (isReqIncluded(ref))
+            {
+                flag++;
+            }
+        }
+        if (flag < references.size())
+        {
+            solved = false;
+        }
+        return solved;
+    }
     
     protected IRequirement getAnyReqByID(String id)
     {
@@ -234,8 +251,7 @@ public class RequirementAnalysis
     @Override
     public IGlossaryEntry getGlossaryEntriesByTerm(String term)
     {
-        // TODO
-        return null;
+        return myGlossaryEntries.getEntryByTerm(term);
     }
 
     @Override
@@ -288,15 +304,7 @@ public class RequirementAnalysis
 
     protected ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        int flag = 0;
-        for (String ref : references)
-        {
-            if (isReqIncluded(ref))
-            {
-                flag++;
-            }
-        }
-        if (flag < references.size())
+        if (!solveReferences(references))
         {
             return ErrorCodes.REFERENCE_NOT_SOLVED;
         }
@@ -308,6 +316,7 @@ public class RequirementAnalysis
                 myReferences.add(getAnyReqByID(ref));
             }
             FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
+            myFRequirements.add(myReq);
             return ErrorCodes.NO_ERROR;
         }
     }
@@ -320,9 +329,68 @@ public class RequirementAnalysis
         int flag = 0;
         for (String ref : crossRef)
         {
-            
+            for (IGlossaryEntry entry : myGlossaryEntries)
+            {
+                if (ref.equals(entry.getTerm()))
+                {
+                    flag++;
+                }
+            }
         }
-        return null;
+        if (flag < crossRef.size())
+        {
+            return ErrorCodes.REFERENCE_NOT_SOLVED;
+        }
+        else
+        {
+            ArrayList<IGlossaryEntry> myCrossRef = new ArrayList<IGlossaryEntry>(); 
+            for (String ref : crossRef)
+            {
+                myCrossRef.add(getGlossaryEntriesByTerm(ref));
+            }
+            GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
+            myGlossaryEntries.add(myEntry);
+            return ErrorCodes.NO_ERROR;
+        }
+    }
+
+    ErrorCodes addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    {
+        if (!solveReferences(references))
+        {
+            return ErrorCodes.REFERENCE_NOT_SOLVED;
+        }
+        else
+        {
+            ArrayList<IRequirement> myReferences = new ArrayList<IRequirement>(); 
+            for (String ref : references)
+            {
+                myReferences.add(getAnyReqByID(ref));
+            }
+            NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
+            myNFRequirements.add(myReq);
+            return ErrorCodes.NO_ERROR;
+        }
+    }
+
+    ErrorCodes addProductData(String id, String content, String attribute, String maxCount,
+                              ArrayList<String> references)
+    {
+        if (!solveReferences(references))
+        {
+            return ErrorCodes.REFERENCE_NOT_SOLVED;
+        }
+        else
+        {
+            ArrayList<IRequirement> myReferences = new ArrayList<IRequirement>(); 
+            for (String ref : references)
+            {
+                myReferences.add(getAnyReqByID(ref));
+            }
+            ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
+            myProductData.add(myReq);
+            return ErrorCodes.NO_ERROR;
+        }
     }
 
 }

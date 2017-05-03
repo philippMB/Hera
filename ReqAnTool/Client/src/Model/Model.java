@@ -77,15 +77,23 @@ public class Model
     @Override
     public ErrorCodes addNFReq(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        // TODO Implement this method
-        return null;
+        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+        if (myReqAn.getFRequirements().size() <= 2000)
+        {
+            retValue = myReqAn.addNFRequirement(id, title, actor, description, references);
+        }
+        return retValue;
     }
 
     @Override
     public ErrorCodes addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references)
     {
-        // TODO Implement this method
-        return null;
+        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+        if (myReqAn.getFRequirements().size() <= 300)
+        {
+            retValue = myReqAn.addProductData(id, content, attribute, maxCount, references);
+        }
+        return retValue;
     }
 
     @Override

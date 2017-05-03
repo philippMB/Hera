@@ -16,6 +16,14 @@ public class NFRequirement
     private String actor;
     private String description;
 
+    NFRequirement(String id, String title, String actor, String description, ArrayList<IRequirement> references)
+    {
+        super(id, references);
+        this.title = title;
+        this.actor = actor;
+        this.description = description;
+    }
+
 
     @Override
     public String getTitle()

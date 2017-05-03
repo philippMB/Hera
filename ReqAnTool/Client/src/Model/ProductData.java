@@ -16,6 +16,14 @@ public class ProductData
     private String attribute;
     private String maxCount;
 
+    ProductData(String id, String content, String attribute, String maxCount, ArrayList<IRequirement> references)
+    {
+        super(id, references);
+        this.content = content;
+        this.attribute = attribute;
+        this.maxCount = maxCount;
+    }
+
     @Override
     public String getAttribute()
     {

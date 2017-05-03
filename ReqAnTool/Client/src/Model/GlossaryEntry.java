@@ -21,6 +21,18 @@ public class GlossaryEntry
      */
     private ArrayList<IGlossaryEntry> crossReferences;
 
+    GlossaryEntry(String term, String sense, String boundary, String validity, String obscurities, String label,
+                  ArrayList<IGlossaryEntry> crossRef)
+    {
+        this.term = term;
+        this.sense = sense;
+        this.boundary = boundary;
+        this.validity = validity;
+        this.obscurities = obscurities;
+        this.label = label;
+        this.crossReferences = crossRef;
+    }
+
     @Override
     public String getTerm()
     {

@@ -5,7 +5,7 @@ import Model_Interfaces.IRequirementList;
 
 import java.util.ArrayList;
 
-public class AdapterList<T>
+public class RequirementList<T>
     extends ArrayList<T>
     implements IRequirementList<T>
 {
