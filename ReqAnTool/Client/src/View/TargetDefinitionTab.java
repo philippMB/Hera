@@ -1,6 +1,11 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
+import Model_Interfaces.IModelGetData;
+import Model_Interfaces.ITargetDefinition;
 import View_Interfaces.ITargetDefinitionTab;
+
+import javax.xml.soap.Text;
 import java.awt.*;
 
 /**
@@ -11,18 +16,25 @@ public class TargetDefinitionTab
 	implements ITargetDefinitionTab
 {
 
-	public TargetDefinitionTab()
+	public TargetDefinitionTab(IModelGetData model)
 	{
-		super("Zielbestimmung");
+		super(model, TextNameConstants.TITLE_TARGET_DEFINITION);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Zielbestimmung");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_TARGET_DEFINITION));
 		buildTextPanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
+	}
+
+	@Override
+	protected String getDescriptionFromModel()
+	{
+		ITargetDefinition myTargetDefinition = myModel.getTargetDef();
+		return myTargetDefinition.getDescription();
 	}
 
 }

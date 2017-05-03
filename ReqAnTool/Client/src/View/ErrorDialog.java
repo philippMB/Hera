@@ -1,9 +1,11 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.TextNameConstants;
 import View_Interfaces.IErrorDialog;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.nio.file.Path;
@@ -21,13 +23,16 @@ public class ErrorDialog
 	private static final String ERROR_IMAGE_PATH_STRING =
 			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/Fehlerschild.png";
 
+	private final ViewActions[] BUTTON_ACTIONS = {
+			ViewActions.OK,
+			ViewActions.CANCEL
+	};
+
 	private String descriptionText;
 	private String title;
-	private JButton buttonOk;
-	private JButton buttonBack;
 
 	public ErrorDialog(String title, String errorDescription){
-		super("Fehlermeldung");
+		super(TextNameConstants.TITLE_ERROR);
 		this.title = title;
 		descriptionText = errorDescription;
 
@@ -42,32 +47,23 @@ public class ErrorDialog
 	@Override
 	protected void init()
 	{
-		String[] buttonNames = {"Ok","Zurück"};
+		setButtonActions(BUTTON_ACTIONS);
 
 		myBuilder.addTitle(title);
 		myBuilder.addImage(getErrorImagePath());
 		myBuilder.addText(descriptionText);
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonOk = myButtons[0];
-		buttonBack = myButtons[1];
+		myButtons = myBuilder.addButtonBar(myButtonActions);
 
-		getContentPane().add(new BorderDecorater(myBuilder.getResult(), Color.RED, "Fehlermeldung"));
+		getContentPane().add(
+				new BorderDecorater(
+						myBuilder.getResult(),
+						Color.RED,
+						myTextBundle.getTitleText(TextNameConstants.TITLE_ERROR)
+				)
+		);
 
 		pack();
 		setVisible(true);
-	}
-
-	private void setActionCommands()
-	{
-		buttonOk.setActionCommand(ViewActions.OK.toString());
-		buttonBack.setActionCommand(ViewActions.BACK.toString());
-	}
-
-	@Override
-	public void addController(ActionListener newListener)
-	{
-		buttonOk.addActionListener(newListener);
-		buttonBack.addActionListener(newListener);
 	}
 
 	@Override

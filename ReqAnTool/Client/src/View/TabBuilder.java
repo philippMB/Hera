@@ -1,20 +1,20 @@
 package View;
 
-import com.sun.deploy.panel.JreTableModel;
-
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.nio.file.Path;
 
 public class TabBuilder
-	extends JPanelBuilder
+	extends PanelBuilder
 {
+
+	private static final int GRID_WIDTH = 2;
 
 	private int globalRowNumber;
 	private int globalColumnNumber;
+	private int section;
 	private boolean splitNextUp;
 
 	public TabBuilder()
@@ -23,6 +23,7 @@ public class TabBuilder
 		myPanel.setLayout(new GridBagLayout());
 		globalRowNumber = -1;
 		globalColumnNumber = -1;
+		section = 0;
 		splitNextUp = false;
 		textStyler = new TabTextStyle();
 	}
@@ -34,10 +35,11 @@ public class TabBuilder
 
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
 		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = section*GRID_WIDTH+0;
 		layoutConstraints.anchor = GridBagConstraints.WEST;
 		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 		layoutConstraints.insets = new Insets(10,0,10,0);
-		layoutConstraints.gridwidth = 2;
+		layoutConstraints.gridwidth = GRID_WIDTH;
 
 		JLabel nameLabel = new JLabel(titleText,SwingConstants.CENTER);
 		textStyler.styleAsTitle(nameLabel);
@@ -65,7 +67,7 @@ public class TabBuilder
 
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
 		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = globalColumnNumber;
+		layoutConstraints.gridx = GRID_WIDTH*section+globalColumnNumber;
 		layoutConstraints.anchor = GridBagConstraints.CENTER;
 		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 
@@ -126,7 +128,7 @@ public class TabBuilder
     public JTextArea addNamedTextArea(String name, String content, boolean isEditable)
 	{
 		globalRowNumber++;
-		globalColumnNumber = 0;
+		globalColumnNumber = section*GRID_WIDTH+0;
 		splitNextUp = true;
 
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
@@ -166,7 +168,7 @@ public class TabBuilder
     public JTable addTable(String name, String[][] elements, String[] columnNames)
 	{
 		globalRowNumber++;
-		globalColumnNumber = 0;
+		globalColumnNumber = section*GRID_WIDTH+0;
 		splitNextUp = true;
 
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
@@ -229,6 +231,33 @@ public class TabBuilder
 
 	@Override
 	public void addImage(Path imagePath)
+	{
+
+	}
+
+	@Override
+	public SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue)
+	{
+		//Not used yet. Has to be implemented when used.
+		return null;
+	}
+
+	@Override
+	public void addNewSection()
+	{
+		section++;
+		globalRowNumber = -1;
+		globalColumnNumber = -1;
+	}
+
+	@Override
+	public JComboBox<String> addNamedDropdownList(String name, String[] options)
+	{
+		return null;
+	}
+
+	@Override
+	public void addPanel(JPanel newPanel)
 	{
 
 	}

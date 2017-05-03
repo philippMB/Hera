@@ -1,6 +1,8 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.ITextFacade;
+import LanguageAndText.TextNameConstants;
 import View_Interfaces.IStartView;
 
 import javax.swing.*;
@@ -16,51 +18,57 @@ public class StartView
 	implements IStartView
 {
 
-	private JPanelBuilder myBuilder;
-	private JButton buttonNewProject;
-	private JButton buttonOpenRA;
-	private JButton buttonClose;
+	private final ViewActions[] BUTTON_ACTIONS = {
+			ViewActions.NEW_PROJECT,
+			ViewActions.OPEN_PROJECT,
+			ViewActions.CLOSE
+	};
+
+	private PanelBuilder myBuilder;
+	private ITextFacade myTextBundle;
+	private JButton[] myButtons;
 
 
 	public StartView()
 	{
-		super("ReqAn-Tool");
+		super();
+		myTextBundle = ITextFacade.getInstance();
+		setTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_REQAN_TOOL));
 		setSize(500,500);
-		myBuilder = JPanelBuilderFactory.getInstance().createPanelBuilder(this);
+		myBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
 
 		init();
 	}
 
 	private void init()
 	{
-		String[] buttonNames = {"Neues Projekt anlegen", "Anforderungsanalyse öffnen", "Programm Beenden"};
-
 		setLayout(new GridLayout());
 
-		myBuilder.addTitle("Hauptmenü");
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonNewProject = myButtons[0];
-		buttonOpenRA = myButtons[1];
-		buttonClose = myButtons[2];
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_MAIN_MENU));
+		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
 
+		setActionCommands();
 		add(myBuilder.getResult(), BorderLayout.CENTER);
 
 		pack();
 		setVisible(true);
 	}
 
+	private void setActionCommands()
+	{
+		for(int i=0;i<BUTTON_ACTIONS.length;i++)
+		{
+			myButtons[i].setActionCommand(BUTTON_ACTIONS[i].toString());
+		}
+	}
 
 	@Override
 	public void addController(ActionListener newListener)
 	{
-		buttonNewProject.addActionListener(newListener);
-		buttonNewProject.setActionCommand(ViewActions.NEW.toString());
-
-		buttonOpenRA.addActionListener(newListener);
-		buttonOpenRA.setActionCommand(ViewActions.OPEN.toString());
-
-		buttonClose.addActionListener(newListener);
-		buttonClose.setActionCommand(ViewActions.CLOSE.toString());
+		for(JButton b: myButtons)
+		{
+			b.addActionListener(newListener);
+		}
 	}
 
 	@Override
@@ -72,6 +80,7 @@ public class StartView
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		//Do nothing
+		//Nothing to be updated
 	}
+
 }

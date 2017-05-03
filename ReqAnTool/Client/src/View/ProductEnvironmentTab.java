@@ -1,5 +1,7 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
+import Model_Interfaces.IModelGetData;
 import View_Interfaces.IProductEnvironmentTab;
 
 import javax.swing.*;
@@ -15,19 +17,24 @@ public class ProductEnvironmentTab
 	implements IProductEnvironmentTab
 {
 
-	public ProductEnvironmentTab()
+	public ProductEnvironmentTab(IModelGetData model)
 	{
-		super("Produktumgebung");
+		super(model, TextNameConstants.TITLE_PRODUCT_ENVIRONMENT);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Produktumgebung");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCT_ENVIRONMENT));
 		buildTextPanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
 	}
 
+	@Override
+	protected String getDescriptionFromModel()
+	{
+		return myModel.getProdEnviron();
+	}
 }
 

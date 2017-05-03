@@ -3,8 +3,10 @@ package Model_Interfaces;
 public interface IRequirementList<T>
 {
     
-    public boolean add();
+    public boolean add(T myReq);
     
-    public boolean search();
+    public boolean isIncluded(String id);
+    
+    public T getReqByID(String id);
     
 }

@@ -1,10 +1,13 @@
 package View;
 
+import Controller_Interfaces.ViewActions;
+import LanguageAndText.ITextFacade;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.IView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by phlippe on 27.04.17.
@@ -14,22 +17,61 @@ public abstract class TabPanel
 	implements IView
 {
 
+	protected ViewActions[] myButtonActions;
+	protected JButton[] myButtons;
 	protected IModelGetData myModel;
-	protected JPanelBuilder myBuilder;
+	protected PanelBuilder myBuilder;
+	protected ITextFacade myTextBundle;
 	private String tabName;
 
 
-	public TabPanel(IModelGetData model, String tabName)
+	public TabPanel(IModelGetData model, String titleConstant)
 	{
 		myModel = model;
-		this.tabName = tabName;
+		myTextBundle = ITextFacade.getInstance();
+		this.tabName = myTextBundle.getTitleText(titleConstant);
 
 		setSize(500,500);	//Um dem Builder die ungefähre Größe anzugeben
-		myBuilder = JPanelBuilderFactory.getInstance().createPanelBuilder(this);
+		myBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
 
 		setLayout(new BorderLayout());	//Standard-Layout für zentrale Größenanpassung
 
 		init();
+	}
+
+	protected void setButtonActions(ViewActions[] buttonActions)
+	{
+		myButtonActions = buttonActions;
+		myButtons = new JButton[myButtonActions.length];
+	}
+
+	protected void setActionCommands()
+	{
+		for(int i=0;i<myButtonActions.length;i++)
+		{
+			myButtons[i].setActionCommand(myButtonActions[i].toString());
+		}
+	}
+
+	protected String[] getButtonNames()
+	{
+		String[] buttonNames = new String[myButtonActions.length];
+
+		for(int i=0;i<buttonNames.length;i++)
+		{
+			buttonNames[i] = myTextBundle.getButtonText(myButtonActions[i]);
+		}
+
+		return getButtonNames();
+	}
+
+	@Override
+	public void addController(ActionListener newListener)
+	{
+		for(JButton b: myButtons)
+		{
+			b.addActionListener(newListener);
+		}
 	}
 
 	public String getTabName()

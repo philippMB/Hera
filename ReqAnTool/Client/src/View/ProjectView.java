@@ -1,5 +1,6 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirementAnalysis;
 import View_Interfaces.IProjectView;
@@ -32,7 +33,7 @@ public class ProjectView
 
 	private void init()
 	{
-		setTitle("Anforderungsanalyse \""+myAnalysis.getTitle()+"\"");
+		setTitle(myAnalysis.getTitle());
 		setMinimumSize(new Dimension(550,400));
 		setSize(823,400);
 

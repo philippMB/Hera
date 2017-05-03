@@ -1,6 +1,10 @@
 package View;
 
-import javax.swing.*;
+import Controller_Interfaces.ViewActions;
+import LanguageAndText.TextNameConstants;
+import Model_Interfaces.IModelGetData;
+
+import java.util.Observable;
 
 /**
  * Created by phlippe on 29.04.17.
@@ -9,39 +13,38 @@ public class CostEstimationTab
 	extends TabPanel
 {
 
-	JButton buttonShowCE;
-	JButton buttonEditCE;
-	JButton buttonDeleteCE;
-	JButton buttonFPCalc;
-	JButton buttonOptimize;
-	JButton buttonEnterAS;
+	private final ViewActions[] BUTTON_ACTIONS = {
+			ViewActions.SHOW_CE,
+			ViewActions.CALC_FP,
+			ViewActions.EDIT_CE,
+			ViewActions.OPTIMIZE_WF,
+			ViewActions.DELETE_CE,
+			ViewActions.ENTER_AS
+	};
 
 
-	public CostEstimationTab()
+	public CostEstimationTab(IModelGetData model)
 	{
-		super("Aufwandsschätzung");
+		super(model, TextNameConstants.TITLE_COST_ESTIMATION);
+		setButtonActions(BUTTON_ACTIONS);
 	}
 
 	@Override
 	protected void init()
 	{
-		String[] buttonNames = {"Aufwandsschätzung anzeigen",
-								"Function-Points berechnen",
-								"Aufwandsschätzung bearbeiten",
-								"Gewichtsfaktoren optimieren",
-								"Aufwandsschätzung löschen",
-								"Ist-Zustand eintragen"
-						       };
 
-		myBuilder.addTitle("Aufwandsschätzung");
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonShowCE = myButtons[0];
-		buttonFPCalc = myButtons[1];
-		buttonEditCE = myButtons[2];
-		buttonOptimize = myButtons[3];
-		buttonDeleteCE = myButtons[4];
-		buttonEnterAS = myButtons[5];
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION));
+		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
+
+		setActionCommands();
 
 		add(myBuilder.getResult());
 	}
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		//Nothing to be updated
+	}
+
 }

@@ -1,6 +1,7 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.TextNameConstants;
 import View_Interfaces.IWarningDialog;
 
 import javax.swing.*;
@@ -21,38 +22,34 @@ public class WarningDialog
 	private static final String WARN_IMAGE_PATH_STRING =
 			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/Warnschild.png";
 	private static final Color WARN_COLOR = new Color(238,190,40);
-	private static final String WARN_HEADER_NAME = "Warnung";
+
+	private final ViewActions[] BUTTON_ACTIONS = {
+		ViewActions.OK,
+		ViewActions.CANCEL
+	};
 
 	private String title;
 	private String description;
-	private String[] buttonNames;
-	private ViewActions[] buttonActions;
+	private ViewActions[] myButtonActions;
 	private JButton[] myButtons;
 
 
 	public WarningDialog(String warnTitle, String warnDescription){
-		super(WARN_HEADER_NAME);
+		super(TextNameConstants.TITLE_WARNING);
 		title = warnTitle;
 		description = warnDescription;
-
-		generateDefaultButtons();
-		init();
-	}
-
-	public WarningDialog(String warnTitle, String warnDescription, String[] warnButtonNames, ViewActions[] warnButtonActions){
-		super(WARN_HEADER_NAME);
-		title = warnTitle;
-		description = warnDescription;
-		buttonNames = warnButtonNames;
-		buttonActions = warnButtonActions;
+		myButtonActions = BUTTON_ACTIONS;
 
 		init();
 	}
 
-	private void generateDefaultButtons()
-	{
-		buttonNames = new String[]{"Ok","Abbrechen"};
-		buttonActions = new ViewActions[]{ViewActions.OK,ViewActions.CANCEL};
+	public WarningDialog(String warnTitle, String warnDescription, ViewActions[] warnButtonActions){
+		super(TextNameConstants.TITLE_WARNING);
+		title = warnTitle;
+		description = warnDescription;
+		myButtonActions = warnButtonActions;
+
+		init();
 	}
 
 	private Path getWarnImagePath()
@@ -66,27 +63,19 @@ public class WarningDialog
 		myBuilder.addTitle(title);
 		myBuilder.addImage(getWarnImagePath());
 		myBuilder.addText(description);
-		myButtons = myBuilder.addButtonBar(buttonNames);
+		myButtons = myBuilder.addButtonBar(myButtonActions);
 
 		getContentPane().add(
 				new BorderDecorater(
-						myBuilder.getResult(), WARN_COLOR,WARN_HEADER_NAME
+						myBuilder.getResult(),
+						WARN_COLOR,
+						myTextBundle.getTitleText(TextNameConstants.TITLE_WARNING)
 				)
 		);
 		setActionCommands();
 
 		pack();
 		setVisible(true);
-	}
-
-	private void setActionCommands()
-	{
-		int maxIndex = Math.min(myButtons.length,buttonActions.length);
-
-		for(int i=0;i<maxIndex;i++)
-		{
-			myButtons[i].setActionCommand(buttonActions.toString());
-		}
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import Controller_Interfaces.ViewActions;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirement;
 import View_Interfaces.IRequirementFormView;
+import com.sun.org.glassfish.gmbal.ManagedObject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,13 +21,11 @@ public abstract class RequirementFormView
 	implements IRequirementFormView
 {
 
+	private final ViewActions[] BUTTON_ACTIONS_EDITABLE = {ViewActions.ADD, ViewActions.CANCEL};
+	private final ViewActions[] BUTTON_ACTIONS_NOT_EDITABLE = {ViewActions.EDIT, ViewActions.DELETE, ViewActions.CANCEL};
+
 	protected IModelGetData myModel;
 	protected boolean isEditable;
-	private JButton buttonSave;
-	private JButton buttonCancel;
-	private JButton buttonEdit;
-	private JButton buttonDelete;
-	private JButton buttonClose;
 	private TableSelectionPanel tableSelectionLinks;
 	private JTable tableLinks;
 
@@ -41,7 +40,7 @@ public abstract class RequirementFormView
 	protected void buildLinkTable()
 	{
 		final String tagedName = "Verweise";
-		String[] tableEntries = (String[])getMyRequirement().getReferencesID().toArray();
+		String[] tableEntries = getMyRequirement().getReferenceIDs();
 
 		if(isEditable)
 		{
@@ -59,22 +58,15 @@ public abstract class RequirementFormView
 
 	protected void buildButtonBar()
 	{
-		final String[] buttonNamesEditable = {"Speichern","Abbrechen"};
-		final String[] buttonNamesNotEditable = {"Bearbeiten","Löschen","Schließen"};
-
 		if(isEditable)
 		{
-			JButton[] lButton = myBuilder.addButtonBar(buttonNamesEditable);
-			buttonSave = lButton[0];
-			buttonCancel = lButton[1];
+			setButtonActions(BUTTON_ACTIONS_EDITABLE);
 		}
 		else
 		{
-			JButton[] lButton = myBuilder.addButtonBar(buttonNamesNotEditable);
-			buttonEdit = lButton[0];
-			buttonDelete = lButton[1];
-			buttonClose = lButton[2];
+			setButtonActions(BUTTON_ACTIONS_NOT_EDITABLE);
 		}
+		myButtons = myBuilder.addButtonBar(myButtonActions);
 	}
 
 	protected String[] getTableEntries()
@@ -127,34 +119,6 @@ public abstract class RequirementFormView
 	}
 
 	@Override
-	public void addController(ActionListener actionListener)
-	{
-
-		if(isEditable)
-		{
-			buttonSave.addActionListener(actionListener);
-			buttonSave.setActionCommand(ViewActions.SAVE.toString());
-
-			buttonCancel.addActionListener(actionListener);
-			buttonCancel.setActionCommand(ViewActions.CANCEL.toString());
-
-			tableSelectionLinks.addController(actionListener);
-		}
-		else
-		{
-			buttonEdit.addActionListener(actionListener);
-			buttonEdit.setActionCommand(ViewActions.EDIT.toString());
-
-			buttonDelete.addActionListener(actionListener);
-			buttonDelete.setActionCommand(ViewActions.DELETE.toString());
-
-			buttonClose.addActionListener(actionListener);
-			buttonClose.setActionCommand(ViewActions.CLOSE.toString());
-		}
-
-	}
-
-	@Override
 	public void destruct()
 	{
 
@@ -163,10 +127,7 @@ public abstract class RequirementFormView
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		if(o instanceof IModelGetData)
-		{
-			updateAll();
-		}
+		updateAll();
 	}
 
 	protected void updateAll()
@@ -179,8 +140,10 @@ public abstract class RequirementFormView
 		updateTable();
 	}
 
+	//TODO: GENERATE ID gehört in den Controller und nicht in die View!
 	protected void checkGeneratedID()
 	{
+		/*
 		if(isEditable)
 		{
 			String enteredID = getIDEntry();
@@ -190,6 +153,7 @@ public abstract class RequirementFormView
 				setIDEntry(myModel.generateNewID());
 			}
 		}
+		*/
 	}
 
 	protected void updateTable()
@@ -200,10 +164,12 @@ public abstract class RequirementFormView
 
 			for(String ID: tableEntries)
 			{
+				/*
 				if(myModel.getReqByID(ID) == null)
 				{
 					tableEntries.remove(ID);
 				}
+				*/
 			}
 
 			tableSelectionLinks.setTableEntries((String[])tableEntries.toArray());
@@ -212,12 +178,19 @@ public abstract class RequirementFormView
 		}
 		else
 		{
-			String[] myLinkIDs = (String[])getMyRequirement().getReferencesID().toArray();
+			String[] myLinkIDs = getMyRequirement().getReferenceIDs();
 			String[][] wideTableEntries = new String[1][myLinkIDs.length];
 			wideTableEntries[0] = myLinkIDs;
 
 			tableLinks.setModel(new DefaultTableModel(wideTableEntries,null));
 		}
+	}
+
+	@Override
+	public void addController(ActionListener newListener)
+	{
+		super.addController(newListener);
+		tableSelectionLinks.addController(newListener);
 	}
 
 	protected abstract void updateFields();

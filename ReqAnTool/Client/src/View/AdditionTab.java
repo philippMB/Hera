@@ -1,10 +1,14 @@
 package View;
 
+import Controller_Interfaces.ViewActions;
+import LanguageAndText.ITextFacade;
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IAddition;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.IAdditionTab;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,15 +22,16 @@ public class AdditionTab
 	implements IAdditionTab
 {
 
+
 	public AdditionTab(IModelGetData model)
 	{
-		super(model,"Ergänzungen");
+		super(model, TextNameConstants.TITLE_ADDITION);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Ergänzungen");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_ADDITION));
 		buildTablePanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
@@ -36,7 +41,7 @@ public class AdditionTab
 	protected String[][] getTableEntries()
 	{
 		String[][] tableEntries;
-		ArrayList<IAddition> allAdditions = myModel.getAllAdditions();
+		ArrayList<IAddition> allAdditions = myModel.getAllAddition();
 
 		tableEntries = new String[allAdditions.size()][getColumnNames().length];
 
@@ -53,7 +58,10 @@ public class AdditionTab
 	@Override
 	protected String[] getColumnNames()
 	{
-		return new String[]{"Titel","Beschreibung"};
+		return new String[]{
+				myTextBundle.getParameterText(TextNameConstants.PAR_TITLE),
+				myTextBundle.getParameterText(TextNameConstants.PAR_DESC)
+		};
 	}
 
 	@Override

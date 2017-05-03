@@ -5,8 +5,6 @@ import Model_Interfaces.IModelGetData;
 import View_Interfaces.ITextTab;
 
 import javax.swing.*;
-import javax.swing.event.DocumentListener;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 
 /**
@@ -17,43 +15,31 @@ public abstract class TextTab
 	implements ITextTab
 {
 
+	private final ViewActions[] BUTTON_ACTIONS = {
+			ViewActions.SAVE,
+			ViewActions.DELETE
+	};
+
 	private JTextArea textAreaDescription;
-	private JButton buttonSave;
-	private JButton buttonDelete;
-	private ActionListener myActionListener;
-	private boolean isSaved;	//TODO: DocumentListener auf TextArea
+	private boolean isSaved;
 
 
-	public TextTab(IModelGetData model, String tabName)
+	public TextTab(IModelGetData model, String titleConstant)
 	{
-		super(model, tabName);
+		super(model, titleConstant);
 	}
 
 	protected void buildTextPanel()
 	{
-		String[] buttonNames = {"Speichern","Löschen"};
 
-		textAreaDescription = myBuilder.addNamedTextArea(null,"");
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonSave = myButtons[0];
-		buttonDelete = myButtons[1];
+		textAreaDescription = myBuilder.addNamedTextArea(
+				null,
+				getDescriptionFromModel()
+		);
+		myButtons = myBuilder.addButtonBar(myButtonActions);
 
 		setActionCommands();
 		isSaved = true;
-	}
-
-	private void setActionCommands()
-	{
-		buttonSave.setActionCommand(ViewActions.SAVE.toString());
-		buttonDelete.setActionCommand(ViewActions.DELETE.toString());
-	}
-
-	@Override
-	public void addController(ActionListener actionListener)
-	{
-		buttonSave.addActionListener(actionListener);
-		buttonDelete.addActionListener(actionListener);
-		//TODO: DocumentListener auf TextArea
 	}
 
 	@Override

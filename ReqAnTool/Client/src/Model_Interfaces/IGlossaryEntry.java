@@ -19,9 +19,9 @@ public interface IGlossaryEntry
     public String getValidity();
     
     public String getObscurities();
-
+    
     public ArrayList<IGlossaryEntry> getReferences();
-
-    public ArrayList<String> getReferencesTerm();
+    
+    public String[] getReferenceTerms();
     
 }

@@ -1,9 +1,12 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.TextNameConstants;
+import Model_Interfaces.IModelGetData;
 import View_Interfaces.IProjectTab;
 
 import javax.swing.*;
+import javax.xml.soap.Text;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
@@ -15,55 +18,34 @@ public class ProjectTab
 	implements IProjectTab
 {
 
-	JButton buttonSave;
-	JButton button2PDF;
-	JButton button2XML;
-	JButton buttonDelete;
-	JButton buttonClose;
+	private final ViewActions[] BUTTON_ACTIONS = {
+			ViewActions.SAVE,
+			ViewActions.TO_PDF,
+			ViewActions.TO_XML,
+			ViewActions.DELETE,
+			ViewActions.CLOSE
+	};
 
-	public ProjectTab()
+	public ProjectTab(IModelGetData model)
 	{
-		super("Projektmenü");
+		super(model, TextNameConstants.TITLE_PROJECT_TAB);
 	}
 
 	protected void init(){
-		String[] buttonNames = {"Projekt speichern", "Projekt als PDF drucken", "Projekt als XML exportieren", "Bestehendes Projekt löschen", "Projekt schließen"};
+		setButtonActions(BUTTON_ACTIONS);
 
-		myBuilder.addTitle("Projektmenü");
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonSave = myButtons[0];
-		button2PDF = myButtons[1];
-		button2XML = myButtons[2];
-		buttonDelete = myButtons[3];
-		buttonClose = myButtons[4];
-
-		add(myBuilder.getResult());
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PROJECT_TAB));
+		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
 
 		setActionCommands();
-	}
 
-	private void setActionCommands()
-	{
-		buttonSave.setActionCommand(ViewActions.SAVE.toString());
-		buttonDelete.setActionCommand(ViewActions.DELETE.toString());
-		buttonClose.setActionCommand(ViewActions.CLOSE.toString());
-		button2XML.setActionCommand(ViewActions.TO_XML.toString());
-		button2PDF.setActionCommand(ViewActions.TO_PDF.toString());
-	}
-
-	@Override
-	public void addController(ActionListener newListener)
-	{
-		buttonSave.addActionListener(newListener);
-		buttonDelete.addActionListener(newListener);
-		buttonClose.addActionListener(newListener);
-		button2XML.addActionListener(newListener);
-		button2PDF.addActionListener(newListener);
+		add(myBuilder.getResult());
 	}
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
-
+		//Nothing to be updated
 	}
+
 }

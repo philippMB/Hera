@@ -11,7 +11,7 @@ import java.nio.file.Path;
  * Quelle: https://sourcemaking.com/design_patterns/builder
  */
 public class DialogBuilder
-	extends JPanelBuilder
+	extends PanelBuilder
 {
 
 	private static final int GRID_WIDTH = 2;
@@ -163,6 +163,30 @@ public class DialogBuilder
 		ImageLabel myImage = new ImageLabel(imagePath,50,50);
 		myPanel.add(myImage,layoutConstraints);
 		imageAdded = true;
+	}
+
+	@Override
+	public SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue)
+	{
+		return null;
+	}
+
+	@Override
+	public void addNewSection()
+	{
+
+	}
+
+	@Override
+	public JComboBox<String> addNamedDropdownList(String name, String[] options)
+	{
+		return null;
+	}
+
+	@Override
+	public void addPanel(JPanel newPanel)
+	{
+
 	}
 
 }

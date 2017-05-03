@@ -1,5 +1,6 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IGlossaryEntry;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IProductData;
@@ -20,13 +21,13 @@ public class GlossaryTab
 
 	public GlossaryTab(IModelGetData model)
 	{
-		super(model, "Glossar");
+		super(model, TextNameConstants.TITLE_GLOSSARY);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Glossar");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_GLOSSARY));
 		buildTablePanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
@@ -36,7 +37,7 @@ public class GlossaryTab
 	protected String[][] getTableEntries()
 	{
 		String[][] tableEntries;
-		ArrayList<IGlossaryEntry> allGlossaryEntries = myModel.getAllGlossaryEntries();
+		ArrayList<IGlossaryEntry> allGlossaryEntries = myModel.getAllGlossEntry();
 
 		tableEntries = new String[allGlossaryEntries.size()][getColumnNames().length];
 
@@ -45,7 +46,7 @@ public class GlossaryTab
 			IGlossaryEntry glossaryEntryAtRow = allGlossaryEntries.get(row);
 			tableEntries[row][0] = glossaryEntryAtRow.getTerm();
 			tableEntries[row][1] = glossaryEntryAtRow.getSense();
-			tableEntries[row][2] = convertListToSingleString(glossaryEntryAtRow.getReferencesTerm());
+			tableEntries[row][2] = convertListToSingleString(glossaryEntryAtRow.getReferenceTerms());
 		}
 
 		return tableEntries;
@@ -54,7 +55,11 @@ public class GlossaryTab
 	@Override
 	protected String[] getColumnNames()
 	{
-		return new String[]{"Begriff","Bedeutung","Querverweise"};
+		return new String[]{
+				myTextBundle.getParameterText(TextNameConstants.PAR_TERM),
+				myTextBundle.getParameterText(TextNameConstants.PAR_SENSE),
+				myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES)
+		};
 	}
 
 	@Override

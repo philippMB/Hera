@@ -5,7 +5,7 @@ import java.awt.*;
 import java.nio.file.Path;
 
 public class FormulaBuilder
-	extends JPanelBuilder
+	extends PanelBuilder
 {
 
     private static final int GRID_WIDTH = 2;
@@ -27,16 +27,14 @@ public class FormulaBuilder
 	{
         globalRowNumber++;
 
-        GridBagConstraints layoutConstraints = new GridBagConstraints();
-        layoutConstraints.gridy = globalRowNumber;
-        layoutConstraints.anchor = GridBagConstraints.LINE_START;
-        layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
-        layoutConstraints.insets = new Insets(10,10,10,5);
-		
-        JLabel nameLabel = new JLabel(name);
-        textStyler.styleAsTagedNameToField(nameLabel);
-        layoutConstraints.gridx = 0;
-        myPanel.add(nameLabel,layoutConstraints);
+        addLeftNameTag(name);
+
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.gridx = 1;
+		layoutConstraints.insets = new Insets(10,5,10,10);
 
         JTextField myTextField = new JTextField(10);
 		myTextField.setEditable(isEditable);
@@ -45,8 +43,6 @@ public class FormulaBuilder
 			myTextField.setBackground(null);
 		}
         myTextField.setText(content);
-        layoutConstraints.gridx = 1;
-        layoutConstraints.insets = new Insets(10,5,10,10);
         myPanel.add(myTextField,layoutConstraints);
 
         return myTextField;
@@ -123,10 +119,13 @@ public class FormulaBuilder
         if(buttonNames != null && buttonNames.length != 0)
 		{
 			myButtons = new JButton[buttonNames.length];
-			JPanel myButtonPanel = new JPanel(new GridLayout(1,buttonNames.length));
+			GridLayout myButtonLayout = new GridLayout(1,buttonNames.length);
+			myButtonLayout.setHgap(10);
+			JPanel myButtonPanel = new JPanel(myButtonLayout);
 			for (int i = 0; i < myButtons.length; i++)
 			{
 				myButtons[i] = new JButton(buttonNames[i]);
+				myButtons[i].setMaximumSize(new Dimension(150,50));
 				myButtonPanel.add(myButtons[i]);
 			}
 			myButtonPanel.setAlignmentX(JPanel.RIGHT_ALIGNMENT);
@@ -231,6 +230,94 @@ public class FormulaBuilder
 
 		ImageLabel myImage = new ImageLabel(imagePath,50,50);
 		myPanel.add(myImage,layoutConstraints);
+	}
+
+	@Override
+	public SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue)
+	{
+		globalRowNumber++;
+
+		addLeftNameTag(name);
+
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = 1;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,5,10,10);
+
+		SliderPanel mySliderPanel = new SliderPanel(initValue,minimumValue,maximumValue);
+
+		myPanel.add(mySliderPanel,layoutConstraints);
+
+		return mySliderPanel;
+	}
+
+	@Override
+	public void addNewSection()
+	{
+		globalRowNumber++;
+
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = 0;
+		layoutConstraints.gridwidth = 2;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,10,10,10);
+
+		JSeparator mySeparator = new JSeparator(SwingConstants.HORIZONTAL);
+		myPanel.add(mySeparator,layoutConstraints);
+	}
+
+	@Override
+	public JComboBox<String> addNamedDropdownList(String name, String[] options)
+	{
+		globalRowNumber++;
+
+		addLeftNameTag(name);
+
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = 1;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,5,10,10);
+
+		JComboBox<String> myDropdownList = new JComboBox<>(options);
+		myDropdownList.setSelectedIndex(0);
+
+		myPanel.add(myDropdownList,layoutConstraints);
+
+		return myDropdownList;
+	}
+
+	@Override
+	public void addPanel(JPanel newPanel)
+	{
+		globalRowNumber++;
+
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = 0;
+		layoutConstraints.gridwidth = GRID_WIDTH;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,10,10,10);
+
+		myPanel.add(newPanel, layoutConstraints);
+	}
+
+	private void addLeftNameTag(String name)
+	{
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,10,10,5);
+
+		JLabel nameLabel = new JLabel(name);
+		textStyler.styleAsTagedNameToField(nameLabel);
+		layoutConstraints.gridx = 0;
+		myPanel.add(nameLabel,layoutConstraints);
 	}
 
 

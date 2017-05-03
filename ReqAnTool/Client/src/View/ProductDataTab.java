@@ -1,5 +1,6 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
 import Model_Interfaces.IProductData;
@@ -19,13 +20,13 @@ public class ProductDataTab
 
 	public ProductDataTab(IModelGetData model)
 	{
-		super(model, "Produktdaten");
+		super(model, TextNameConstants.TITLE_PRODUCTDATA);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Produktdaten");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCTDATA));
 		buildTablePanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
@@ -35,7 +36,7 @@ public class ProductDataTab
 	protected String[][] getTableEntries()
 	{
 		String[][] tableEntries;
-		ArrayList<IProductData> allProductData = myModel.getAllPReqs();
+		ArrayList<IProductData> allProductData = myModel.getAllProdData();
 
 		tableEntries = new String[allProductData.size()][getColumnNames().length];
 
@@ -45,7 +46,7 @@ public class ProductDataTab
 			tableEntries[row][0] = productDataAtRow.getID();
 			tableEntries[row][1] = productDataAtRow.getContent();
 			tableEntries[row][2] = productDataAtRow.getMaxCount();
-			tableEntries[row][3] = convertListToSingleString(productDataAtRow.getReferencesID());
+			tableEntries[row][3] = convertListToSingleString(productDataAtRow.getReferenceIDs());
 		}
 
 		return tableEntries;
@@ -54,7 +55,12 @@ public class ProductDataTab
 	@Override
 	protected String[] getColumnNames()
 	{
-		return new String[]{"ID","Speicherinhalt","Max. Anzahl","Verweise"};
+		return new String[]{
+				myTextBundle.getParameterText(TextNameConstants.PAR_ID),
+				myTextBundle.getParameterText(TextNameConstants.PAR_CONTENT),
+				myTextBundle.getParameterText(TextNameConstants.PAR_MAX_COUNT),
+				myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES)
+		};
 	}
 
 

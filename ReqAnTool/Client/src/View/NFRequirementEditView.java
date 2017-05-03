@@ -1,5 +1,6 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
 import Model_Interfaces.IRequirement;
@@ -47,13 +48,28 @@ public class NFRequirementEditView
     {
 		setResizable(false);
 
-		myBuilder.addTitle("Edit Requirement");
-		fieldTitle = myBuilder.addNamedTextField("Titel:","",isEditable);
-		fieldID = myBuilder.addNamedTextField("ID:","",isEditable);
+		String titleText = getTitleText();
+
+		myBuilder.addTitle(titleText);
+		fieldTitle = myBuilder.addNamedTextField(
+				myTextBundle.getParameterText(TextNameConstants.PAR_TITLE)+":",
+				"",
+				isEditable
+		);
+		fieldID = myBuilder.addNamedTextField(
+				myTextBundle.getParameterText(TextNameConstants.PAR_ID)+":",
+				"",
+				isEditable
+		);
 		buildLinkTable();
-		fieldDescription = myBuilder.addNamedTextArea("Beschreibung", "",isEditable);
+		fieldDescription = myBuilder.addNamedTextArea(
+				myTextBundle.getParameterText(TextNameConstants.PAR_DESC),
+				"",
+				isEditable
+		);
 		buildButtonBar();
 
+		setFieldEntries();
 		updateAll();
 
 		getContentPane().add(myBuilder.getResult());
@@ -62,6 +78,29 @@ public class NFRequirementEditView
 
 		setVisible(true);
     }
+
+	private String getTitleText()
+	{
+		String titleText;
+
+		if(!isEditable)
+		{
+			titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_NFREQ_SHOW);
+		}
+		else
+		{
+			if(myReq == null)
+			{
+				titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_NFREQ_ADD_NEW);
+			}
+			else
+			{
+				titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_NFREQ_EDIT);
+			}
+		}
+
+		return titleText;
+	}
 
     @Override
     public String getIDEntry()
@@ -103,6 +142,14 @@ public class NFRequirementEditView
 	protected void updateFields()
 	{
 		if(!isEditable)
+		{
+			setFieldEntries();
+		}
+	}
+
+	private void setFieldEntries()
+	{
+		if(myReq != null)
 		{
 			fieldID.setText(myReq.getID());
 			fieldTitle.setText(myReq.getTitle());

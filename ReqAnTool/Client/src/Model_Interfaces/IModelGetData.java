@@ -4,47 +4,51 @@ import java.util.ArrayList;
 
 public interface IModelGetData
 {
-    IRequirement getReqByID(String ID);
 
-	IFRequirement getFReqByID(String ID);
+	public IRequirementAnalysis getReqAnalysis();
 
-	INFRequirement getNFReqByID(String ID);
-
-	IProductData getPReqByID(String ID);
-
-	IRequirementAnalysis getReqAnalysis();
-
-	public ArrayList<IFRequirement> getAllFReqs();
-
-	public ArrayList<INFRequirement> getAllNFReqs();
-
-	public ArrayList<IProductData> getAllPReqs();
-
-    public ArrayList<String> getAllReqIDs();
+    public IFRequirement getFReqByID(String id);
 
     public ICustomerData getCustomerData();
 
-    IGlossaryEntry getGlossaryEntryByTerm(String term);
+    public IGlossaryEntry getGlossaryEntryByTerm(String term);
 
     public ICostEstimation getCostEstimation();
 
-    public IAddition getAddition();
-
-    public ArrayList<IAddition> getAllAdditions();
+    public IAddition getAdditionByTitle(String title);
 
     public IProductApplication getProdApp();
 
     public IQualityRequirement getQualReqByCriteria(String criteria);
 
-    public ArrayList<IQualityRequirement> getAllQualityReqs();
-
-	public ArrayList<IGlossaryEntry> getAllGlossaryEntries();
-
     public ITargetDefinition getTargetDef();
 
-    public IWeightFactor getOptWeightFactor();
+    public IWeightFactor getOptWeightFactorByTitle(String title);
 
-    public IWeightFactor getWeightFactor();
+    public IWeightFactor getWeightFactorByTitle(String title);
 
-    public String generateNewID();
+    public ArrayList<IFRequirement> getAllFReq();
+
+    public ArrayList<INFRequirement> getAllNFReq();
+
+    public ArrayList<IProductData> getAllProdData();
+
+    public ArrayList<IGlossaryEntry> getAllGlossEntry();
+
+    public ArrayList<IQualityRequirement> getAllQualReq();
+
+    public ArrayList<IAddition> getAllAddition();
+
+    public ArrayList<IWeightFactor> getAllWeightFactors();
+    
+    public ArrayList<IWeightFactor> getAllOptWeightFactor();
+
+    public INFRequirement getNFReqByID(String id);
+
+    public IProductData getProductDataByID(String id);
+
+    public ArrayList<String> getAllReqIDs();
+
+    public String getProdEnviron();
+    
 }

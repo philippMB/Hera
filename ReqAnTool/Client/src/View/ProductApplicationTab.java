@@ -1,5 +1,8 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
+import Model_Interfaces.IModelGetData;
+import Model_Interfaces.IProductApplication;
 import View_Interfaces.IProductApplicationTab;
 
 import java.awt.*;
@@ -12,18 +15,25 @@ public class ProductApplicationTab
 	implements IProductApplicationTab
 {
 
-	public ProductApplicationTab()
+	public ProductApplicationTab(IModelGetData model)
 	{
-		super("Produkteinsatz");
+		super(model, TextNameConstants.TITLE_PRODUCT_APPLICATION);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Produkteinsatz");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCT_APPLICATION));
 		buildTextPanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
+	}
+
+	@Override
+	protected String getDescriptionFromModel()
+	{
+		IProductApplication myProductApplication = myModel.getProdApp();
+		return myProductApplication.getDescription();
 	}
 
 }

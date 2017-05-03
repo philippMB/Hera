@@ -1,6 +1,5 @@
 package Model_Interfaces;
 
-import Model.ClassOfDataFP;
 
 /**
  * Created by phlippe on 26.04.17.

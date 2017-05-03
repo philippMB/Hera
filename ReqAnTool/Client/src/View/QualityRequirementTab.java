@@ -1,5 +1,6 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IQualityRequirement;
 import View_Interfaces.IQualityRequirementTab;
@@ -18,13 +19,13 @@ public class QualityRequirementTab
 
 	public QualityRequirementTab(IModelGetData model)
 	{
-		super(model, "Qualitätsanforderungen");
+		super(model, TextNameConstants.TITLE_QUALIRY_REQ);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Qualitätsanforderungen");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_QUALIRY_REQ));
 		buildTablePanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
@@ -34,7 +35,7 @@ public class QualityRequirementTab
 	protected String[][] getTableEntries()
 	{
 		String[][] tableEntries;
-		ArrayList<IQualityRequirement> allQualityRequirements = myModel.getAllQualityReqs();
+		ArrayList<IQualityRequirement> allQualityRequirements = myModel.getAllQualReq();
 
 		tableEntries = new String[allQualityRequirements.size()][getColumnNames().length];
 
@@ -51,7 +52,10 @@ public class QualityRequirementTab
 	@Override
 	protected String[] getColumnNames()
 	{
-		return new String[]{"Name","Bewertung"};
+		return new String[]{
+				myTextBundle.getParameterText(TextNameConstants.PAR_NAME),
+				myTextBundle.getParameterText(TextNameConstants.PAR_VALUATION)
+		};
 	}
 
 	@Override

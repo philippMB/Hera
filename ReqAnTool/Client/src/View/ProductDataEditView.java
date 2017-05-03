@@ -1,5 +1,6 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IProductData;
 import Model_Interfaces.IRequirement;
@@ -30,7 +31,7 @@ public class ProductDataEditView
 		super(model,isEditable);
 		if(ID != null)
 		{
-			myReq = myModel.getPReqByID(ID);
+			myReq = myModel.getProductDataByID(ID);
 		}
 		else
 		{
@@ -49,14 +50,33 @@ public class ProductDataEditView
 	{
 		setResizable(false);
 
-		myBuilder.addTitle("Edit Requirement");
-		fieldContent = myBuilder.addNamedTextField("Speicherinhalt:","",isEditable);
-		fieldID = myBuilder.addNamedTextField("ID:","",isEditable);
+		String titleText = getTitleText();
+
+		myBuilder.addTitle(titleText);
+		fieldContent = myBuilder.addNamedTextField(
+				myTextBundle.getParameterText(TextNameConstants.PAR_CONTENT)+":",
+				"",
+				isEditable
+		);
+		fieldID = myBuilder.addNamedTextField(
+				myTextBundle.getParameterText(TextNameConstants.PAR_ID)+":",
+				"",
+				isEditable
+		);
 		buildLinkTable();
-		fieldMaxCount = myBuilder.addNamedTextField("Max. Anzahl","",isEditable);
-		fieldAttributes = myBuilder.addNamedTextArea("Beschreibung:", "",isEditable);
+		fieldMaxCount = myBuilder.addNamedTextField(
+				myTextBundle.getParameterText(TextNameConstants.PAR_MAX_COUNT),
+				"",
+				isEditable
+		);
+		fieldAttributes = myBuilder.addNamedTextArea(
+				myTextBundle.getParameterText(TextNameConstants.PAR_ATTRIBUTES),
+				"",
+				isEditable
+		);
 		buildButtonBar();
 
+		setFieldEntries();
 		updateAll();
 
 		getContentPane().add(myBuilder.getResult());
@@ -64,6 +84,29 @@ public class ProductDataEditView
 		setLocationRelativeTo(null);
 
 		setVisible(true);
+	}
+
+	private String getTitleText()
+	{
+		String titleText;
+
+		if(!isEditable)
+		{
+			titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCTDATA_SHOW);
+		}
+		else
+		{
+			if(myReq == null)
+			{
+				titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCTDATA_ADD_NEW);
+			}
+			else
+			{
+				titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCTDATA_EDIT);
+			}
+		}
+
+		return titleText;
 	}
 
 	@Override
@@ -112,6 +155,14 @@ public class ProductDataEditView
 	protected void updateFields()
 	{
 		if(!isEditable)
+		{
+			setFieldEntries();
+		}
+	}
+
+	private void setFieldEntries()
+	{
+		if(myReq != null)
 		{
 			fieldID.setText(myReq.getID());
 			fieldContent.setText(myReq.getContent());

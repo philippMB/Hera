@@ -7,7 +7,6 @@ import View_Interfaces.ITableTab;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,6 +18,12 @@ public abstract class TableTab
 	implements ITableTab
 {
 
+	private final ViewActions[] BUTTON_ACTIONS = {
+			ViewActions.ADD,
+			ViewActions.EDIT,
+			ViewActions.DELETE
+	};
+
 	protected IModelGetData myModel;
 	private JTable myTable;
 	private JButton buttonAdd;
@@ -26,37 +31,19 @@ public abstract class TableTab
 	private JButton buttonDelete;
 
 
-	public TableTab(IModelGetData model, String tabName)
+	public TableTab(IModelGetData model, String titleConstant)
 	{
-		super(model, tabName);
+		super(model, titleConstant);
 	}
 
 	protected void buildTablePanel()
 	{
-		String[] buttonNames = {"Hinzufügen", "Bearbeiten", "Löschen"};
+		setButtonActions(BUTTON_ACTIONS);
 
 		myTable = myBuilder.addTable(null, getTableEntries(), getColumnNames());
-		JButton[] myButtons = myBuilder.addButtonBar(buttonNames);
-		buttonAdd = myButtons[0];
-		buttonEdit = myButtons[1];
-		buttonDelete = myButtons[2];
+		myButtons = myBuilder.addButtonBar(myButtonActions);
 
 		setActionCommands();
-	}
-
-	private void setActionCommands()
-	{
-		buttonAdd.setActionCommand(ViewActions.ADD.toString());
-		buttonEdit.setActionCommand(ViewActions.EDIT.toString());
-		buttonDelete.setActionCommand(ViewActions.DELETE.toString());
-	}
-
-	@Override
-	public void addController(ActionListener actionListener)
-	{
-		buttonAdd.addActionListener(actionListener);
-		buttonEdit.addActionListener(actionListener);
-		buttonDelete.addActionListener(actionListener);
 	}
 
 	@Override
@@ -91,6 +78,12 @@ public abstract class TableTab
 
 	protected abstract String[] getColumnNames();
 
+	protected static String convertListToSingleString(String[] arrayOfStrings)
+	{
+		ArrayList<String> listOfStrings = new ArrayList<>(Arrays.asList(arrayOfStrings));
+		return convertListToSingleString(listOfStrings);
+	}
+
 	protected static String convertListToSingleString(ArrayList<String> listOfStrings)
 	{
 		String convertedString = "";
@@ -106,4 +99,5 @@ public abstract class TableTab
 
 		return convertedString;
 	}
+
 }

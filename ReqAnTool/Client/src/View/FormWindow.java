@@ -1,18 +1,71 @@
 package View;
 
+import Controller_Interfaces.ViewActions;
+import LanguageAndText.ITextFacade;
+import View_Interfaces.IView;
+
 import javax.swing.*;
-import java.util.Observer;
+import java.awt.event.ActionListener;
 
 public abstract class FormWindow
     extends JFrame
+	implements IView
 {
-    protected JPanelBuilder myBuilder;
+
+	protected ViewActions[] myButtonActions;
+	protected JButton[] myButtons;
+	protected PanelBuilder myBuilder;
+    protected ITextFacade myTextBundle;
+
 
     public FormWindow()
     {
         setSize(250,500);   //Ungefähre Größe, damit Factory richtigen Builder erzeugen kann
-        myBuilder = JPanelBuilderFactory.getInstance().createPanelBuilder(this);
+        myBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
+        myTextBundle = ITextFacade.getInstance();
     }
+
+    protected void setButtonActions(ViewActions[] buttonActions)
+	{
+		myButtonActions = buttonActions;
+		myButtons = new JButton[myButtonActions.length];
+	}
+
+	protected void setActionCommands()
+	{
+		for(int i=0;i<myButtonActions.length;i++)
+		{
+			myButtons[i].setActionCommand(myButtonActions[i].toString());
+		}
+	}
+
+	protected String[] getButtonNames()
+	{
+		String[] buttonNames = new String[myButtonActions.length];
+
+		for(int i=0;i<buttonNames.length;i++)
+		{
+			buttonNames[i] = myTextBundle.getButtonText(myButtonActions[i]);
+		}
+
+		return getButtonNames();
+	}
+
+	@Override
+	public void addController(ActionListener newListener)
+	{
+		for(JButton b: myButtons)
+		{
+			b.addActionListener(newListener);
+		}
+	}
+
+	@Override
+	public void destruct()
+	{
+		setVisible(false);
+		dispose();
+	}
 
     protected abstract void init();
 

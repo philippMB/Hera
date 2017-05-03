@@ -1,5 +1,6 @@
 package View;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
@@ -19,13 +20,13 @@ public class NFRequirementTab
 
 	public NFRequirementTab(IModelGetData model)
 	{
-		super(model, "Nichtfunktionale Anforderungen");
+		super(model, TextNameConstants.TITLE_NFREQ);
 	}
 
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle("Nichtfunktionale Anforderungen");
+		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_NFREQ));
 		buildTablePanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
@@ -35,7 +36,7 @@ public class NFRequirementTab
 	protected String[][] getTableEntries()
 	{
 		String[][] tableEntries;
-		ArrayList<INFRequirement> allNFRequirements = myModel.getAllNFReqs();
+		ArrayList<INFRequirement> allNFRequirements = myModel.getAllNFReq();
 
 		tableEntries = new String[allNFRequirements.size()][getColumnNames().length];
 
@@ -45,7 +46,7 @@ public class NFRequirementTab
 			tableEntries[row][0] = nfRequirementAtRow.getID();
 			tableEntries[row][1] = nfRequirementAtRow.getTitle();
 			tableEntries[row][2] = nfRequirementAtRow.getActor();
-			tableEntries[row][3] = convertListToSingleString(nfRequirementAtRow.getReferencesID());
+			tableEntries[row][3] = convertListToSingleString(nfRequirementAtRow.getReferenceIDs());
 		}
 
 		return tableEntries;
@@ -54,7 +55,12 @@ public class NFRequirementTab
 	@Override
 	protected String[] getColumnNames()
 	{
-		return new String[]{"ID","Titel","Akteur","Verweise"};
+		return new String[]{
+				myTextBundle.getParameterText(TextNameConstants.PAR_ID),
+				myTextBundle.getParameterText(TextNameConstants.PAR_TITLE),
+				myTextBundle.getParameterText(TextNameConstants.PAR_ACTOR),
+				myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES)
+		};
 	}
 
 	@Override
