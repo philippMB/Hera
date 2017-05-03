@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public interface IModelGetData
 {
+    
+    public IRequirementAnalysis getReqAnalysis();
 
     public IFRequirement getFReqByID(String id);
     
