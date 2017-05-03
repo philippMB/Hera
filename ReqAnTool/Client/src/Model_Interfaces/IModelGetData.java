@@ -45,4 +45,6 @@ public interface IModelGetData
     
     public ArrayList<IWeightFactor> getAllOptWeightFactor();
     
+    public ArrayList<String> getAllReqIDs();
+    
 }

@@ -16,6 +16,17 @@ public class CustomerData
 
     private PersonalData projectManager;
 
+    CustomerData(String pmName, String pmMail, String pmPhone)
+    {
+        this.projectManager = new PersonalData(pmName, pmMail, pmPhone);
+        this.companyName = null;
+        this.city = null;
+        this.companyStreet = null;
+        this.country = null;
+        this.zip = -1;
+        this.customer = null;
+    }
+
     @Override
     public String getPMName()
     {

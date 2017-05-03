@@ -20,5 +20,8 @@ public interface ICostEstimation
     public ArrayList<IDataFP> getDataFPs();
     
     public ArrayList<ITransactionFP> getTransactionFPs();
-    
+
+    public ArrayList<IWeightFactor> getWeightFactors();
+
+    public IWeightFactor getWeightFactorByTitle(String title);
 }

@@ -14,7 +14,14 @@ public abstract class Requirement
      * @associates <{Model.Requirement}>
      */
     private ArrayList<IRequirement> references;
-    
+
+    Requirement(String id, ArrayList<IRequirement> references)
+    {
+        this.id = id;
+        this.references = references;
+
+    }
+
     @Override
     public String getID()
     {

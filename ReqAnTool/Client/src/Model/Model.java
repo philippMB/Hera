@@ -1,5 +1,6 @@
 package Model;
 
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IAddition;
 import Model_Interfaces.IApplications;
 import Model_Interfaces.ICostEstimation;
@@ -12,11 +13,12 @@ import Model_Interfaces.INFRequirement;
 import Model_Interfaces.IProductApplication;
 import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
-import Model_Interfaces.IRequirement;
 import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.IWeightFactor;
 
 import java.util.ArrayList;
+
+import org.omg.CORBA.PolicyErrorCodeHelper;
 
 public class Model
     implements IModelGetData, IModelSetData, IApplications
@@ -30,53 +32,66 @@ public class Model
     }
 
     @Override
-    public boolean addAddition(String title, String description)
+    public ErrorCodes addAddition(String title, String description)
     {
-        // TODO Implement this method
-        return false;
+        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+        if (myReqAn.getAdditions().size() <= 100)
+        {
+            retValue = ErrorCodes.NO_ERROR;
+            myReqAn.addAddition(title, description);
+        }
+        return retValue;
     }
 
     @Override
-    public boolean addCostEstimation()
+    public ErrorCodes addCostEstimation()
     {
-        // TODO Implement this method
-        return false;
+        // TODO
+        return null;
     }
 
     @Override
-    public boolean addFReq(String id, String title, String actor, String description, String[] references)
+    public ErrorCodes addFReq(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        // TODO Implement this method
-        return false;
+        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+        if (myReqAn.getFRequirements().size() <= 2000)
+        {
+            retValue = myReqAn.addFRequirement(id, title, actor, description, references);
+        }
+        return retValue;
     }
 
     @Override
-    public boolean addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
-                                 String label)
+    public ErrorCodes addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
+                                 String label, ArrayList<String> crossRef)
     {
-        // TODO Implement this method
-        return false;
+        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+        if (myReqAn.getGlossaryEntries().size() <= 3000)
+        {
+            retValue = myReqAn.addGlossaryEntry(term, sense, boundary, validity,obscurities, label, crossRef);
+        }
+        return retValue;
     }
 
     @Override
-    public boolean addNFReq(String id, String title, String actor, String description, String[] references)
+    public ErrorCodes addNFReq(String id, String title, String actor, String description, ArrayList<String> references)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean addProdData(String id, String content, String attribute, String maxCount, String[] references)
+    public ErrorCodes addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean addQualReq(String criteria, String value)
+    public ErrorCodes addQualReq(String criteria, String value)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
@@ -157,72 +172,72 @@ public class Model
     }
 
     @Override
-    public boolean editAddition(String title, String description)
+    public ErrorCodes editAddition(String title, String description)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editCustData(String companyName, String companyCity, String companyStreet, int zip,
+    public ErrorCodes editCustData(String companyName, String companyCity, String companyStreet, int zip,
                                 String companyCountry, String custName, String custMail, String custPhone,
                                 String pmName, String pmMail, String pmPhone)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editFReq(String oldID, String id, String title, String actor, String description,
-                            String[] references)
+    public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
+                            ArrayList<String> references)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
-                                  String obscurities, String label)
+    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+                                  String obscurities, String label, ArrayList<String> crossRef)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editNFReq(String oldID, String id, String title, String actor, String description,
-                             String[] references)
+    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description,
+                             ArrayList<String> references)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editProdApp(String description)
+    public ErrorCodes editProdApp(String description)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editProdData(String oldID, String id, String content, String attribute, String maxCount,
-                                String[] references)
+    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
+                                ArrayList<String> references)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editQualReq(String oldCriteria, String criteria, String value)
+    public ErrorCodes editQualReq(String oldCriteria, String criteria, String value)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean editTargetDef(String description)
+    public ErrorCodes editTargetDef(String description)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
@@ -325,52 +340,52 @@ public class Model
     }
 
     @Override
-    public boolean remAdditionByTitle(String title)
+    public ErrorCodes remAdditionByTitle(String title)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean remCostEstimation()
+    public ErrorCodes remCostEstimation()
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean remFReqByID(String id)
+    public ErrorCodes remFReqByID(String id)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean remGlossEntryByTerm(String term)
+    public ErrorCodes remGlossEntryByTerm(String term)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean remNFReqByID(String id)
+    public ErrorCodes remNFReqByID(String id)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean remProdDataByID(String id)
+    public ErrorCodes remProdDataByID(String id)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
-    public boolean remQualReqByCrit(String criteria)
+    public ErrorCodes remQualReqByCrit(String criteria)
     {
         // TODO Implement this method
-        return false;
+        return null;
     }
 
     @Override
@@ -415,7 +430,7 @@ public class Model
     }
 
     @Override
-    public ArrayList<IGlossaryEntry> getAllGlossEntry()
+    public ArrayList<IGlossaryEntry> getAllGlossEntries()
     {
         return myReqAn.getGlossaryEntries();
     }
@@ -481,5 +496,18 @@ public class Model
     {
         // TODO Implement this method
         return myReqAn.getProductDataByID(id);
+    }
+
+    @Override
+    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone)
+    {
+        RequirementAnalysis myReqAn = new RequirementAnalysis(title, pmName, pmMail, pmPhone);
+        return true;
+    }
+
+    @Override
+    public ArrayList<String> getAllReqIDs()
+    {
+        return myReqAn.getAllReqIDs();
     }
 }

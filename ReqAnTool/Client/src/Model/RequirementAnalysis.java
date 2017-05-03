@@ -1,6 +1,7 @@
 package Model;
 
 
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IAddition;
 import Model_Interfaces.ICostEstimation;
 import Model_Interfaces.ICustomerData;
@@ -10,6 +11,7 @@ import Model_Interfaces.INFRequirement;
 import Model_Interfaces.IProductApplication;
 import Model_Interfaces.IProductData;
 import Model_Interfaces.IQualityRequirement;
+import Model_Interfaces.IRequirement;
 import Model_Interfaces.IRequirementAnalysis;
 import Model_Interfaces.IRequirementList;
 import Model_Interfaces.ITargetDefinition;
@@ -53,12 +55,80 @@ public class RequirementAnalysis
      * @associates <{Model.QualityRequirement}>
      */
     private ArrayList<IQualityRequirement> myQualityRequirements;
-    /**
-     * @associates <{Model.WeightFactor}>
-     */
-    private ArrayList<IWeightFactor> myWeightFactors;
 
+    RequirementAnalysis(String title, String pmName, String pmMail, String pmPhone)
+    {
+        this.title = title;
+        this.customerDescription = null;
+        this.myCustomerData = new CustomerData(pmName, pmMail, pmPhone);
+        this.myAdditions = new ArrayList<IAddition>();
+        this.myCostEstimation = new CostEstimation();
+        this.myFRequirements = new AdapterList<IFRequirement>();
+        this.myGlossaryEntries = new ArrayList<IGlossaryEntry>();
+        this.myNFRequirements = new AdapterList<INFRequirement>();
+        this.myProductApplication = new ProductApplication();
+        this.myProductData = new AdapterList<IProductData>();
+        this.myQualityRequirements = new ArrayList<IQualityRequirement>();
+        this.myTargetDefinition = new TargetDefinition();
+        this.createDate = new Date();
+        this.actualState = -1.0;        
+    }
 
+    protected boolean isReqIncluded(String id)
+    {
+        boolean isIncluded = false;
+        if (myFRequirements.isIncluded(id))
+        {
+            isIncluded = true;
+        }
+        else if (myNFRequirements.isIncluded(id))
+        {
+            isIncluded = true;
+        }
+        else if (myProductData.isIncluded(id))
+        {
+            isIncluded = true;
+        }
+        return isIncluded;
+    }
+    
+    
+    protected IRequirement getAnyReqByID(String id)
+    {
+        IRequirement myReq = null;
+        if (myFRequirements.isIncluded(id))
+        {
+            myReq = myFRequirements.getReqByID(id);
+        }
+        else if (myNFRequirements.isIncluded(id))
+        {
+            myReq = myNFRequirements.getReqByID(id);
+        }
+        else if (myProductData.isIncluded(id))
+        {
+            myReq = myProductData.getReqByID(id);
+        }
+        return myReq;
+    }
+    
+    protected ArrayList<String> getAllReqIDs()
+    {
+        ArrayList<String> myIDs = new ArrayList<String>();
+        for (IRequirement req : myFRequirements)
+        {
+            myIDs.add(req.getID());
+        }
+        for (IRequirement req : myNFRequirements)
+        {
+            myIDs.add(req.getID());
+        }
+        for (IRequirement req : myProductData)
+        {
+            myIDs.add(req.getID());
+        }
+        return myIDs;
+    }
+    
     public boolean checkReference(String _alteID, String _neueID) {
         return false;
     }
@@ -96,15 +166,15 @@ public class RequirementAnalysis
     }
 
     @Override
-    public AdapterList<IFRequirement> getFRequirements()
+    public ArrayList<IFRequirement> getFRequirements()
     {
-        return myFRequirements;
+        return myFRequirements.toArrayList();
     }
 
     @Override
-    public AdapterList<INFRequirement> getNFRequirements()
+    public ArrayList<INFRequirement> getNFRequirements()
     {
-        return myNFRequirements;
+        return myNFRequirements.toArrayList();
     }
 
     @Override
@@ -114,9 +184,9 @@ public class RequirementAnalysis
     }
 
     @Override
-    public AdapterList<IProductData> getProductData()
+    public ArrayList<IProductData> getProductData()
     {
-        return myProductData;
+        return myProductData.toArrayList();
     }
 
     @Override
@@ -128,7 +198,7 @@ public class RequirementAnalysis
     @Override
     public ArrayList<IWeightFactor> getWeightFactors()
     {
-        return myWeightFactors;
+        return myCostEstimation.getWeightFactors();
     }
 
     @Override
@@ -186,7 +256,7 @@ public class RequirementAnalysis
     public IWeightFactor getWeightFactorByTitle(String title)
     {
         // TODO
-        return null;
+        return myCostEstimation.getWeightFactorByTitle(title);
     }
 
     @Override
@@ -209,5 +279,50 @@ public class RequirementAnalysis
         // TODO
         return null;
     }
+
+    protected void addAddition(String title, String description)
+    {
+        Addition myAdd = new Addition(title, description);
+        myAdditions.add(myAdd);
+    }
+
+    protected ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    {
+        int flag = 0;
+        for (String ref : references)
+        {
+            if (isReqIncluded(ref))
+            {
+                flag++;
+            }
+        }
+        if (flag < references.size())
+        {
+            return ErrorCodes.REFERENCE_NOT_SOLVED;
+        }
+        else
+        {
+            ArrayList<IRequirement> myReferences = new ArrayList<IRequirement>(); 
+            for (String ref : references)
+            {
+                myReferences.add(getAnyReqByID(ref));
+            }
+            FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
+            return ErrorCodes.NO_ERROR;
+        }
+    }
     
+
+    protected ErrorCodes addGlossaryEntry(String term, String sense, String boundary, String validity, String obscurities,
+                                String label, ArrayList<String> crossRef)
+    {
+        ErrorCodes retValue = null;
+        int flag = 0;
+        for (String ref : crossRef)
+        {
+            
+        }
+        return null;
+    }
+
 }

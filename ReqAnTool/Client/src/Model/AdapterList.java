@@ -29,4 +29,10 @@ public class AdapterList<T>
         // TODO Implement this method
         return null;
     }
+
+    @Override
+    public ArrayList<T> toArrayList()
+    {
+        return this;
+    }
 }

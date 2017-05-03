@@ -8,6 +8,12 @@ public class Addition
     private String title;
     private String description;
 
+    Addition(String title, String description)
+    {
+        this.title = title;
+        this.description = description;
+    }
+
     @Override
     public String getDescription()
     {

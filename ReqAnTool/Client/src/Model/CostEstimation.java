@@ -7,6 +7,8 @@ import Model_Interfaces.IRequirement;
 
 import Model_Interfaces.ITransactionFP;
 
+import Model_Interfaces.IWeightFactor;
+
 import java.util.ArrayList;
 
 public class CostEstimation 
@@ -22,6 +24,11 @@ public class CostEstimation
      * @associates <{Model.DataFP}>
      */
     private ArrayList<IDataFP> myDataFPs;
+
+    /**
+     * @associates <{Model.WeightFactor}>
+     */
+    private ArrayList<IWeightFactor> myWeightFactors;
 
 
     @Override
@@ -59,4 +66,18 @@ public class CostEstimation
     {
         return myTransactionFPs;
     }
+
+    @Override
+    public IWeightFactor getWeightFactorByTitle(String title)
+    {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public ArrayList<IWeightFactor> getWeightFactors()
+    {
+        return myWeightFactors;
+    }
+    
 }
