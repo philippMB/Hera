@@ -1,13 +1,37 @@
 package xml;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAttribute;
 
 public class FRequirement
 {
+  private String id;
   private String title;
   private String actor;
   private String description;
-  
+  private ArrayList<String> referenceIDs;
+
+  public void setId(String id)
+  {
+    this.id = id;
+  }
+
+  public String getId()
+  {
+    return id;
+  }
+
+  public void setReferenceIDs(ArrayList<String> referenceIDs)
+  {
+    this.referenceIDs = referenceIDs;
+  }
+
+  public ArrayList<String> getReferenceIDs()
+  {
+    return referenceIDs;
+  }
+
   public FRequirement(String title, String actor, String description)
   {
     this.title = title;

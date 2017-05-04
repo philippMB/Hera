@@ -64,6 +64,8 @@ public class CustomXMLFormat
   
   @XmlElement(name="Target_Definition")
   private TargetDefinition targetDef;
+  private ArrayList<Supplement> supplements;
+  private Title reqAnTitle;
 
   @Override
   public int createFragments(IRequirementAnalysis rawData)
@@ -342,4 +344,23 @@ public class CustomXMLFormat
     return targetDef;
   }
 
+  public void setSupplements(ArrayList<Supplement> supplements)
+  {
+    this.supplements = supplements;
+  }
+
+  public ArrayList<Supplement> getSupplements()
+  {
+    return supplements;
+  }
+
+  public void setReqAnTitle(Title reqAnTitle)
+  {
+    this.reqAnTitle = reqAnTitle;
+  }
+
+  public Title getReqAnTitle()
+  {
+    return reqAnTitle;
+  }
 }
