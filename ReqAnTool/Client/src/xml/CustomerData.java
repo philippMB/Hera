@@ -1,84 +1,84 @@
 package xml;
 
 import javax.xml.bind.annotation.XmlAttribute;
-
+// Needs refactoring in accessors
 public class CustomerData
 {
-  private String PMName;
-  private String PMPNumber;
-  private String PMEmail;
-  private String CName;
-  private String CNumber;
-  private String CEmail;
-  private String CompanyName;
-  private String CompanyStreet;
-  private int CompanyPLZ;
-  private String Company;
-  private String CompanyCountry;
+  private String pmName;
+  private String pmPNumber;
+  private String pmEMail;
+  private String cName;
+  private String cNumber;
+  private String cEMail;
+  private String companyName;
+  private String companyStreet;
+  private int companyPLZ;
+  private String companyCity;
+  private String companyCountry;
   
-  public CustomerData(String PMName, String PMPNumber, String PMEmail, String CName, String CNumber, String CEmail, String CompanyName, String CompanyStreet, int CompanyPLZ, String Company, String CompanyCountry)
+  public CustomerData(String pmName, String pmPNumber, String pmEMail, String cName, String cNumber, String cEMail, String companyName, String companyStreet, int companyPLZ, String companyCity, String companyCountry)
   {
-    this.PMName = PMName;
-    this.PMPNumber = PMPNumber;
-    this.PMEmail = PMEmail;
-    this.CName = CName;
-    this.CNumber = CNumber;
-    this.CEmail = CEmail;
-    this.CompanyName = CompanyName;
-    this.CompanyStreet = CompanyStreet;
-    this.CompanyPLZ = CompanyPLZ;
-    this.Company = Company;
-    this.CompanyCountry = CompanyCountry;
+    this.pmName = pmName;
+    this.pmPNumber = pmPNumber;
+    this.pmEMail = pmEMail;
+    this.cName = cName;
+    this.cNumber = cNumber;
+    this.cEMail = cEMail;
+    this.companyName = companyName;
+    this.companyStreet = companyStreet;
+    this.companyPLZ = companyPLZ;
+    this.companyCity = companyCity;
+    this.companyCountry = companyCountry;
   }
 
-  public String getPMName()
+  public String getPmName()
   {
-    return PMName;
+    return pmName;
   }
 
-  public String getPMPNumber()
+  public String getPmPNumber()
   {
-    return PMPNumber;
+    return pmPNumber;
   }
 
-  public String getPMEmail()
+  public String getPmEMail()
   {
-    return PMEmail;
+    return pmEMail;
   }
 
   public String getCName()
   {
-    return CName;
+    return cName;
   }
 
   public String getCNumber()
   {
-    return CNumber;
+    return cNumber;
   }
 
-  public String getCEmail()
+  public String getCEMail()
   {
-    return CEmail;
+    return cEMail;
   }
 
   public String getCompanyName()
   {
-    return CompanyName;
+    return companyName;
   }
 
   public String getCompanyStreet()
   {
-    return CompanyStreet;
+    return companyStreet;
   }
 
   public int getCompanyPLZ()
   {
-    return CompanyPLZ;
+    return companyPLZ;
   }
 
   public String getCompanyCountry()
   {
-    return CompanyCountry;
+    return companyCountry;
   }
   
   // für JavaBeans
@@ -88,63 +88,63 @@ public class CustomerData
     
   }
 
-  public void setPMName(String PMName)
+  public void setPmName(String PMName)
   {
-    this.PMName = PMName;
+    this.pmName = PMName;
   }
 
-  public void setPMPNumber(String PMPNumber)
+  public void setPmPNumber(String PMPNumber)
   {
-    this.PMPNumber = PMPNumber;
+    this.pmPNumber = PMPNumber;
   }
 
-  public void setPMEmail(String PMEmail)
+  public void setPmEMail(String PMEmail)
   {
-    this.PMEmail = PMEmail;
+    this.pmEMail = PMEmail;
   }
 
   public void setCName(String CName)
   {
-    this.CName = CName;
+    this.cName = CName;
   }
 
   public void setCNumber(String CNumber)
   {
-    this.CNumber = CNumber;
+    this.cNumber = CNumber;
   }
 
-  public void setCEmail(String CEmail)
+  public void setCEMail(String CEmail)
   {
-    this.CEmail = CEmail;
+    this.cEMail = CEmail;
   }
 
   public void setCompanyName(String CompanyName)
   {
-    this.CompanyName = CompanyName;
+    this.companyName = CompanyName;
   }
 
   public void setCompanyStreet(String CompanyStreet)
   {
-    this.CompanyStreet = CompanyStreet;
+    this.companyStreet = CompanyStreet;
   }
 
   public void setCompanyPLZ(int CompanyPLZ)
   {
-    this.CompanyPLZ = CompanyPLZ;
+    this.companyPLZ = CompanyPLZ;
   }
 
-  public void setCompany(String Company)
+  public void setCompanyCity(String Company)
   {
-    this.Company = Company;
+    this.companyCity = Company;
   }
 
-  public String getCompany()
+  public String getCompanyCity()
   {
-    return Company;
+    return companyCity;
   }
 
   public void setCompanyCountry(String CompanyCountry)
   {
-    this.CompanyCountry = CompanyCountry;
+    this.companyCountry = CompanyCountry;
   }
 }

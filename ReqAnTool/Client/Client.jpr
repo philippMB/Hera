@@ -103,6 +103,7 @@
       <list n="technologyScope">
          <string v="Java"/>
          <string v="Java-Modeling"/>
+         <string v="XML"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.compiler.OjcConfiguration">

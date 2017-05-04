@@ -41,6 +41,7 @@ public class CustomXMLFormat
   @XmlElementWrapper(name="Glossary")
   @XmlElement(name="Glossary_Entry")
   private ArrayList<GlossaryEntry> glossary;
+  
   private ArrayList<ProductData> productDataList;
   
   @XmlElementWrapper(name="Quality_Requirements")
