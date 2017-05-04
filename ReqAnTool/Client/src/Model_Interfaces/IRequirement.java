@@ -7,7 +7,6 @@ public interface IRequirement
     
     public ArrayList<IRequirement> getReferences();
 
-
-    public String[] getReferenceIDs();
+    public ArrayList<String> getReferenceIDs();
 
 }

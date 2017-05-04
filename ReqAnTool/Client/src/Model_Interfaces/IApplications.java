@@ -7,6 +7,8 @@ public interface IApplications
     public int saveReqAn(String path);
 
     public int deleteReqAn();
+    
+    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone);
 
     public boolean isReqAnUnsaved();
 
