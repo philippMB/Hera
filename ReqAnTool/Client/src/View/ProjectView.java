@@ -4,6 +4,7 @@ import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirementAnalysis;
 import View_Interfaces.IProjectView;
+import View_Interfaces.ITab;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,9 +52,10 @@ public class ProjectView
 		repaint();
 	}
 
-	protected void addTab(TabPanel newTab)
+	@Override
+	public void addTab(ITab newTab)
 	{
-		addTab(newTab.getTabName(), newTab);
+		addTab(newTab.getTabName(), newTab.getPanel());
 	}
 
 	@Override

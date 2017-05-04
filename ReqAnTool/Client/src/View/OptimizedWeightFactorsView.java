@@ -3,6 +3,7 @@ package View;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IWeightFactor;
+import View_Interfaces.IOptimizedWeightFactorsView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +15,7 @@ import java.util.Observable;
  */
 public class OptimizedWeightFactorsView
 	extends FormWindow
+	implements IOptimizedWeightFactorsView
 {
 
 	private IModelGetData myModel;

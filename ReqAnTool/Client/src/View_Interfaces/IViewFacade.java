@@ -1,5 +1,6 @@
 package View_Interfaces;
 
+import Controller_Interfaces.ViewActions;
 import Model_Interfaces.IModelGetData;
 import View.*;
 import com.sun.istack.internal.NotNull;
@@ -20,11 +21,13 @@ public interface IViewFacade
 
 	public IActualStateEditView createActualStateEditView();
 
-	public IAdditionTab createAdditionTab();
+	public IAdditionTab createAdditionTab(@NotNull IProjectView tabView);
 
 	public ICostEstimationEditView createCostEstimationEditView();
 
-	public ICustomerTab createCustomerDataView();
+	public ICostEstimationShowView createCostEstimationShowView();
+
+	public ICustomerTab createCustomerTab(@NotNull IProjectView tabView);
 
 	public IErrorDialog createErrorDialog(@NotNull String title, @NotNull String message);
 
@@ -42,10 +45,44 @@ public interface IViewFacade
 
 	public INFRequirementEditView createINFRequirementShowView(@NotNull String ID);
 
+	public IOptimizedWeightFactorsView createOptimizedWeightFactorsView();
+
 	public IProductDataEditView createProductDataAddView();
 
 	public IProductDataEditView createProductDataEditView(@NotNull String ID);
 
 	public IProductDataEditView createProductDataShowView(@NotNull String ID);
+
+	public IFRequirementTab createFRequirementTab(@NotNull IProjectView tabView);
+
+	public INFRequirementTab createNFRequirementTab(@NotNull IProjectView tabView);
+
+	public IProductDataTab createProductDataTab(@NotNull IProjectView tabView);
+
+	public IGlossaryTab createGlossaryTab(@NotNull IProjectView tabView);
+
+	public IProcessClassificationView createProcessClassificationView(@NotNull String ID);
+
+	public IProductApplicationTab createProductApplicationTab(@NotNull IProjectView tabView);
+
+	public IProductEnvironmentTab createProductEnvironmentTab(@NotNull IProjectView tabView);
+
+	public IProjectCreateView createProjectCreateView();
+
+	public IProjectTab createProjectTab(@NotNull IProjectView tabView);
+
+	public IProjectView createProjectView();
+
+	public IQualityRequirementTab createQualityRequirementTab(@NotNull IProjectView tabView);
+
+	public IStartView createStartView();
+
+	public ITargetDefinitionTab createTargetDefinitionTab(@NotNull IProjectView tabView);
+
+	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription);
+
+	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription, ViewActions[] warnButtonActions);
+
+	public IWeightFactorEditView createWeightFactorEditView();
 
 }

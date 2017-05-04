@@ -4,7 +4,7 @@ package View_Interfaces;
  * Created by phlippe on 03.05.17.
  */
 public interface ICustomerTab
-	extends IView
+	extends ITab
 {
 
 	public String getCustName();

@@ -4,7 +4,7 @@ package View_Interfaces;
  * Created by phlippe on 30.04.17.
  */
 public interface ITextTab
-	extends IView
+	extends ITab
 {
 
 	public String getDescription();

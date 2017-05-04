@@ -42,8 +42,28 @@ public class QualityRequirementTab
 		for(int row = 0; row < tableEntries.length; row++)
 		{
 			IQualityRequirement qualityReqAtRow = allQualityRequirements.get(row);
+			String valuation;
+			switch(qualityReqAtRow.getValue())
+			{
+				case NORMAL:
+					valuation = myTextBundle.getParameterText(TextNameConstants.PAR_NORMAL);
+					break;
+				case IMPORTANT:
+					valuation = myTextBundle.getParameterText(TextNameConstants.PAR_IMPORTANT);
+					break;
+				case VERYIMPORTANT:
+					valuation = myTextBundle.getParameterText(TextNameConstants.PAR_VERY_IMPORTANT);
+					break;
+				case NOTRELEVANT:
+					valuation = myTextBundle.getParameterText(TextNameConstants.PAR_NOT_RELEVANT);
+					break;
+				default:
+					valuation = "---";
+					break;
+			}
+
 			tableEntries[row][0] = qualityReqAtRow.getCriteria();
-			tableEntries[row][1] = qualityReqAtRow.getValue().toString();	//TODO: Implement ".toString()" in enum Score
+			tableEntries[row][1] = valuation;
 		}
 
 		return tableEntries;

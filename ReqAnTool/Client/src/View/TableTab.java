@@ -71,7 +71,11 @@ public abstract class TableTab
 
 	protected void updateTable()
 	{
-		myTable.setModel(new DefaultTableModel(getTableEntries(),getColumnNames()));
+		String[][] tableEntries = getTableEntries();
+		String[] columnNames = getColumnNames();
+
+		DefaultTableModel defaultTableModel = new DefaultTableModel(tableEntries,columnNames);
+		myTable.setModel(defaultTableModel);
 	}
 
 	protected abstract String[][] getTableEntries();

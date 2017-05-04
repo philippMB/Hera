@@ -1,6 +1,7 @@
 package View;
 
-import Model_Interfaces.IModelGetData;
+import Controller_Interfaces.ViewActions;
+import Model_Interfaces.*;
 import View_Interfaces.*;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
@@ -8,7 +9,8 @@ import com.sun.istack.internal.Nullable;
 import javax.swing.*;
 
 /**
- * Created by phlippe on 01.05.17.
+ * @author Phillip Lippe
+ * @see View_Interfaces.IViewFacade
  */
 public class ViewFacade
 	implements IViewFacade
@@ -24,6 +26,11 @@ public class ViewFacade
 		myModel = model;
 	}
 
+	/**
+	 *
+	 * @param model
+	 * @return
+	 */
 	public static ViewFacade getInstance(@NotNull IModelGetData model)
 	{
 		if(singletonFacade == null)
@@ -33,56 +40,83 @@ public class ViewFacade
 		return singletonFacade;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	@Override
 	public IActualStateEditView createActualStateEditView()
 	{
-		return new ActualStateEditDialog(myModel);
+		IActualStateEditView myView = new ActualStateEditDialog(myModel);
+		return myView;
 	}
 
+	/**
+	 *
+	 * @param tabView
+	 * @return
+	 */
 	@Override
-	public IAdditionTab createAdditionTab()
+	public IAdditionTab createAdditionTab(@NotNull IProjectView tabView)
 	{
-		return null;
+		IAdditionTab myTab = new AdditionTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
 	}
 
 	@Override
 	public ICostEstimationEditView createCostEstimationEditView()
 	{
-		return new CostEstimationEditView(myModel);
+		ICostEstimationEditView myView = new CostEstimationEditView(myModel);
+		return myView;
 	}
 
 	@Override
-	public ICustomerTab createCustomerDataView()
+	public ICostEstimationShowView createCostEstimationShowView()
 	{
-		return null;
+		ICostEstimationShowView myView = new CostEstimationShowView(myModel);
+		return myView;
+	}
+
+	@Override
+	public ICustomerTab createCustomerTab(@NotNull IProjectView tabView)
+	{
+		ICustomerTab myTab = new CustomerTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
 	}
 
 	@Override
 	public IErrorDialog createErrorDialog(@NotNull String title,@NotNull String message)
 	{
-		return new ErrorDialog(title, message);
+		IErrorDialog myView = new ErrorDialog(title, message);
+		return myView;
 	}
 
 	@Override
 	public IFileChooser createFileChooser(@Nullable JFrame parentView,@NotNull FileAccess accessType)
 	{
-		return new FileChooser(parentView,accessType);
+		IFileChooser myView = new FileChooser(parentView,accessType);
+		return myView;
 	}
 
 	@Override
 	public IFRequirementEditView createIFRequirementAddView()
 	{
-		return new FRequirementEditView(myModel);
+		IFRequirementEditView myView = new FRequirementEditView(myModel);
+		return myView;
 	}
 
 	@Override
-	public IFRequirementEditView createIFRequirementEditView(@NotNull String ID)
+	public IFRequirementEditView createIFRequirementEditView(@Nullable String ID)
 	{
 		IFRequirementEditView myView;
 
 		if(myModel.getFReqByID(ID) == null)
 		{
-			myView = null;
+			myView = createIFRequirementAddView();
 		}
 		else
 		{
@@ -112,17 +146,18 @@ public class ViewFacade
 	@Override
 	public INFRequirementEditView createINFRequirementAddView()
 	{
-		return new NFRequirementEditView(myModel);
+		INFRequirementEditView myView = new NFRequirementEditView(myModel);
+		return myView;
 	}
 
 	@Override
-	public INFRequirementEditView createINFRequirementEditView(@NotNull String ID)
+	public INFRequirementEditView createINFRequirementEditView(@Nullable String ID)
 	{
 		INFRequirementEditView myView;
 
 		if(myModel.getNFReqByID(ID) == null)
 		{
-			myView = null;
+			myView = createINFRequirementAddView();
 		}
 		else
 		{
@@ -150,19 +185,27 @@ public class ViewFacade
 	}
 
 	@Override
-	public IProductDataEditView createProductDataAddView()
+	public IOptimizedWeightFactorsView createOptimizedWeightFactorsView()
 	{
-		return new ProductDataEditView(myModel);
+		IOptimizedWeightFactorsView myView = new OptimizedWeightFactorsView(myModel);
+		return myView;
 	}
 
 	@Override
-	public IProductDataEditView createProductDataEditView(@NotNull String ID)
+	public IProductDataEditView createProductDataAddView()
+	{
+		IProductDataEditView myView = new ProductDataEditView(myModel);
+		return myView;
+	}
+
+	@Override
+	public IProductDataEditView createProductDataEditView(@Nullable String ID)
 	{
 		IProductDataEditView myView;
 
 		if(myModel.getProductDataByID(ID) == null)
 		{
-			myView = null;
+			myView = createProductDataAddView();
 		}
 		else
 		{
@@ -189,5 +232,149 @@ public class ViewFacade
 		return myView;
 	}
 
+	@Override
+	public IFRequirementTab createFRequirementTab(IProjectView tabView)
+	{
+		IFRequirementTab myTab = new FRequirementTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public INFRequirementTab createNFRequirementTab(IProjectView tabView)
+	{
+		INFRequirementTab myTab = new NFRequirementTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IProductDataTab createProductDataTab(IProjectView tabView)
+	{
+		IProductDataTab myTab = new ProductDataTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IGlossaryTab createGlossaryTab(IProjectView tabView)
+	{
+		IGlossaryTab myTab = new GlossaryTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IProcessClassificationView createProcessClassificationView(String ID)
+	{
+		IProcessClassificationView myView = null;
+		IRequirement myReq = myModel.getReqByID(ID);
+
+		if(myReq instanceof IFRequirement)
+		{
+			myView = new ProcessClassificationFReqView(myModel, ID);
+		}
+		if(myReq instanceof INFRequirement)
+		{
+			myView = new ProcessClassificationNFReqView(myModel, ID);
+		}
+		if(myReq instanceof IProductData)
+		{
+			myView = new ProcessClassificationProdDataView(myModel, ID);
+		}
+
+		return myView;
+	}
+
+	@Override
+	public IProductApplicationTab createProductApplicationTab(IProjectView tabView)
+	{
+		IProductApplicationTab myTab = new ProductApplicationTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IProductEnvironmentTab createProductEnvironmentTab(IProjectView tabView)
+	{
+		IProductEnvironmentTab myTab = new ProductEnvironmentTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IProjectCreateView createProjectCreateView()
+	{
+		IProjectCreateView myView = new ProjectCreateView(myModel);
+		return myView;
+	}
+
+	@Override
+	public IProjectTab createProjectTab(IProjectView tabView)
+	{
+		IProjectTab myTab = new ProjectTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IProjectView createProjectView()
+	{
+		IProjectView myView = new ProjectView(myModel);
+		return myView;
+	}
+
+	@Override
+	public IQualityRequirementTab createQualityRequirementTab(IProjectView tabView)
+	{
+		IQualityRequirementTab myTab = new QualityRequirementTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IStartView createStartView()
+	{
+		IStartView myView = new StartView();
+		return myView;
+	}
+
+	@Override
+	public ITargetDefinitionTab createTargetDefinitionTab(IProjectView tabView)
+	{
+		ITargetDefinitionTab myTab = new TargetDefinitionTab(myModel);
+		tabView.addTab(myTab);
+
+		return myTab;
+	}
+
+	@Override
+	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription)
+	{
+		IWarningDialog myView = new WarningDialog(warnTitle, warnDescription);
+		return myView;
+	}
+
+	@Override
+	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription, ViewActions[] warnButtonActions)
+	{
+		IWarningDialog myView = new WarningDialog(warnTitle, warnDescription, warnButtonActions);
+		return myView;
+	}
+
+	@Override
+	public IWeightFactorEditView createWeightFactorEditView()
+	{
+		IWeightFactorEditView myView = new WeightFactorEditView(myModel);
+		return myView;
+	}
 
 }

@@ -3,6 +3,7 @@ package View;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import Model_Interfaces.IModelGetData;
+import View_Interfaces.ITab;
 import View_Interfaces.IView;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.awt.event.ActionListener;
  */
 public abstract class TabPanel
 	extends JPanel
-	implements IView
+	implements ITab
 {
 
 	protected ViewActions[] myButtonActions;
@@ -74,6 +75,7 @@ public abstract class TabPanel
 		}
 	}
 
+	@Override
 	public String getTabName()
 	{
 		return tabName;
@@ -84,6 +86,12 @@ public abstract class TabPanel
 	{
 		setVisible(false);
 		getParent().remove(this);
+	}
+
+	@Override
+	public JPanel getPanel()
+	{
+		return this;
 	}
 
 	protected abstract void init();

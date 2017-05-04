@@ -6,4 +6,7 @@ package View_Interfaces;
 public interface IProjectView
 	extends IView
 {
+
+	public void addTab(ITab newTab);
+
 }

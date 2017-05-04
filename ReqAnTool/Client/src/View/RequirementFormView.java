@@ -132,28 +132,35 @@ public abstract class RequirementFormView
 
 	protected void updateAll()
 	{
-		if(isEditable)
+		if(!isReqDeleted())
 		{
-			checkGeneratedID();
+			updateFields();
+			updateTable();
 		}
-		updateFields();
-		updateTable();
+		else
+		{
+			destruct();
+		}
 	}
 
-	//TODO: GENERATE ID gehört in den Controller und nicht in die View!
-	protected void checkGeneratedID()
+	private boolean isReqDeleted()
 	{
-		/*
-		if(isEditable)
+		boolean isReqDeleted;
+		IRequirement myReq = getMyRequirement();
+
+		if(myReq != null)
 		{
-			String enteredID = getIDEntry();
-			if(enteredID.equals("") ||
-					(getMyRequirement() == null && myModel.getReqByID(enteredID)==null))
-			{
-				setIDEntry(myModel.generateNewID());
-			}
+			String ID = myReq.getID();
+			IRequirement newReq = myModel.getReqByID(ID);	//TODO: Ersetzen mit Include-Anweisung
+
+			isReqDeleted = (newReq == null);
 		}
-		*/
+		else
+		{
+			isReqDeleted = false;
+		}
+
+		return isReqDeleted;
 	}
 
 	protected void updateTable()
@@ -164,6 +171,7 @@ public abstract class RequirementFormView
 
 			for(String ID: tableEntries)
 			{
+				//TODO: IModelGetData-Interface mit einer Include-Anweisung versehen
 				/*
 				if(myModel.getReqByID(ID) == null)
 				{
