@@ -1,21 +1,6 @@
 package Model;
 
-import Model_Interfaces.ErrorCodes;
-import Model_Interfaces.IAddition;
-import Model_Interfaces.IApplications;
-import Model_Interfaces.ICostEstimation;
-import Model_Interfaces.ICustomerData;
-import Model_Interfaces.IFRequirement;
-import Model_Interfaces.IGlossaryEntry;
-import Model_Interfaces.IModelGetData;
-import Model_Interfaces.IModelSetData;
-import Model_Interfaces.INFRequirement;
-import Model_Interfaces.IProductApplication;
-import Model_Interfaces.IProductData;
-import Model_Interfaces.IQualityRequirement;
-import Model_Interfaces.IRequirementAnalysis;
-import Model_Interfaces.ITargetDefinition;
-import Model_Interfaces.IWeightFactor;
+import Model_Interfaces.*;
 
 import java.util.ArrayList;
 
@@ -38,8 +23,7 @@ public class Model
         ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
         if (myReqAn.getAdditions().size() <= 100)
         {
-            retValue = ErrorCodes.NO_ERROR;
-            myReqAn.addAddition(title, description);
+            retValue = myReqAn.addAddition(title, description);
         }
         return retValue;
     }
@@ -97,10 +81,14 @@ public class Model
     }
 
     @Override
-    public ErrorCodes addQualReq(String criteria, String value)
+    public ErrorCodes addQualReq(String criteria, Score value)
     {
-        // TODO Implement this method
-        return null;
+        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+        if (myReqAn.getFRequirements().size() <= 30)
+        {
+            retValue = myReqAn.addQualReq(criteria, value);
+        }
+        return retValue;
     }
 
     @Override
@@ -183,8 +171,7 @@ public class Model
     @Override
     public ErrorCodes editAddition(String title, String description)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editAddition(title, description);
     }
 
     @Override
@@ -192,96 +179,105 @@ public class Model
                                 String companyCountry, String custName, String custMail, String custPhone,
                                 String pmName, String pmMail, String pmPhone)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editCustData(companyName, companyCity, companyStreet, zip, companyCountry, custName,
+                                custMail, custPhone, pmName, pmMail, pmPhone);
     }
 
     @Override
     public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
                             ArrayList<String> references)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editFReq(oldID, id, title, actor, description, references);
     }
 
     @Override
     public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                   String obscurities, String label, ArrayList<String> crossRef)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editGlossEntry(oldTerm, term, sense, boundary, validity, obscurities, label, crossRef);
     }
 
     @Override
     public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description,
                              ArrayList<String> references)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editNFReq(oldID, id, title, actor, description, references);
     }
 
     @Override
     public ErrorCodes editProdApp(String description)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editProdApp(description);
     }
 
     @Override
     public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                 ArrayList<String> references)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editProdData(oldID, id, content, attribute, maxCount, references);
     }
 
     @Override
-    public ErrorCodes editQualReq(String oldCriteria, String criteria, String value)
+    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editQualReq(oldCriteria, criteria, value);
     }
 
     @Override
     public ErrorCodes editTargetDef(String description)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.editTargetDef(description);
     }
 
     @Override
     public boolean existsActualState()
     {
-        // TODO Implement this method
-        return false;
+        return myReqAn.getActualState() == -1.0;
     }
 
     @Override
     public boolean existsFPCount()
     {
-        // TODO Implement this method
-        return false;
+        if (myReqAn.getCostEstimation() != null)
+        {
+            return myReqAn.getCostEstimation().getFunctionPoints() == -1.0;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
     public boolean existsID(String id)
     {
-        // TODO Implement this method
-        return false;
+        return myReqAn.isReqIncluded(id);
     }
 
     @Override
     public boolean existsManMonthCount()
     {
-        // TODO Implement this method
-        return false;
+        if (myReqAn.getCostEstimation() != null)
+        {
+            return myReqAn.getCostEstimation().getManMonth() == -1.0;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
     public boolean existsOptWeightFactor()
     {
-        // TODO Implement this method
-        return false;
+        if (myConfig != null)
+        {
+            return myConfig.getOptWeightFactors() != null;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
@@ -329,8 +325,7 @@ public class Model
     @Override
     public boolean isIDUnique(String id)
     {
-        // TODO Implement this method
-        return false;
+        return myReqAn.isIDunique(id);
     }
 
     @Override

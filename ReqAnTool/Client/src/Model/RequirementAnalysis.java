@@ -1,21 +1,7 @@
 package Model;
 
 
-import Model_Interfaces.ErrorCodes;
-import Model_Interfaces.IAddition;
-import Model_Interfaces.ICostEstimation;
-import Model_Interfaces.ICustomerData;
-import Model_Interfaces.IFRequirement;
-import Model_Interfaces.IGlossaryEntry;
-import Model_Interfaces.INFRequirement;
-import Model_Interfaces.IProductApplication;
-import Model_Interfaces.IProductData;
-import Model_Interfaces.IQualityRequirement;
-import Model_Interfaces.IRequirement;
-import Model_Interfaces.IRequirementAnalysis;
-import Model_Interfaces.IRequirementList;
-import Model_Interfaces.ITargetDefinition;
-import Model_Interfaces.IWeightFactor;
+import Model_Interfaces.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,10 +13,10 @@ public class RequirementAnalysis
     private String title;
     private String customerDescription;
     private double actualState;    
-    private IProductApplication myProductApplication;
-    private ITargetDefinition myTargetDefinition;
-    private ICostEstimation myCostEstimation;
-    private ICustomerData myCustomerData;
+    private ProductApplication myProductApplication;
+    private TargetDefinition myTargetDefinition;
+    private CostEstimation myCostEstimation;
+    private CustomerData myCustomerData;
     /**
      * @associates <{Model.FRequirement}>
      */
@@ -46,29 +32,29 @@ public class RequirementAnalysis
     /**
      * @associates <{Model.Addition}>
      */
-    private ArrayList<IAddition> myAdditions;
+    private AdditionList<IAddition> myAdditions;
     /**
      * @associates <{Model.GlossaryEntry}>
      */
-    private ArrayList<IGlossaryEntry> myGlossaryEntries;
+    private GlossaryList<IGlossaryEntry> myGlossaryEntries;
     /**
      * @associates <{Model.QualityRequirement}>
      */
-    private ArrayList<IQualityRequirement> myQualityRequirements;
+    private QualityRequirementList<IQualityRequirement> myQualityRequirements;
 
     RequirementAnalysis(String title, String pmName, String pmMail, String pmPhone)
     {
         this.title = title;
         this.customerDescription = null;
         this.myCustomerData = new CustomerData(pmName, pmMail, pmPhone);
-        this.myAdditions = new ArrayList<IAddition>();
-        this.myCostEstimation = new CostEstimation();
+        this.myAdditions = new AdditionList<IAddition>();
+        this.myCostEstimation = null;
         this.myFRequirements = new RequirementList<IFRequirement>();
-        this.myGlossaryEntries = new ArrayList<IGlossaryEntry>();
+        this.myGlossaryEntries = new GlossaryList<IGlossaryEntry>();
         this.myNFRequirements = new RequirementList<INFRequirement>();
         this.myProductApplication = new ProductApplication();
         this.myProductData = new RequirementList<IProductData>();
-        this.myQualityRequirements = new ArrayList<IQualityRequirement>();
+        this.myQualityRequirements = new QualityRequirementList<IQualityRequirement>();
         this.myTargetDefinition = new TargetDefinition();
         this.createDate = new Date();
         this.actualState = -1.0;        
@@ -91,10 +77,25 @@ public class RequirementAnalysis
         }
         return isIncluded;
     }
-    
-    protected boolean solveReferences(ArrayList<String> references)
+
+    protected boolean solveGlossaryTerms(ArrayList<String> terms)
     {
-        boolean solved = true;
+        int flag = 0;
+        for (String term : terms)
+        {
+            for (IGlossaryEntry entry : myGlossaryEntries)
+            {
+                if (term.equals(entry.getTerm()))
+                {
+                    flag++;
+                }
+            }
+        }
+        return flag == terms.size();
+    }
+    
+    protected boolean solveReqReferences(ArrayList<String> references)
+    {
         int flag = 0;
         for (String ref : references)
         {
@@ -103,11 +104,7 @@ public class RequirementAnalysis
                 flag++;
             }
         }
-        if (flag < references.size())
-        {
-            solved = false;
-        }
-        return solved;
+        return flag == references.size();
     }
     
     protected IRequirement getAnyReqByID(String id)
@@ -150,7 +147,7 @@ public class RequirementAnalysis
         return false;
     }
 
-    public boolean isIDunique(String _id) {
+    public boolean isIDunique(String id) {
         return true;
     }
 
@@ -296,21 +293,22 @@ public class RequirementAnalysis
         return null;
     }
 
-    protected void addAddition(String title, String description)
+    ErrorCodes addAddition(String title, String description)
     {
         Addition myAdd = new Addition(title, description);
         myAdditions.add(myAdd);
+        return ErrorCodes.NO_ERROR;
     }
 
-    protected ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        if (!solveReferences(references))
+        if (!solveReqReferences(references))
         {
-            return ErrorCodes.REFERENCE_NOT_SOLVED;
+            return ErrorCodes.REFERENCES_NOT_SOLVED;
         }
         else
         {
-            ArrayList<IRequirement> myReferences = new ArrayList<IRequirement>(); 
+            RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
             for (String ref : references)
             {
                 myReferences.add(getAnyReqByID(ref));
@@ -326,24 +324,14 @@ public class RequirementAnalysis
                                 String label, ArrayList<String> crossRef)
     {
         ErrorCodes retValue = null;
-        int flag = 0;
-        for (String ref : crossRef)
+
+        if (!solveGlossaryTerms(crossRef))
         {
-            for (IGlossaryEntry entry : myGlossaryEntries)
-            {
-                if (ref.equals(entry.getTerm()))
-                {
-                    flag++;
-                }
-            }
-        }
-        if (flag < crossRef.size())
-        {
-            return ErrorCodes.REFERENCE_NOT_SOLVED;
+            return ErrorCodes.REFERENCES_NOT_SOLVED;
         }
         else
         {
-            ArrayList<IGlossaryEntry> myCrossRef = new ArrayList<IGlossaryEntry>(); 
+            GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
             for (String ref : crossRef)
             {
                 myCrossRef.add(getGlossaryEntriesByTerm(ref));
@@ -356,13 +344,13 @@ public class RequirementAnalysis
 
     ErrorCodes addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        if (!solveReferences(references))
+        if (!solveReqReferences(references))
         {
-            return ErrorCodes.REFERENCE_NOT_SOLVED;
+            return ErrorCodes.REFERENCES_NOT_SOLVED;
         }
         else
         {
-            ArrayList<IRequirement> myReferences = new ArrayList<IRequirement>(); 
+            RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
             for (String ref : references)
             {
                 myReferences.add(getAnyReqByID(ref));
@@ -376,13 +364,13 @@ public class RequirementAnalysis
     ErrorCodes addProductData(String id, String content, String attribute, String maxCount,
                               ArrayList<String> references)
     {
-        if (!solveReferences(references))
+        if (!solveReqReferences(references))
         {
-            return ErrorCodes.REFERENCE_NOT_SOLVED;
+            return ErrorCodes.REFERENCES_NOT_SOLVED;
         }
         else
         {
-            ArrayList<IRequirement> myReferences = new ArrayList<IRequirement>(); 
+            RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
             for (String ref : references)
             {
                 myReferences.add(getAnyReqByID(ref));
@@ -393,4 +381,187 @@ public class RequirementAnalysis
         }
     }
 
+    protected ErrorCodes addQualReq(String criteria, Score value)
+    {
+        IQualityRequirement myQualReq = new QualityRequirement(criteria, value);
+        myQualityRequirements.add(myQualReq);
+        return ErrorCodes.NO_ERROR;
+    }
+
+    protected ErrorCodes editAddition(String title, String description)
+    {
+        Addition myAdd = myAdditions.getAdditionByTerm(title);
+        myAdd.edit(title, description);
+        return ErrorCodes.NO_ERROR;
+    }
+
+    ErrorCodes editCustData(String companyName, String companyCity, String companyStreet, int zip, String companyCountry,
+                            String custName, String custMail, String custPhone, String pmName, String pmMail, String pmPhone)
+    {
+        return myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
+                                    custMail, custPhone, pmName, pmMail, pmPhone);
+    }
+
+    ErrorCodes editFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references)
+    {
+        if (myFRequirements.isIncluded(oldID))
+        {
+            IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
+            if (isIDunique(id))
+            {
+                if (solveReqReferences(references))
+                {
+                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                    FRequirement myFReq = (FRequirement)myIFReq;
+                    for (String ref : references)
+                    {
+                        myReferences.add(getAnyReqByID(ref));
+                    }
+                    return myFReq.edit(id, title, actor, description, myReferences);
+                }
+                else
+                {
+                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                }
+            }
+            else
+            {
+                return ErrorCodes.DUPLICATE;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity, String obscurities, String label, ArrayList<String> crossRef)
+    {
+        if (myGlossaryEntries.isIncluded(oldTerm))
+        {
+            IGlossaryEntry myIEntry = myGlossaryEntries.getEntryByTerm(oldTerm);
+            if (!myGlossaryEntries.isIncluded(term)) // Test for duplicate Term in GlossaryEntries
+            {
+                if (solveGlossaryTerms(crossRef))
+                {
+                    GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
+                    GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
+                    for (String ref : crossRef)
+                    {
+                        myCrossRef.add(myGlossaryEntries.getEntryByTerm(ref));
+                    }
+                    return myEntry.edit(term, sense, boundary, validity, obscurities, label, myCrossRef);
+                }
+                else
+                {
+                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                }
+            }
+            else
+            {
+                return ErrorCodes.DUPLICATE;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references)
+    {
+        if (myNFRequirements.isIncluded(oldID))
+        {
+            INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
+            if (isIDunique(id))
+            {
+                if (solveReqReferences(references))
+                {
+                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                    NFRequirement myNFReq = (NFRequirement)myINFReq;
+                    for (String ref : references)
+                    {
+                        myReferences.add(getAnyReqByID(ref));
+                    }
+                    return myNFReq.edit(id, title, actor, description, myReferences);
+                }
+                else
+                {
+                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                }
+            }
+            else
+            {
+                return ErrorCodes.DUPLICATE;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes editProdApp(String description)
+    {
+        return myProductApplication.edit(description);
+    }
+
+    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount, ArrayList<String> references)
+    {
+        if (myProductData.isIncluded(oldID))
+        {
+            IProductData myIProdData = myProductData.getReqByID(oldID);
+            if (isIDunique(id))
+            {
+                if (solveReqReferences(references))
+                {
+                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                    ProductData myProdData = (ProductData) myIProdData;
+                    for (String ref : references)
+                    {
+                        myReferences.add(getAnyReqByID(ref));
+                    }
+                    return myProdData.edit(id, content, attribute, maxCount, myReferences);
+                }
+                else
+                {
+                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                }
+            }
+            else
+            {
+                return ErrorCodes.DUPLICATE;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value)
+    {
+        if (myQualityRequirements.isIncluded(oldCriteria))
+        {
+            IQualityRequirement myIQualReq = myQualityRequirements.getQualReqByCriteria(oldCriteria);
+            if (!myQualityRequirements.isIncluded(criteria)) // Test for duplicate criteria
+            {
+                QualityRequirement myQualReq = (QualityRequirement) myIQualReq;
+                return myQualReq.edit(criteria, value);
+            }
+            else
+            {
+                return ErrorCodes.DUPLICATE;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes editTargetDef(String description)
+    {
+        return myTargetDefinition.edit(description);
+    }
 }

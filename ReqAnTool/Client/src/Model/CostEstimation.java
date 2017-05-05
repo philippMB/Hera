@@ -30,6 +30,14 @@ public class CostEstimation
      */
     private ArrayList<IWeightFactor> myWeightFactors;
 
+    public CostEstimation()
+    {
+        this.FPcount = -1.0;
+        this.manMonthCount = -1.0;
+        myDataFPs = new ArrayList<IDataFP>();
+        myTransactionFPs = new ArrayList<ITransactionFP>();
+        myWeightFactors = new ArrayList<IWeightFactor>();
+    }
 
     @Override
     public void calculateFP()
@@ -71,6 +79,30 @@ public class CostEstimation
     public IWeightFactor getWeightFactorByTitle(String title)
     {
         // TODO
+        return null;
+    }
+
+    @Override
+    public boolean hasIDDataFP(String id)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean hasIDTransactionFP(String id)
+    {
+        return false;
+    }
+
+    @Override
+    public IDataFP getDataFPByID(String id)
+    {
+        return null;
+    }
+
+    @Override
+    public ITransactionFP getTransactionFPByID(String id)
+    {
         return null;
     }
 

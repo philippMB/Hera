@@ -1,5 +1,6 @@
 package Model;
 
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IProductData;
 
 import Model_Interfaces.IRequirement;
@@ -16,7 +17,7 @@ public class ProductData
     private String attribute;
     private String maxCount;
 
-    ProductData(String id, String content, String attribute, String maxCount, ArrayList<IRequirement> references)
+    ProductData(String id, String content, String attribute, String maxCount, RequirementList<IRequirement> references)
     {
         super(id, references);
         this.content = content;
@@ -41,5 +42,13 @@ public class ProductData
     {
         return maxCount;
     }
-    
+
+    public ErrorCodes edit(String id, String content, String attribute, String maxCount, RequirementList<IRequirement> myReferences)
+    {
+        super.edit(id, myReferences);
+        this.content = content;
+        this.attribute = attribute;
+        this.maxCount = maxCount;
+        return ErrorCodes.NO_ERROR;
+    }
 }

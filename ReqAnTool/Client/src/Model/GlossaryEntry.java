@@ -1,8 +1,7 @@
 package Model;
 
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IGlossaryEntry;
-
-import Model_Interfaces.IRequirement;
 
 import java.util.ArrayList;
 
@@ -19,10 +18,10 @@ public class GlossaryEntry
     /**
      * @associates <{Model.GlossaryEntry}>
      */
-    private ArrayList<IGlossaryEntry> crossReferences;
+    private GlossaryList<IGlossaryEntry> crossReferences;
 
     GlossaryEntry(String term, String sense, String boundary, String validity, String obscurities, String label,
-                  ArrayList<IGlossaryEntry> crossRef)
+                  GlossaryList<IGlossaryEntry> crossRef)
     {
         this.term = term;
         this.sense = sense;
@@ -84,5 +83,17 @@ public class GlossaryEntry
     public ArrayList<IGlossaryEntry> getReferences()
     {
         return crossReferences;
+    }
+
+    public ErrorCodes edit(String term, String sense, String boundary, String validity, String obscurities, String label, GlossaryList<IGlossaryEntry> crossRef)
+    {
+        this.term = term;
+        this.sense = sense;
+        this.boundary = boundary;
+        this.validity = validity;
+        this.obscurities = obscurities;
+        this.label = label;
+        this.crossReferences = crossRef;
+        return ErrorCodes.NO_ERROR;
     }
 }

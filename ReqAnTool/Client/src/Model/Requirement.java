@@ -13,9 +13,9 @@ public abstract class Requirement
     /**
      * @associates <{Model.Requirement}>
      */
-    private ArrayList<IRequirement> references;
+    private RequirementList<IRequirement> references;
 
-    Requirement(String id, ArrayList<IRequirement> references)
+    Requirement(String id, RequirementList<IRequirement> references)
     {
         this.id = id;
         this.references = references;
@@ -29,7 +29,7 @@ public abstract class Requirement
     }
 
     @Override
-    public ArrayList<IRequirement> getReferences()
+    public RequirementList<IRequirement> getReferences()
     {
         return references;
     }
@@ -45,4 +45,9 @@ public abstract class Requirement
         return ids;
     }
 
+    public void edit(String id, RequirementList<IRequirement> references)
+    {
+        this.id = id;
+        this.references = references;
+    }
 }
