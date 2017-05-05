@@ -11,7 +11,7 @@ public interface IDataFP
     
     public int getRET();
     
-    public IRequirement getReference();
+    public IRequirement getRequirement();
     
     public ClassOfDataFP getType();
 

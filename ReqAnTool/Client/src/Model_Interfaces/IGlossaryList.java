@@ -2,7 +2,7 @@ package Model_Interfaces;
 
 import java.util.ArrayList;
 
-public interface IGlossaryList
+public interface IGlossaryList<IGlossaryEntry>
 {
     
     public boolean add(IGlossaryEntry myEntry);
