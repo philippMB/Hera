@@ -1,13 +1,6 @@
 package Model;
 
-import Model_Interfaces.ICostEstimation;
-
-import Model_Interfaces.IDataFP;
-import Model_Interfaces.IRequirement;
-
-import Model_Interfaces.ITransactionFP;
-
-import Model_Interfaces.IWeightFactor;
+import Model_Interfaces.*;
 
 import java.util.ArrayList;
 
@@ -111,5 +104,39 @@ public class CostEstimation
     {
         return myWeightFactors;
     }
-    
+
+    public ArrayList<ErrorCodes> rateWeightFactor(ArrayList<Integer> values)
+    {
+        ArrayList<ErrorCodes> retValue = new AdditionList<ErrorCodes>();
+        if (values.size() == getWeightFactors().size())
+        {
+            int i = 0;
+            WeightFactor tmp;
+            for (Integer value : values)
+            {
+                tmp = (WeightFactor) myWeightFactors.get(i);
+                retValue.add(tmp.setValue(value));
+            }
+            return retValue;
+        }
+        else
+        {
+            retValue.add(ErrorCodes.INVALID_ARGUMENT);
+            return retValue;
+        }
+    }
+
+    public ErrorCodes setDataFP(ClassOfDataFP type, IRequirement requirement, int det, int ret)
+    {
+        DataFP myDataFP = new DataFP(type, requirement, det, ret);
+        myDataFPs.add(myDataFP);
+        return ErrorCodes.NO_ERROR;
+    }
+
+    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr)
+    {
+        TransactionFP myTransactionFP = new TransactionFP(type, reference, det, ftr);
+        myTransactionFPs.add(myTransactionFP);
+        return ErrorCodes.NO_ERROR;
+    }
 }

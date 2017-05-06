@@ -96,4 +96,9 @@ public class GlossaryEntry
         this.crossReferences = crossRef;
         return ErrorCodes.NO_ERROR;
     }
+
+    public void remReference(String term)
+    {
+        crossReferences.remove(crossReferences.getEntryByTerm(term));
+    }
 }

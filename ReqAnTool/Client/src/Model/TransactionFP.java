@@ -10,7 +10,15 @@ public class TransactionFP
     private ClassOfTransactionFP type;
     private int det;
     private int ftr;
-    private Requirement reference;
+    private IRequirement reference;
+
+    public TransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr)
+    {
+        this.type = type;
+        this.reference = reference;
+        this.det = det;
+        this.ftr = ftr;
+    }
 
     @Override
     public int getDET()
@@ -31,7 +39,7 @@ public class TransactionFP
     }
 
     @Override
-    public IRequirement getReference()
+    public IRequirement getRequirement()
     {
         return reference;
     }

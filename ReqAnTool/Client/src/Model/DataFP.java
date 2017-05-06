@@ -11,7 +11,15 @@ public class DataFP
     private ClassOfDataFP type;
     private int det;
     private int ret;
-    private Requirement reference;
+    private IRequirement reference;
+
+    public DataFP(ClassOfDataFP type, IRequirement requirement, int det, int ret)
+    {
+        this.type = type;
+        this.det = det;
+        this.ret = ret;
+        this.reference = requirement;
+    }
 
     @Override
     public int getDET()
@@ -26,7 +34,7 @@ public class DataFP
     }
 
     @Override
-    public IRequirement getReference()
+    public IRequirement getRequirement()
     {
         return reference;
     }
@@ -34,7 +42,6 @@ public class DataFP
     @Override
     public ClassOfDataFP getType()
     {
-        // TODO returntype
         return type;
     }
 }

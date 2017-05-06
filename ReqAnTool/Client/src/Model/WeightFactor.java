@@ -1,5 +1,6 @@
 package Model;
 
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IWeightFactor;
 
 public class WeightFactor
@@ -25,5 +26,18 @@ public class WeightFactor
     public int getMaxValue()
     {
         return maxValue;
+    }
+
+    public ErrorCodes setValue(Integer value)
+    {
+        if (value >= 0 && value <= maxValue)
+        {
+            this.score = value;
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.INVALID_ARGUMENT;
+        }
     }
 }

@@ -14,7 +14,7 @@ public interface IAdditionList<IAddition>
 
     public boolean isIncluded(String term);
 
-    public Addition getAdditionByTerm(String term);
+    public Addition getAdditionByTitle(String term);
 
     public ArrayList<IAddition> toArrayList();
 

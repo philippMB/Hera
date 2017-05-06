@@ -19,7 +19,7 @@ public class AdditionList<IAddition>
     }
 
     @Override
-    public Addition getAdditionByTerm(String term)
+    public Addition getAdditionByTitle(String term)
     {
         return null;
     }
