@@ -106,6 +106,138 @@ public class RequirementAnalysis
         }
         return flag == references.size();
     }
+
+    public boolean isReferenceOnID(String id)
+    {
+        boolean referenced = false;
+        for (IFRequirement myIFReq : myFRequirements)
+        {
+            FRequirement myFReq = (FRequirement)myIFReq;
+            for (String refID : myFReq.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    referenced = true;
+                }
+            }
+        }
+        for (INFRequirement myINFReq : myNFRequirements)
+        {
+            FRequirement myNFReq = (FRequirement)myINFReq;
+            for (String refID : myNFReq.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    referenced = true;
+                }
+            }
+        }
+        for (IProductData myIProdData : myProductData)
+        {
+            ProductData myProdData = (ProductData)myIProdData;
+            for (String refID : myProdData.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    referenced = true;
+                }
+            }
+        }
+        return referenced;
+    }
+
+    private void refreshReferences(String oldID, String id)
+    {
+        IRequirement newReq = getAnyReqByID(id);
+        for (IFRequirement myIFReq : myFRequirements)
+        {
+            FRequirement myFReq = (FRequirement)myIFReq;
+            for (String refID : myFReq.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    myFReq.refreshReference(oldID, newReq);
+                }
+            }
+        }
+        for (INFRequirement myINFReq : myNFRequirements)
+        {
+            FRequirement myNFReq = (FRequirement)myINFReq;
+            for (String refID : myNFReq.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    myNFReq.refreshReference(oldID, newReq);
+                }
+            }
+        }
+        for (IProductData myIProdData : myProductData)
+        {
+            ProductData myProdData = (ProductData)myIProdData;
+            for (String refID : myProdData.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    myProdData.refreshReference(oldID, newReq);
+                }
+            }
+        }
+    }
+
+    private void removeReferences(String id)
+    {
+        for (IFRequirement myIFReq : myFRequirements)
+        {
+            FRequirement myFReq = (FRequirement)myIFReq;
+            for (String refID : myFReq.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    myFReq.remReference(id);
+                }
+            }
+        }
+        for (INFRequirement myINFReq : myNFRequirements)
+        {
+            FRequirement myNFReq = (FRequirement)myINFReq;
+            for (String refID : myNFReq.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    myNFReq.remReference(id);
+                }
+            }
+        }
+        for (IProductData myIProdData : myProductData)
+        {
+            ProductData myProdData = (ProductData)myIProdData;
+            for (String refID : myProdData.getReferenceIDs())
+            {
+                if (refID.equals(id))
+                {
+                    myProdData.remReference(id);
+                }
+            }
+        }
+    }
+
+    private boolean ifTermReferencedRemTerm(String term)
+    {
+        boolean referenced = false;
+        for (IGlossaryEntry myIEntry : myGlossaryEntries)
+        {
+            GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
+            for (String ref : myEntry.getReferenceTerms())
+            {
+                if (ref.equals(term))
+                {
+                    myEntry.remReference(term);
+                    referenced = true;
+                }
+            }
+        }
+        return referenced;
+    }
     
     protected IRequirement getAnyReqByID(String id)
     {
@@ -142,17 +274,17 @@ public class RequirementAnalysis
         }
         return myIDs;
     }
-    
-    public boolean checkReference(String _alteID, String _neueID) {
-        return false;
-    }
 
-    public boolean isIDunique(String id) {
-        return true;
-    }
-
-    public boolean optimizeWeightFactor() {
-        return false;
+    public boolean isIDunique(String id)
+    {
+        if (getAnyReqByID(id) == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
@@ -194,7 +326,7 @@ public class RequirementAnalysis
     @Override
     public ArrayList<IGlossaryEntry> getGlossaryEntries()
     {
-        return myGlossaryEntries;
+        return myGlossaryEntries.toArrayList();
     }
 
     @Override
@@ -206,7 +338,7 @@ public class RequirementAnalysis
     @Override
     public ArrayList<IQualityRequirement> getQualityRequirements()
     {
-        return myQualityRequirements;
+        return myQualityRequirements.toArrayList();
     }
 
     @Override
@@ -254,43 +386,37 @@ public class RequirementAnalysis
     @Override
     public IQualityRequirement getQualityRequirementsByCriteria(String criteria)
     {
-        // TODO
-        return null;
+        return myQualityRequirements.getQualReqByCriteria(criteria);
     }
 
     @Override
     public IAddition getAdditionByTitle(String title)
     {
-        // TODO
-        return null;
+        return myAdditions.getAdditionByTitle(title);
     }
 
     @Override
     public IWeightFactor getWeightFactorByTitle(String title)
     {
-        // TODO
         return myCostEstimation.getWeightFactorByTitle(title);
     }
 
     @Override
     public IFRequirement getFRequirementByID(String id)
     {
-        // TODO
-        return null;
+        return myFRequirements.getReqByID(id);
     }
 
     @Override
     public INFRequirement getNFRequirementByID(String id)
     {
-        // TODO
-        return null;
+        return myNFRequirements.getReqByID(id);
     }
 
     @Override
     public IProductData getProductDataByID(String id)
     {
-        // TODO
-        return null;
+        return myProductData.getReqByID(id);
     }
 
     ErrorCodes addAddition(String title, String description)
@@ -390,7 +516,7 @@ public class RequirementAnalysis
 
     protected ErrorCodes editAddition(String title, String description)
     {
-        Addition myAdd = myAdditions.getAdditionByTerm(title);
+        Addition myAdd = myAdditions.getAdditionByTitle(title);
         myAdd.edit(title, description);
         return ErrorCodes.NO_ERROR;
     }
@@ -417,7 +543,12 @@ public class RequirementAnalysis
                     {
                         myReferences.add(getAnyReqByID(ref));
                     }
-                    return myFReq.edit(id, title, actor, description, myReferences);
+                    ErrorCodes retValue = myFReq.edit(id, title, actor, description, myReferences);
+                    if (isReferenceOnID(oldID))
+                    {
+                        refreshReferences(oldID, id);
+                    }
+                    return retValue;
                 }
                 else
                 {
@@ -483,7 +614,12 @@ public class RequirementAnalysis
                     {
                         myReferences.add(getAnyReqByID(ref));
                     }
-                    return myNFReq.edit(id, title, actor, description, myReferences);
+                    ErrorCodes retValue = myNFReq.edit(id, title, actor, description, myReferences);
+                    if (isReferenceOnID(oldID))
+                    {
+                        refreshReferences(oldID, id);
+                    }
+                    return retValue;
                 }
                 else
                 {
@@ -521,7 +657,12 @@ public class RequirementAnalysis
                     {
                         myReferences.add(getAnyReqByID(ref));
                     }
-                    return myProdData.edit(id, content, attribute, maxCount, myReferences);
+                    ErrorCodes retValue = myProdData.edit(id, content, attribute, maxCount, myReferences);
+                    if (isReferenceOnID(oldID))
+                    {
+                        refreshReferences(oldID, id);
+                    }
+                    return retValue;
                 }
                 else
                 {
@@ -564,4 +705,222 @@ public class RequirementAnalysis
     {
         return myTargetDefinition.edit(description);
     }
+
+    public ErrorCodes rateWeightFactor(ArrayList<Integer> values)
+    {
+        boolean success = true;
+        if (getCostEstimation() != null)
+        {
+            ArrayList<ErrorCodes> errors = myCostEstimation.rateWeightFactor(values);
+            for (ErrorCodes error : errors)
+            {
+                if (!(error == ErrorCodes.NO_ERROR))
+                {
+                    success = false;
+                }
+            }
+            if (success)
+            {
+                return ErrorCodes.NO_ERROR;
+            }
+            else
+            {
+                return ErrorCodes.INVALID_ARGUMENT;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NO_COST_ESTIMATION;
+        }
+    }
+
+    public ErrorCodes remAdditionByTitle(String title)
+    {
+        if (myAdditions.isIncluded(title))
+        {
+            myAdditions.remove(myAdditions.getAdditionByTitle(title));
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes remCostEstimation()
+    {
+        if (myCostEstimation != null)
+        {
+            myCostEstimation = null;
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes remFReqByID(String id)
+    {
+        if (myFRequirements.isIncluded(title))
+        {
+            myFRequirements.remove(myFRequirements.getReqByID(id));
+            if(isReferenceOnID(id))
+            {
+                return ErrorCodes.NO_ERROR;
+            }
+            else
+            {
+                removeReferences(id);
+                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes remGlossEntryByTerm(String term)
+    {
+        if (myGlossaryEntries.isIncluded(term))
+        {
+            myGlossaryEntries.remove(myGlossaryEntries.getEntryByTerm(term));
+            if(!ifTermReferencedRemTerm(term))
+            {
+                return ErrorCodes.NO_ERROR;
+            }
+            else
+            {
+                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes remNFReqByID(String id)
+    {
+        if (myNFRequirements.isIncluded(id))
+        {
+            myNFRequirements.remove(myNFRequirements.getReqByID(id));
+            if (isReferenceOnID(id))
+            {
+                return ErrorCodes.NO_ERROR;
+            }
+            else
+            {
+                removeReferences(id);
+                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes remProdDataByID(String id)
+    {
+        if (myProductData.isIncluded(id))
+        {
+            myProductData.remove(myProductData.getReqByID(id));
+            if (!isReferenceOnID(id))
+            {
+                return ErrorCodes.NO_ERROR;
+            }
+            else
+            {
+                removeReferences(id);
+                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes remQualReqByCrit(String criteria)
+    {
+        if (myQualityRequirements.isIncluded(criteria))
+        {
+            myQualityRequirements.remove(myQualityRequirements.getQualReqByCriteria(criteria));
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes setActualState(double actualState)
+    {
+        if(actualState > 0)
+        {
+            this.actualState = actualState;
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.INVALID_ARGUMENT;
+        }
+    }
+
+    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret)
+    {
+        if (isReqIncluded(id))
+        {
+            if (myCostEstimation != null)
+            {
+                if (myCostEstimation.getDataFPByID(id) == null) // Test for duplicate initialising
+                {
+                    IRequirement reference = getAnyReqByID(id);
+                    return myCostEstimation.setDataFP(type, reference, det, ret);
+                }
+                else
+                {
+                    return ErrorCodes.DUPLICATE;
+                }
+            }
+            else
+            {
+                return ErrorCodes.NO_COST_ESTIMATION;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
+    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+    {
+        if (isReqIncluded(id))
+        {
+            if (myCostEstimation != null)
+            {
+                if (myCostEstimation.getTransactionFPByID(id) == null)
+                {
+                    IRequirement reference = getAnyReqByID(id);
+                    return myCostEstimation.setTransactionFP(type, reference, det, ftr);
+                }
+                else
+                {
+                    return ErrorCodes.DUPLICATE;
+                }
+            }
+            else
+            {
+                return ErrorCodes.NO_COST_ESTIMATION;
+            }
+        }
+        else
+        {
+            return ErrorCodes.NOT_EXISTENT;
+        }
+    }
+
 }

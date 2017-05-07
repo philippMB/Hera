@@ -50,4 +50,15 @@ public abstract class Requirement
         this.id = id;
         this.references = references;
     }
+
+    public void remReference(String id)
+    {
+        references.remove(references.getReqByID(id));
+    }
+
+    public void refreshReference(String oldID, IRequirement newReq)
+    {
+        references.remove(references.getReqByID(oldID));
+        references.add(newReq);
+    }
 }

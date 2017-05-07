@@ -14,7 +14,7 @@ public class CustomerData
     private String country;
     private PersonalData customer;
     private PersonalData projectManager;
-    private StringValidator myValidator;
+    private Validator myValidator;
 
     CustomerData(String pmName, String pmMail, String pmPhone)
     {
@@ -25,7 +25,7 @@ public class CustomerData
         this.country = null;
         this.zip = -1;
         this.customer = null;
-        this.myValidator = new StringValidator();
+        this.myValidator = new Validator();
     }
 
     public ErrorCodes edit(String companyName, String companyCity, String companyStreet, int zip, String companyCountry,

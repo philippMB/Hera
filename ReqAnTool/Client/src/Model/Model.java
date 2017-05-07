@@ -4,8 +4,6 @@ import Model_Interfaces.*;
 
 import java.util.ArrayList;
 
-import org.omg.CORBA.PolicyErrorCodeHelper;
-
 public class Model
     implements IModelGetData, IModelSetData, IApplications
 {
@@ -148,24 +146,24 @@ public class Model
     }
 
     @Override
-    public boolean checkReferenceOnID(String id)
+    public boolean isReferenceOnID(String id)
     {
-        // TODO Implement this method
-        return false;
+        return myReqAn.isReferenceOnID(id);
     }
 
     @Override
     public boolean checkZIP(int zip)
     {
-        // TODO Implement this method
-        return false;
+        Validator myValidator = new Validator();
+        return myValidator.isValidZIP(zip);
     }
 
     @Override
-    public int deleteReqAn()
+    public ErrorCodes deleteReqAn()
     {
-        // TODO Implement this method
-        return 0;
+        this.myReqAn = null;
+        this.myConfig = null;
+        return ErrorCodes.NO_ERROR;
     }
 
     @Override
@@ -336,88 +334,76 @@ public class Model
     }
 
     @Override
-    public boolean rateWeightFactor(int cat1, int cat2, int cat3, int cat4a, int cat4b, int cat4c, int cat4d, int cat5,
-                                    int cat6, int cat7)
+    public ErrorCodes rateWeightFactor(ArrayList<Integer> values)
     {
-        // TODO Implement this method
-        return false;
+        return myReqAn.rateWeightFactor(values);
     }
 
     @Override
     public ErrorCodes remAdditionByTitle(String title)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.remAdditionByTitle(title);
     }
 
     @Override
     public ErrorCodes remCostEstimation()
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.remCostEstimation();
     }
 
     @Override
     public ErrorCodes remFReqByID(String id)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.remFReqByID(id);
     }
 
     @Override
     public ErrorCodes remGlossEntryByTerm(String term)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.remGlossEntryByTerm(term);
     }
 
     @Override
     public ErrorCodes remNFReqByID(String id)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.remNFReqByID(id);
     }
 
     @Override
     public ErrorCodes remProdDataByID(String id)
     {
-        // TODO Implement this method
-        return null;
+        return myReqAn.remProdDataByID(id);
     }
 
     @Override
     public ErrorCodes remQualReqByCrit(String criteria)
     {
-        // TODO Implement this method
+        return myReqAn.remQualReqByCrit(criteria);
+    }
+
+    @Override
+    public ErrorCodes saveReqAn(String path)
+    {
+        // TODO
         return null;
     }
 
     @Override
-    public int saveReqAn(String path)
+    public ErrorCodes setActualState(double actStat)
     {
-        // TODO Implement this method
-        return 0;
+        return myReqAn.setActualState(actStat);
     }
 
     @Override
-    public boolean setActualState(double actStat)
+    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret)
     {
-        // TODO Implement this method
-        return false;
+        return myReqAn.setDataFP(type, id, det, ret);
     }
 
     @Override
-    public boolean setDataFP(String type, String id, int det, int ret)
+    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
     {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
-    public boolean setTransactionFP(String type, String ref, int det, int ftr)
-    {
-        // TODO Implement this method
-        return false;
+        return myReqAn.setTransactionFP(type, id, det, ftr);
     }
 
     @Override
@@ -429,7 +415,6 @@ public class Model
     @Override
     public ArrayList<IFRequirement> getAllFReq()
     {
-        // TODO
         return myReqAn.getFRequirements();
     }
 
@@ -442,14 +427,12 @@ public class Model
     @Override
     public ArrayList<INFRequirement> getAllNFReq()
     {
-        // TODO Implement this method
         return myReqAn.getNFRequirements();
     }
 
     @Override
     public ArrayList<IProductData> getAllProdData()
     {
-        // TODO Implement this method
         return myReqAn.getProductData();
     }
 
@@ -498,7 +481,6 @@ public class Model
     @Override
     public IProductData getProductDataByID(String id)
     {
-        // TODO Implement this method
         return myReqAn.getProductDataByID(id);
     }
 
