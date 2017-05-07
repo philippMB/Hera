@@ -11,7 +11,7 @@ public class DataFP
   private int ret;
   private ArrayList<String> referenceIDs;
   // TODO enum in JAXB
-  private ClassOfDataFP type;
+  private DataFPType type;
 
   public void setId(String id)
   {

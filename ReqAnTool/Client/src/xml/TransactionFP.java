@@ -1,9 +1,13 @@
 package xml;
 
+import javax.xml.bind.annotation.XmlEnum;
+
+@XmlEnum
 public class TransactionFP
 {
   private int det;
   private int ftr;
+  private TransactionFPType type;
 
   public TransactionFP(int det, int ftr)
   {
@@ -36,5 +40,15 @@ public class TransactionFP
   public void setFtr(int ftr)
   {
     this.ftr = ftr;
+  }
+
+  public void setType(TransactionFPType type)
+  {
+    this.type = type;
+  }
+
+  public TransactionFPType getType()
+  {
+    return type;
   }
 }
