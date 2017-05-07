@@ -1,4 +1,3 @@
-
 package Model_Interfaces;
 
 
@@ -14,6 +13,6 @@ public interface ITransactionFP
     
     public ClassOfTransactionFP getType();
     
-    public IRequirement getReference();
+    public IRequirement getRequirement();
     
 }

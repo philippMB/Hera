@@ -1,18 +1,20 @@
 package Model_Interfaces;
 
+import java.util.ArrayList;
+
 public interface IApplications
 {
    public boolean existsID(String id);
 
-    public int saveReqAn(String path);
+    public ErrorCodes saveReqAn(String path);
 
-    public int deleteReqAn();
+    public ErrorCodes deleteReqAn();
     
     public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone);
 
     public boolean isReqAnUnsaved();
 
-    public boolean checkReferenceOnID(String id);
+    public boolean isReferenceOnID(String id);
 
     public boolean isIDUnique(String id);
 
@@ -22,16 +24,15 @@ public interface IApplications
 
     public boolean existsManMonthCount();
 
-    public boolean setDataFP(String type, String id, int det, int ret);
+    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret);
 
-    public boolean setTransactionFP(String type, String ref, int det, int ftr);
+    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr);
 
-    public boolean rateWeightFactor(int cat1, int cat2, int cat3, int cat4a, int cat4b, int cat4c, int cat4d, int cat5,
-                                    int cat6, int cat7);
+    public ErrorCodes rateWeightFactor(ArrayList<Integer> values);
 
     public boolean calcManMonth();
 
-    public boolean setActualState(double actStat);
+    public ErrorCodes setActualState(double actStat);
 
     public boolean calcOptWeightFactor();
 

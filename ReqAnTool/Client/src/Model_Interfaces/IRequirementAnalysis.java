@@ -1,7 +1,7 @@
 
 package Model_Interfaces;
 
-//import Model.AdapterList;
+//import Model.RequirementList;
 
 import java.util.ArrayList;
 import java.util.Date;

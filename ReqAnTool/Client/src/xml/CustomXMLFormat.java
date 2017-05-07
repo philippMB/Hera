@@ -13,6 +13,7 @@ import Model_Interfaces.IRequirementAnalysis;
 import Model_Interfaces.ITargetDefinition;
 import Model_Interfaces.ITransactionFP;
 import Model_Interfaces.IWeightFactor;
+import Model_Interfaces.IRequirement;
 
 import java.util.*;
 import javax.xml.bind.annotation.*;
@@ -106,6 +107,7 @@ public class CustomXMLFormat
     {
       int det = obj.getDET();
       int ret = obj.getRET();
+      ArrayList<String> ref = obj.getRequirement();
       DataFP funcPoint = new DataFP(det, ret);
       dataFuncPointList.add(funcPoint);
     }

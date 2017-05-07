@@ -1,5 +1,7 @@
 package xml;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAttribute;
 
 public class GlossaryEntry
@@ -10,6 +12,7 @@ public class GlossaryEntry
   private String label;
   private String validity;
   private String obscurities;
+  private ArrayList<String> references;
   
   public GlossaryEntry(String term, String sense, String boundary, String label, String validity, String obscurities)
   {
@@ -86,5 +89,15 @@ public class GlossaryEntry
   public void setObscurities(String obscurities)
   {
     this.obscurities = obscurities;
+  }
+
+  public void setReferences(ArrayList<String> references)
+  {
+    this.references = references;
+  }
+
+  public ArrayList<String> getReferences()
+  {
+    return references;
   }
 }
