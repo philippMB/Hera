@@ -17,6 +17,7 @@ public class RequirementAnalysis
     private TargetDefinition myTargetDefinition;
     private CostEstimation myCostEstimation;
     private CustomerData myCustomerData;
+    private Validator myValidator;
     /**
      * @associates <{Model.FRequirement}>
      */
@@ -57,7 +58,8 @@ public class RequirementAnalysis
         this.myQualityRequirements = new QualityRequirementList<IQualityRequirement>();
         this.myTargetDefinition = new TargetDefinition();
         this.createDate = new Date();
-        this.actualState = -1.0;        
+        this.actualState = -1.0;
+        this.myValidator = new Validator();
     }
 
     protected boolean isReqIncluded(String id)
@@ -434,14 +436,21 @@ public class RequirementAnalysis
         }
         else
         {
-            RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-            for (String ref : references)
+            if (myValidator.isValidID(id))
             {
-                myReferences.add(getAnyReqByID(ref));
+                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                for (String ref : references)
+                {
+                    myReferences.add(getAnyReqByID(ref));
+                }
+                FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
+                myFRequirements.add(myReq);
+                return ErrorCodes.NO_ERROR;
             }
-            FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
-            myFRequirements.add(myReq);
-            return ErrorCodes.NO_ERROR;
+            else
+            {
+                return ErrorCodes.INVALID_ID;
+            }
         }
     }
     
@@ -476,14 +485,21 @@ public class RequirementAnalysis
         }
         else
         {
-            RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-            for (String ref : references)
+            if (myValidator.isValidID(id))
             {
-                myReferences.add(getAnyReqByID(ref));
+                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                for (String ref : references)
+                {
+                    myReferences.add(getAnyReqByID(ref));
+                }
+                NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
+                myNFRequirements.add(myReq);
+                return ErrorCodes.NO_ERROR;
             }
-            NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
-            myNFRequirements.add(myReq);
-            return ErrorCodes.NO_ERROR;
+            else
+            {
+                return ErrorCodes.INVALID_ID;
+            }
         }
     }
 
@@ -496,14 +512,21 @@ public class RequirementAnalysis
         }
         else
         {
-            RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-            for (String ref : references)
+            if (myValidator.isValidID(id))
             {
-                myReferences.add(getAnyReqByID(ref));
+                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                for (String ref : references)
+                {
+                    myReferences.add(getAnyReqByID(ref));
+                }
+                ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
+                myProductData.add(myReq);
+                return ErrorCodes.NO_ERROR;
             }
-            ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
-            myProductData.add(myReq);
-            return ErrorCodes.NO_ERROR;
+            else
+            {
+                return ErrorCodes.INVALID_ID;
+            }
         }
     }
 
@@ -521,7 +544,7 @@ public class RequirementAnalysis
         return ErrorCodes.NO_ERROR;
     }
 
-    ErrorCodes editCustData(String companyName, String companyCity, String companyStreet, int zip, String companyCountry,
+    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
                             String custName, String custMail, String custPhone, String pmName, String pmMail, String pmPhone)
     {
         return myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
@@ -537,18 +560,26 @@ public class RequirementAnalysis
             {
                 if (solveReqReferences(references))
                 {
-                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                    FRequirement myFReq = (FRequirement)myIFReq;
-                    for (String ref : references)
+                    if (myValidator.isValidID(id))
                     {
-                        myReferences.add(getAnyReqByID(ref));
+                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                        FRequirement myFReq = (FRequirement) myIFReq;
+
+                        for (String ref : references)
+                        {
+                            myReferences.add(getAnyReqByID(ref));
+                        }
+                        ErrorCodes retValue = myFReq.edit(id, title, actor, description, myReferences);
+                        if (isReferenceOnID(oldID))
+                        {
+                            refreshReferences(oldID, id);
+                        }
+                        return retValue;
                     }
-                    ErrorCodes retValue = myFReq.edit(id, title, actor, description, myReferences);
-                    if (isReferenceOnID(oldID))
+                    else
                     {
-                        refreshReferences(oldID, id);
+                        return ErrorCodes.INVALID_ID;
                     }
-                    return retValue;
                 }
                 else
                 {
@@ -608,18 +639,25 @@ public class RequirementAnalysis
             {
                 if (solveReqReferences(references))
                 {
-                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                    NFRequirement myNFReq = (NFRequirement)myINFReq;
-                    for (String ref : references)
+                    if (myValidator.isValidID(id))
                     {
-                        myReferences.add(getAnyReqByID(ref));
+                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                        NFRequirement myNFReq = (NFRequirement) myINFReq;
+                        for (String ref : references)
+                        {
+                            myReferences.add(getAnyReqByID(ref));
+                        }
+                        ErrorCodes retValue = myNFReq.edit(id, title, actor, description, myReferences);
+                        if (isReferenceOnID(oldID))
+                        {
+                            refreshReferences(oldID, id);
+                        }
+                        return retValue;
                     }
-                    ErrorCodes retValue = myNFReq.edit(id, title, actor, description, myReferences);
-                    if (isReferenceOnID(oldID))
+                    else
                     {
-                        refreshReferences(oldID, id);
+                        return ErrorCodes.INVALID_ID;
                     }
-                    return retValue;
                 }
                 else
                 {
@@ -651,18 +689,25 @@ public class RequirementAnalysis
             {
                 if (solveReqReferences(references))
                 {
-                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                    ProductData myProdData = (ProductData) myIProdData;
-                    for (String ref : references)
+                    if (myValidator.isValidID(id))
                     {
-                        myReferences.add(getAnyReqByID(ref));
+                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                        ProductData myProdData = (ProductData) myIProdData;
+                        for (String ref : references)
+                        {
+                            myReferences.add(getAnyReqByID(ref));
+                        }
+                        ErrorCodes retValue = myProdData.edit(id, content, attribute, maxCount, myReferences);
+                        if (isReferenceOnID(oldID))
+                        {
+                            refreshReferences(oldID, id);
+                        }
+                        return retValue;
                     }
-                    ErrorCodes retValue = myProdData.edit(id, content, attribute, maxCount, myReferences);
-                    if (isReferenceOnID(oldID))
+                    else
                     {
-                        refreshReferences(oldID, id);
+                        return ErrorCodes.INVALID_ID;
                     }
-                    return retValue;
                 }
                 else
                 {
@@ -923,4 +968,9 @@ public class RequirementAnalysis
         }
     }
 
+    public ErrorCodes addCostEstimation(ComplexityMatrix myComplexityMatrix, ComplexityWeightMatrix myComplexityWeightMatrix)
+    {
+        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrix);
+        return ErrorCodes.NO_ERROR;
+    }
 }

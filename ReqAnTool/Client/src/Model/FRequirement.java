@@ -17,7 +17,7 @@ public class FRequirement
     private String actor;
     private String description;
 
-    public FRequirement(String id, String title, String actor, String description, ArrayList<IRequirement> references)
+    public FRequirement(String id, String title, String actor, String description, RequirementList<IRequirement> references)
     {
         super(id, references);
         this.title = title;
@@ -25,7 +25,7 @@ public class FRequirement
         this.description = description;
     }
 
-    public ErrorCodes edit(String id, String title, String actor, String description, ArrayList<IRequirement> references)
+    public ErrorCodes edit(String id, String title, String actor, String description, RequirementList<IRequirement> references)
     {
         super.edit(id, references);
         this.title = title;

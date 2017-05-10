@@ -10,9 +10,12 @@ public class Model
 
     private RequirementAnalysis myReqAn;
     private Configuration myConfig;
+    private boolean unsaved;
 
     public Model()
     {
+        unsaved = true;
+        myReqAn = null;
     }
 
     @Override
@@ -29,8 +32,7 @@ public class Model
     @Override
     public ErrorCodes addCostEstimation()
     {
-        // TODO
-        return null;
+        return myReqAn.addCostEstimation(myConfig.getComplexityMatrix(), myConfig.getComplexityWeightMatrix());
     }
 
     @Override
@@ -104,58 +106,9 @@ public class Model
     }
 
     @Override
-    public boolean checkAddressFormat(String addr)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
-    public boolean checkCountry(String country)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
-    public boolean checkDET_FTR_RET(int value)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
-    public boolean checkIDFormat(String id)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
-    public boolean checkMailFormat(String mail)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
-    public boolean checkPhoneFormat(String phone)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
-    @Override
     public boolean isReferenceOnID(String id)
     {
         return myReqAn.isReferenceOnID(id);
-    }
-
-    @Override
-    public boolean checkZIP(int zip)
-    {
-        Validator myValidator = new Validator();
-        return myValidator.isValidZIP(zip);
     }
 
     @Override
@@ -173,7 +126,7 @@ public class Model
     }
 
     @Override
-    public ErrorCodes editCustData(String companyName, String companyCity, String companyStreet, int zip,
+    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip,
                                 String companyCountry, String custName, String custMail, String custPhone,
                                 String pmName, String pmMail, String pmPhone)
     {
@@ -329,8 +282,7 @@ public class Model
     @Override
     public boolean isReqAnUnsaved()
     {
-        // TODO Implement this method
-        return false;
+        return unsaved;
     }
 
     @Override
@@ -384,6 +336,7 @@ public class Model
     @Override
     public ErrorCodes saveReqAn(String path)
     {
+        unsaved = false;
         // TODO
         return null;
     }

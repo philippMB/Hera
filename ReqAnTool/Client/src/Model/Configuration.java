@@ -15,12 +15,14 @@ public class Configuration
      */
     private ArrayList<IWeightFactor> optWeightFactor;
 
-    private void getComplexityMatrix()
+    public ComplexityMatrix getComplexityMatrix()
     {
+        return myComplexityMatrix;
     }
 
-    private void getComplexityWeightMatrix()
+    public ComplexityWeightMatrix getComplexityWeightMatrix()
     {
+        return myComplexityWeightMatrix;
     }
 
     public ArrayList<IWeightFactor> getOptWeightFactors()

@@ -9,6 +9,8 @@ public class CostEstimation
 {
     private double FPcount;
     private double manMonthCount;
+    private ComplexityWeightMatrix myComplexityWeightMatrix;
+    private ComplexityMatrix myComplexityMatrix;
     /**
      * @associates <{Model.TransactionFP}>
      */
@@ -23,18 +25,21 @@ public class CostEstimation
      */
     private ArrayList<IWeightFactor> myWeightFactors;
 
-    public CostEstimation()
+    public CostEstimation(ComplexityWeightMatrix myWeightMatrix, ComplexityMatrix myComplexityMatrix)
     {
         this.FPcount = -1.0;
         this.manMonthCount = -1.0;
         myDataFPs = new ArrayList<IDataFP>();
         myTransactionFPs = new ArrayList<ITransactionFP>();
         myWeightFactors = new ArrayList<IWeightFactor>();
+        this.myComplexityWeightMatrix = myWeightMatrix;
+        this.myComplexityMatrix = myComplexityMatrix;
     }
 
     @Override
     public void calculateFP()
     {
+
         // TODO Implement this method
     }
 
@@ -128,15 +133,34 @@ public class CostEstimation
 
     public ErrorCodes setDataFP(ClassOfDataFP type, IRequirement requirement, int det, int ret)
     {
-        DataFP myDataFP = new DataFP(type, requirement, det, ret);
-        myDataFPs.add(myDataFP);
-        return ErrorCodes.NO_ERROR;
+        Validator myValidator = new Validator();
+        if (myValidator.areValidValues(det, ret))
+        {
+            DataFP myDataFP = new DataFP(type, requirement, det, ret);
+            myDataFPs.add(myDataFP);
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.INVALID_ARGUMENT;
+        }
+
     }
 
     public ErrorCodes setTransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr)
     {
-        TransactionFP myTransactionFP = new TransactionFP(type, reference, det, ftr);
-        myTransactionFPs.add(myTransactionFP);
-        return ErrorCodes.NO_ERROR;
+        Validator myValidator = new Validator();
+        if (myValidator.areValidValues(det, ftr))
+        {
+            TransactionFP myTransactionFP = new TransactionFP(type, reference, det, ftr);
+            myTransactionFPs.add(myTransactionFP);
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.INVALID_ARGUMENT;
+        }
+
     }
+
 }
