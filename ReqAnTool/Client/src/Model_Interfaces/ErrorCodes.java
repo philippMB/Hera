@@ -1,0 +1,20 @@
+package Model_Interfaces;
+
+public enum ErrorCodes
+{
+    NO_ERROR,
+    REFERENCES_NOT_SOLVED,
+    LIST_OVERFLOW,
+    DUPLICATE,
+    NOT_EXISTENT,
+    NO_COST_ESTIMATION,
+    INVALID_ARGUMENT,
+    INVALID_MAIL,
+    INVALID_PHONE,
+    INVALID_ADRESS,
+    INVALID_ID,
+    REFERENCES_ON_ITEM_DELETED,
+    NO_REQAN,
+    FP_NOT_EXISTENT
+    
+}
