@@ -1,7 +1,6 @@
 package Model;
 
 import Model_Interfaces.IQualityRequirement;
-import Model_Interfaces.IQualityRequirementList;
 
 import java.util.ArrayList;
 

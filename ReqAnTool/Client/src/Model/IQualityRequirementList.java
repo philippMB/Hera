@@ -1,4 +1,6 @@
-package Model_Interfaces;
+package Model;
+
+import Model_Interfaces.IQualityRequirement;
 
 import java.util.ArrayList;
 
