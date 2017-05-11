@@ -1,6 +1,7 @@
-package Model_Interfaces;
+package Model;
 
 import Model.Addition;
+import Model_Interfaces.IAddition;
 
 import java.util.ArrayList;
 

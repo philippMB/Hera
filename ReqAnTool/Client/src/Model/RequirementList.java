@@ -1,8 +1,6 @@
 package Model;
 
-import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IRequirement;
-import Model_Interfaces.IRequirementList;
 
 import java.util.ArrayList;
 

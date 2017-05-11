@@ -1,6 +1,5 @@
 package Model;
 
-import Model_Interfaces.IGlossaryList;
 import Model_Interfaces.IGlossaryEntry;
 
 import java.util.ArrayList;
