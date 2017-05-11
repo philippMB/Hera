@@ -85,7 +85,8 @@ public class GlossaryEntry
         return crossReferences;
     }
 
-    public ErrorCodes edit(String term, String sense, String boundary, String validity, String obscurities, String label, GlossaryList<IGlossaryEntry> crossRef)
+    public ErrorCodes edit(String term, String sense, String boundary, String validity, String obscurities,
+                           String label, GlossaryList<IGlossaryEntry> crossRef)
     {
         this.term = term;
         this.sense = sense;
@@ -99,6 +100,6 @@ public class GlossaryEntry
 
     public void remReference(String term)
     {
-        crossReferences.remove(crossReferences.getEntryByTerm(term));
+        crossReferences.removeEntryByTerm(term);
     }
 }

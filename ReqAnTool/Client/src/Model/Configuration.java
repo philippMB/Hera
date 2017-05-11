@@ -7,13 +7,35 @@ import java.util.List;
 
 public class Configuration
 {
-    private static ComplexityMatrix myComplexityMatrix;
-    private static ComplexityWeightMatrix myComplexityWeightMatrix;
-
+    private final ComplexityMatrix myComplexityMatrix;
+    private final ComplexityWeightMatrix myComplexityWeightMatrix;
     /**
      * @associates <{Model.WeightFactor}>
      */
     private ArrayList<IWeightFactor> optWeightFactor;
+    
+    public Configuration()
+    {
+        myComplexityMatrix = readComplexityMatrixFromInit();
+        myComplexityWeightMatrix = readComWeightMatrixFromInit();
+        optWeightFactor = readOptWeightFactorFromInit();
+    }
+
+    private ArrayList<IWeightFactor> readOptWeightFactorFromInit()
+    {
+        // TODO
+        return null;
+    }
+
+    private ComplexityWeightMatrix readComWeightMatrixFromInit()
+    {
+        return null;
+    }
+
+    private ComplexityMatrix readComplexityMatrixFromInit()
+    {
+        return null;
+    }
 
     public ComplexityMatrix getComplexityMatrix()
     {

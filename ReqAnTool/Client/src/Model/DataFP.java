@@ -12,6 +12,8 @@ public class DataFP
     private int det;
     private int ret;
     private IRequirement reference;
+    private Complexities myComplexity;
+    private int fPvalue;
 
     public DataFP(ClassOfDataFP type, IRequirement requirement, int det, int ret)
     {
@@ -43,5 +45,24 @@ public class DataFP
     public ClassOfDataFP getType()
     {
         return type;
+    }
+
+    private void calculateComplexity(ComplexityMatrix myComplexityMatrix)
+    {
+        myComplexity = myComplexityMatrix.getDetRetValue(det, ret);
+    }
+
+    public int getFPvalue(ComplexityMatrix myComplexityMatrix, ComplexityWeightMatrix myComplexityWeightMatrix)
+    {
+        calculateComplexity(myComplexityMatrix);
+        fPvalue = myComplexityWeightMatrix.getFPvalue(myComplexity, type);
+        return fPvalue;
+    }
+
+    public void edit(ClassOfDataFP type, int det, int ret)
+    {
+        this.type = type;
+        this.det = det;
+        this.ret = ret;
     }
 }

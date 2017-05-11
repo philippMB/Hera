@@ -22,7 +22,7 @@ public interface ICustomerData
 
     public String getCompanyStreet();
 
-    public int getCompanyPLZ();
+    public String getCompanyPLZ();
 
     public String getCompanyCity();
 

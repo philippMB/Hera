@@ -11,6 +11,8 @@ public class TransactionFP
     private int det;
     private int ftr;
     private IRequirement reference;
+    private Complexities myComplexity;
+    private int fPvalue;
 
     public TransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr)
     {
@@ -42,5 +44,24 @@ public class TransactionFP
     public IRequirement getRequirement()
     {
         return reference;
+    }
+
+    private void calculateComplexity(ComplexityMatrix myComplexityMatrix)
+    {
+        myComplexity = myComplexityMatrix.getDetFtrValue(det, ftr);
+    }
+
+    public int getFPvalue(ComplexityMatrix myComplexityMatrix, ComplexityWeightMatrix myComplexityWeightMatrix)
+    {
+        calculateComplexity(myComplexityMatrix);
+        fPvalue = myComplexityWeightMatrix.getFPvalue(myComplexity, type);
+        return fPvalue;
+    }
+
+    public void edit(ClassOfTransactionFP type, int det, int ftr)
+    {
+        this.type = type;
+        this.det = det;
+        this.ftr = ftr;
     }
 }

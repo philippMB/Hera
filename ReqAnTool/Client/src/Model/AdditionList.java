@@ -8,25 +8,47 @@ import java.util.ArrayList;
 /**
  * Created by mbill on 04.05.2017.
  */
-public class AdditionList<IAddition>
-        extends ArrayList<IAddition>
-        implements IAdditionList<IAddition>
+public class AdditionList<IAdd extends IAddition>
+        extends ArrayList<IAdd>
+        implements IAdditionList<IAdd>
 {
+
     @Override
     public boolean isIncluded(String term)
     {
+        for (IAdd myAdd : this)
+        {
+            if (myAdd.getTitle().equals(term))
+            {
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
-    public Addition getAdditionByTitle(String term)
+    public IAdd getAdditionByTitle(String term)
     {
+        for (IAdd myAdd : this)
+        {
+            if (myAdd.getTitle().equals(term))
+            {
+                return myAdd;
+            }
+        }
         return null;
     }
 
     @Override
-    public ArrayList<IAddition> toArrayList()
+    public boolean removeByTitle(String title)
     {
-        return null;
+        for (IAdd myAdd : this)
+        {
+            if (myAdd.getTitle().equals(title))
+            {
+                return super.remove(myAdd);
+            }
+        }
+        return false;
     }
 }

@@ -30,8 +30,9 @@ public class CustomerData
         this.myValidator = new Validator();
     }
 
-    public ArrayList<ErrorCodes> edit(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
-                                     String custName, String custMail, String custPhone, String pmName, String pmMail, String pmPhone)
+    public ArrayList<ErrorCodes> edit(String companyName, String companyCity, String companyStreet, String zip,
+                                      String companyCountry, String custName, String custMail, String custPhone,
+                                      String pmName, String pmMail, String pmPhone)
     {
         ArrayList<ErrorCodes> myErrors = new ArrayList<ErrorCodes>();
         boolean error = false;

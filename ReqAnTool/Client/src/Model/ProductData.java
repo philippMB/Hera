@@ -43,7 +43,8 @@ public class ProductData
         return maxCount;
     }
 
-    public ErrorCodes edit(String id, String content, String attribute, String maxCount, RequirementList<IRequirement> myReferences)
+    public ErrorCodes edit(String id, String content, String attribute, String maxCount,
+                           RequirementList<IRequirement> myReferences)
     {
         super.edit(id, myReferences);
         this.content = content;

@@ -29,28 +29,22 @@ public interface IApplications
 
     public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr);
 
+    public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret);
+
+    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr);
+
+    public ErrorCodes remTransactionFPByID(String id);
+
+    public ErrorCodes remDataFPByID(String id);
+
     public ErrorCodes rateWeightFactor(ArrayList<Integer> values);
 
-    public boolean calcManMonth();
+    public ErrorCodes calcManMonth();
 
     public ErrorCodes setActualState(double actStat);
 
-    public boolean calcOptWeightFactor();
+    public ErrorCodes calcOptWeightFactor();
 
     public boolean existsOptWeightFactor();
-
-    public boolean checkIDFormat(String id);
-
-    public boolean checkMailFormat(String mail);
-
-    public boolean checkPhoneFormat(String phone);
-
-    public boolean checkAddressFormat(String addr);
-
-    public boolean checkCountry(String country);
-
-    public boolean checkZIP(int zip);
-
-    public boolean checkDET_FTR_RET(int value);
 
 }

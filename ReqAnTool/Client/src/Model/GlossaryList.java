@@ -5,29 +5,50 @@ import Model_Interfaces.IGlossaryEntry;
 
 import java.util.ArrayList;
 
-public class GlossaryList<IGlossaryEntry>
-    extends ArrayList<IGlossaryEntry>
-    implements IGlossaryList<IGlossaryEntry>
+public class GlossaryList<IGloss extends IGlossaryEntry>
+    extends ArrayList<IGloss>
+    implements IGlossaryList<IGloss>
 {
 
     @Override
-    public IGlossaryEntry getEntryByTerm(String term)
+    public IGloss getEntryByTerm(String term)
     {
-        // TODO Implement this method
+        for (IGloss myEntry : this)
+        {
+            if (myEntry.getTerm().equals(term))
+            {
+                return myEntry;
+            }
+        }
         return null;
     }
 
     @Override
     public boolean isIncluded(String term)
     {
-        // TODO Implement this method
-        return false;
+        boolean included = false;
+        for (IGlossaryEntry myEntry : this)
+        {
+            if (myEntry.getTerm().equals(term))
+            {
+                included = true;
+            }
+        }
+        return included;
     }
 
     @Override
-    public ArrayList<IGlossaryEntry> toArrayList()
+    public boolean removeEntryByTerm(String term)
     {
-        return this;
+        for (IGloss myEntry : this)
+        {
+            if (myEntry.getTerm().equals(term))
+            {
+                return super.remove(myEntry);
+            }
+        }
+        return false;
     }
+
 
 }

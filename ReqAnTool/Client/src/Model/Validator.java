@@ -37,7 +37,8 @@ public class Validator
 
     public boolean isValidZIP(String zip)
     {
-        return Pattern.matches("(0[1-9][0-9][0-9][0-9])|([1-9][0-9][0-9][0-9])", zip); // only validate European ZIPs
+        return Pattern.matches("(0[1-9][0-9][0-9][0-9])|([1-9][0-9][0-9][0-9])", zip);
+        // only validate European ZIPs
     }
 
     public boolean isValidID(String id)

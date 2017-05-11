@@ -1,38 +1,52 @@
 package Model;
 
+import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IRequirement;
 import Model_Interfaces.IRequirementList;
 
 import java.util.ArrayList;
 
-public class RequirementList<T>
+public class RequirementList<T extends IRequirement>
     extends ArrayList<T>
     implements IRequirementList<T>
 {
 
     @Override
-    public boolean add(T myReq)
+    public boolean isIncluded(String id)
     {
-        // TODO Implement this method
+        for (T myReq : this)
+        {
+            if (myReq.getID().equals(id))
+            {
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
-    public boolean isIncluded(String id)
-    {
-        // TODO Implement this method
-        return false;
-    }
-
     public T getReqByID(String id)
     {
-        // TODO Implement this method
+        for (T myReq : this)
+        {
+            if (myReq.getID().equals(id))
+            {
+                return myReq;
+            }
+        }
         return null;
     }
 
     @Override
-    public ArrayList<T> toArrayList()
+    public boolean removeReqByID(String id)
     {
-        return this;
+        for (T myReq : this)
+        {
+            if (myReq.getID().equals(id))
+            {
+                return super.remove(myReq);
+            }
+        }
+        return false;
     }
 }

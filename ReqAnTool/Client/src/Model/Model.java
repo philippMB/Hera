@@ -14,6 +14,7 @@ public class Model
 
     public Model()
     {
+        // TODO uncomment this: myConfig = new Configuration();
         unsaved = true;
         myReqAn = null;
     }
@@ -21,94 +22,165 @@ public class Model
     @Override
     public ErrorCodes addAddition(String title, String description)
     {
-        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
-        if (myReqAn.getAdditions().size() <= 100)
+        if (myReqAn != null)
         {
-            retValue = myReqAn.addAddition(title, description);
+            ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+            if (myReqAn.getAdditions().size() <= 100)
+            {
+                retValue = myReqAn.addAddition(title, description);
+            }
+            return retValue;
         }
-        return retValue;
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes addCostEstimation()
     {
-        return myReqAn.addCostEstimation(myConfig.getComplexityMatrix(), myConfig.getComplexityWeightMatrix());
+        if (myReqAn != null)
+        {
+            return myReqAn.addCostEstimation(myConfig.getComplexityMatrix(), myConfig.getComplexityWeightMatrix());
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes addFReq(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
-        if (myReqAn.getFRequirements().size() <= 2000)
+        if (myReqAn != null)
         {
-            retValue = myReqAn.addFRequirement(id, title, actor, description, references);
+            ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+            if (myReqAn.getFRequirements().size() <= 2000)
+            {
+                retValue = myReqAn.addFRequirement(id, title, actor, description, references);
+            }
+            return retValue;
         }
-        return retValue;
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
                                  String label, ArrayList<String> crossRef)
     {
-        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
-        if (myReqAn.getGlossaryEntries().size() <= 3000)
+        if (myReqAn != null)
         {
-            retValue = myReqAn.addGlossaryEntry(term, sense, boundary, validity,obscurities, label, crossRef);
+            ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+            if (myReqAn.getGlossaryEntries().size() <= 3000)
+            {
+                retValue = myReqAn.addGlossaryEntry(term, sense, boundary, validity, obscurities, label, crossRef);
+            }
+            return retValue;
         }
-        return retValue;
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes addNFReq(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
-        if (myReqAn.getFRequirements().size() <= 2000)
+        if (myReqAn != null)
         {
-            retValue = myReqAn.addNFRequirement(id, title, actor, description, references);
+            ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+            if (myReqAn.getFRequirements().size() <= 2000)
+            {
+                retValue = myReqAn.addNFRequirement(id, title, actor, description, references);
+            }
+            return retValue;
         }
-        return retValue;
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
-    public ErrorCodes addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references)
+    public ErrorCodes addProdData(String id, String content, String attribute, String maxCount,
+                                  ArrayList<String> references)
     {
-        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
-        if (myReqAn.getFRequirements().size() <= 300)
+        if (myReqAn != null)
         {
-            retValue = myReqAn.addProductData(id, content, attribute, maxCount, references);
+            ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+            if (myReqAn.getFRequirements().size() <= 300)
+            {
+                retValue = myReqAn.addProductData(id, content, attribute, maxCount, references);
+            }
+            return retValue;
         }
-        return retValue;
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes addQualReq(String criteria, Score value)
     {
-        ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
-        if (myReqAn.getFRequirements().size() <= 30)
+        if (myReqAn != null)
         {
-            retValue = myReqAn.addQualReq(criteria, value);
+            ErrorCodes retValue = ErrorCodes.LIST_OVERFLOW;
+            if (myReqAn.getFRequirements().size() <= 30)
+            {
+                retValue = myReqAn.addQualReq(criteria, value);
+            }
+            return retValue;
         }
-        return retValue;
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
+
     }
 
     @Override
-    public boolean calcManMonth()
+    public ErrorCodes calcManMonth()
     {
-        // TODO Implement this method
-        return false;
+        if (myReqAn != null)
+        {
+            return myReqAn.calcManMonth();
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
-    public boolean calcOptWeightFactor()
+    public ErrorCodes calcOptWeightFactor()
     {
+        if (myReqAn != null)
+        {
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
         // TODO Implement this method
-        return false;
     }
 
     @Override
     public boolean isReferenceOnID(String id)
     {
-        return myReqAn.isReferenceOnID(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.isReferenceOnID(id);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
@@ -122,7 +194,14 @@ public class Model
     @Override
     public ErrorCodes editAddition(String title, String description)
     {
-        return myReqAn.editAddition(title, description);
+        if (myReqAn != null)
+        {
+            return myReqAn.editAddition(title, description);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
@@ -130,60 +209,128 @@ public class Model
                                 String companyCountry, String custName, String custMail, String custPhone,
                                 String pmName, String pmMail, String pmPhone)
     {
-        return myReqAn.editCustData(companyName, companyCity, companyStreet, zip, companyCountry, custName,
-                                custMail, custPhone, pmName, pmMail, pmPhone);
+        if (myReqAn != null)
+        {
+            return myReqAn.editCustData(companyName, companyCity, companyStreet, zip, companyCountry, custName,
+                    custMail, custPhone, pmName, pmMail, pmPhone);
+        }
+        else
+        {
+            ArrayList<ErrorCodes> errors = new ArrayList<ErrorCodes>();
+            errors.add(ErrorCodes.NO_REQAN);
+            return errors;
+        }
+
     }
 
     @Override
     public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
                             ArrayList<String> references)
     {
-        return myReqAn.editFReq(oldID, id, title, actor, description, references);
+        if (myReqAn != null)
+        {
+            return myReqAn.editFReq(oldID, id, title, actor, description, references);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
+
     }
 
     @Override
     public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                   String obscurities, String label, ArrayList<String> crossRef)
     {
-        return myReqAn.editGlossEntry(oldTerm, term, sense, boundary, validity, obscurities, label, crossRef);
+        if (myReqAn != null)
+        {
+            return myReqAn.editGlossEntry(oldTerm, term, sense, boundary, validity, obscurities, label, crossRef);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description,
                              ArrayList<String> references)
     {
-        return myReqAn.editNFReq(oldID, id, title, actor, description, references);
+        if (myReqAn != null)
+        {
+            return myReqAn.editNFReq(oldID, id, title, actor, description, references);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
+
     }
 
     @Override
     public ErrorCodes editProdApp(String description)
     {
-        return myReqAn.editProdApp(description);
+        if (myReqAn != null)
+        {
+            return myReqAn.editProdApp(description);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                 ArrayList<String> references)
     {
-        return myReqAn.editProdData(oldID, id, content, attribute, maxCount, references);
+        if (myReqAn != null)
+        {
+            return myReqAn.editProdData(oldID, id, content, attribute, maxCount, references);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value)
     {
-        return myReqAn.editQualReq(oldCriteria, criteria, value);
+        if (myReqAn != null)
+        {
+            return myReqAn.editQualReq(oldCriteria, criteria, value);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes editTargetDef(String description)
     {
-        return myReqAn.editTargetDef(description);
+        if (myReqAn != null)
+        {
+            return myReqAn.editTargetDef(description);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public boolean existsActualState()
     {
-        return myReqAn.getActualState() == -1.0;
+        if (myReqAn != null)
+        {
+            return myReqAn.getActualState() == -1.0;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
@@ -202,7 +349,14 @@ public class Model
     @Override
     public boolean existsID(String id)
     {
-        return myReqAn.isReqIncluded(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.isReqIncluded(id);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
@@ -234,49 +388,105 @@ public class Model
     @Override
     public ArrayList<IAddition> getAllAddition()
     {
-        return myReqAn.getAdditions();
+        if (myReqAn != null)
+        {
+            return myReqAn.getAdditions();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ICostEstimation getCostEstimation()
     {
-        return myReqAn.getCostEstimation();
+        if (myReqAn != null)
+        {
+            return myReqAn.getCostEstimation();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ICustomerData getCustomerData()
     {
-        return myReqAn.getCustomerData();
+        if (myReqAn != null)
+        {
+            return myReqAn.getCustomerData();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public IGlossaryEntry getGlossaryEntryByTerm(String term)
     {
-        return myReqAn.getGlossaryEntriesByTerm(term);
+        if (myReqAn != null)
+        {
+            return myReqAn.getGlossaryEntriesByTerm(term);
+        }
+        else
+        {
+            return null;
+        }
     }
     
     @Override
     public IProductApplication getProdApp()
     {
-        return myReqAn.getProductApplication();
+        if (myReqAn != null)
+        {
+            return myReqAn.getProductApplication();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public IQualityRequirement getQualReqByCriteria(String criteria)
     {
-        return myReqAn.getQualityRequirementsByCriteria(criteria);
+        if (myReqAn != null)
+        {
+            return myReqAn.getQualityRequirementsByCriteria(criteria);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ITargetDefinition getTargetDef()
     {
-        return myReqAn.getTargetDefinition();
+        if (myReqAn != null)
+        {
+            return myReqAn.getTargetDefinition();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public boolean isIDUnique(String id)
     {
-        return myReqAn.isIDunique(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.isIDunique(id);
+        }
+        else
+        {
+            return true;
+        }
     }
 
     @Override
@@ -288,166 +498,407 @@ public class Model
     @Override
     public ErrorCodes rateWeightFactor(ArrayList<Integer> values)
     {
-        return myReqAn.rateWeightFactor(values);
+        if (myReqAn != null)
+        {
+            return myReqAn.rateWeightFactor(values);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes remAdditionByTitle(String title)
     {
-        return myReqAn.remAdditionByTitle(title);
+        if (myReqAn != null)
+        {
+            return myReqAn.remAdditionByTitle(title);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes remCostEstimation()
     {
-        return myReqAn.remCostEstimation();
+        if (myReqAn != null)
+        {
+            return myReqAn.remCostEstimation();
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes remFReqByID(String id)
     {
-        return myReqAn.remFReqByID(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.remFReqByID(id);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes remGlossEntryByTerm(String term)
     {
-        return myReqAn.remGlossEntryByTerm(term);
+        if (myReqAn != null)
+        {
+            return myReqAn.remGlossEntryByTerm(term);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes remNFReqByID(String id)
     {
-        return myReqAn.remNFReqByID(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.remNFReqByID(id);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes remProdDataByID(String id)
     {
-        return myReqAn.remProdDataByID(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.remProdDataByID(id);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes remQualReqByCrit(String criteria)
     {
-        return myReqAn.remQualReqByCrit(criteria);
+        if (myReqAn != null)
+        {
+            return myReqAn.remQualReqByCrit(criteria);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes saveReqAn(String path)
     {
-        unsaved = false;
-        // TODO
-        return null;
+        if (myReqAn != null)
+        {
+            unsaved = false;
+            // TODO
+            return ErrorCodes.NO_ERROR;
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes setActualState(double actStat)
     {
-        return myReqAn.setActualState(actStat);
+        if (myReqAn != null)
+        {
+            return myReqAn.setActualState(actStat);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret)
     {
-        return myReqAn.setDataFP(type, id, det, ret);
+        if (myReqAn != null)
+        {
+            return myReqAn.setDataFP(type, id, det, ret);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
     {
-        return myReqAn.setTransactionFP(type, id, det, ftr);
+        if (myReqAn != null)
+        {
+            return myReqAn.setTransactionFP(type, id, det, ftr);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
+    }
+
+    @Override
+    public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+    {
+        if (myReqAn != null)
+        {
+            return myReqAn.editDataFPByID(type, id, det, ret);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
+    }
+
+    @Override
+    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+    {
+        if (myReqAn != null)
+        {
+            return myReqAn.editTransactionFPByID(type, id, det, ftr);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
+    }
+
+    @Override
+    public ErrorCodes remDataFPByID(String id)
+    {
+        if (myReqAn != null)
+        {
+            return myReqAn.remDataFPByID(id);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
+    }
+
+    @Override
+    public ErrorCodes remTransactionFPByID(String id)
+    {
+        if (myReqAn != null)
+        {
+            return myReqAn.remTransactionFPByID(id);
+        }
+        else
+        {
+            return ErrorCodes.NO_REQAN;
+        }
     }
 
     @Override
     public IAddition getAdditionByTitle(String title)
     {
-        return myReqAn.getAdditionByTitle(title);
+        if (myReqAn != null)
+        {
+            return myReqAn.getAdditionByTitle(title);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ArrayList<IFRequirement> getAllFReq()
     {
-        return myReqAn.getFRequirements();
+        if (myReqAn != null)
+        {
+            return myReqAn.getFRequirements();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ArrayList<IGlossaryEntry> getAllGlossEntries()
     {
-        return myReqAn.getGlossaryEntries();
+        if (myReqAn != null)
+        {
+            return myReqAn.getGlossaryEntries();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ArrayList<INFRequirement> getAllNFReq()
     {
-        return myReqAn.getNFRequirements();
+        if (myReqAn != null)
+        {
+            return myReqAn.getNFRequirements();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ArrayList<IProductData> getAllProdData()
     {
-        return myReqAn.getProductData();
+        if (myReqAn != null)
+        {
+            return myReqAn.getProductData();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ArrayList<IQualityRequirement> getAllQualReq()
     {
-        return myReqAn.getQualityRequirements();
+        if (myReqAn != null)
+        {
+            return myReqAn.getQualityRequirements();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ArrayList<IWeightFactor> getAllWeightFactor()
     {
-        return myReqAn.getWeightFactors();
+        if (myReqAn != null)
+        {
+            return myReqAn.getWeightFactors();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public IWeightFactor getWeightFactorByTitle(String title)
     {
-        return myReqAn.getWeightFactorByTitle(title);
+        if (myReqAn != null)
+        {
+            return myReqAn.getWeightFactorByTitle(title);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public ArrayList<IWeightFactor> getAllOptWeightFactor()
     {
-        return myConfig.getOptWeightFactors();
+        if (myConfig != null)
+        {
+            return myConfig.getOptWeightFactors();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public IWeightFactor getOptWeightFactorByTitle(String title)
     {
-        return myConfig.getOptWeightFactorsByTitle(title);
+        if (myConfig != null)
+        {
+            return myConfig.getOptWeightFactorsByTitle(title);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public IFRequirement getFReqByID(String id)
     {
-        return myReqAn.getFRequirementByID(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.getFRequirementByID(id);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public INFRequirement getNFReqByID(String id)
     {
-        return myReqAn.getNFRequirementByID(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.getNFRequirementByID(id);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public IProductData getProductDataByID(String id)
     {
-        return myReqAn.getProductDataByID(id);
+        if (myReqAn != null)
+        {
+            return myReqAn.getProductDataByID(id);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone)
     {
-        RequirementAnalysis myReqAn = new RequirementAnalysis(title, pmName, pmMail, pmPhone);
-        return true;
+        if (myReqAn != null)
+        {
+            return false;
+        }
+        else
+        {
+            RequirementAnalysis myReqAn = new RequirementAnalysis(title, pmName, pmMail, pmPhone);
+            return true;
+        }
     }
 
     @Override
     public ArrayList<String> getAllReqIDs()
     {
-        return myReqAn.getAllReqIDs();
+        if (myReqAn != null)
+        {
+            return myReqAn.getAllReqIDs();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
@@ -455,4 +906,5 @@ public class Model
     {
         return myReqAn;
     }
+
 }

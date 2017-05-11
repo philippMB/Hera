@@ -3,7 +3,6 @@ package Model;
 import Model_Interfaces.IRequirement;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Requirement
     implements IRequirement
@@ -53,12 +52,12 @@ public abstract class Requirement
 
     public void remReference(String id)
     {
-        references.remove(references.getReqByID(id));
+        references.removeReqByID(id);
     }
 
     public void refreshReference(String oldID, IRequirement newReq)
     {
-        references.remove(references.getReqByID(oldID));
+        references.removeReqByID(oldID);
         references.add(newReq);
     }
 }

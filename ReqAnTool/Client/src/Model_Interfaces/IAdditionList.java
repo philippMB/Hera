@@ -7,17 +7,13 @@ import java.util.ArrayList;
 /**
  * Created by mbill on 04.05.2017.
  */
-public interface IAdditionList<IAddition>
+public interface IAdditionList<IAdd extends IAddition>
 {
-
-    public boolean add(IAddition myAdd);
 
     public boolean isIncluded(String term);
 
-    public Addition getAdditionByTitle(String term);
+    public IAdd getAdditionByTitle(String title);
 
-    public ArrayList<IAddition> toArrayList();
-
-    public boolean remove(IAddition myAdd);
+    public boolean removeByTitle(String title);
 
 }

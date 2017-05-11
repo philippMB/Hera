@@ -2,31 +2,38 @@ package Model;
 
 public class ComplexityMatrix
 {
-    private int[][] detFtrMat;
-    private int[][] detRetMat;
+    private Complexities[][] detFtrMat;
+    private Complexities[][] detRetMat;
+    private int[] detIndexes;
+    private int[] ftrIndexes;
+    private int[] retIndexes;
 
-    public ComplexityMatrix(int[][] detFtrMat, int[][] detRetMat)
+    public ComplexityMatrix(Complexities[][] detFtrMat, Complexities[][] detRetMat, int[] detIndexes,
+                            int[] ftrIndexes, int[] retIndexes)
     {
+        this.detIndexes = detIndexes;
+        this.ftrIndexes = ftrIndexes;
+        this.retIndexes = retIndexes;
         this.detFtrMat = detFtrMat;
         this.detRetMat = detRetMat;
     }
 
-    public int getDetFtrValue(int det, int ftr)
+    public Complexities getDetFtrValue(int det, int ftr)
     {
         int x = 0, y = 0;
-        for (int j = 1; j < detFtrMat[0].length; j++)
+        for (int i = 0; i < ftrIndexes.length; i++)
         {
-            if (detFtrMat[j][0] >= ftr)
+            if (ftrIndexes[i] >= ftr)
             {
-                x = j;
+                x = i;
                 break;
             }
         }
-        for (int i = 1; i < detFtrMat[0].length; i++)
+        for (int j = 0; j < detIndexes.length; j++)
         {
-            if (detFtrMat[0][i] >= det)
+            if (detIndexes[j] >= det)
             {
-                y = i;
+                y = j;
                 break;
             }
         }
@@ -34,52 +41,34 @@ public class ComplexityMatrix
 
     }
 
-    public int getDetRetValue(int det, int ret)
+    public Complexities getDetRetValue(int det, int ret)
     {
-        int x = 0, y = 0;
-        for (int j = 1; j < detRetMat[0].length; j++)
-        {
-            if (detRetMat[j][0] >= ret)
-            {
-                x = j;
-                break;
-            }
-        }
+        int x = -1, y = -1;
         for (int i = 1; i < detRetMat[0].length; i++)
         {
-            if (detFtrMat[0][i] >= det)
+            if (detIndexes[i] >= det)
             {
-                y = i;
+                x = i;
                 break;
             }
         }
-        return detFtrMat[x][y];
+        for (int j = 1; j < retIndexes.length; j++)
+        {
+            if (retIndexes[j] >= ret)
+            {
+                y = j;
+                break;
+            }
+        }
+        if (x == -1 || y == -1)
+        {
+            return Complexities.ERROR;
+        }
+        else
+        {
+            return detRetMat[x][y];
+        }
 
     }
 
-    public int getMaxValue()
-    {
-        int maxValue = 0;
-        for (int i = 1; i < detRetMat.length; i++)
-        {
-            for (int j = 1; j < detRetMat[0].length; j++)
-            {
-                if (detRetMat[i][j] > maxValue)
-                {
-                    maxValue = detRetMat[i][j];
-                }
-            }
-        }
-        for (int i = 0; i < detFtrMat.length; i++)
-        {
-            for (int j = 0; j < detFtrMat[0].length; j++)
-            {
-                if (detFtrMat[i][j] > maxValue)
-                {
-                    maxValue = detFtrMat[i][j];
-                }
-            }
-        }
-        return maxValue;
-    }
 }

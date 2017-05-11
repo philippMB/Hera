@@ -24,7 +24,7 @@ public interface IModelSetData
 
     public ErrorCodes remProdDataByID(String id);
 
-    public ErrorCodes editCustData(String companyName, String companyCity, String companyStreet, int zip, String companyCountry,
+    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
                          String custName, String custMail, String custPhone, String pmName, String pmMail,
                          String pmPhone);
 
