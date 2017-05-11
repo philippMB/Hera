@@ -32,6 +32,8 @@ public interface IModelSetData
 
     public ErrorCodes editProdApp(String description);
 
+    public ErrorCodes editProdEnv(String description);
+
     public ErrorCodes addQualReq(String criteria, Score value);
 
     public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value);

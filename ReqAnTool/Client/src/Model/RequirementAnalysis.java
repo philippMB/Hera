@@ -15,6 +15,7 @@ public class RequirementAnalysis
     private String customerDescription;
     private double actualState;    
     private ProductApplication myProductApplication;
+    private ProductEnvironment myProductEnvironment;
     private TargetDefinition myTargetDefinition;
     private CostEstimation myCostEstimation;
     private CustomerData myCustomerData;
@@ -55,6 +56,7 @@ public class RequirementAnalysis
         this.myGlossaryEntries = new GlossaryList<IGlossaryEntry>();
         this.myNFRequirements = new RequirementList<INFRequirement>();
         this.myProductApplication = new ProductApplication();
+        this.myProductEnvironment = new ProductEnvironment();
         this.myProductData = new RequirementList<IProductData>();
         this.myQualityRequirements = new QualityRequirementList<IQualityRequirement>();
         this.myTargetDefinition = new TargetDefinition();
@@ -1086,5 +1088,15 @@ public class RequirementAnalysis
         {
             return ErrorCodes.NO_COST_ESTIMATION;
         }
+    }
+
+    public IProductEnvironment getProductEnviroment()
+    {
+        return myProductEnvironment;
+    }
+
+    public ErrorCodes editProdEnv(String description)
+    {
+        return myProductEnvironment.edit(description);
     }
 }
