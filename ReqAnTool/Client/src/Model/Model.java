@@ -883,7 +883,7 @@ public class Model
         }
         else
         {
-            RequirementAnalysis myReqAn = new RequirementAnalysis(title, pmName, pmMail, pmPhone);
+            this.myReqAn = new RequirementAnalysis(title, pmName, pmMail, pmPhone);
             return true;
         }
     }
