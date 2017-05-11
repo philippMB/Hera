@@ -17,6 +17,8 @@ public interface IModelGetData
 
     public IProductApplication getProdApp();
 
+    public IProductEnvironment getProdEnv();
+
     public IGlossaryEntry getGlossaryEntryByTerm(String term);
 
     public ICostEstimation getCostEstimation();

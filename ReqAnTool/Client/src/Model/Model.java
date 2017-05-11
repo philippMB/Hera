@@ -281,6 +281,17 @@ public class Model
     }
 
     @Override
+    public ErrorCodes editProdEnv(String description)
+    {
+        ErrorCodes retValue = ErrorCodes.NO_REQAN;
+        if (myReqAn != null)
+        {
+            retValue = myReqAn.editProdEnv(description);
+        }
+        return retValue;
+    }
+
+    @Override
     public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                 ArrayList<String> references)
     {
@@ -448,6 +459,18 @@ public class Model
         {
             return null;
         }
+    }
+
+    @Override
+    public IProductEnvironment getProdEnv()
+    {
+        IProductEnvironment myProdEnv = null;
+        if (myReqAn != null)
+        {
+            myProdEnv = myReqAn.getProductEnviroment();
+        }
+        return myProdEnv;
+
     }
 
     @Override
