@@ -39,6 +39,8 @@ public interface IApplications
 
     public ErrorCodes rateWeightFactor(ArrayList<Integer> values);
 
+    public ErrorCodes calcFPCount();
+
     public ErrorCodes calcManMonth();
 
     public ErrorCodes setActualState(double actStat);
