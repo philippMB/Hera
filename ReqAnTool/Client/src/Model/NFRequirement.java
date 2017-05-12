@@ -23,6 +23,7 @@ public class NFRequirement
         this.title = title;
         this.actor = actor;
         this.description = description;
+
     }
 
 
@@ -30,18 +31,21 @@ public class NFRequirement
     public String getTitle()
     {
         return title;
+
     }
 
     @Override
     public String getActor()
     {
         return actor;
+
     }
 
     @Override
     public String getDescription()
     {
         return description;
+
     }
 
     public ErrorCodes edit(String id, String title, String actor, String description,
@@ -52,5 +56,6 @@ public class NFRequirement
         this.actor = actor;
         this.description = description;
         return ErrorCodes.NO_ERROR;
+
     }
 }

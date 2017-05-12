@@ -21,7 +21,7 @@ public class ComplexityWeightMatrix
 
     public int getFPvalue(Complexities myComplexity, ClassOfTransactionFP type)
     {
-        int x = -1, y = -1;
+        int x = -1, y = -1, fPValue = -1;
         for (int i = 0; i < myComplexityIndexes.length; i++)
         {
             if (myComplexityIndexes[i] == myComplexity)
@@ -38,19 +38,16 @@ public class ComplexityWeightMatrix
                 break;
             }
         }
-        if (x == -1 || y == -1)
+        if (!(x == -1 || y == -1))
         {
-            return -1;
+            fPValue = myFPMatrix[x][y];
         }
-        else
-        {
-            return myFPMatrix[x][y];
-        }
+        return fPValue;
     }
 
     public int getFPvalue(Complexities myComplexity, ClassOfDataFP type)
     {
-        int x = -1, y = -1;
+        int x = -1, y = -1, fPValue = -1;
         for (int i = 0; i < myComplexityIndexes.length; i++)
         {
             if (myComplexityIndexes[i] == myComplexity)
@@ -67,13 +64,10 @@ public class ComplexityWeightMatrix
                 break;
             }
         }
-        if (x == -1 || y == -1)
+        if (!(x == -1 || y == -1))
         {
-            return -1;
+            fPValue = myFPMatrix[x][y];
         }
-        else
-        {
-            return myFPMatrix[x][y];
-        }
+        return fPValue;
     }
 }

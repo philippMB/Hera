@@ -14,30 +14,32 @@ public class WeightFactor
     public String getTitle()
     {
         return title;
+
     }
 
     @Override
     public int getValue()
     {
         return score;
+
     }
 
     @Override
     public int getMaxValue()
     {
         return maxValue;
+
     }
 
     public ErrorCodes setValue(Integer value)
     {
+        ErrorCodes retValue = ErrorCodes.INVALID_ARGUMENT;
         if (value >= 0 && value <= maxValue)
         {
             this.score = value;
-            return ErrorCodes.NO_ERROR;
+            retValue = ErrorCodes.NO_ERROR;
         }
-        else
-        {
-            return ErrorCodes.INVALID_ARGUMENT;
-        }
+        return retValue;
+
     }
 }

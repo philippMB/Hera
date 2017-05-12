@@ -21,27 +21,27 @@ public class RequirementAnalysis
     private CustomerData myCustomerData;
     private Validator myValidator;
     /**
-     * @associates <{Model.FRequirement}>
+     * @associates <{Model_Interfaces.IFRequirement}>
      */
     private RequirementList<IFRequirement> myFRequirements;
     /**
-     * @associates <{Model.ProductData}>
+     * @associates <{Model_Interfaces.IProductData}>
      */
     private RequirementList<IProductData> myProductData;
     /**
-     * @associates <{Model.NFRequirement}>
+     * @associates <{Model_Interfaces.INFRequirement}>
      */
     private RequirementList<INFRequirement> myNFRequirements;
     /**
-     * @associates <{Model.Addition}>
+     * @associates <{Model_Interfaces.IAddition}>
      */
     private AdditionList<IAddition> myAdditions;
     /**
-     * @associates <{Model.GlossaryEntry}>
+     * @associates <{Model_Interfaces.IGlossaryEntry}>
      */
     private GlossaryList<IGlossaryEntry> myGlossaryEntries;
     /**
-     * @associates <{Model.QualityRequirement}>
+     * @associates <{Model_Interfaces.IQualityRequirement}>
      */
     private QualityRequirementList<IQualityRequirement> myQualityRequirements;
 
@@ -63,9 +63,10 @@ public class RequirementAnalysis
         this.createDate = new Date();
         this.actualState = -1.0;
         this.myValidator = new Validator();
+
     }
 
-    protected boolean isReqIncluded(String id)
+    private boolean isReqIncluded(String id)
     {
         boolean isIncluded = false;
         if (myFRequirements.isIncluded(id))
@@ -81,9 +82,10 @@ public class RequirementAnalysis
             isIncluded = true;
         }
         return isIncluded;
+
     }
 
-    protected boolean solveGlossaryTerms(ArrayList<String> terms)
+    private boolean solveGlossaryTerms(ArrayList<String> terms)
     {
         int flag = 0;
         for (String term : terms)
@@ -97,9 +99,10 @@ public class RequirementAnalysis
             }
         }
         return flag == terms.size();
+
     }
     
-    protected boolean solveReqReferences(ArrayList<String> references)
+    private boolean solveReqReferences(ArrayList<String> references)
     {
         int flag = 0;
         for (String ref : references)
@@ -110,10 +113,12 @@ public class RequirementAnalysis
             }
         }
         return flag == references.size();
+
     }
 
     public boolean isReferenceOnID(String id)
     {
+        boolean referenced = false;
         for (IFRequirement myIFReq : myFRequirements)
         {
             FRequirement myFReq = (FRequirement)myIFReq;
@@ -121,7 +126,7 @@ public class RequirementAnalysis
             {
                 if (refID.equals(id))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
@@ -132,7 +137,7 @@ public class RequirementAnalysis
             {
                 if (refID.equals(id))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
@@ -143,11 +148,12 @@ public class RequirementAnalysis
             {
                 if (refID.equals(id))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
-        return false;
+        return referenced;
+
     }
 
     private void refreshReferences(String oldID, String id)
@@ -186,6 +192,7 @@ public class RequirementAnalysis
                 }
             }
         }
+
     }
 
     private void removeRequirementReferences(String id)
@@ -223,10 +230,12 @@ public class RequirementAnalysis
                 }
             }
         }
+
     }
 
     private boolean isReferenceOnTerm(String term)
     {
+        boolean referenced = false;
         for (IGlossaryEntry myIEntry : myGlossaryEntries)
         {
             GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
@@ -234,11 +243,12 @@ public class RequirementAnalysis
             {
                 if (ref.equals(term))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
-        return false;
+        return referenced;
+
     }
 
     private void removeGlossaryReferences(String term)
@@ -254,9 +264,10 @@ public class RequirementAnalysis
                 }
             }
         }
+
     }
     
-    protected IRequirement getAnyReqByID(String id)
+    private IRequirement getAnyReqByID(String id)
     {
         IRequirement myReq = null;
         if (myFRequirements.isIncluded(id))
@@ -272,9 +283,10 @@ public class RequirementAnalysis
             myReq = myProductData.getReqByID(id);
         }
         return myReq;
+
     }
     
-    protected ArrayList<String> getAllReqIDs()
+    public ArrayList<String> getAllReqIDs()
     {
         ArrayList<String> myIDs = new ArrayList<String>();
         for (IRequirement req : myFRequirements)
@@ -290,166 +302,186 @@ public class RequirementAnalysis
             myIDs.add(req.getID());
         }
         return myIDs;
+
     }
 
     public boolean isIDunique(String id)
     {
+        boolean unique = false;
         if (getAnyReqByID(id) == null)
         {
-            return true;
+            unique = true;
         }
-        else
-        {
-            return false;
-        }
+        return unique;
+
     }
 
     @Override
     public double getActualState()
     {
         return actualState;
+
     }
 
     @Override
     public Date getCreateDate()
     {
         return createDate;
+
     }
 
     @Override
     public String getCustomerDescription()
     {
         return customerDescription;
+
     }
 
     @Override
     public ArrayList<IAddition> getAdditions()
     {
         return myAdditions;
+
     }
 
     @Override
     public ArrayList<IFRequirement> getFRequirements()
     {
         return myFRequirements;
+
     }
 
     @Override
     public ArrayList<INFRequirement> getNFRequirements()
     {
         return myNFRequirements;
+
     }
 
     @Override
     public ArrayList<IGlossaryEntry> getGlossaryEntries()
     {
         return myGlossaryEntries;
+
     }
 
     @Override
     public ArrayList<IProductData> getProductData()
     {
         return myProductData;
+
     }
 
     @Override
     public ArrayList<IQualityRequirement> getQualityRequirements()
     {
         return myQualityRequirements;
+
     }
 
     @Override
     public ArrayList<IWeightFactor> getWeightFactors()
     {
         return myCostEstimation.getWeightFactors();
+
     }
 
     @Override
     public String getTitle()
     {
         return title;
+
     }
 
     @Override
     public ITargetDefinition getTargetDefinition()
     {
         return myTargetDefinition;
+
     }
 
     @Override
     public IProductApplication getProductApplication()
     {
         return myProductApplication;
+
     }
 
     @Override
     public ICustomerData getCustomerData()
     {
         return myCustomerData;
+
     }
 
     @Override
     public ICostEstimation getCostEstimation()
     {
         return myCostEstimation;
+
     }
 
     @Override
     public IGlossaryEntry getGlossaryEntriesByTerm(String term)
     {
         return myGlossaryEntries.getEntryByTerm(term);
+
     }
 
     @Override
     public IQualityRequirement getQualityRequirementsByCriteria(String criteria)
     {
         return myQualityRequirements.getQualReqByCriteria(criteria);
+
     }
 
     @Override
     public IAddition getAdditionByTitle(String title)
     {
         return myAdditions.getAdditionByTitle(title);
+
     }
 
     @Override
     public IWeightFactor getWeightFactorByTitle(String title)
     {
         return myCostEstimation.getWeightFactorByTitle(title);
+
     }
 
     @Override
     public IFRequirement getFRequirementByID(String id)
     {
         return myFRequirements.getReqByID(id);
+
     }
 
     @Override
     public INFRequirement getNFRequirementByID(String id)
     {
         return myNFRequirements.getReqByID(id);
+
     }
 
     @Override
     public IProductData getProductDataByID(String id)
     {
         return myProductData.getReqByID(id);
+
     }
 
-    ErrorCodes addAddition(String title, String description)
+    public ErrorCodes addAddition(String title, String description)
     {
         Addition myAdd = new Addition(title, description);
         myAdditions.add(myAdd);
         return ErrorCodes.NO_ERROR;
+
     }
 
-    ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    public ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        if (!solveReqReferences(references))
-        {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
-        }
-        else
+        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
+        if (solveReqReferences(references))
         {
             if (myValidator.isValidID(id))
             {
@@ -460,26 +492,23 @@ public class RequirementAnalysis
                 }
                 FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
                 myFRequirements.add(myReq);
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
-                return ErrorCodes.INVALID_ID;
+                retValue = ErrorCodes.INVALID_ID;
             }
         }
+        return retValue;
+
     }
     
 
-    protected ErrorCodes addGlossaryEntry(String term, String sense, String boundary, String validity,
+    public ErrorCodes addGlossaryEntry(String term, String sense, String boundary, String validity,
                                           String obscurities, String label, ArrayList<String> crossRef)
     {
-        ErrorCodes retValue = null;
-
-        if (!solveGlossaryTerms(crossRef))
-        {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
-        }
-        else
+        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
+        if (solveGlossaryTerms(crossRef))
         {
             GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
             for (String ref : crossRef)
@@ -488,17 +517,16 @@ public class RequirementAnalysis
             }
             GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
             myGlossaryEntries.add(myEntry);
-            return ErrorCodes.NO_ERROR;
+            retValue = ErrorCodes.NO_ERROR;
         }
+        return retValue;
+
     }
 
-    ErrorCodes addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    public ErrorCodes addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
     {
-        if (!solveReqReferences(references))
-        {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
-        }
-        else
+        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
+        if (solveReqReferences(references))
         {
             if (myValidator.isValidID(id))
             {
@@ -509,23 +537,22 @@ public class RequirementAnalysis
                 }
                 NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
                 myNFRequirements.add(myReq);
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
-                return ErrorCodes.INVALID_ID;
+                retValue = ErrorCodes.INVALID_ID;
             }
         }
+        return retValue;
+
     }
 
-    ErrorCodes addProductData(String id, String content, String attribute, String maxCount,
+    public ErrorCodes addProductData(String id, String content, String attribute, String maxCount,
                               ArrayList<String> references)
     {
-        if (!solveReqReferences(references))
-        {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
-        }
-        else
+        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
+        if (solveReqReferences(references))
         {
             if (myValidator.isValidID(id))
             {
@@ -536,28 +563,32 @@ public class RequirementAnalysis
                 }
                 ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
                 myProductData.add(myReq);
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
-                return ErrorCodes.INVALID_ID;
+                retValue = ErrorCodes.INVALID_ID;
             }
         }
+        return retValue;
+
     }
 
-    protected ErrorCodes addQualReq(String criteria, Score value)
+    public ErrorCodes addQualReq(String criteria, Score value)
     {
         IQualityRequirement myQualReq = new QualityRequirement(criteria, value);
         myQualityRequirements.add(myQualReq);
         return ErrorCodes.NO_ERROR;
+
     }
 
-    protected ErrorCodes editAddition(String title, String description)
+    public ErrorCodes editAddition(String title, String description)
     {
         IAddition myIAdd = myAdditions.getAdditionByTitle(title);
         Addition myAdd = (Addition)myIAdd;
         myAdd.edit(title, description);
         return ErrorCodes.NO_ERROR;
+
     }
 
     public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip,
@@ -566,11 +597,13 @@ public class RequirementAnalysis
     {
         return myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
                                     custMail, custPhone, pmName, pmMail, pmPhone);
+
     }
 
-    ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
+    public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
                         ArrayList<String> references)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myFRequirements.isIncluded(oldID))
         {
             IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
@@ -587,37 +620,35 @@ public class RequirementAnalysis
                         {
                             myReferences.add(getAnyReqByID(ref));
                         }
-                        ErrorCodes retValue = myFReq.edit(id, title, actor, description, myReferences);
+                        retValue = myFReq.edit(id, title, actor, description, myReferences);
                         if (isReferenceOnID(oldID))
                         {
                             refreshReferences(oldID, id);
                         }
-                        return retValue;
                     }
                     else
                     {
-                        return ErrorCodes.INVALID_ID;
+                        retValue = ErrorCodes.INVALID_ID;
                     }
                 }
                 else
                 {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
                 }
             }
             else
             {
-                return ErrorCodes.DUPLICATE;
+                retValue = ErrorCodes.DUPLICATE;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                      String obscurities, String label, ArrayList<String> crossRef)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myGlossaryEntries.isIncluded(oldTerm))
         {
             IGlossaryEntry myIEntry = myGlossaryEntries.getEntryByTerm(oldTerm);
@@ -631,27 +662,26 @@ public class RequirementAnalysis
                     {
                         myCrossRef.add(myGlossaryEntries.getEntryByTerm(ref));
                     }
-                    return myEntry.edit(term, sense, boundary, validity, obscurities, label, myCrossRef);
+                    retValue = myEntry.edit(term, sense, boundary, validity, obscurities, label, myCrossRef);
                 }
                 else
                 {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
                 }
             }
             else
             {
-                return ErrorCodes.DUPLICATE;
+                retValue = ErrorCodes.DUPLICATE;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description,
                                 ArrayList<String> references)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myNFRequirements.isIncluded(oldID))
         {
             INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
@@ -667,42 +697,41 @@ public class RequirementAnalysis
                         {
                             myReferences.add(getAnyReqByID(ref));
                         }
-                        ErrorCodes retValue = myNFReq.edit(id, title, actor, description, myReferences);
+                        retValue = myNFReq.edit(id, title, actor, description, myReferences);
                         if (isReferenceOnID(oldID))
                         {
                             refreshReferences(oldID, id);
                         }
-                        return retValue;
                     }
                     else
                     {
-                        return ErrorCodes.INVALID_ID;
+                        retValue = ErrorCodes.INVALID_ID;
                     }
                 }
                 else
                 {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
                 }
             }
             else
             {
-                return ErrorCodes.DUPLICATE;
+                retValue = ErrorCodes.DUPLICATE;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes editProdApp(String description)
     {
         return myProductApplication.edit(description);
+
     }
 
     public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                    ArrayList<String> references)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myProductData.isIncluded(oldID))
         {
             IProductData myIProdData = myProductData.getReqByID(oldID);
@@ -718,62 +747,60 @@ public class RequirementAnalysis
                         {
                             myReferences.add(getAnyReqByID(ref));
                         }
-                        ErrorCodes retValue = myProdData.edit(id, content, attribute, maxCount, myReferences);
+                        retValue = myProdData.edit(id, content, attribute, maxCount, myReferences);
                         if (isReferenceOnID(oldID))
                         {
                             refreshReferences(oldID, id);
                         }
-                        return retValue;
                     }
                     else
                     {
-                        return ErrorCodes.INVALID_ID;
+                        retValue = ErrorCodes.INVALID_ID;
                     }
                 }
                 else
                 {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
+                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
                 }
             }
             else
             {
-                return ErrorCodes.DUPLICATE;
+                retValue = ErrorCodes.DUPLICATE;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return ErrorCodes.NOT_EXISTENT;
+
     }
 
     public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myQualityRequirements.isIncluded(oldCriteria))
         {
             IQualityRequirement myIQualReq = myQualityRequirements.getQualReqByCriteria(oldCriteria);
             if (!myQualityRequirements.isIncluded(criteria)) // Test for duplicate criteria
             {
                 QualityRequirement myQualReq = (QualityRequirement) myIQualReq;
-                return myQualReq.edit(criteria, value);
+                retValue = myQualReq.edit(criteria, value);
             }
             else
             {
-                return ErrorCodes.DUPLICATE;
+                retValue = ErrorCodes.DUPLICATE;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes editTargetDef(String description)
     {
         return myTargetDefinition.edit(description);
+
     }
 
     public ErrorCodes rateWeightFactor(ArrayList<Integer> values)
     {
+        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         boolean success = true;
         if (getCostEstimation() != null)
         {
@@ -787,157 +814,148 @@ public class RequirementAnalysis
             }
             if (success)
             {
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
-                return ErrorCodes.INVALID_ARGUMENT;
+                retValue = ErrorCodes.INVALID_ARGUMENT;
             }
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remAdditionByTitle(String title)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myAdditions.isIncluded(title))
         {
             myAdditions.removeByTitle(title);
-            return ErrorCodes.NO_ERROR;
+            retValue = ErrorCodes.NO_ERROR;
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remCostEstimation()
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myCostEstimation != null)
         {
             myCostEstimation = null;
-            return ErrorCodes.NO_ERROR;
+            retValue = ErrorCodes.NO_ERROR;
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remFReqByID(String id)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myFRequirements.isIncluded(title))
         {
             myFRequirements.removeReqByID(id);
             if(isReferenceOnID(id))
             {
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
                 removeRequirementReferences(id);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remGlossEntryByTerm(String term)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myGlossaryEntries.isIncluded(term))
         {
             myGlossaryEntries.removeEntryByTerm(term);
             if(!isReferenceOnTerm(term))
             {
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
                 removeGlossaryReferences(term);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remNFReqByID(String id)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myNFRequirements.isIncluded(id))
         {
             myNFRequirements.removeReqByID(id);
             if (isReferenceOnID(id))
             {
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
                 removeRequirementReferences(id);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remProdDataByID(String id)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myProductData.isIncluded(id))
         {
             myProductData.removeReqByID(id);
             if (!isReferenceOnID(id))
             {
-                return ErrorCodes.NO_ERROR;
+                retValue = ErrorCodes.NO_ERROR;
             }
             else
             {
                 removeRequirementReferences(id);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
+                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remQualReqByCrit(String criteria)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (myQualityRequirements.isIncluded(criteria))
         {
             myQualityRequirements.removeQualReqByCriteria(criteria);
-            return ErrorCodes.NO_ERROR;
+            retValue = ErrorCodes.NO_ERROR;
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes setActualState(double actualState)
     {
+        ErrorCodes retValue = ErrorCodes.INVALID_ARGUMENT;
         if(actualState > 0)
         {
             this.actualState = actualState;
-            return ErrorCodes.NO_ERROR;
+            retValue = ErrorCodes.NO_ERROR;
         }
-        else
-        {
-            return ErrorCodes.INVALID_ARGUMENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (isReqIncluded(id))
         {
             if (myCostEstimation != null)
@@ -945,26 +963,25 @@ public class RequirementAnalysis
                 if (myCostEstimation.getDataFPByID(id) == null) // Test for duplicate initialising
                 {
                     IRequirement reference = getAnyReqByID(id);
-                    return myCostEstimation.setDataFP(type, reference, det, ret);
+                    retValue = myCostEstimation.setDataFP(type, reference, det, ret);
                 }
                 else
                 {
-                    return ErrorCodes.DUPLICATE;
+                    retValue = ErrorCodes.DUPLICATE;
                 }
             }
             else
             {
-                return ErrorCodes.NO_COST_ESTIMATION;
+                retValue = ErrorCodes.NO_COST_ESTIMATION;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
     {
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
         if (isReqIncluded(id))
         {
             if (myCostEstimation != null)
@@ -972,22 +989,20 @@ public class RequirementAnalysis
                 if (myCostEstimation.getTransactionFPByID(id) == null)
                 {
                     IRequirement reference = getAnyReqByID(id);
-                    return myCostEstimation.setTransactionFP(type, reference, det, ftr);
+                    retValue = myCostEstimation.setTransactionFP(type, reference, det, ftr);
                 }
                 else
                 {
-                    return ErrorCodes.DUPLICATE;
+                    retValue = ErrorCodes.DUPLICATE;
                 }
             }
             else
             {
-                return ErrorCodes.NO_COST_ESTIMATION;
+                retValue = ErrorCodes.NO_COST_ESTIMATION;
             }
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes addCostEstimation(ComplexityMatrix myComplexityMatrix,
@@ -995,108 +1010,117 @@ public class RequirementAnalysis
     {
         myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrix);
         return ErrorCodes.NO_ERROR;
+
     }
 
     public ErrorCodes calcManMonth()
     {
+        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         if (myCostEstimation != null)
         {
             myCostEstimation.calculateManMonth();
-            return ErrorCodes.NO_ERROR;
+            retValue = ErrorCodes.NO_ERROR;
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remTransactionFPByID(String id)
     {
+        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         if (myCostEstimation != null)
         {
             if (isReqIncluded(id))
             {
                 IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.remTransactionFPByID(ReferenceToRequirement);
+                retValue = myCostEstimation.remTransactionFPByID(ReferenceToRequirement);
             }
             else
             {
-                return ErrorCodes.NOT_EXISTENT;
+                retValue = ErrorCodes.NOT_EXISTENT;
             }
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes remDataFPByID(String id)
     {
+        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         if (myCostEstimation != null)
         {
             if (isReqIncluded(id))
             {
                 IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.remDataFPByID(ReferenceToRequirement);
+                retValue = myCostEstimation.remDataFPByID(ReferenceToRequirement);
             }
             else
             {
-                return ErrorCodes.NOT_EXISTENT;
+                retValue = ErrorCodes.NOT_EXISTENT;
             }
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
     {
+        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         if (myCostEstimation != null)
         {
             if (isReqIncluded(id))
             {
                 IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.editTransactionFPByID(type, ReferenceToRequirement, det, ftr);
+                retValue = myCostEstimation.editTransactionFPByID(type, ReferenceToRequirement, det, ftr);
             }
             else
             {
-                return ErrorCodes.NOT_EXISTENT;
+                retValue = ErrorCodes.NOT_EXISTENT;
             }
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        return retValue;
+
     }
 
     public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
     {
+        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         if (myCostEstimation != null)
         {
             if (isReqIncluded(id))
             {
                 IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.editDataFPByID(type, ReferenceToRequirement, det, ret);
+                retValue = myCostEstimation.editDataFPByID(type, ReferenceToRequirement, det, ret);
             }
             else
             {
-                return ErrorCodes.NOT_EXISTENT;
+                retValue = ErrorCodes.NOT_EXISTENT;
             }
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        return retValue;
+
     }
 
     public IProductEnvironment getProductEnviroment()
     {
         return myProductEnvironment;
+
     }
 
     public ErrorCodes editProdEnv(String description)
     {
         return myProductEnvironment.edit(description);
+
+    }
+
+    public ErrorCodes calcFPCount()
+    {
+        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
+        if (myCostEstimation != null)
+        {
+            myCostEstimation.calculateFP();
+            retValue = ErrorCodes.NO_ERROR;
+        }
+        return retValue;
     }
 }

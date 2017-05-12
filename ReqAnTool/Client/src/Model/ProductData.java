@@ -23,24 +23,28 @@ public class ProductData
         this.content = content;
         this.attribute = attribute;
         this.maxCount = maxCount;
+
     }
 
     @Override
     public String getAttribute()
     {
         return attribute;
+
     }
 
     @Override
     public String getContent()
     {
         return content;
+
     }
 
     @Override
     public String getMaxCount()
     {
         return maxCount;
+
     }
 
     public ErrorCodes edit(String id, String content, String attribute, String maxCount,
@@ -51,5 +55,6 @@ public class ProductData
         this.attribute = attribute;
         this.maxCount = maxCount;
         return ErrorCodes.NO_ERROR;
+
     }
 }

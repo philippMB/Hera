@@ -12,20 +12,24 @@ public class PersonalData
         this.name = name;
         this.mailAddress = mail;
         this.phoneNumber = phone;
+
     }
 
     public String getName()
     {
         return name;
+
     }
     
     public String getPhoneNumber()
     {
         return phoneNumber;
+
     }
     public String getMailAddress()
     {
         return mailAddress;
+
     }
 
 }

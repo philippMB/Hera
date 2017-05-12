@@ -15,40 +15,46 @@ public class QualityRequirementList<IQualReq extends IQualityRequirement>
     @Override
     public boolean isIncluded(String criteria)
     {
+        boolean included = false;
         for (IQualReq myQualReq : this)
         {
             if (myQualReq.getCriteria().equals(criteria))
             {
-                return true;
+                included = true;
             }
         }
-        return false;
+        return included;
+
     }
 
     @Override
     public IQualReq getQualReqByCriteria(String criteria)
     {
+        IQualReq qualReqToReturn = null;
         for (IQualReq myQualReq : this)
         {
             if (myQualReq.getCriteria().equals(criteria))
             {
-                return myQualReq;
+                qualReqToReturn = myQualReq;
             }
         }
-        return null;
+        return qualReqToReturn;
+
     }
 
     @Override
     public boolean removeQualReqByCriteria(String criteria)
     {
+        boolean success = false;
         for (IQualReq myQualReq : this)
         {
             if (myQualReq.getCriteria().equals(criteria))
             {
-                return super.remove(myQualReq);
+                success = super.remove(myQualReq);
             }
         }
-        return false;
+        return success;
+
     }
 
 }

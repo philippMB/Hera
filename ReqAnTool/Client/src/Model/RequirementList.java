@@ -12,39 +12,45 @@ public class RequirementList<T extends IRequirement>
     @Override
     public boolean isIncluded(String id)
     {
+        boolean included = false;
         for (T myReq : this)
         {
             if (myReq.getID().equals(id))
             {
-                return true;
+                included = true;
             }
         }
-        return false;
+        return included;
+
     }
 
     @Override
     public T getReqByID(String id)
     {
+        T reqToReturn = null;
         for (T myReq : this)
         {
             if (myReq.getID().equals(id))
             {
-                return myReq;
+                reqToReturn = myReq;
             }
         }
-        return null;
+        return reqToReturn;
+
     }
 
     @Override
     public boolean removeReqByID(String id)
     {
+        boolean success = false;
         for (T myReq : this)
         {
             if (myReq.getID().equals(id))
             {
-                return super.remove(myReq);
+                success = super.remove(myReq);
             }
         }
-        return false;
+        return success;
+
     }
 }

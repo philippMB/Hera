@@ -21,6 +21,7 @@ public class DataFP
         this.det = det;
         this.ret = ret;
         this.reference = requirement;
+        this.fPvalue = -1;
     }
 
     @Override
@@ -54,8 +55,11 @@ public class DataFP
 
     public int getFPvalue(ComplexityMatrix myComplexityMatrix, ComplexityWeightMatrix myComplexityWeightMatrix)
     {
-        calculateComplexity(myComplexityMatrix);
-        fPvalue = myComplexityWeightMatrix.getFPvalue(myComplexity, type);
+        if (fPvalue == -1) // if already determined: do not calculate
+        {
+            calculateComplexity(myComplexityMatrix);
+            fPvalue = myComplexityWeightMatrix.getFPvalue(myComplexity, type);
+        }
         return fPvalue;
     }
 
@@ -64,5 +68,6 @@ public class DataFP
         this.type = type;
         this.det = det;
         this.ret = ret;
+        this.fPvalue = -1;
     }
 }

@@ -12,18 +12,20 @@ public class TargetDefinition
     public TargetDefinition()
     {
         this.description = null;
-    }
 
+    }
 
     @Override
     public String getDescription()
     {
         return description;
+
     }
 
     public ErrorCodes edit(String description)
     {
         this.description = description;
         return ErrorCodes.NO_ERROR;
+
     }
 }

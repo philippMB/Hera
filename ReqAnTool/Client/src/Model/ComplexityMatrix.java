@@ -21,6 +21,7 @@ public class ComplexityMatrix
     public Complexities getDetFtrValue(int det, int ftr)
     {
         int x = 0, y = 0;
+        Complexities retValue = Complexities.ERROR;
         for (int i = 0; i < ftrIndexes.length; i++)
         {
             if (ftrIndexes[i] >= ftr)
@@ -37,13 +38,18 @@ public class ComplexityMatrix
                 break;
             }
         }
-        return detFtrMat[x][y];
+        if (!(x == -1 || y == -1))
+        {
+            retValue = detFtrMat[x][y];
+        }
+        return retValue;
 
     }
 
     public Complexities getDetRetValue(int det, int ret)
     {
         int x = -1, y = -1;
+        Complexities retValue = Complexities.ERROR;
         for (int i = 1; i < detRetMat[0].length; i++)
         {
             if (detIndexes[i] >= det)
@@ -60,15 +66,10 @@ public class ComplexityMatrix
                 break;
             }
         }
-        if (x == -1 || y == -1)
+        if (!(x == -1 || y == -1))
         {
-            return Complexities.ERROR;
+            retValue = detFtrMat[x][y];
         }
-        else
-        {
-            return detRetMat[x][y];
-        }
-
+        return retValue;
     }
-
 }

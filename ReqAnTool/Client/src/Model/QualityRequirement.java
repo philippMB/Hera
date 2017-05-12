@@ -15,18 +15,21 @@ public class QualityRequirement
     {
         this.criteria = criteria;
         this.value = value;
+
     }
 
     @Override
     public String getCriteria()
     {
         return criteria;
+
     }
 
     @Override
     public Score getValue()
     {
         return value;
+
     }
 
     public ErrorCodes edit(String criteria, Score value)
@@ -34,5 +37,6 @@ public class QualityRequirement
         this.criteria = criteria;
         this.value = value;
         return ErrorCodes.NO_ERROR;
+
     }
 }

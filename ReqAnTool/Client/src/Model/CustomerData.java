@@ -71,42 +71,38 @@ public class CustomerData
         boolean validCity = myValidator.isValidCity(companyCity);
         boolean validStreet = myValidator.isValidStreet(companyStreet);
         boolean validZIP = myValidator.isValidZIP(zip);
+        boolean isValid = false;
         if (validCountry && validCity && validStreet && validZIP)
         {
-            return true;
+            isValid = true;
         }
-        else
-        {
-            return false;
-        }
+        return isValid;
     }
 
     private boolean validMail(String custMail, String pmMail)
     {
         boolean validCustMail = myValidator.isValidEmail(custMail);
         boolean validpmMail = myValidator.isValidEmail(pmMail);
+        boolean isValid = false;
         if (validCustMail && validpmMail)
         {
-            return true;
+            isValid = true;
         }
-        else
-        {
-            return false;
-        }
+        return isValid;
+
     }
 
     private boolean validPhone(String custPhone, String pmPhone)
     {
-        boolean validCustPhone = myValidator.isValidEmail(custPhone);
-        boolean validpmPhone = myValidator.isValidEmail(pmPhone);
+        boolean validCustPhone = myValidator.isValidPhone(custPhone);
+        boolean validpmPhone = myValidator.isValidPhone(pmPhone);
+        boolean isValid = false;
         if (validCustPhone && validpmPhone)
         {
-            return true;
+            isValid = true;
         }
-        else
-        {
-            return false;
-        }
+        return isValid;
+
     }
 
     @Override

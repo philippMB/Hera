@@ -83,9 +83,9 @@ public class CostEstimation
     public void calculateManMonth()
     {
         // rough Estimation by Jones:
-        double developementTime = Math.pow(fPCount, 0.4);
+        double developmentTime = Math.pow(fPCount, 0.4);
         double personCount = Math.ceil(fPCount / 150);
-        this.manMonthCount = developementTime * personCount;
+        this.manMonthCount = developmentTime * personCount;
     }
 
     @Override
@@ -130,25 +130,57 @@ public class CostEstimation
     @Override
     public boolean hasIDDataFP(String id)
     {
-        return false;
+        boolean hasDataFP = false;
+        for (IDataFP myDataFP : myDataFPs)
+        {
+            if (myDataFP.getRequirement().getID().equals(id))
+            {
+                hasDataFP = true;
+            }
+        }
+        return hasDataFP;
     }
 
     @Override
     public boolean hasIDTransactionFP(String id)
     {
-        return false;
+        boolean hasTransactionFP = false;
+        for (ITransactionFP myTransactionFP : myTransactionFPs)
+        {
+            if (myTransactionFP.getRequirement().getID().equals(id))
+            {
+                hasTransactionFP = true;
+            }
+        }
+        return hasTransactionFP;
     }
 
     @Override
     public IDataFP getDataFPByID(String id)
     {
-        return null;
+        IDataFP dataFPToReturn = null;
+        for (IDataFP myDataFP : myDataFPs)
+        {
+            if (myDataFP.getRequirement().getID().equals(id))
+            {
+                dataFPToReturn = myDataFP;
+            }
+        }
+        return dataFPToReturn;
     }
 
     @Override
     public ITransactionFP getTransactionFPByID(String id)
     {
-        return null;
+        ITransactionFP transactionFPToReturn = null;
+        for (ITransactionFP myTransactionFP : myTransactionFPs)
+        {
+            if (myTransactionFP.getRequirement().getID().equals(id))
+            {
+                transactionFPToReturn = myTransactionFP;
+            }
+        }
+        return transactionFPToReturn;
     }
 
     @Override
@@ -159,6 +191,7 @@ public class CostEstimation
 
     public ArrayList<ErrorCodes> rateWeightFactor(ArrayList<Integer> values)
     {
+        // TODO map or WeightFactor
         ArrayList<ErrorCodes> retValue = new ArrayList<ErrorCodes>();
         if (values.size() == getWeightFactors().size())
         {
@@ -190,7 +223,7 @@ public class CostEstimation
                 return ErrorCodes.DUPLICATE;
             }
         }
-        if (myValidator.areValidValues(det, ret))
+        if (myValidator.isValidDET(det) && myValidator.isValidRET(ret))
         {
             DataFP myDataFP = new DataFP(type, reference, det, ret);
             myDataFPs.add(myDataFP);
@@ -215,7 +248,7 @@ public class CostEstimation
                 return ErrorCodes.DUPLICATE;
             }
         }
-        if (myValidator.areValidValues(det, ftr))
+        if (myValidator.isValidDET(det) && myValidator.isValidFTR(ftr))
         {
             TransactionFP myTransactionFP = new TransactionFP(type, reference, det, ftr);
             myTransactionFPs.add(myTransactionFP);
@@ -285,7 +318,7 @@ public class CostEstimation
         }
         if (fPtoEdit != null)
         {
-            if (myValidator.areValidValues(det, ftr))
+            if (myValidator.isValidDET(det) && myValidator.isValidFTR(ftr))
             {
                 fPtoEdit.edit(type, det, ftr);
                 return ErrorCodes.NO_ERROR;
@@ -316,7 +349,7 @@ public class CostEstimation
         }
         if (fPtoEdit != null)
         {
-            if (myValidator.areValidValues(det, ret))
+            if (myValidator.isValidDET(det) && myValidator.isValidRET(ret))
             {
                 fPtoEdit.edit(type, det, ret);
                 return ErrorCodes.NO_ERROR;
