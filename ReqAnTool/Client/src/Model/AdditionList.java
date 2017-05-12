@@ -13,12 +13,12 @@ public class AdditionList<IAdd extends IAddition>
 {
 
     @Override
-    public boolean isIncluded(String term)
+    public boolean isIncluded(String title)
     {
         boolean included = false;
         for (IAdd myAdd : this)
         {
-            if (myAdd.getTitle().equals(term))
+            if (myAdd.getTitle().equals(title))
             {
                 included = true;
             }
@@ -27,12 +27,12 @@ public class AdditionList<IAdd extends IAddition>
     }
 
     @Override
-    public IAdd getAdditionByTitle(String term)
+    public IAdd getAdditionByTitle(String title)
     {
         IAdd addToReturn = null;
         for (IAdd myAdd : this)
         {
-            if (myAdd.getTitle().equals(term))
+            if (myAdd.getTitle().equals(title))
             {
                 addToReturn = myAdd;
             }

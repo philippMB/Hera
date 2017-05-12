@@ -166,14 +166,15 @@ public class Model
     }
 
     @Override
-    public ErrorCodes editAddition(String title, String description)
+    public ErrorCodes editAddition(String oldTitle, String newTitle, String description)
     {
         ErrorCodes retValue = ErrorCodes.NO_REQAN;
         if (myReqAn != null)
         {
-            retValue = myReqAn.editAddition(title, description);
+            retValue = myReqAn.editAddition(oldTitle, newTitle, description);
         }
         return retValue;
+
     }
 
     @Override
@@ -291,6 +292,7 @@ public class Model
             retValue = myReqAn.editTargetDef(description);
         }
         return retValue;
+
     }
 
     @Override
@@ -326,6 +328,7 @@ public class Model
             exists = myReqAn.isReqIncluded(id);
         }
         return exists;
+
     }
 
     @Override

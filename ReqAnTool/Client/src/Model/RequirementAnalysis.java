@@ -66,7 +66,7 @@ public class RequirementAnalysis
 
     }
 
-    private boolean isReqIncluded(String id)
+    public boolean isReqIncluded(String id)
     {
         boolean isIncluded = false;
         if (myFRequirements.isIncluded(id))
@@ -472,9 +472,14 @@ public class RequirementAnalysis
 
     public ErrorCodes addAddition(String title, String description)
     {
-        Addition myAdd = new Addition(title, description);
-        myAdditions.add(myAdd);
-        return ErrorCodes.NO_ERROR;
+        ErrorCodes retValue = ErrorCodes.DUPLICATE;
+        if (!myAdditions.isIncluded(title))
+        {
+            Addition myAdd = new Addition(title, description);
+            myAdditions.add(myAdd);
+            retValue = ErrorCodes.NO_ERROR;
+        }
+        return retValue;
 
     }
 
@@ -485,14 +490,21 @@ public class RequirementAnalysis
         {
             if (myValidator.isValidID(id))
             {
-                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                for (String ref : references)
+                if (isIDunique(id))
                 {
-                    myReferences.add(getAnyReqByID(ref));
+                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                    for (String ref : references)
+                    {
+                        myReferences.add(getAnyReqByID(ref));
+                    }
+                    FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
+                    myFRequirements.add(myReq);
+                    retValue = ErrorCodes.NO_ERROR;
                 }
-                FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
-                myFRequirements.add(myReq);
-                retValue = ErrorCodes.NO_ERROR;
+                else
+                {
+                    retValue = ErrorCodes.DUPLICATE;
+                }
             }
             else
             {
@@ -507,17 +519,24 @@ public class RequirementAnalysis
     public ErrorCodes addGlossaryEntry(String term, String sense, String boundary, String validity,
                                           String obscurities, String label, ArrayList<String> crossRef)
     {
-        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-        if (solveGlossaryTerms(crossRef))
+        ErrorCodes retValue = ErrorCodes.DUPLICATE;
+        if (!myGlossaryEntries.isIncluded(term))
         {
-            GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
-            for (String ref : crossRef)
+            if (solveGlossaryTerms(crossRef))
             {
-                myCrossRef.add(getGlossaryEntriesByTerm(ref));
+                GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
+                for (String ref : crossRef)
+                {
+                    myCrossRef.add(getGlossaryEntriesByTerm(ref));
+                }
+                GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
+                myGlossaryEntries.add(myEntry);
+                retValue = ErrorCodes.NO_ERROR;
             }
-            GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
-            myGlossaryEntries.add(myEntry);
-            retValue = ErrorCodes.NO_ERROR;
+            else
+            {
+                retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
+            }
         }
         return retValue;
 
@@ -530,14 +549,21 @@ public class RequirementAnalysis
         {
             if (myValidator.isValidID(id))
             {
-                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                for (String ref : references)
+                if (isIDunique(id))
                 {
-                    myReferences.add(getAnyReqByID(ref));
+                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                    for (String ref : references)
+                    {
+                        myReferences.add(getAnyReqByID(ref));
+                    }
+                    NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
+                    myNFRequirements.add(myReq);
+                    retValue = ErrorCodes.NO_ERROR;
                 }
-                NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
-                myNFRequirements.add(myReq);
-                retValue = ErrorCodes.NO_ERROR;
+                else
+                {
+                    retValue = ErrorCodes.DUPLICATE;
+                }
             }
             else
             {
@@ -556,14 +582,21 @@ public class RequirementAnalysis
         {
             if (myValidator.isValidID(id))
             {
-                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                for (String ref : references)
+                if (isIDunique(id))
                 {
-                    myReferences.add(getAnyReqByID(ref));
+                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+                    for (String ref : references)
+                    {
+                        myReferences.add(getAnyReqByID(ref));
+                    }
+                    ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
+                    myProductData.add(myReq);
+                    retValue = ErrorCodes.NO_ERROR;
                 }
-                ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
-                myProductData.add(myReq);
-                retValue = ErrorCodes.NO_ERROR;
+                else
+                {
+                    retValue = ErrorCodes.DUPLICATE;
+                }
             }
             else
             {
@@ -576,18 +609,35 @@ public class RequirementAnalysis
 
     public ErrorCodes addQualReq(String criteria, Score value)
     {
-        IQualityRequirement myQualReq = new QualityRequirement(criteria, value);
-        myQualityRequirements.add(myQualReq);
-        return ErrorCodes.NO_ERROR;
+        ErrorCodes retValue = ErrorCodes.DUPLICATE;
+        if (!myQualityRequirements.isIncluded(criteria))
+        {
+            IQualityRequirement myQualReq = new QualityRequirement(criteria, value);
+            myQualityRequirements.add(myQualReq);
+            retValue = ErrorCodes.NO_ERROR;
+        }
+        return retValue;
 
     }
 
-    public ErrorCodes editAddition(String title, String description)
+    public ErrorCodes editAddition(String oldTitle, String newTitle, String description)
     {
-        IAddition myIAdd = myAdditions.getAdditionByTitle(title);
-        Addition myAdd = (Addition)myIAdd;
-        myAdd.edit(title, description);
-        return ErrorCodes.NO_ERROR;
+        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
+        if (myAdditions.isIncluded(oldTitle))
+        {
+            if (!myAdditions.isIncluded(newTitle))
+            {
+                IAddition myIAdd = myAdditions.getAdditionByTitle(title);
+                Addition myAdd = (Addition) myIAdd;
+                myAdd.edit(title, description);
+                retValue = ErrorCodes.NO_ERROR;
+            }
+            else
+            {
+                retValue = ErrorCodes.DUPLICATE;
+            }
+        }
+        return retValue;
 
     }
 

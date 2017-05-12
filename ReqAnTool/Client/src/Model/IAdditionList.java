@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public interface IAdditionList<IAdd extends IAddition>
 {
 
-    public boolean isIncluded(String term);
+    public boolean isIncluded(String title);
 
     public IAdd getAdditionByTitle(String title);
 

@@ -42,7 +42,7 @@ public interface IModelSetData
 
     public ErrorCodes addAddition(String title, String description);
 
-    public ErrorCodes editAddition(String title, String description);
+    public ErrorCodes editAddition(String oldTitle, String newTitle, String description);
 
     public ErrorCodes remAdditionByTitle(String title);
 
