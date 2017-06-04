@@ -117,7 +117,7 @@ public class CustomerTab
 		fieldCustEMail.setText(myCustomerData.getCEMail());
 		fieldCompName.setText(myCustomerData.getCompanyName());
 		fieldCompStreet.setText(myCustomerData.getCompanyStreet());
-		fieldCompPLZ.setText(Integer.toString(myCustomerData.getCompanyPLZ()));
+		fieldCompPLZ.setText(myCustomerData.getCompanyPLZ());
 		fieldCompCity.setText(myCustomerData.getCompanyCity());
 		fieldCompCountry.setText(myCustomerData.getCompanyCountry());
 	}

@@ -18,7 +18,7 @@ public class ProjectTab
 	implements IProjectTab
 {
 
-	private final ViewActions[] BUTTON_ACTIONS = {
+	private final static ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.SAVE,
 			ViewActions.TO_PDF,
 			ViewActions.TO_XML,
@@ -32,6 +32,7 @@ public class ProjectTab
 	}
 
 	protected void init(){
+		System.out.println(BUTTON_ACTIONS[0].toString());
 		setButtonActions(BUTTON_ACTIONS);
 
 		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PROJECT_TAB));

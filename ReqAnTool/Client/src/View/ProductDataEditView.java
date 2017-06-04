@@ -54,12 +54,12 @@ public class ProductDataEditView
 
 		myBuilder.addTitle(titleText);
 		fieldContent = myBuilder.addNamedTextField(
-				myTextBundle.getParameterText(TextNameConstants.PAR_CONTENT)+":",
+				myTextBundle.getParameterText(TextNameConstants.PAR_CONTENT),
 				"",
 				isEditable
 		);
 		fieldID = myBuilder.addNamedTextField(
-				myTextBundle.getParameterText(TextNameConstants.PAR_ID)+":",
+				myTextBundle.getParameterText(TextNameConstants.PAR_ID),
 				"",
 				isEditable
 		);
@@ -113,6 +113,13 @@ public class ProductDataEditView
 	public String getIDEntry()
 	{
 		return fieldID.getText();
+	}
+
+	@Override
+	protected IRequirement getReqFromModel()
+	{
+		String ID = myReq.getID();
+		return myModel.getProductDataByID(ID);
 	}
 
 	@Override

@@ -40,10 +40,11 @@ public class TextFacade
 			ex.printStackTrace();
 		}
 		ClassLoader loader = new URLClassLoader(urls);
-		buttonTextBundle = new TextResourceBundle(BASE_NAME+"_button", currentLocalisation,loader);
-		dialogTextBundle = new TextResourceBundle(BASE_NAME+"_dialog", currentLocalisation,loader);
-		parameterTextBundle = new TextResourceBundle(BASE_NAME+"_parameter", currentLocalisation,loader);
-		titleTextBundle = new TextResourceBundle(BASE_NAME+"_title", currentLocalisation,loader);
+		currentLocalisation = new Locale("de","DE");
+		buttonTextBundle = new TextResourceBundle(BASE_NAME+"_button_converted", currentLocalisation,loader);
+		dialogTextBundle = new TextResourceBundle(BASE_NAME+"_dialog_converted", currentLocalisation,loader);
+		parameterTextBundle = new TextResourceBundle(BASE_NAME+"_parameter_converted", currentLocalisation,loader);
+		titleTextBundle = new TextResourceBundle(BASE_NAME+"_title_converted", currentLocalisation,loader);
 	}
 
 	public static TextFacade getInstance()
@@ -57,13 +58,14 @@ public class TextFacade
 
 	public boolean setLocalisation(Locale newLocalisation)
 	{
-		boolean settingWorked = true;
-		settingWorked = settingWorked && buttonTextBundle.setLocalisation(newLocalisation);
-		settingWorked = settingWorked && dialogTextBundle.setLocalisation(newLocalisation);
-		settingWorked = settingWorked && parameterTextBundle.setLocalisation(newLocalisation);
-		settingWorked = settingWorked && titleTextBundle.setLocalisation(newLocalisation);
+		//Es muss überprüft werden, ob es bei allen TextBundles die Lokalisationssetzung funktioniert
+		boolean isLocalisationPossible = true;
+		isLocalisationPossible = isLocalisationPossible && buttonTextBundle.isLocalisationPossible(newLocalisation);
+		isLocalisationPossible = isLocalisationPossible && dialogTextBundle.isLocalisationPossible(newLocalisation);
+		isLocalisationPossible = isLocalisationPossible && parameterTextBundle.isLocalisationPossible(newLocalisation);
+		isLocalisationPossible = isLocalisationPossible && titleTextBundle.isLocalisationPossible(newLocalisation);
 
-		if(!settingWorked)	//Falls bei einem es nicht funktioniert hat => zurücksetzen
+		if(isLocalisationPossible)	//Falls bei einem es nicht funktioniert hat => zurücksetzen
 		{
 			buttonTextBundle.setLocalisation(currentLocalisation);
 			dialogTextBundle.setLocalisation(currentLocalisation);
@@ -75,7 +77,7 @@ public class TextFacade
 			currentLocalisation = newLocalisation;
 		}
 
-		return settingWorked;
+		return isLocalisationPossible;
 	}
 
 	public boolean setLocalisation(String language, String country)

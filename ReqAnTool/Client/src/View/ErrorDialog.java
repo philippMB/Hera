@@ -31,6 +31,7 @@ public class ErrorDialog
 	private String descriptionText;
 	private String title;
 
+
 	public ErrorDialog(String title, String errorDescription){
 		super(TextNameConstants.TITLE_ERROR);
 		this.title = title;

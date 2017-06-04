@@ -26,7 +26,9 @@ public class ProductDataTab
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCTDATA));
+		myBuilder.addTitle(
+				myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCTDATA)
+		);
 		buildTablePanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);

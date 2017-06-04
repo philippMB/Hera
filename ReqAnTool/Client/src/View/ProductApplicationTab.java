@@ -23,7 +23,9 @@ public class ProductApplicationTab
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCT_APPLICATION));
+		myBuilder.addTitle(
+				myTextBundle.getTitleText(TextNameConstants.TITLE_PRODUCT_APPLICATION)
+		);
 		buildTextPanel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);

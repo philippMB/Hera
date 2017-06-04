@@ -1,11 +1,11 @@
 package View;
 
+import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import View_Interfaces.IView;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 public abstract class FormWindow
     extends JFrame
@@ -48,16 +48,17 @@ public abstract class FormWindow
 			buttonNames[i] = myTextBundle.getButtonText(myButtonActions[i]);
 		}
 
-		return getButtonNames();
+		return buttonNames;
 	}
 
 	@Override
-	public void addController(ActionListener newListener)
+	public void addController(IController newController)
 	{
 		for(JButton b: myButtons)
 		{
-			b.addActionListener(newListener);
+			b.addActionListener(newController);
 		}
+		addWindowListener(newController);
 	}
 
 	@Override

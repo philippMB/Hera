@@ -1,57 +1,59 @@
 package Model_Interfaces;
 
+import java.util.ArrayList;
+
 public interface IModelSetData
 {
 
-    public boolean addFReq(String id, String title, String actor, String description, String[] references);
+    public ErrorCodes addFReq(String id, String title, String actor, String description, ArrayList<String> references);
 
-    public boolean addNFReq(String id, String title, String actor, String description, String[] references);
+    public ErrorCodes addNFReq(String id, String title, String actor, String description, ArrayList<String> references);
 
-    public boolean addProdData(String id, String content, String attribute, String maxCount, String[] references);
+    public ErrorCodes addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references);
 
-    public boolean editFReq(String oldID, String id, String title, String actor, String description, String[] references);
+    public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references);
 
-    public boolean editNFReq(String oldID, String id, String title, String actor, String description, String[] references);
+    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references);
 
-    public boolean editProdData(String oldID, String id, String content, String attribute, String maxCount,
-                         String[] references);
+    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
+                         ArrayList<String> references);
 
-    public boolean remFReqByID(String id);
+    public ErrorCodes remFReqByID(String id);
 
-    public boolean remNFReqByID(String id);
+    public ErrorCodes remNFReqByID(String id);
 
-    public boolean remProdDataByID(String id);
+    public ErrorCodes remProdDataByID(String id);
 
-    public boolean editCustData(String companyName, String companyCity, String companyStreet, int zip, String companyCountry,
+    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
                          String custName, String custMail, String custPhone, String pmName, String pmMail,
                          String pmPhone);
 
-    public boolean editTargetDef(String description);
+    public ErrorCodes editTargetDef(String description);
 
-    public boolean editProdApp(String description);
+    public ErrorCodes editProdApp(String description);
 
-    public boolean addQualReq(String criteria, String value);
+    public ErrorCodes addQualReq(String criteria, Score value);
 
-    public boolean editQualReq(String oldCriteria, String criteria, String value);
+    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value);
 
-    public boolean remQualReqByCrit(String criteria);
+    public ErrorCodes remQualReqByCrit(String criteria);
 
-    public boolean addAddition(String title, String description);
+    public ErrorCodes addAddition(String title, String description);
 
-    public boolean editAddition(String title, String description);
+    public ErrorCodes editAddition(String title, String description);
 
-    public boolean remAdditionByTitle(String title);
+    public ErrorCodes remAdditionByTitle(String title);
 
-    public boolean addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
-                          String label);
+    public ErrorCodes addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
+                          String label, ArrayList<String> references);
 
-    public boolean editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
-                           String obscurities, String label);
+    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+                           String obscurities, String label, ArrayList<String> references);
 
-    public boolean remGlossEntryByTerm(String term);
+    public ErrorCodes remGlossEntryByTerm(String term);
 
-    public boolean addCostEstimation();
+    public ErrorCodes addCostEstimation();
 
-    public boolean remCostEstimation();
+    public ErrorCodes remCostEstimation();
 
 }

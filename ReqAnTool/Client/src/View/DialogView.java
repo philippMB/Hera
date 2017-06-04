@@ -1,11 +1,11 @@
 package View;
 
+import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import View_Interfaces.IView;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 /**
  * Created by phlippe on 27.04.17.
@@ -25,7 +25,7 @@ public abstract class DialogView
 
 		setSize(300,200);   //Ungefähre Größe, damit Factory richtigen Builder erzeugen kann
 		setResizable(false);
-		setModal(true);
+		//setModal(true);
 
 		myBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
 		myTextBundle = ITextFacade.getInstance();
@@ -60,13 +60,17 @@ public abstract class DialogView
 	}
 
 	@Override
-	public void addController(ActionListener newListener)
+	public void addController(IController newController)
 	{
 		for(JButton b: myButtons)
 		{
-			b.addActionListener(newListener);
+			b.addActionListener(newController);
 		}
+		addWindowListener(newController);
+		System.out.println("Controller added");
 	}
+
+
 
 	@Override
 	public void destruct()

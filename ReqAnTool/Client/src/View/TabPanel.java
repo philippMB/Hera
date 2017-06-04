@@ -1,14 +1,13 @@
 package View;
 
+import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.ITab;
-import View_Interfaces.IView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 /**
  * Created by phlippe on 27.04.17.
@@ -67,11 +66,11 @@ public abstract class TabPanel
 	}
 
 	@Override
-	public void addController(ActionListener newListener)
+	public void addController(IController newController)
 	{
 		for(JButton b: myButtons)
 		{
-			b.addActionListener(newListener);
+			b.addActionListener(newController);
 		}
 	}
 

@@ -1,6 +1,7 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.ITextFacade;
 
 import javax.swing.*;
 import java.nio.file.Path;
@@ -24,10 +25,12 @@ public abstract class PanelBuilder
 
     public JButton[] addButtonBar(ViewActions[] buttonActions)
     {
-        String[] buttonNames = new String[buttonActions.length];
+		String[] buttonNames = new String[buttonActions.length];
+		ITextFacade myTextBundle = ITextFacade.getInstance();
+
         for(int i=0;i<buttonNames.length;i++)
         {
-            buttonNames[i] = buttonActions[i].toString();
+            buttonNames[i] = myTextBundle.getButtonText( buttonActions[i] );
         }
 
         return addButtonBar(buttonNames);

@@ -1,6 +1,8 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.ITextFacade;
+import LanguageAndText.TextNameConstants;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,9 +21,10 @@ public class TableSelectionPanel
 	private String[] options;
 	private JComboBox<String> myDropdownList;
 	private JTable myTable;
-	private Vector<String> tableEntries;
+	private Vector<Vector> tableEntries;
 	private JButton buttonAdd;
 	private JButton buttonDelete;
+	private ITextFacade myTextBundle;
 
 
 	public TableSelectionPanel(String[] selectables)
@@ -29,6 +32,7 @@ public class TableSelectionPanel
 		super(new GridBagLayout());
 		options = selectables;
 		tableEntries = new Vector<>();
+		myTextBundle = ITextFacade.getInstance();
 
 		init();
 	}
@@ -37,18 +41,23 @@ public class TableSelectionPanel
 	{
 		super(new GridBagLayout());
 		options = selectables;
-		this.tableEntries = new Vector<>(Arrays.asList(tableEntries));
+		this.tableEntries = castArrayToVector(tableEntries);
+		myTextBundle = ITextFacade.getInstance();
 
 		init();
 	}
 
-	public TableSelectionPanel(String[] selectables, Vector<String> tableEntries)
+	private static Vector<Vector> castArrayToVector(String[] stringArray)
 	{
-		super(new GridBagLayout());
-		options = selectables;
-		this.tableEntries = tableEntries;
+		Vector<Vector> myVector = new Vector<>();
+		for(String s: stringArray)
+		{
+			Vector<String> rowVector = new Vector<>();
+			rowVector.add(s);
+			myVector.add(rowVector);
+		}
 
-		init();
+		return myVector;
 	}
 
 	private void init()
@@ -64,7 +73,8 @@ public class TableSelectionPanel
 		add(myDropdownList,constraints);
 
 		constraints.gridy = 1;
-		myTable = new JTable(tableEntries,null);
+		myTable = new JTable(tableEntries,getColumnNames());
+		myTable.setTableHeader(null);
 		JScrollPane scrollableTable = new JScrollPane(myTable);
 		scrollableTable.setPreferredSize(new Dimension(100,100));
 		scrollableTable.setMaximumSize(new Dimension(100,100));
@@ -72,13 +82,15 @@ public class TableSelectionPanel
 
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		buttonAdd = new JButton("Hinzufügen");
+		buttonAdd = new JButton(myTextBundle.getButtonText(ViewActions.TABLE_SELECTION_ADD));
 		add(buttonAdd, constraints);
 
 		constraints.gridy = 1;
-		buttonDelete = new JButton("Löschen");
+		buttonDelete = new JButton(myTextBundle.getButtonText(ViewActions.TABLE_SELECTION_DELETE));
 		constraints.anchor = GridBagConstraints.PAGE_START;
 		add(buttonDelete,constraints);
+
+		setActionCommands();
 	}
 
 	public String getSelectedItem()
@@ -88,7 +100,9 @@ public class TableSelectionPanel
 
 	public void addSelectedItemToTable()
 	{
-		tableEntries.add((String)myDropdownList.getSelectedItem());
+		Vector<String> rowVector = new Vector<>();
+		rowVector.add((String)myDropdownList.getSelectedItem());
+		tableEntries.add(rowVector);
 		repaint();
 	}
 
@@ -143,6 +157,14 @@ public class TableSelectionPanel
 		return myEntries;
 	}
 
+	private Vector<String> getColumnNames()
+	{
+		Vector<String> columnNames = new Vector<>();
+		columnNames.add("");
+
+		return columnNames;
+	}
+
 	public void setTableEntries(String[] tableEntries)
 	{
 		String[][] widerTableEntries = new String[1][tableEntries.length];
@@ -150,13 +172,16 @@ public class TableSelectionPanel
 		myTable.setModel(new DefaultTableModel(widerTableEntries,null));
 	}
 
+	private void setActionCommands()
+	{
+		buttonAdd.setActionCommand(ViewActions.TABLE_SELECTION_ADD.toString());
+		buttonDelete.setActionCommand(ViewActions.TABLE_SELECTION_DELETE.toString());
+	}
+
 	public void addController(ActionListener actionListener)
 	{
 		buttonAdd.addActionListener(actionListener);
-		buttonAdd.setActionCommand(ViewActions.TABLE_SELECTION_ADD.toString());
-
 		buttonDelete.addActionListener(actionListener);
-		buttonDelete.setActionCommand(ViewActions.TABLE_SELECTION_DELETE.toString());
 	}
 
 }

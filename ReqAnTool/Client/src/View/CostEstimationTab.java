@@ -3,6 +3,7 @@ package View;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
+import View_Interfaces.ICostEstimationTab;
 
 import java.util.Observable;
 
@@ -11,9 +12,10 @@ import java.util.Observable;
  */
 public class CostEstimationTab
 	extends TabPanel
+	implements ICostEstimationTab
 {
 
-	private final ViewActions[] BUTTON_ACTIONS = {
+	private static final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.SHOW_CE,
 			ViewActions.CALC_FP,
 			ViewActions.EDIT_CE,
@@ -26,12 +28,12 @@ public class CostEstimationTab
 	public CostEstimationTab(IModelGetData model)
 	{
 		super(model, TextNameConstants.TITLE_COST_ESTIMATION);
-		setButtonActions(BUTTON_ACTIONS);
 	}
 
 	@Override
 	protected void init()
 	{
+		setButtonActions(BUTTON_ACTIONS);
 
 		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION));
 		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);

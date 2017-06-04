@@ -18,17 +18,14 @@ public abstract class TableTab
 	implements ITableTab
 {
 
-	private final ViewActions[] BUTTON_ACTIONS = {
+	private static final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.ADD,
+			ViewActions.SHOW,
 			ViewActions.EDIT,
 			ViewActions.DELETE
 	};
 
-	protected IModelGetData myModel;
 	private JTable myTable;
-	private JButton buttonAdd;
-	private JButton buttonEdit;
-	private JButton buttonDelete;
 
 
 	public TableTab(IModelGetData model, String titleConstant)

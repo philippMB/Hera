@@ -1,12 +1,12 @@
 package View;
 
+import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
 import View_Interfaces.IWarningDialog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Observable;
@@ -23,22 +23,20 @@ public class WarningDialog
 			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/Warnschild.png";
 	private static final Color WARN_COLOR = new Color(238,190,40);
 
-	private final ViewActions[] BUTTON_ACTIONS = {
+	private final ViewActions[] DEFAULT_BUTTON_ACTIONS = {
 		ViewActions.OK,
 		ViewActions.CANCEL
 	};
 
 	private String title;
 	private String description;
-	private ViewActions[] myButtonActions;
-	private JButton[] myButtons;
 
 
 	public WarningDialog(String warnTitle, String warnDescription){
 		super(TextNameConstants.TITLE_WARNING);
 		title = warnTitle;
 		description = warnDescription;
-		myButtonActions = BUTTON_ACTIONS;
+		setButtonActions(DEFAULT_BUTTON_ACTIONS);
 
 		init();
 	}
@@ -47,7 +45,7 @@ public class WarningDialog
 		super(TextNameConstants.TITLE_WARNING);
 		title = warnTitle;
 		description = warnDescription;
-		myButtonActions = warnButtonActions;
+		setButtonActions(warnButtonActions);
 
 		init();
 	}
@@ -62,7 +60,7 @@ public class WarningDialog
 	{
 		myBuilder.addTitle(title);
 		myBuilder.addImage(getWarnImagePath());
-		myBuilder.addText(description);
+		JTextArea textArea = myBuilder.addText(description);
 		myButtons = myBuilder.addButtonBar(myButtonActions);
 
 		getContentPane().add(
@@ -74,17 +72,11 @@ public class WarningDialog
 		);
 		setActionCommands();
 
+		textArea.setColumns((getWidth()-80)/8);
+		System.out.println("Width: "+getWidth());
+
 		pack();
 		setVisible(true);
-	}
-
-	@Override
-	public void addController(ActionListener newListener)
-	{
-		for(JButton b: myButtons)
-		{
-			b.addActionListener(newListener);
-		}
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class OptimizedWeightFactorsView
 		String[][] tableEntries;
 
 		ArrayList<IWeightFactor> allWeightFactors;
-		allWeightFactors = myModel.getAllWeightFactors();
+		allWeightFactors = myModel.getAllWeightFactor();
 		int amountWeightFactors = allWeightFactors.size();
 		tableEntries = new String[amountWeightFactors][3];
 

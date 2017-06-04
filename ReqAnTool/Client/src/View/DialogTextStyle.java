@@ -17,9 +17,10 @@ public class DialogTextStyle implements TextStyleBridge {
     {
         String[] allPossibleFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().
                 getAvailableFontFamilyNames();
+        /*
         for(String s : allPossibleFonts)
             System.out.println( s );
-
+		*/
         String titleFontName = "Helvetica Neue";
         String tagedToFieldFontName;
         String tagedToAreaFontName;

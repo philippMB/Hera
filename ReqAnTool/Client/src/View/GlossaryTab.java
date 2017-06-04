@@ -37,7 +37,7 @@ public class GlossaryTab
 	protected String[][] getTableEntries()
 	{
 		String[][] tableEntries;
-		ArrayList<IGlossaryEntry> allGlossaryEntries = myModel.getAllGlossEntry();
+		ArrayList<IGlossaryEntry> allGlossaryEntries = myModel.getAllGlossEntries();
 
 		tableEntries = new String[allGlossaryEntries.size()][getColumnNames().length];
 

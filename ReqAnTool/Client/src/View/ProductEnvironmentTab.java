@@ -34,7 +34,7 @@ public class ProductEnvironmentTab
 	@Override
 	protected String getDescriptionFromModel()
 	{
-		return myModel.getProdEnviron();
+		return myModel.getProdApp().getDescription();	//TODO: CHANGE TO PRODUCT ENVIRONMENT
 	}
 }
 

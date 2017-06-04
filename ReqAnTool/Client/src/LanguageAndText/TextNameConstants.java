@@ -38,7 +38,8 @@ public abstract class TextNameConstants
 	public static final String TITLE_CUSTOMER = "CUSTOMER";
 	public static final String TITLE_COMPANY = "COMPANY";
 	public static final String TITLE_PROJECT_CREATE = "PROJECT_CREATE";
-	public static final String TITLE_SUPPLIER = "Auftragnehmer";
+	public static final String TITLE_SUPPLIER = "SUPPLIER";
+	public static final String TITLE_SAVE_WARNING="SAVE_WARNING";
 
 	public static final String PAR_ADDITION = "ADDITION";
 	public static final String PAR_COST_EST = "COST_ESTIMATION";
@@ -88,5 +89,11 @@ public abstract class TextNameConstants
 	public static final String PAR_OPTIMIZED = "OPTIMIZED";
 	public static final String PAR_CURRENT = "CURRENT";
 	public static final String PAR_ACTUAL_STATE = "ACTUAL_STATE";
+	public static final String PAR_WEIGHT_FACTORS = "WEIGHT_FACTORS";
+	public static final String PAR_NOT_CALCULATED = "NOT_CALCULATED";
+	public static final String PAR_NORMAL = "NORMAL";
+	public static final String PAR_IMPORTANT = "IMPORTANT";
+	public static final String PAR_VERY_IMPORTANT = "VERY_IMPORTANT";
+	public static final String PAR_NOT_RELEVANT = "NOT_RELEVANT";
 
 }

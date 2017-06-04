@@ -21,6 +21,7 @@ public class TabBuilder
 	{
 		myPanel = new JPanel();
 		myPanel.setLayout(new GridBagLayout());
+		myPanel.setOpaque(false);
 		globalRowNumber = -1;
 		globalColumnNumber = -1;
 		section = 0;
@@ -75,6 +76,7 @@ public class TabBuilder
 		{
 			JPanel myButtonPanel = new JPanel();
 			myButtonPanel.setLayout(new GridBagLayout());
+			myButtonPanel.setOpaque(false);
 			GridBagConstraints innerConstraints = new GridBagConstraints();
 			innerConstraints.gridx = 0;
 			innerConstraints.fill = GridBagConstraints.HORIZONTAL;

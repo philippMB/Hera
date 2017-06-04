@@ -92,7 +92,7 @@ public abstract class ProcessClassificationView
 	private String[][] calcReferenceTableEntries()
 	{
 		String[][] tableEntries;
-		ArrayList<String> referencesID = new ArrayList<>(Arrays.asList(getMyRequirement().getReferenceIDs()));
+		ArrayList<String> referencesID = getMyRequirement().getReferenceIDs();
 		int amountReferences = referencesID.size();
 		tableEntries = new String[amountReferences][1];
 
@@ -194,7 +194,7 @@ public abstract class ProcessClassificationView
 		}
 		else
 		{
-			if(myCostEstimation.hasIDTransaktionFP(reqID))
+			if(myCostEstimation.hasIDTransactionFP(reqID))
 			{
 				ITransactionFP myTransactionFP = myCostEstimation.getTransactionFPByID(reqID);
 				setFieldsOnTransactionFP(myTransactionFP);

@@ -21,12 +21,15 @@ public interface ICostEstimation
     
     public ArrayList<ITransactionFP> getTransactionFPs();
 
-    public boolean hasIDDataFP(String ID);
+    public ArrayList<IWeightFactor> getWeightFactors();
 
-    public boolean hasIDTransaktionFP(String ID);
+    public IWeightFactor getWeightFactorByTitle(String title);
 
-    public IDataFP getDataFPByID(String ID);
+    public boolean hasIDDataFP(String id);
 
-    public ITransactionFP getTransactionFPByID(String ID);
-    
+    public boolean hasIDTransactionFP(String id);
+
+    public IDataFP getDataFPByID(String id);
+
+    public ITransactionFP getTransactionFPByID(String id);
 }

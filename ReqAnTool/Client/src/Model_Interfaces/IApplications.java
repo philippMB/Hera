@@ -1,17 +1,21 @@
 package Model_Interfaces;
 
+import java.util.ArrayList;
+
 public interface IApplications
 {
     
     public boolean existsID(String id);
 
-    public int saveReqAn(String path);
+    public ErrorCodes saveReqAn(String path);
 
-    public int deleteReqAn();
+    public ErrorCodes deleteReqAn();
+    
+    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone);
 
     public boolean isReqAnUnsaved();
 
-    public boolean checkReferenceOnID(String id);
+    public boolean isReferenceOnID(String id);
 
     public boolean isIDUnique(String id);
 
@@ -21,33 +25,26 @@ public interface IApplications
 
     public boolean existsManMonthCount();
 
-    public boolean setDataFP(String type, String id, int det, int ret);
+    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret);
 
-    public boolean setTransactionFP(String type, String ref, int det, int ftr);
+    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr);
 
-    public boolean rateWeightFactor(int cat1, int cat2, int cat3, int cat4a, int cat4b, int cat4c, int cat4d, int cat5,
-                                    int cat6, int cat7);
+    public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret);
 
-    public boolean calcManMonth();
+    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr);
 
-    public boolean setActualState(double actStat);
+    public ErrorCodes remTransactionFPByID(String id);
 
-    public boolean calcOptWeightFactor();
+    public ErrorCodes remDataFPByID(String id);
+
+    public ErrorCodes rateWeightFactor(ArrayList<Integer> values);
+
+    public ErrorCodes calcManMonth();
+
+    public ErrorCodes setActualState(double actStat);
+
+    public ErrorCodes calcOptWeightFactor();
 
     public boolean existsOptWeightFactor();
-
-    public boolean checkIDFormat(String id);
-
-    public boolean checkMailFormat(String mail);
-
-    public boolean checkPhoneFormat(String phone);
-
-    public boolean checkAddressFormat(String addr);
-
-    public boolean checkCountry(String country);
-
-    public boolean checkZIP(int zip);
-
-    public boolean checkDET_FTR_RET(int value);
 
 }

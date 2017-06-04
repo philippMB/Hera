@@ -42,7 +42,7 @@ public class WeightFactorEditView
 	@Override
 	protected void init()
 	{
-		ArrayList<IWeightFactor> myWeightFactors = myModel.getAllWeightFactors();
+		ArrayList<IWeightFactor> myWeightFactors = myModel.getAllWeightFactor();
 		myScrollBarPanels = new HashMap<>();
 
 		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_WEIGHT_FACTOR_EDIT));

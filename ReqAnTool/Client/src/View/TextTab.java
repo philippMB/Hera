@@ -15,7 +15,7 @@ public abstract class TextTab
 	implements ITextTab
 {
 
-	private final ViewActions[] BUTTON_ACTIONS = {
+	private static final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.SAVE,
 			ViewActions.DELETE
 	};
@@ -31,6 +31,7 @@ public abstract class TextTab
 
 	protected void buildTextPanel()
 	{
+		setButtonActions(BUTTON_ACTIONS);
 
 		textAreaDescription = myBuilder.addNamedTextArea(
 				null,

@@ -1,12 +1,14 @@
 package Model_Interfaces;
 
-public interface IRequirementList<T>
+import java.util.ArrayList;
+
+public interface IRequirementList<T extends IRequirement>
 {
-    
-    public boolean add(T myReq);
-    
+
     public boolean isIncluded(String id);
     
     public T getReqByID(String id);
+    
+    public boolean removeReqByID(String id);
     
 }

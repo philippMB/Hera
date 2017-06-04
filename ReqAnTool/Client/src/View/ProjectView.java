@@ -1,6 +1,7 @@
 package View;
 
-import LanguageAndText.TextNameConstants;
+import Controller_Interfaces.IController;
+import Logging.LogSystem;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirementAnalysis;
 import View_Interfaces.IProjectView;
@@ -8,7 +9,6 @@ import View_Interfaces.ITab;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 
 /**
@@ -29,7 +29,14 @@ public class ProjectView
 		super();
 		myModel = model;
 		myAnalysis = myModel.getReqAnalysis();
-		init();
+		if(myAnalysis != null)
+		{
+			init();
+		}
+		else
+		{
+			LogSystem.getLogger().warning("Analysis can not be null!");
+		}
 	}
 
 	private void init()
@@ -43,7 +50,7 @@ public class ProjectView
 		tabPanel = new JTabbedPane();
 		getContentPane().add(tabPanel);
 
-		//Nicht direkt sichtbar, da zunächst Tabs hinzugefügt werden müssen
+		setVisible(true);
 	}
 
 	protected void addTab(String tabName, JPanel newTab)
@@ -59,9 +66,9 @@ public class ProjectView
 	}
 
 	@Override
-	public void addController(ActionListener newListener)
+	public void addController(IController newController)
 	{
-		//Nothing to be controlled...
+		addWindowListener(newController);
 	}
 
 	@Override

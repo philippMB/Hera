@@ -1,14 +1,15 @@
 package View;
 
+import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirement;
 import View_Interfaces.IRequirementFormView;
-import com.sun.org.glassfish.gmbal.ManagedObject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
@@ -39,21 +40,37 @@ public abstract class RequirementFormView
 
 	protected void buildLinkTable()
 	{
-		final String tagedName = "Verweise";
-		String[] tableEntries = getMyRequirement().getReferenceIDs();
+		String[] tableEntries;
+		IRequirement myReq = getMyRequirement();
 
-		if(isEditable)
+		if(myReq != null)
 		{
-			tableSelectionLinks = myBuilder.addTableSelection(tagedName,
-																tableEntries,
-																(String[])myModel.getAllReqIDs().toArray());
+			tableEntries = getMyRequirement().getReferenceIDs().toArray(new String[0]);
 		}
 		else
 		{
-			String[][] wideTableEntries = new String[1][tableEntries.length];
-			wideTableEntries[0] = tableEntries;
-			tableLinks = myBuilder.addTable(tagedName,wideTableEntries);
+			tableEntries = new String[0];
 		}
+
+		if(isEditable)
+		{
+
+			tableSelectionLinks = myBuilder.addTableSelection(
+					myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES),
+					new String[0],
+					new String[0]
+			);
+		}
+		else
+		{
+			tableLinks = myBuilder.addTable(
+					myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES),
+					new String[0][0],
+					new String[0]
+			);
+		}
+
+		updateTable();	//Füllt Tabelle mit aktuellen Daten
 	}
 
 	protected void buildButtonBar()
@@ -150,8 +167,7 @@ public abstract class RequirementFormView
 
 		if(myReq != null)
 		{
-			String ID = myReq.getID();
-			IRequirement newReq = myModel.getReqByID(ID);	//TODO: Ersetzen mit Include-Anweisung
+			IRequirement newReq = getReqFromModel();	//TODO: Ersetzen mit Include-Anweisung
 
 			isReqDeleted = (newReq == null);
 		}
@@ -180,13 +196,19 @@ public abstract class RequirementFormView
 				*/
 			}
 
-			tableSelectionLinks.setTableEntries((String[])tableEntries.toArray());
+//			tableSelectionLinks.setTableEntries((String[])(tableEntries.toArray()));
+			ArrayList<String> allReqIDs = myModel.getAllReqIDs();
+			IRequirement myReq = getMyRequirement();
+			if(myReq != null)
+			{
+				allReqIDs.remove(myReq.getID());
+			}
 
-			tableSelectionLinks.setSelectables((String[])myModel.getAllReqIDs().toArray());
+			tableSelectionLinks.setSelectables(allReqIDs.toArray(new String[0]));
 		}
 		else
 		{
-			String[] myLinkIDs = getMyRequirement().getReferenceIDs();
+			String[] myLinkIDs = getMyRequirement().getReferenceIDs().toArray(new String[0]);
 			String[][] wideTableEntries = new String[1][myLinkIDs.length];
 			wideTableEntries[0] = myLinkIDs;
 
@@ -195,10 +217,10 @@ public abstract class RequirementFormView
 	}
 
 	@Override
-	public void addController(ActionListener newListener)
+	public void addController(IController newController)
 	{
-		super.addController(newListener);
-		tableSelectionLinks.addController(newListener);
+		super.addController(newController);
+		tableSelectionLinks.addController(newController);
 	}
 
 	protected abstract void updateFields();
@@ -208,5 +230,7 @@ public abstract class RequirementFormView
 	protected abstract void setIDEntry(String ID);
 
 	public abstract String getIDEntry();
+
+	protected abstract IRequirement getReqFromModel();
 
 }

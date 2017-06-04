@@ -108,7 +108,14 @@ public class NFRequirementEditView
         return fieldID.getText();
     }
 
-    @Override
+	@Override
+	protected IRequirement getReqFromModel()
+	{
+		String ID = myReq.getID();
+		return myModel.getNFReqByID(ID);
+	}
+
+	@Override
     public String getTitleEntry()
     {
         return fieldTitle.getText();

@@ -1,57 +1,54 @@
 package Main;
 
+import Controller.ProjectViewController;
 import Controller_Interfaces.ViewActions;
 import Logging.LogSystem;
-import Model_Interfaces.IRequirementAnalysis;
+import Model_Interfaces.ErrorCodes;
 import View.*;
+import Model.Model;
+import View_Interfaces.IViewFacadeFactory;
 
-import javax.swing.*;
-
-import static java.lang.Thread.sleep;
+import java.util.ArrayList;
 
 /**
  * Created by phlippe on 25.04.17.
  */
 public class Start {
 
-    public final static String[] einArray = {"A","B","C","D","E"};
-    public final static ViewActions[] paarActions = {ViewActions.CANCEL, ViewActions.CANCEL, ViewActions.CANCEL, ViewActions.CANCEL, ViewActions.CANCEL};
+    public final static ViewActions[] paarActions = {ViewActions.OK, ViewActions.SAVE, ViewActions.DELETE, ViewActions.BACK, ViewActions.CANCEL};
+
 
     public static void main(String args[])
     {
+
         try
         {
-            System.out.println(UIManager.getCrossPlatformLookAndFeelClassName());
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-            //"com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
+            //System.out.println(UIManager.getCrossPlatformLookAndFeelClassName());
+            //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            //UIManager.setLookAndFeel("javax.swing.plaf.modena.ModenaLookAndFeel");
+			//setUserAgentStylesheet(STYLESHEET_MODENA);
         }
         catch(Exception ex)
         {
             System.out.println("Fehler");
+            ex.printStackTrace();
         }
+    	/*
+		JOptionPane.showMessageDialog(new JFrame(), "Message", "Dialog",
+				JOptionPane.INFORMATION_MESSAGE);
+		*/
+    	Logging.Logger myLogger = LogSystem.getLogger();
+		Model newModel = new Model();
+		newModel.makeNewReqAn("Anforderungsanalysentool","Ich","ll@sd.com","049");
+		ErrorCodes errorCode = newModel.addFReq("/222/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
+		ErrorCodes errorCode2 = newModel.addNFReq("/223/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
+		ErrorCodes errorCode3 = newModel.addProdData("/224/","Das ist ein Titel","Ich","100",new ArrayList<String>());
+		System.out.println(errorCode);
+		IViewFacadeFactory viewFacade = IViewFacadeFactory.getInstance(newModel);
 
-		LogSystem.getLogger().info("This is another log");
-        try
-		{
-			sleep(10000);
-		}
-		catch(Exception ex)
-		{
-
-		}
-        /*
-        System.out.println(einArray);
-        FRequirementEditView myView = new FRequirementEditView();
-        ProjectView mySecondView = new ProjectView(new IRequirementAnalysis()
-        {
-            @Override
-            public String getTitle()
-            {
-                return "Hallo Welt";
-            }
-        });*/
-        //StartView myStartView = new StartView();
+		ProjectViewController projectViewController = new ProjectViewController(newModel, viewFacade.createProjectView());
+        StartView myStartView = new StartView();
         //ErrorDialog myDialog = new ErrorDialog("Titel","Das ist eine Infromationejkhfasekjghksdjhgkjhvk<haskv");
-        //WarningDialog myWarning = new WarningDialog("Titel", "Das ist eine Beschreibung der aufgetretenen Warnung",einArray,paarActions);
+        //WarningDialog myWarning = new WarningDialog("Titel", "Das ist eine Beschreibung der aufgetretenen Warnung",paarActions);
     }
 }

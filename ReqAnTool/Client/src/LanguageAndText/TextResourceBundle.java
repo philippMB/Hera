@@ -1,5 +1,7 @@
 package LanguageAndText;
 
+import Logging.LogSystem;
+
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -11,7 +13,6 @@ public class TextResourceBundle
 {
 
 	private String baseName;
-	private Locale currentLocalisation;
 	private ClassLoader myLoader;
 	private ResourceBundle myResourceBundle;
 
@@ -22,45 +23,75 @@ public class TextResourceBundle
 		setLocalisation(localisation);
 	}
 
-	public String getString(String name)
+	public String getString(String propertyName)
 	{
-		String ret = null;
+		String ret = "";
 		try
 		{
-			ret = myResourceBundle.getString(name);
+			ret = myResourceBundle.getString(propertyName);
 		}
 		catch (MissingResourceException ex)
 		{
 			System.err.println(ex);
 			ex.printStackTrace();
+			LogSystem.getLogger().warning("Could not find Resource for "+propertyName);
 		}
 		catch(NullPointerException ex)
 		{
 			System.err.println(ex);
 			ex.printStackTrace();
+			LogSystem.getLogger().warning("Could not find property for "+propertyName);
 		}
 		return ret;
 	}
 
-	public boolean setLocalisation(Locale localisation)
+	public boolean isLocalisationPossible(Locale localisation)
 	{
-		boolean fileExists = false;
+		boolean fileExists;
+
 		try
 		{
-			myResourceBundle = ResourceBundle.getBundle(baseName,localisation,myLoader);
-			currentLocalisation = localisation;
+			ResourceBundle.getBundle(baseName,localisation,myLoader);
 			fileExists = true;
 		}
 		catch(MissingResourceException ex)
 		{
 			System.err.println(ex);
 			ex.printStackTrace();
+			fileExists = false;
 		}
 		catch(NullPointerException ex)
 		{
 			System.err.println(ex);
 			ex.printStackTrace();
+			fileExists = false;
 		}
+
+		return fileExists;
+	}
+
+	public boolean setLocalisation(Locale localisation)
+	{
+		boolean fileExists;
+
+		try
+		{
+			myResourceBundle = ResourceBundle.getBundle(baseName,localisation,myLoader);
+			fileExists = true;
+		}
+		catch(MissingResourceException ex)
+		{
+			System.err.println(ex);
+			ex.printStackTrace();
+			fileExists = false;
+		}
+		catch(NullPointerException ex)
+		{
+			System.err.println(ex);
+			ex.printStackTrace();
+			fileExists = false;
+		}
+
 		return fileExists;
 	}
 
