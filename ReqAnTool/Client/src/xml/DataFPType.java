@@ -1,7 +1,9 @@
 package xml;
 
 import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType(name = "FPType")
 @XmlEnum
 public enum DataFPType
 {
