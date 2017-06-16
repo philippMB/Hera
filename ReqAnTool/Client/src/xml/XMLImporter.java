@@ -4,21 +4,36 @@ import Model_Interfaces.IRequirementAnalysis;
 
 public class XMLImporter
 {
+  private IRequirementAnalysis reqData = null;
 
-  private FileOperator fileOperator;
 
-  private IRequirementAnalysis unmarshall()
-  {
-    return null;
-  }
 
   public IRequirementAnalysis load(String address)
   {
-    return null;
+    IXMLFormat customData;
+    customData = loadFrom(address);
+    if (customData == null)
+    {
+      System.out.println("Failed to read data from file.");
+      return null;
+    }
+    else
+    {
+      reqData = unmarshall();
+    }
+    return reqData;
   }
 
-  private int loadFrom(String address)
+  private IRequirementAnalysis unmarshall()
   {
-    return 0;
+    return reqData;
+  }
+
+  private IXMLFormat loadFrom(String address)
+  {
+    FileOperator fileOperator = new FileOperator();
+    IXMLFormat customData;
+    customData = fileOperator.readFromFile(address, CustomXMLFormat.class);
+    return customData;
   }
 }
