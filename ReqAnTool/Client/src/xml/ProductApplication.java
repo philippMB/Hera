@@ -18,7 +18,7 @@ public class ProductApplication
   
   public ProductApplication()
   {
-    
+    // Default-Constructor
   }
   
   public void setDescription(String description)

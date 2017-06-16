@@ -1,6 +1,7 @@
 package xml;
 
 import Model_Interfaces.IRequirementAnalysis;
+import Model_Interfaces.XMLErrorCodes;
 
 import java.io.FileNotFoundException;
 
@@ -9,59 +10,50 @@ import javax.xml.bind.JAXBException;
 public class XMLExporter
 {
 
-  private FileOperator fileOperator;
-  private IXMLFormat xmlData;
-  private XMLFormatFactory xmlFactory;
-  private int ret = 0;
-  
-  public int save(IRequirementAnalysis analysis, String address) throws JAXBException, FileNotFoundException
+  public XMLErrorCodes save(IRequirementAnalysis analysis, String address)
   {
+      IXMLFormat xmlData;
+    XMLErrorCodes error = XMLErrorCodes.NO_ERROR;
     xmlData = marshall(analysis);
     
     if (xmlData == null)
     {
+      // TODO: Logger
       System.out.println("Failed to marshall analysis.");
-      return -1 ;
+      error = XMLErrorCodes.XML_FORMAT_ERROR;
     }
-    
-    ret = saveTo(address, xmlData);
-    
-    return ret;
+    else
+    {
+        error = saveTo(address, xmlData);
+    }
+
+    return error;
   }
 
   private IXMLFormat marshall(IRequirementAnalysis analysis)
   {
+      XMLFormatFactory xmlFactory;
+      IXMLFormat xmlData;
     xmlFactory = new XMLFormatFactory();
-    if(xmlFactory == null)
-    {
-      System.out.println("Failed to create xml factory.");
-      return null;
-    }
     // TODO picker via method/parameter
     xmlData = xmlFactory.xmlFormat(1);
-    if(xmlData == null)
+    if(xmlData != null)
     {
-      System.out.println("Failed to create xml formatter.");
-      return null;
+      xmlData.createFragments(analysis);
     }
-    // Rückgabe
-    ret = xmlData.createFragments(analysis);
-    
+
     return xmlData;
   }
 
-  private int saveTo(String address, IXMLFormat xmlData)
-    throws JAXBException, FileNotFoundException
+  private XMLErrorCodes saveTo(String address, IXMLFormat xmlData)
   {
+      XMLErrorCodes error = XMLErrorCodes.NO_ERROR;
+      FileOperator fileOperator;
+
     fileOperator = new FileOperator();
-    if(fileOperator == null)
-    {
-      System.out.println("Failed to create file operator.");
-      return -1;
-    }
     
-    ret = fileOperator.writeToFile(address, xmlData);
+    error = fileOperator.writeToFile(address, xmlData);
     
-    return ret;
+    return error;
   }
 }

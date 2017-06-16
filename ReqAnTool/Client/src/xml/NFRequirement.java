@@ -1,6 +1,10 @@
 package xml;
 
+import Model_Interfaces.INFRequirement;
+
 public class NFRequirement
+        extends Requirement
+        implements INFRequirement
 {
   private String title;
   private String actor;
@@ -32,7 +36,7 @@ public class NFRequirement
   
   public NFRequirement()
   {
-    
+    // Default-Constructor
   }
   
   public void setTitle(String title)

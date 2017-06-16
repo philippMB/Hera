@@ -1,42 +1,31 @@
 package xml;
 
+import Model_Interfaces.IFRequirement;
+
 import java.util.ArrayList;
 
-import javax.xml.bind.annotation.XmlAttribute;
 
 public class FRequirement
+        extends Requirement
+        implements IFRequirement
 {
-  private String id;
   private String title;
   private String actor;
   private String description;
-  private ArrayList<String> referenceIDs;
-
-  public void setId(String id)
-  {
-    this.id = id;
-  }
-
-  public String getId()
-  {
-    return id;
-  }
-
-  public void setReferenceIDs(ArrayList<String> referenceIDs)
-  {
-    this.referenceIDs = referenceIDs;
-  }
-
-  public ArrayList<String> getReferenceIDs()
-  {
-    return referenceIDs;
-  }
 
   public FRequirement(String title, String actor, String description)
   {
     this.title = title;
     this.actor = actor;
     this.description = description;
+  }
+
+  public FRequirement(IFRequirement origin)
+  {
+    super(origin);
+    title = origin.getTitle();
+    actor = origin.getActor();
+    description = origin.getDescription();
   }
 
   public String getTitle()
@@ -58,7 +47,7 @@ public class FRequirement
   
   public FRequirement()
   {
-    
+    // Default-Constructor
   }
   
   public void setTitle(String title)

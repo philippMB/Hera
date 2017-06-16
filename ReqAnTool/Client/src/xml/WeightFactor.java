@@ -32,7 +32,7 @@ public class WeightFactor
   
   public WeightFactor()
   {
-    
+    // Default-Constructor
   }
   
   public void setTitle(String title)

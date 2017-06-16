@@ -7,9 +7,8 @@ public class RequirementsInterchangeFormat
 {
 
   @Override
-  public int createFragments(IRequirementAnalysis rawData)
+  public void createFragments(IRequirementAnalysis rawData)
   {
     // TODO Implement this method
-    return 0;
   }
 }

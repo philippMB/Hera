@@ -1,19 +1,6 @@
 package xml;
 
-import Model_Interfaces.ICostEstimation;
-import Model_Interfaces.ICustomerData;
-import Model_Interfaces.IDataFP;
-import Model_Interfaces.IFRequirement;
-import Model_Interfaces.IGlossaryEntry;
-import Model_Interfaces.INFRequirement;
-import Model_Interfaces.IProductApplication;
-import Model_Interfaces.IProductData;
-import Model_Interfaces.IQualityRequirement;
-import Model_Interfaces.IRequirementAnalysis;
-import Model_Interfaces.ITargetDefinition;
-import Model_Interfaces.ITransactionFP;
-import Model_Interfaces.IWeightFactor;
-import Model_Interfaces.IRequirement;
+import Model_Interfaces.*;
 
 import java.util.*;
 import javax.xml.bind.annotation.*;
@@ -27,49 +14,49 @@ public class CustomXMLFormat
   @XmlElementWrapper(name="Functional_Requirements")
   @XmlElement(name="Requirement")
   private ArrayList<FRequirement> funcRequirementList;
-  
-  @XmlElementWrapper(name="Data_FunctionPoints")
-  @XmlElement(name="FunctionPoint")
+
+  //@XmlElementWrapper(name="Data_FunctionPoints")
+  //@XmlElement(name="FunctionPoint")
   private ArrayList<DataFP> dataFuncPointList;
-  
+
   @XmlElementWrapper(name="Non-Functional_Requirements")
   @XmlElement(name="Requirement")
   private ArrayList<NFRequirement> nonFuncRequirementList;
-  
+
   @XmlElement(name="CustomerData")
   private CustomerData custData;
-  
+
   @XmlElementWrapper(name="Glossary")
   @XmlElement(name="Glossary_Entry")
   private ArrayList<GlossaryEntry> glossary;
-  
+
   private ArrayList<ProductData> productDataList;
-  
+
   @XmlElementWrapper(name="Quality_Requirements")
   @XmlElement(name="Requirement")
   private ArrayList<QualityRequirement> qualityRequirementList;
-  
-  @XmlElementWrapper(name="Transaction_FunctionPoints")
-  @XmlElement(name="FunctionPoint")
+
+  //@XmlElementWrapper(name="Transaction_FunctionPoints")
+  //@XmlElement(name="FunctionPoint")
   private ArrayList<TransactionFP> transactionFPList;
-  
-  @XmlElementWrapper(name="Weightfactors")
-  @XmlElement(name="Factor")
+
+  //@XmlElementWrapper(name="Weightfactors")
+  //@XmlElement(name="Factor")
   private ArrayList<WeightFactor> weightFactorList;
-  
+
   @XmlElement(name="Cost_Estimation")
   private CostEstimation costEstimation;
-  
+
   @XmlElement(name="Product_Application")
   private ProductApplication productApplication;
-  
+
   @XmlElement(name="Target_Definition")
   private TargetDefinition targetDef;
   private ArrayList<Supplement> supplements;
   private Title reqAnTitle;
 
   @Override
-  public int createFragments(IRequirementAnalysis rawData)
+  public void createFragments(IRequirementAnalysis rawData)
   {
     addFuncRequirements(rawData);
     addDataFP(rawData);
@@ -83,11 +70,10 @@ public class CustomXMLFormat
     addCostEstimation(rawData);
     addProductApplication(rawData);
     addTargetDefinition(rawData);
-    
+
     // Rückgabe?
-    return 0;
   }
-  
+
   private void addFuncRequirements(IRequirementAnalysis data)
   {
     for(IFRequirement obj : data.getFRequirements())
@@ -95,7 +81,10 @@ public class CustomXMLFormat
       String title = obj.getTitle();
       String actor = obj.getActor();
       String description = obj.getDescription();
+      ArrayList<String> referenceIds = obj.getReferenceIDs();
       FRequirement req = new FRequirement(title, actor, description);
+      // TODO: trennen
+      req.setId(obj.getID());
       funcRequirementList.add(req);
     }
   }
@@ -107,12 +96,14 @@ public class CustomXMLFormat
     {
       int det = obj.getDET();
       int ret = obj.getRET();
-      ArrayList<String> ref = obj.getRequirement();
-      DataFP funcPoint = new DataFP(det, ret);
+      ArrayList<String> ref = obj.getRequirement().getReferenceIDs();
+      ClassOfDataFP type = obj.getType();
+      String reqID = obj.getRequirement().getID();
+      DataFP funcPoint = new DataFP(det, ret, ref, type, reqID);
       dataFuncPointList.add(funcPoint);
     }
   }
-  
+
   private void addNonFuncRequirements(IRequirementAnalysis data)
   {
     for(INFRequirement obj : data.getNFRequirements())
@@ -124,7 +115,7 @@ public class CustomXMLFormat
       nonFuncRequirementList.add(req);
     }
   }
-  
+
   private void addCustomerData(IRequirementAnalysis data)
   {
     ICustomerData custData = data.getCustomerData();
@@ -133,13 +124,14 @@ public class CustomXMLFormat
     String PMEmail = custData.getPMEMail();
     String CName = custData.getCName();
     String CNumber = custData.getCNumber();
-    String CEmail = custData.getCEmail();
+    String CEmail = custData.getCEMail();
     String CompanyName = custData.getCompanyName();
     String CompanyStreet = custData.getCompanyStreet();
     int CompanyPLZ = custData.getCompanyPLZ();
-    String Company = custData.getCompany();
+    String Company = custData.getCompanyCity();
     String CompanyCountry = custData.getCompanyCountry();
-    this.custData = new CustomerData(PMName, PMPNumber, PMEmail, CName, CNumber, CEmail, CompanyName, CompanyStreet, CompanyPLZ, Company, CompanyCountry);
+    this.custData = new CustomerData(PMName, PMPNumber, PMEmail, CName, CNumber, CEmail, CompanyName,
+                                     CompanyStreet, CompanyPLZ, Company, CompanyCountry);
   }
   
   private void addGlossary(IRequirementAnalysis data)
@@ -186,7 +178,10 @@ public class CustomXMLFormat
     {
       int ftr = obj.getFTR();
       int det = obj.getDET();
-      TransactionFP funcPoint = new TransactionFP(det, ftr);
+      ArrayList<String> ref = obj.getRequirement().getReferenceIDs();
+      ClassOfTransactionFP type = obj.getType();
+      String reqID = obj.getRequirement().getID();
+      TransactionFP funcPoint = new TransactionFP(det, ftr, ref, type, reqID);
       transactionFPList.add(funcPoint);
     }
   }
@@ -208,7 +203,8 @@ public class CustomXMLFormat
     ICostEstimation cEst = data.getCostEstimation();
     double functionPoints = cEst.getFunctionPoints();
     double manMonth = cEst.getManMonth();
-    costEstimation = new CostEstimation(functionPoints, manMonth);
+    costEstimation = new CostEstimation(functionPoints, manMonth, dataFuncPointList,
+            transactionFPList, weightFactorList);
   }
   
   private void addProductApplication(IRequirementAnalysis data)
@@ -236,15 +232,19 @@ public class CustomXMLFormat
     return funcRequirementList;
   }
 
+/*
   public void setDataFuncPointList(ArrayList<DataFP> dataFuncPointList)
   {
     this.dataFuncPointList = dataFuncPointList;
   }
+*/
 
+/*
   public ArrayList<DataFP> getDataFuncPointList()
   {
     return dataFuncPointList;
   }
+*/
 
   public void setNonFuncRequirementList(ArrayList<NFRequirement> nonFuncRequirementList)
   {
@@ -296,25 +296,29 @@ public class CustomXMLFormat
     return qualityRequirementList;
   }
 
-  public void setTransactionFPList(ArrayList<TransactionFP> transactionFPList)
+  /*public void setTransactionFPList(ArrayList<TransactionFP> transactionFPList)
   {
     this.transactionFPList = transactionFPList;
-  }
+  }*/
 
+/*
   public ArrayList<TransactionFP> getTransactionFPList()
   {
     return transactionFPList;
   }
-
+*/
+/*
   public void setWeightFactorList(ArrayList<WeightFactor> weightFactorList)
   {
     this.weightFactorList = weightFactorList;
-  }
+  }*/
 
+/*
   public ArrayList<WeightFactor> getWeightFactorList()
   {
     return weightFactorList;
   }
+*/
 
   public void setCostEstimation(CostEstimation costEstimation)
   {

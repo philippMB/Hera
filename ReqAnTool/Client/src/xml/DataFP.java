@@ -1,26 +1,34 @@
 package xml;
 
 import Model_Interfaces.ClassOfDataFP;
+import Model_Interfaces.IRequirement;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 
 public class DataFP
 {
-  private String id;
   private int det;
   private int ret;
   private ArrayList<String> referenceIDs;
   // TODO enum in JAXB
-  private DataFPType type;
+  @XmlElement(name="Data_Function_Point")
+  private ClassOfDataFP type;
+  private String reqID;
 
-  public void setId(String id)
-  {
-    this.id = id;
-  }
+    public String getReqID() {
+        return reqID;
+    }
 
-  public String getId()
+    public void setReqID(String reqID) {
+        this.reqID = reqID;
+    }
+
+    public DataFP()
   {
-    return id;
+    // Default-Constructor
   }
 
   public void setReferenceIDs(ArrayList<String> referenceIDs)
@@ -40,13 +48,16 @@ public class DataFP
 
   public ClassOfDataFP getType()
   {
-    return type;
+    return type ;
   }
 
-  public DataFP(int det, int ret)
+  public DataFP(int det, int ret, ArrayList<String> referenceIDs, ClassOfDataFP type, String reqID)
   {
     this.det = det;
     this.ret = ret;
+    this.referenceIDs = referenceIDs;
+    this.type = type;
+    this.reqID = reqID;
   }
 
   public int getDet()
@@ -60,11 +71,6 @@ public class DataFP
   }
 
   // für JavaBeans
-  
-  public DataFP()
-  {
-    
-  }
   
   public void setDet(int det)
   {

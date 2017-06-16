@@ -2,18 +2,32 @@ package xml;
 
 import java.util.ArrayList;
 
+import java.util.*;
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CostEstimation
 {
   private double functionPoints;
   private double manMonth;
+  @XmlElementWrapper(name="Data_FunctionPoints")
+  @XmlElement(name="FunctionPoint")
   private ArrayList<DataFP> dataFPList;
+  @XmlElementWrapper(name="Transaction_FunctionPoints")
+  @XmlElement(name="FunctionPoint")
   private ArrayList<TransactionFP> transactionFPList;
+  @XmlElementWrapper(name="Weightfactors")
+  @XmlElement(name="Factor")
   private ArrayList<WeightFactor> weightFactorList;
 
-  public CostEstimation(double functionPoints, double manMonth)
+  public CostEstimation(double functionPoints, double manMonth, ArrayList<DataFP> dataFPList,
+                        ArrayList<TransactionFP> transactionFPList, ArrayList<WeightFactor> weightFactorList)
   {
     this.functionPoints = functionPoints;
     this.manMonth = manMonth;
+    this.dataFPList = dataFPList;
+    this.transactionFPList = transactionFPList;
+    this.weightFactorList = weightFactorList;
   }
 
   public double getFunctionPoints()
@@ -30,7 +44,7 @@ public class CostEstimation
   
   public CostEstimation()
   {
-     
+     // Default-Constructor
   }
   
   public void setFunctionPoints(double functionPoints)

@@ -18,7 +18,7 @@ public class QualityRequirement
 
   public QualityRequirement()
   {
-    
+    // Default-Constructor
   }
 
   public void setCriteria(String criteria)

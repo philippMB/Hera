@@ -18,7 +18,7 @@ public class TargetDefinition
   
   public TargetDefinition()
   {
-    
+    // Default-Constructor
   }
   
   public void setDescription(String description)

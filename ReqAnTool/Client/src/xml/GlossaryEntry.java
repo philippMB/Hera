@@ -13,7 +13,7 @@ public class GlossaryEntry
   private String validity;
   private String obscurities;
   private ArrayList<String> references;
-  
+
   public GlossaryEntry(String term, String sense, String boundary, String label, String validity, String obscurities)
   {
     this.term = term;
@@ -58,7 +58,7 @@ public class GlossaryEntry
   
   public GlossaryEntry()
   {
-    
+    // Default-Constructor
   }
 
   public void setTerm(String term)
