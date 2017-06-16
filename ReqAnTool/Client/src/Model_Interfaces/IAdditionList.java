@@ -1,6 +1,6 @@
 package Model_Interfaces;
 
-import Model.Addition;
+//import Model.Addition;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public interface IAdditionList<IAddition>
 
     public boolean isIncluded(String term);
 
-    public Addition getAdditionByTitle(String term);
+    //public Addition getAdditionByTitle(String term);
 
     public ArrayList<IAddition> toArrayList();
 

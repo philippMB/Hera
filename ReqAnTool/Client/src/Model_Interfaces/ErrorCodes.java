@@ -11,5 +11,4 @@ public enum ErrorCodes
     NO_COST_ESTIMATION,
     INVALID_ARGUMENT,
     REFERENCES_ON_ITEM_DELETED,
-    
 }
