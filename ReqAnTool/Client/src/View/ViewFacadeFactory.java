@@ -3,18 +3,17 @@ package View;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.DialogConstants;
 import LanguageAndText.ITextFacade;
-import LanguageAndText.TextNameConstants;
-import LanguageAndText.TextResourceBundle;
+import Logging.ILogger;
+import Logging.ILoggerFactory;
 import Model_Interfaces.*;
 import View_Interfaces.*;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import sun.tools.jconsole.Tab;
 
 import javax.swing.*;
 
 /**
- * @author Phillip Lippe
+ * @author 9045534
  * @see IViewFacadeFactory
  */
 public class ViewFacadeFactory
@@ -24,11 +23,13 @@ public class ViewFacadeFactory
 	private static ViewFacadeFactory singletonViewFF;
 
 	private IModelGetData myModel;
+	private ILogger myLogger;
 
 
 	private ViewFacadeFactory(@NotNull IModelGetData model)
 	{
 		myModel = model;
+		myLogger = ILoggerFactory.getInstance().createLogger();
 	}
 
 	/**
@@ -103,6 +104,20 @@ public class ViewFacadeFactory
 	}
 
 	@Override
+	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode)
+	{
+		IErrorDialog myView = new ErrorDialog(errorCode);
+		return myView;
+	}
+
+	@Override
+	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode, @Nullable String[] placeholderInText)
+	{
+		IErrorDialog myView = new ErrorDialog(errorCode, placeholderInText);
+		return myView;
+	}
+
+	@Override
 	public IErrorDialog createErrorDialog(@NotNull String title,@NotNull String message)
 	{
 		IErrorDialog myView = new ErrorDialog(title, message);
@@ -110,7 +125,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IFileChooser createFileChooser(@Nullable JFrame parentView,@NotNull FileAccess accessType)
+	public IFileChooser createFileChooser(@Nullable JFrame parentView,@NotNull FileAccessType accessType)
 	{
 		IFileChooser myView = new FileChooser(parentView,accessType);
 
@@ -142,9 +157,9 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IFRequirementEditView createIFRequirementShowView(@NotNull String ID)
+	public IFRequirementShowView createIFRequirementShowView(@NotNull String ID)
 	{
-		IFRequirementEditView myView;
+		IFRequirementShowView myView;
 
 		if(myModel.getFReqByID(ID) == null)
 		{
@@ -183,9 +198,9 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public INFRequirementEditView createINFRequirementShowView(@NotNull String ID)
+	public INFRequirementShowView createINFRequirementShowView(@NotNull String ID)
 	{
-		INFRequirementEditView myView;
+		INFRequirementShowView myView;
 
 		if(myModel.getNFReqByID(ID) == null)
 		{
@@ -231,9 +246,9 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IProductDataEditView createProductDataShowView(@NotNull String ID)
+	public IProductDataShowView createProductDataShowView(@NotNull String ID)
 	{
-		IProductDataEditView myView;
+		IProductDataShowView myView;
 
 		if(myModel.getProductDataByID(ID) == null)
 		{
@@ -248,7 +263,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IFRequirementTab createFRequirementTab(IProjectView tabView)
+	public IFRequirementTab createFRequirementTab(@NotNull IProjectView tabView)
 	{
 		IFRequirementTab myTab = new FRequirementTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -257,7 +272,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public INFRequirementTab createNFRequirementTab(IProjectView tabView)
+	public INFRequirementTab createNFRequirementTab(@NotNull IProjectView tabView)
 	{
 		INFRequirementTab myTab = new NFRequirementTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -266,7 +281,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IProductDataTab createProductDataTab(IProjectView tabView)
+	public IProductDataTab createProductDataTab(@NotNull IProjectView tabView)
 	{
 		IProductDataTab myTab = new ProductDataTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -275,7 +290,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IGlossaryTab createGlossaryTab(IProjectView tabView)
+	public IGlossaryTab createGlossaryTab(@NotNull IProjectView tabView)
 	{
 		IGlossaryTab myTab = new GlossaryTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -284,7 +299,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IProcessClassificationView createProcessClassificationView(String ID)
+	public IProcessClassificationView createProcessClassificationView(@NotNull String ID)
 	{
 		IProcessClassificationView myView = null;
 
@@ -319,7 +334,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IProductApplicationTab createProductApplicationTab(IProjectView tabView)
+	public IProductApplicationTab createProductApplicationTab(@NotNull IProjectView tabView)
 	{
 		IProductApplicationTab myTab = new ProductApplicationTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -328,7 +343,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IProductEnvironmentTab createProductEnvironmentTab(IProjectView tabView)
+	public IProductEnvironmentTab createProductEnvironmentTab(@NotNull IProjectView tabView)
 	{
 		IProductEnvironmentTab myTab = new ProductEnvironmentTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -344,7 +359,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IProjectTab createProjectTab(IProjectView tabView)
+	public IProjectTab createProjectTab(@NotNull IProjectView tabView)
 	{
 		IProjectTab myTab = new ProjectTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -360,7 +375,7 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IQualityRequirementTab createQualityRequirementTab(IProjectView tabView)
+	public IQualityRequirementTab createQualityRequirementTab(@NotNull IProjectView tabView)
 	{
 		IQualityRequirementTab myTab = new QualityRequirementTab(myModel);
 		addTabToTabView(tabView, myTab);
@@ -385,27 +400,90 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IWarningDialog createWarningDialog(int dialogType)
+	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName)
 	{
-		ITextFacade myTextBundle = ITextFacade.getInstance();
-		String warnTitle = myTextBundle.getTitleText(TextNameConstants.TITLE_SAVE_WARNING);
-		String warnDescription = myTextBundle.getDialogText(DialogConstants.DIALOG_SAVE_WARNING);
-		ViewActions[] warnButtonActions = DialogConstants.DIALOG_BUTTONS_SAVE_WARNING;
-
-		return createWarningDialog(warnTitle,warnDescription,warnButtonActions);
+		return createWarningDialog(dialogPropertyName, (String[])null);
 	}
 
 	@Override
-	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription)
+	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName, @Nullable String[] placeholderInText)
+	{
+		//TODO: Put TextBundle access in warning dialog
+		IWarningDialog newWarningDialog = null;
+		if(containsMapDialogPropertyName(dialogPropertyName))
+		{
+			ITextFacade myTextBundle = ITextFacade.getInstance();
+			String warnTitle = myTextBundle.getTitleText(dialogPropertyName);
+			String warnDescription;
+			if(placeholderInText != null)
+			{
+				warnDescription = myTextBundle.getDialogText(dialogPropertyName, placeholderInText);
+			}
+			else
+			{
+				warnDescription = myTextBundle.getDialogText(dialogPropertyName);
+			}
+			ViewActions[] warnButtonActions = DialogConstants.DIALOG_NAME_TO_VIEW_ACTIONS.get(dialogPropertyName);
+
+			newWarningDialog = createWarningDialog(warnTitle, warnDescription, warnButtonActions);
+		}
+		return newWarningDialog;
+	}
+
+	private boolean containsMapDialogPropertyName(String dialogPropertyName)
+	{
+		boolean containing = true;
+		try
+		{
+			DialogConstants.DIALOG_NAME_TO_VIEW_ACTIONS.get(dialogPropertyName);
+		}
+		catch(NullPointerException ex)
+		{
+			myLogger.warning("Given key is null.", ex);
+			containing = false;
+		}
+		catch(ClassCastException ex)
+		{
+			myLogger.warning("Given key has wrong class for dialog-Map in DialogConstants. Class: "+
+							dialogPropertyName.getClass().toString(), ex);
+			containing = false;
+		}
+		return containing;
+	}
+
+	@Override
+	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription)
 	{
 		IWarningDialog myView = new WarningDialog(warnTitle, warnDescription);
 		return myView;
 	}
 
 	@Override
-	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription, ViewActions[] warnButtonActions)
+	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription,
+											  @NotNull ViewActions[] warnButtonActions)
 	{
 		IWarningDialog myView = new WarningDialog(warnTitle, warnDescription, warnButtonActions);
+		return myView;
+	}
+
+	@Override
+	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName)
+	{
+		IInfoDialog myView = new InfoDialog(dialogPropertyName);
+		return myView;
+	}
+
+	@Override
+	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName, @Nullable String[] placeholderInText)
+	{
+		IInfoDialog myView = new InfoDialog(dialogPropertyName, placeholderInText);
+		return myView;
+	}
+
+	@Override
+	public IInfoDialog createInfoDialog(@NotNull String infoTitle, @NotNull String infoMessage)
+	{
+		IInfoDialog myView = new InfoDialog(infoTitle, infoMessage);
 		return myView;
 	}
 

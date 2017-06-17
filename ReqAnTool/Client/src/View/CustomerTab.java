@@ -18,7 +18,7 @@ public class CustomerTab
 	implements ICustomerTab
 {
 
-	private final ViewActions[] BUTTON_ACTIONS =  {
+	private static final ViewActions[] BUTTON_ACTIONS =  {
 			ViewActions.SAVE,
 			ViewActions.RESET
 	};
@@ -36,22 +36,23 @@ public class CustomerTab
 	public CustomerTab(IModelGetData model)
 	{
 		super(model, TextNameConstants.TITLE_CUSTOMER_DATA);
-		setButtonActions(BUTTON_ACTIONS);
-
-		init();
 	}
 
 	@Override
 	protected void init()
 	{
+		setButtonActions(BUTTON_ACTIONS);
+
 		buildCustomerSection();
 		myBuilder.addNewSection();
 		buildCompanySection();
+		myBuilder.addNewSection();
 		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
 
-		setValuesFromModel();
+		//setValuesFromModel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
+		setActionCommands();
 	}
 
 	private void buildCustomerSection()
@@ -108,7 +109,7 @@ public class CustomerTab
 		);
 	}
 
-	public void setValuesFromModel()
+	private void setValuesFromModel()
 	{
 		ICustomerData myCustomerData = myModel.getCustomerData();
 

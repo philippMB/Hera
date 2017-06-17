@@ -5,15 +5,15 @@ import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirement;
 import View_Interfaces.IFRequirementEditView;
+import View_Interfaces.IFRequirementShowView;
 
 import javax.swing.*;
 
 public class FRequirementEditView
-    extends RequirementFormView
-	implements IFRequirementEditView
+    extends RequirementFormView<IFRequirement>
+	implements IFRequirementEditView, IFRequirementShowView
 {
 
-	private IFRequirement myReq;
 	private JTextField fieldTitle;
     private JTextField fieldID;
     private JTextField fieldActor;
@@ -27,21 +27,7 @@ public class FRequirementEditView
 
     public FRequirementEditView(IModelGetData model, String ID, boolean isEditable)
 	{
-        super(model,isEditable);
-        if(ID != null)
-		{
-			myReq = myModel.getFReqByID(ID);
-		}
-		else
-		{
-			myReq = null;
-			//Falls keine ID übergeben wird, muss die View editierbar sein
-			if(!isEditable)
-			{
-				this.isEditable = true;
-			}
-		}
-        init();
+        super(model,ID,isEditable);
     }
 
     @Override
@@ -81,8 +67,6 @@ public class FRequirementEditView
         getContentPane().add(myBuilder.getResult());
         pack();
         setLocationRelativeTo(null);
-
-        setVisible(true);
     }
 
     private String getTitleText()
@@ -115,9 +99,8 @@ public class FRequirementEditView
     }
 
 	@Override
-	protected IRequirement getReqFromModel()
+	protected IFRequirement getReqFromModel(String ID)
 	{
-		String ID = myReq.getID();
 		return myModel.getFReqByID(ID);
 	}
 
@@ -131,12 +114,6 @@ public class FRequirementEditView
 	public String getActorEntry()
 	{
 		return fieldActor.getText();
-	}
-
-	@Override
-	public String[] getLinkEntry()
-	{
-		return getTableEntries();
 	}
 
 	@Override
@@ -166,15 +143,8 @@ public class FRequirementEditView
 	}
 
 	@Override
-	public IRequirement getMyRequirement()
-	{
-		return myReq;
-	}
-
-	@Override
 	protected void setIDEntry(String ID)
 	{
 		fieldID.setText(ID);
 	}
-
 }

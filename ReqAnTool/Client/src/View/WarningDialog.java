@@ -22,8 +22,7 @@ public class WarningDialog
 	private static final String WARN_IMAGE_PATH_STRING =
 			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/Warnschild.png";
 	private static final Color WARN_COLOR = new Color(238,190,40);
-
-	private final ViewActions[] DEFAULT_BUTTON_ACTIONS = {
+	private static final ViewActions[] DEFAULT_BUTTON_ACTIONS = {
 		ViewActions.OK,
 		ViewActions.CANCEL
 	};
@@ -58,11 +57,7 @@ public class WarningDialog
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle(title);
-		myBuilder.addImage(getWarnImagePath());
-		JTextArea textArea = myBuilder.addText(description);
-		myButtons = myBuilder.addButtonBar(myButtonActions);
-
+		buildDefaultStructure(title, description, getWarnImagePath());
 		getContentPane().add(
 				new BorderDecorater(
 						myBuilder.getResult(),
@@ -70,19 +65,8 @@ public class WarningDialog
 						myTextBundle.getTitleText(TextNameConstants.TITLE_WARNING)
 				)
 		);
-		setActionCommands();
-
-		textArea.setColumns((getWidth()-80)/8);
-		System.out.println("Width: "+getWidth());
 
 		pack();
-		setVisible(true);
-	}
-
-	@Override
-	public void update(Observable o, Object arg)
-	{
-
 	}
 
 }

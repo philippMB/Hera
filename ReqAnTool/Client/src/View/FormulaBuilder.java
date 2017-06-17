@@ -38,10 +38,6 @@ public class FormulaBuilder
 
         JTextField myTextField = new JTextField(10);
 		myTextField.setEditable(isEditable);
-        if(!myTextField.isEnabled())
-		{
-			myTextField.setBackground(null);
-		}
         myTextField.setText(content);
         myPanel.add(myTextField,layoutConstraints);
 
@@ -185,6 +181,7 @@ public class FormulaBuilder
 
 		layoutConstraints.gridx = 1;
         JTable myTable = new JTable(elements,columnNames);
+		myTable.setPreferredScrollableViewportSize(new Dimension(100,100));
         JScrollPane scrollableTable = new JScrollPane(myTable);
         myPanel.add(scrollableTable,layoutConstraints);
 
@@ -320,5 +317,10 @@ public class FormulaBuilder
 		myPanel.add(nameLabel,layoutConstraints);
 	}
 
-
+	@Override
+	public JPanel getResult()
+	{
+		myPanel = new BorderDecorater(myPanel);
+		return super.getResult();
+	}
 }

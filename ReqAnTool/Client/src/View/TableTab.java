@@ -71,8 +71,15 @@ public abstract class TableTab
 		String[][] tableEntries = getTableEntries();
 		String[] columnNames = getColumnNames();
 
-		DefaultTableModel defaultTableModel = new DefaultTableModel(tableEntries,columnNames);
+		DefaultTableModel defaultTableModel = new DefaultTableModel(tableEntries,columnNames){
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+		};
 		myTable.setModel(defaultTableModel);
+
 	}
 
 	protected abstract String[][] getTableEntries();

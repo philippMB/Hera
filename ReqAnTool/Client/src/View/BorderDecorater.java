@@ -12,6 +12,13 @@ public class BorderDecorater
     extends JPanel
 {
 
+    public BorderDecorater(JPanel toDecorate)
+	{
+		super();
+		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		this.add(toDecorate);
+	}
+
     public BorderDecorater(JPanel toDecorate, Color pColor, String pName)
     {
         super();

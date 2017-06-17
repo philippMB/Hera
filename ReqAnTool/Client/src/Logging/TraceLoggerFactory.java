@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.logging.FileHandler;
 
 /**
- * This factory class provides an exclusively single object that manages all {@link ILogger} in the project. This for it
- * checks the constraint that the name of the consisting loggers are exclusively and unique.
+ * This factory class provides an exclusively single object that manages all {@link ILogger}
+ * (based on {@link TraceLogger}) in the project. This for it checks the constraint that the name of the
+ * consisting loggers are exclusively and unique.
  * <p>
  * When a class or object wants to use a logger, it can get one with calling one of the three possible methods
  * <code>createLogger</code>, while each of them is generating a name for the logger. If a logger with the

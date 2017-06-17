@@ -81,10 +81,24 @@ public abstract class TabPanel
 	}
 
 	@Override
+	public void showView()
+	{
+		SwingUtilities.invokeLater(
+				() -> setVisible(true)
+		);
+	}
+
+	@Override
 	public void destruct()
 	{
 		setVisible(false);
 		getParent().remove(this);
+	}
+
+	@Override
+	public void bringToFront()
+	{
+		((JTabbedPane)this.getParent()).setSelectedComponent(this);
 	}
 
 	@Override

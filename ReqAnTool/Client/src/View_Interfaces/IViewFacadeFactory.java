@@ -1,6 +1,7 @@
 package View_Interfaces;
 
 import Controller_Interfaces.ViewActions;
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModelGetData;
 import View.ViewFacadeFactory;
 import com.sun.istack.internal.NotNull;
@@ -14,7 +15,7 @@ import javax.swing.*;
 public interface IViewFacadeFactory
 {
 
-	public static IViewFacadeFactory getInstance(IModelGetData model)
+	public static IViewFacadeFactory getInstance(@NotNull IModelGetData model)
 	{
 		return ViewFacadeFactory.getInstance(model);
 	}
@@ -31,21 +32,25 @@ public interface IViewFacadeFactory
 
 	public ICustomerTab createCustomerTab(@NotNull IProjectView tabView);
 
+	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode);
+
+	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode, @Nullable String[] placeholderInText);
+
 	public IErrorDialog createErrorDialog(@NotNull String title, @NotNull String message);
 
-	public IFileChooser createFileChooser(@Nullable JFrame parentView, @NotNull FileAccess accessType);
+	public IFileChooser createFileChooser(@Nullable JFrame parentView, @NotNull FileAccessType accessType);
 
 	public IFRequirementEditView createIFRequirementAddView();
 
 	public IFRequirementEditView createIFRequirementEditView(@NotNull String ID);
 
-	public IFRequirementEditView createIFRequirementShowView(@NotNull String ID);
+	public IFRequirementShowView createIFRequirementShowView(@NotNull String ID);
 
 	public INFRequirementEditView createINFRequirementAddView();
 
 	public INFRequirementEditView createINFRequirementEditView(@NotNull String ID);
 
-	public INFRequirementEditView createINFRequirementShowView(@NotNull String ID);
+	public INFRequirementShowView createINFRequirementShowView(@NotNull String ID);
 
 	public IOptimizedWeightFactorsView createOptimizedWeightFactorsView();
 
@@ -53,7 +58,7 @@ public interface IViewFacadeFactory
 
 	public IProductDataEditView createProductDataEditView(@NotNull String ID);
 
-	public IProductDataEditView createProductDataShowView(@NotNull String ID);
+	public IProductDataShowView createProductDataShowView(@NotNull String ID);
 
 	public IFRequirementTab createFRequirementTab(@NotNull IProjectView tabView);
 
@@ -81,11 +86,20 @@ public interface IViewFacadeFactory
 
 	public ITargetDefinitionTab createTargetDefinitionTab(@NotNull IProjectView tabView);
 
-	public IWarningDialog createWarningDialog(int dialogType);
+	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName);
 
-	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription);
+	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName,@Nullable String[] placeholderInText);
 
-	public IWarningDialog createWarningDialog(String warnTitle, String warnDescription, ViewActions[] warnButtonActions);
+	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription);
+
+	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription,
+											  @NotNull ViewActions[] warnButtonActions);
+
+	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName);
+
+	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName,@Nullable String[] placeholderInText);
+
+	public IInfoDialog createInfoDialog(@NotNull String warnTitle, @NotNull String warnDescription);
 
 	public IWeightFactorEditView createWeightFactorEditView();
 

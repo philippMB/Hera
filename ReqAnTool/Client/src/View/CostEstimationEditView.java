@@ -58,7 +58,6 @@ public class CostEstimationEditView
 		getContentPane().add(myBuilder.getResult());
 
 		pack();
-		setVisible(true);
 	}
 
 	private String[][] calcTableProcessEntries()

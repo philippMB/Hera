@@ -6,8 +6,8 @@ package View_Interfaces;
 public interface IFileChooser
 {
 
-	public void showFileChooser();
+	public void showView();
 
-	public String getChosenFile();
+	public String getChosenFilePath();
 
 }

@@ -1,6 +1,8 @@
 package Controller;
 
 
+import LanguageAndText.DialogConstants;
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModel;
 import View_Interfaces.IFRequirementTab;
 import View_Interfaces.IView;
@@ -57,12 +59,26 @@ public class FRequirementTabController
 	@Override
 	protected void executeDeleteAction()
 	{
+		controllerManager.createControlledWarningDialog(
+				DialogConstants.DIALOG_DELETE_WARNING,
+				new String[]{
+						myTextBundle.getParameterText(TextNameConstants.PAR_FREQ) + " " + getSelectedIdentifier()
+				},
+				new DeleteWarningController(myModel, null)
+				{
+					@Override
+					protected void deleteObject()
+					{
+						closeView();
+						myModel.remFReqByID(getSelectedIdentifier());
+					}
 
-	}
-
-	@Override
-	protected void closeView()
-	{
-
+					@Override
+					protected void cancelDeletion()
+					{
+						//Do nothing
+					}
+				}
+		);
 	}
 }

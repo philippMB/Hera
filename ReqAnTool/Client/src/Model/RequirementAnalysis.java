@@ -125,7 +125,7 @@ public class RequirementAnalysis
         }
         for (INFRequirement myINFReq : myNFRequirements)
         {
-            FRequirement myNFReq = (FRequirement)myINFReq;
+            NFRequirement myNFReq = (NFRequirement)myINFReq;
             for (String refID : myNFReq.getReferenceIDs())
             {
                 if (refID.equals(id))

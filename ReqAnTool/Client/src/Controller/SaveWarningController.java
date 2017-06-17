@@ -1,7 +1,8 @@
 package Controller;
 
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
-import View_Interfaces.FileAccess;
+import View_Interfaces.FileAccessType;
 import View_Interfaces.IFileChooser;
 import View_Interfaces.IViewFacadeFactory;
 import View_Interfaces.IWarningDialog;
@@ -13,51 +14,63 @@ public class SaveWarningController
 	extends WarningController
 {
 
-	public SaveWarningController(IModel model, IWarningDialog saveWarning)
+	public SaveWarningController(IModel model, IWarningDialog viewToBeControlled)
 	{
-		super(model, saveWarning);
+		super(model, viewToBeControlled);
 	}
 
 	@Override
 	protected void executeSaveAction()
 	{
-		System.out.println("Save-Action");
-		myModel.saveReqAn("Test.reqan");
+		ErrorCodes errorCode = myModel.saveReqAn(null);
+		handleErrorCode(errorCode);
+		if(errorCode == ErrorCodes.NO_ERROR)
+		{
+			closeProgram();
+		}
 	}
 
 	@Override
 	protected void executeSaveAsAction()
 	{
-		System.out.println("SaveAs-Action");
-		String filePath = getChosenFile();
+		IFileChooser myFileChooser = controllerManager.createFileChooser(FileAccessType.SAVE);
+		myFileChooser.showView();
+		String filePath = myFileChooser.getChosenFilePath();
+
 		if(filePath != null)
 		{
-			myModel.saveReqAn(filePath);
+			ErrorCodes errorCode = myModel.saveReqAn(filePath);
+			handleErrorCode(errorCode);
+			if(errorCode == ErrorCodes.NO_ERROR)
+			{
+				closeProgram();
+			}
 		}
 		else
 		{
-			//TODO: What if no file to save is chosen?
+			closeView();
 		}
-	}
-
-	private String getChosenFile()
-	{
-		IViewFacadeFactory viewFacadeFactory = IViewFacadeFactory.getInstance(myModel);
-		IFileChooser myFileChooser = viewFacadeFactory.createFileChooser(null, FileAccess.SAVE);
-		myFileChooser.showFileChooser();
-		return myFileChooser.getChosenFile();
 	}
 
 	@Override
 	protected void executeDontSaveAction()
 	{
-
+		closeProgram();
 	}
 
 	@Override
 	protected void executeCancelAction()
 	{
+		closeView();
+	}
 
+	/**
+	 * Function which is executed if file is saved or should not be saved. Could be overwritten when needed.
+	 * Default action is closing whole application.
+	 */
+	protected void closeProgram()
+	{
+		controllerManager.closeProgram();
 	}
 
 }

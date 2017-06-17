@@ -3,8 +3,9 @@ package Logging;
 import com.sun.istack.internal.Nullable;
 
 /**
- * To log all warnings in one file, a Logger provides methods for add a warning to the log-file.
- * The structure of a entry in the log file is delegated to class implementing this interface. All Logger, an
+ * A Logger object is used to log messages for a specific system or application component.
+ * To organize all log messages a logger provides methods for creating log messages and handles the organization intern.
+ * The structure of a entry in the log file is delegated to the class implementing this interface. All Logger, an
  * {@link ILoggerFactory} provides, are based on this Interface.
  *
  * <p>
@@ -21,7 +22,7 @@ import com.sun.istack.internal.Nullable;
  *         <li><b>Error</b> - An error, which occurred while executing. Necessary for debugging.
  *     </ul>
  *	   Every logger provides methods for each of this message-levels.
- * </p>
+ *
  *
  * @author 9045534
  * @version 1.0

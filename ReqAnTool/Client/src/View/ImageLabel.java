@@ -1,14 +1,14 @@
 package View;
 
-import Logging.LogSystem;
+import Logging.ILoggerFactory;
+import Logging.TraceLoggerFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
-import Logging.Logger;
+import Logging.ILogger;
 
 /**
  * Created by phlippe on 28.04.17.
@@ -17,13 +17,13 @@ public class ImageLabel
 	extends JLabel
 {
 
-	private Logger myLogger;
+	private ILogger myLogger;
 
 
 	public ImageLabel()
 	{
 		super();
-		myLogger = LogSystem.getLogger();
+		myLogger = ILoggerFactory.getInstance().createLogger();
 	}
 
 	public ImageLabel(Path imagePath)
@@ -34,7 +34,7 @@ public class ImageLabel
 	public ImageLabel(Path imagePath, int imageWidth, int imageHeight)
 	{
 		super();
-		myLogger = LogSystem.getLogger();
+		myLogger = ILoggerFactory.getInstance().createLogger();
 
 		setScaledImage(imagePath,imageWidth,imageHeight);
 	}

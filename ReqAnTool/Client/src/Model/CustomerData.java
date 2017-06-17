@@ -49,7 +49,7 @@ public class CustomerData
         if (!validAdress(companyCountry, companyCity, companyStreet, zip))
         {
             error = true;
-            myErrors.add(ErrorCodes.INVALID_ADRESS);
+            myErrors.add(ErrorCodes.INVALID_ADDRESS);
         }
         if (!error)
         {

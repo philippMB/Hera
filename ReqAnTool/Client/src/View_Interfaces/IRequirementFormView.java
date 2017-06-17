@@ -9,10 +9,14 @@ public interface IRequirementFormView
 
 	public String getIDEntry();
 
-	public String getSelectedLink();
+	public String[] getRefEntry();
 
-	public void addSelectedLink();
+	public String getSelectedRefToAdd();
 
-	public void deleteSelectedLink();
+	public String getSelectedLinkToDelete();
+
+	public void addSelectedRef();
+
+	public void deleteSelectedRef();
 
 }

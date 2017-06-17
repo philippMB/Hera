@@ -2,7 +2,6 @@ package Controller;
 
 import LanguageAndText.DialogConstants;
 import Model_Interfaces.IModel;
-import View.ProjectView;
 import View_Interfaces.*;
 
 import java.awt.event.WindowEvent;
@@ -14,7 +13,8 @@ public class ProjectViewController
 		extends BasicController <IProjectView>
 {
 
-	private WarningController controller;
+	boolean couldBeClosed;
+
 
 	public ProjectViewController(IModel model, IProjectView projectView)
 	{
@@ -30,25 +30,13 @@ public class ProjectViewController
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		if(true || myModel.isReqAnUnsaved())
-		{
-			controller = controllerManager.createControlledWarningDialog(DialogConstants.DIALOG_TYPE_SAVE_WARNING);
-		}
-		else
-		{
-			closeView();
-		}
+		controllerManager.closeProgram();
 	}
 
-	@Override
-	protected void closeView()
+	private boolean tryToSaveReqAn()
 	{
-
-	}
-
-	private void saveAnalysis()
-	{
-
+		//TODO: Implement this method
+		return true;
 	}
 
 	private void saveAnalysisAtPath()
@@ -56,4 +44,39 @@ public class ProjectViewController
 
 	}
 
+	@Override
+	protected boolean canViewBeClosed()
+	{
+		couldBeClosed = false && !myModel.isReqAnUnsaved();
+		if(!couldBeClosed)
+		{
+			controllerManager.createControlledWarningDialog(
+					DialogConstants.DIALOG_SAVE_REQAN_WARNING,
+					new SaveWarningController(myModel, null)
+					{
+						@Override
+						protected void executeSaveAction()
+						{
+							closeView();
+							couldBeClosed = tryToSaveReqAn();
+						}
+
+						@Override
+						protected void executeDontSaveAction()
+						{
+							closeView();
+							couldBeClosed = true;
+						}
+
+						@Override
+						protected void executeCancelAction()
+						{
+							closeView();
+							couldBeClosed = false;
+						}
+					}
+			);
+		}
+		return couldBeClosed;
+	}
 }

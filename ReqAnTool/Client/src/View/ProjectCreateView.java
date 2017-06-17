@@ -58,9 +58,8 @@ public class ProjectCreateView
 		myButtons = myBuilder.addButtonBar(myButtonActions);
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
+		setActionCommands();
 		pack();
-
-		setVisible(true);
 	}
 
 	private void buildProjectSection()

@@ -1,5 +1,7 @@
 package Logging;
 
+import com.sun.istack.internal.NotNull;
+
 /**
  * This interface represents an abstract factory for creating and managing {@link ILogger} in a system. It features
  * a public interface over which a client from other packages can interact and create logger (type {@link ILogger}).
@@ -12,7 +14,7 @@ package Logging;
  *         myLogger.info("This logger was created by an ILoggerFactory"); //example info message  <br>
  *     </code>
  *     </p>
- * </p>
+ *
  * Which concrete factory is returned, is defined in {@link ILoggerFactory#getInstance()}. The selection is static,
  * but could be extended with parameters for decision making in future.
  * <p>
@@ -24,7 +26,7 @@ package Logging;
  *         the logger entries. </li>
  *         <li><b>{@link ILoggerFactory#createLogger(String)}</b> - creating a logger with the given name.</li>
  *     </ul>
- * </p>
+ *
  *
  * @author 9045534
  * @version 1.0
@@ -44,7 +46,7 @@ public interface ILoggerFactory
 	 */
 	public static ILoggerFactory getInstance()
 	{
-		return TraceLoggerFactory.getInstance();
+		return TraceLoggerFactory.getInstance();	//TraceLoggerFactory is an implementation of ILoggerFactory
 	}
 
 	/**
@@ -65,6 +67,6 @@ public interface ILoggerFactory
 	 * @param loggerName Name of the new logger
 	 * @return Logger with given name
 	 */
-	public ILogger createLogger(String loggerName);
+	public ILogger createLogger(@NotNull String loggerName);
 
 }

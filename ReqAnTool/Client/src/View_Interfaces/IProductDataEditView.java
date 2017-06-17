@@ -7,13 +7,9 @@ public interface IProductDataEditView
 	extends IView
 {
 
-	public String getIDEntry();
-
 	public String getContentEntry();
 
 	public String getMaxCountEntry();
-
-	public String[] getLinkEntry();
 
 	public String getAttributeEntry();
 

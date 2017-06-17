@@ -5,15 +5,15 @@ import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
 import Model_Interfaces.IRequirement;
 import View_Interfaces.INFRequirementEditView;
+import View_Interfaces.INFRequirementShowView;
 
 import javax.swing.*;
 
 public class NFRequirementEditView
-    extends RequirementFormView
-    implements INFRequirementEditView
+    extends RequirementFormView<INFRequirement>
+    implements INFRequirementEditView, INFRequirementShowView
 {
 
-	private INFRequirement myReq;
 	private JTextField fieldTitle;
 	private JTextField fieldID;
 	private JTextArea fieldDescription;
@@ -26,21 +26,7 @@ public class NFRequirementEditView
 
     public NFRequirementEditView(IModelGetData model, String ID, boolean isEditable)
     {
-    	super(model,isEditable);
-		if(ID != null)
-		{
-			myReq = myModel.getNFReqByID(ID);
-		}
-		else
-		{
-			myReq = null;
-			//Falls keine ID übergeben wird, muss die View editierbar sein
-			if(!isEditable)
-			{
-				this.isEditable = true;
-			}
-		}
-		init();
+    	super(model,ID,isEditable);
     }
 
     @Override
@@ -75,8 +61,6 @@ public class NFRequirementEditView
 		getContentPane().add(myBuilder.getResult());
 		pack();
 		setLocationRelativeTo(null);
-
-		setVisible(true);
     }
 
 	private String getTitleText()
@@ -109,9 +93,8 @@ public class NFRequirementEditView
     }
 
 	@Override
-	protected IRequirement getReqFromModel()
+	protected INFRequirement getReqFromModel(String ID)
 	{
-		String ID = myReq.getID();
 		return myModel.getNFReqByID(ID);
 	}
 
@@ -122,22 +105,10 @@ public class NFRequirementEditView
     }
 
     @Override
-    public String[] getLinkEntry()
-    {
-        return getTableEntries();
-    }
-
-    @Override
     public String getDescriptionEntry()
     {
         return fieldDescription.getText();
     }
-
-	@Override
-	public IRequirement getMyRequirement()
-	{
-		return myReq;
-	}
 
 	@Override
 	protected void setIDEntry(String ID)

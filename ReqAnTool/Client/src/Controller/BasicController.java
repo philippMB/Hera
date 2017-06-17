@@ -2,30 +2,40 @@ package Controller;
 
 import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
-import Logging.LogSystem;
+import LanguageAndText.ITextFacade;
+import Logging.ILogger;
+import Logging.ILoggerFactory;
+import Logging.TraceLoggerFactory;
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IView;
+import View_Interfaces.IViewFacadeFactory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 
 /**
- * Created by phlippe on 11.05.17.
+ * Default controller class which provides a general structure for handling actions which are performed and errors
+ * with creating dialogs.
  */
 public abstract class BasicController <ViewType extends IView>
 	implements IController
 {
 
-	protected ControllerManagement controllerManager;
+	protected ControllerManager controllerManager;
 	protected IModel myModel;
 	protected ViewType myView;
+	protected ILogger myLogger;
+	protected ITextFacade myTextBundle;
 
 
 	public BasicController(IModel modelToBeControlled, ViewType viewToBeControlled)
 	{
 		myModel = modelToBeControlled;
 		setView(viewToBeControlled);
-		controllerManager = ControllerManagement.getInstance(myModel);
+		controllerManager = ControllerManager.getInstance(myModel);
+		myLogger = ILoggerFactory.getInstance().createLogger();
+		myTextBundle = ITextFacade.getInstance();
 	}
 
 	public void setView(ViewType viewToBeControlled)
@@ -36,6 +46,7 @@ public abstract class BasicController <ViewType extends IView>
 		if(myView != null)
 		{
 			myView.addController(this);
+			myView.showView();
 		}
 		else
 		{
@@ -52,110 +63,127 @@ public abstract class BasicController <ViewType extends IView>
 	public void actionPerformed(ActionEvent event)
 	{
 		String actionCommand = event.getActionCommand();
-		ViewActions viewAction = ViewActions.valueOf(actionCommand);
-
-		switch(viewAction)
+		ViewActions viewAction = null;
+		try
 		{
-			case OK:
-				executeOKAction();
-				break;
-			case CANCEL:
-				executeCancelAction();
-				break;
-			case SAVE:
-				executeSaveAction();
-				break;
-			case SAVE_AS:
-				executeSaveAsAction();
-				break;
-			case DONT_SAVE:
-				executeDontSaveAction();
-				break;
-			case ADD:
-				executeAddAction();
-				break;
-			case DELETE:
-				executeDeleteAction();
-				break;
-			case EDIT:
-				executeEditAction();
-				break;
-			case SHOW:
-				executeShowAction();
-				break;
-			case CLOSE:
-				executeCloseAction();
-				break;
-			case BACK:
-				executeBackAction();
-				break;
-			case TABLE_SELECTION_ADD:
-				executeTableSelectionAddAction();
-				break;
-			case TABLE_SELECTION_DELETE:
-				executeTableSelectionDeleteAction();
-				break;
-			case OPEN:
-				executeOpenAction();
-				break;
-			case NEW:
-				executeNewAction();
-				break;
-			case NEW_PROJECT:
-				executeNewProjectAction();
-				break;
-			case OPEN_PROJECT:
-				executeOpenProjectAction();
-				break;
-			case TEXT_CHANGED:
-				executeTextChangedAction();
-				break;
-			case FROM_XML:
-				executeFromXMLAction();
-				break;
-			case TO_XML:
-				executeToXMLAction();
-				break;
-			case TO_PDF:
-				executeToPDFAction();
-				break;
-			case RATE:
-				executeRateAction();
-				break;
-			case RATE_WF:
-				executeRateWFAction();
-				break;
-			case SHOW_CE:
-				executeShowCEAction();
-				break;
-			case EDIT_CE:
-				executeEditCEAction();
-				break;
-			case DELETE_CE:
-				executeDeleteCEAction();
-				break;
-			case CALC_FP:
-				executeCalcFPAction();
-				break;
-			case OPTIMIZE_WF:
-				executeOptimizeWFAction();
-				break;
-			case ENTER_AS:
-				executeEnterASAction();
-				break;
-			case EDIT_EP:
-				executeEditEPAction();
-				break;
-			case RESET:
-				executeResetAction();
-				break;
-			case CREATE:
-				executeCreateAction();
-				break;
-			default:
-				executeDefaultAction(event);
-				break;
+			viewAction = ViewActions.fromString(actionCommand);
 		}
+		catch(IllegalArgumentException ex)
+		{
+			myLogger.error("Controller "+this.getClass().toString()+
+					" got ActionCommand \""+actionCommand+"\" which is no viewAction.", ex);
+		}
+
+		if(viewAction != null)
+		{
+			switch (viewAction)
+			{
+				case OK:
+					executeOKAction();
+					break;
+				case CANCEL:
+					executeCancelAction();
+					break;
+				case SAVE:
+					executeSaveAction();
+					break;
+				case SAVE_AS:
+					executeSaveAsAction();
+					break;
+				case DONT_SAVE:
+					executeDontSaveAction();
+					break;
+				case ADD:
+					executeAddAction();
+					break;
+				case DELETE:
+					executeDeleteAction();
+					break;
+				case EDIT:
+					executeEditAction();
+					break;
+				case SHOW:
+					executeShowAction();
+					break;
+				case CLOSE:
+					executeCloseAction();
+					break;
+				case BACK:
+					executeBackAction();
+					break;
+				case TABLE_SELECTION_ADD:
+					executeTableSelectionAddAction();
+					break;
+				case TABLE_SELECTION_DELETE:
+					executeTableSelectionDeleteAction();
+					break;
+				case OPEN:
+					executeOpenAction();
+					break;
+				case NEW:
+					executeNewAction();
+					break;
+				case NEW_PROJECT:
+					executeNewProjectAction();
+					break;
+				case OPEN_PROJECT:
+					executeOpenProjectAction();
+					break;
+				case TEXT_CHANGED:
+					executeTextChangedAction();
+					break;
+				case FROM_XML:
+					executeFromXMLAction();
+					break;
+				case TO_XML:
+					executeToXMLAction();
+					break;
+				case TO_PDF:
+					executeToPDFAction();
+					break;
+				case RATE:
+					executeRateAction();
+					break;
+				case RATE_WF:
+					executeRateWFAction();
+					break;
+				case SHOW_CE:
+					executeShowCEAction();
+					break;
+				case EDIT_CE:
+					executeEditCEAction();
+					break;
+				case DELETE_CE:
+					executeDeleteCEAction();
+					break;
+				case CALC_FP:
+					executeCalcFPAction();
+					break;
+				case OPTIMIZE_WF:
+					executeOptimizeWFAction();
+					break;
+				case ENTER_AS:
+					executeEnterASAction();
+					break;
+				case EDIT_EP:
+					executeEditEPAction();
+					break;
+				case RESET:
+					executeResetAction();
+					break;
+				case CREATE:
+					executeCreateAction();
+					break;
+				default:
+					executeDefaultAction(event);
+					break;
+			}
+		}
+		else
+		{
+			executeDefaultAction(event);
+		}
+
 	}
 
 	protected void executeOKAction()
@@ -325,7 +353,6 @@ public abstract class BasicController <ViewType extends IView>
 
 	private void logMissingActionExecution(ViewActions action)
 	{
-		Logging.Logger myLogger = LogSystem.getLogger();
 		String warningMsg = "Action "+action.toString()+" was performed without any execution by the controller.\n";
 		warningMsg += "Controller:"+this.getClass().toString()+"\n";
 		warningMsg += "View:"+myView.getClass().toString()+"\n";
@@ -341,13 +368,13 @@ public abstract class BasicController <ViewType extends IView>
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-
+		controllerManager.removeController(this);
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e)
 	{
-
+		controllerManager.removeController(this);
 	}
 
 	@Override
@@ -374,6 +401,178 @@ public abstract class BasicController <ViewType extends IView>
 
 	}
 
-	protected abstract void closeView();
+	protected void handleErrorCode(ErrorCodes errorCode)
+	{
+		handleErrorCode(errorCode, 0);
+	}
+
+	protected void handleErrorCode(ErrorCodes errorCode, int errorID)
+	{
+
+		switch(errorCode)
+		{
+			case NO_ERROR:
+				handleECNoError(errorID);
+				break;
+			case NO_REQAN:
+				handleECNoReqan(errorID);
+				break;
+			case DUPLICATE:
+				handleECDuplicate(errorID);
+				break;
+			case INVALID_ID:
+				handleECInvalidID(errorID);
+				break;
+			case INVALID_MAIL:
+				handleECInvalidMail(errorID);
+				break;
+			case INVALID_PHONE:
+				handleECInvalidPhone(errorID);
+				break;
+			case INVALID_ADDRESS:
+				handleECInvalidAddress(errorID);
+				break;
+			case INVALID_ARGUMENT:
+				handleECInvalidArgument(errorID);
+				break;
+			case NOT_EXISTENT:
+				handleECNotExistent(errorID);
+				break;
+			case NULL_POINTER:
+				handleECNullPointer(errorID);
+				break;
+			case LIST_OVERFLOW:
+				handleECListOverflow(errorID);
+				break;
+			case FP_NOT_EXISTENT:
+				handleECFPNotExistent(errorID);
+				break;
+			case NO_COST_ESTIMATION:
+				handleECNoCostEstimation(errorID);
+				break;
+			case REFERENCES_NOT_SOLVED:
+				handleECRefNotSolved(errorID);
+				break;
+			case REFERENCES_ON_ITEM_DELETED:
+				handleECRefOnItemDeleted(errorID);
+				break;
+			default:
+				handleDefaultEC();
+				break;
+		}
+
+	}
+
+	protected void handleECNoError(int errorID)
+	{
+		//No action, when no error occurred
+	}
+
+	protected void handleECNoReqan(int errorID)
+	{
+		handleECByDefault(ErrorCodes.NO_REQAN, errorID);
+	}
+
+	protected void handleECDuplicate(int errorID)
+	{
+		handleECByDefault(ErrorCodes.DUPLICATE, errorID);
+	}
+
+	protected void handleECInvalidID(int errorID)
+	{
+		handleECByDefault(ErrorCodes.INVALID_ID, errorID);
+	}
+
+	protected void handleECInvalidMail(int errorID)
+	{
+		handleECByDefault(ErrorCodes.INVALID_MAIL, errorID);
+	}
+
+	protected void handleECInvalidPhone(int errorID)
+	{
+		handleECByDefault(ErrorCodes.INVALID_PHONE, errorID);
+	}
+
+	protected void handleECInvalidAddress(int errorID)
+	{
+		handleECByDefault(ErrorCodes.INVALID_ADDRESS, errorID);
+	}
+
+	protected void handleECInvalidArgument(int errorID)
+	{
+		handleECByDefault(ErrorCodes.INVALID_ARGUMENT, errorID);
+	}
+
+	protected void handleECNotExistent(int errorID)
+	{
+		handleECByDefault(ErrorCodes.NOT_EXISTENT, errorID);
+	}
+
+	protected void handleECNullPointer(int errorID)
+	{
+		handleECByDefault(ErrorCodes.NULL_POINTER, errorID);
+	}
+
+	protected void handleECListOverflow(int errorID)
+	{
+		handleECByDefault(ErrorCodes.LIST_OVERFLOW,errorID);
+	}
+
+	protected void handleECFPNotExistent(int errorID)
+	{
+		handleECByDefault(ErrorCodes.NOT_EXISTENT,errorID);
+	}
+
+	protected void handleECNoCostEstimation(int errorID)
+	{
+		handleECByDefault(ErrorCodes.NO_COST_ESTIMATION,errorID);
+	}
+
+	protected void handleECRefNotSolved(int errorID)
+	{
+		handleECByDefault(ErrorCodes.REFERENCES_NOT_SOLVED,errorID);
+	}
+
+	protected void handleECRefOnItemDeleted(int errorID)
+	{
+		handleECByDefault(ErrorCodes.REFERENCES_ON_ITEM_DELETED,errorID);
+	}
+
+	protected void handleDefaultEC()
+	{
+
+	}
+
+	protected void handleECByDefault(ErrorCodes errorCode, int errorID)
+	{
+		handleECByDialog(errorCode);
+		logErrorCode(errorCode, errorID);
+	}
+
+	protected void handleECByDialog(ErrorCodes errorCode)
+	{
+		controllerManager.createControlledErrorDialog(errorCode);
+	}
+
+	protected void logErrorCode(ErrorCodes errorCode, int errorID)
+	{
+		String warningMsg = "ErrorCode "+errorCode.toString()+" (ID = "+errorID+")"
+								+" occurred with default execution of BasicController.\n";
+		warningMsg += "Controller:"+this.getClass().toString()+"\n";
+		warningMsg += "View:"+myView.getClass().toString()+"\n";
+		myLogger.warning( warningMsg );
+	}
+
+
+	protected void closeView()	//TODO: Rename that also controller will be destructed
+	{
+		myView.destruct();
+		controllerManager.removeController(this);
+	}
+
+	protected boolean canViewBeClosed()
+	{
+		return true;
+	}
 
 }

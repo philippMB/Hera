@@ -2,6 +2,7 @@ package View;
 
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
+import Model_Interfaces.ErrorCodes;
 import View_Interfaces.IErrorDialog;
 
 import javax.swing.*;
@@ -22,8 +23,7 @@ public class ErrorDialog
 
 	private static final String ERROR_IMAGE_PATH_STRING =
 			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/Fehlerschild.png";
-
-	private final ViewActions[] BUTTON_ACTIONS = {
+	private static final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.OK,
 			ViewActions.CANCEL
 	};
@@ -31,6 +31,26 @@ public class ErrorDialog
 	private String descriptionText;
 	private String title;
 
+
+	public ErrorDialog(ErrorCodes errorCode){
+		super(TextNameConstants.TITLE_ERROR);
+
+		String errorCodeString = errorCode.toString();
+		this.title = myTextBundle.getTitleText(errorCodeString);
+		this.descriptionText = myTextBundle.getDialogText(errorCodeString);
+
+		init();
+	}
+
+	public ErrorDialog(ErrorCodes errorCode, String[] placeholderInText){
+		super(TextNameConstants.TITLE_ERROR);
+
+		String errorCodeString = errorCode.toString();
+		this.title = myTextBundle.getTitleText(errorCodeString);
+		this.descriptionText = myTextBundle.getDialogText(errorCodeString, placeholderInText);
+
+		init();
+	}
 
 	public ErrorDialog(String title, String errorDescription){
 		super(TextNameConstants.TITLE_ERROR);
@@ -49,12 +69,7 @@ public class ErrorDialog
 	protected void init()
 	{
 		setButtonActions(BUTTON_ACTIONS);
-
-		myBuilder.addTitle(title);
-		myBuilder.addImage(getErrorImagePath());
-		myBuilder.addText(descriptionText);
-		myButtons = myBuilder.addButtonBar(myButtonActions);
-
+		buildDefaultStructure(title, descriptionText, getErrorImagePath());
 		getContentPane().add(
 				new BorderDecorater(
 						myBuilder.getResult(),
@@ -64,7 +79,6 @@ public class ErrorDialog
 		);
 
 		pack();
-		setVisible(true);
 	}
 
 	@Override

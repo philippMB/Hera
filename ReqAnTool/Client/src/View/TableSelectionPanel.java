@@ -2,13 +2,13 @@ package View;
 
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
-import LanguageAndText.TextNameConstants;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 /**
@@ -17,11 +17,10 @@ import java.util.Vector;
 public class TableSelectionPanel
 	extends JPanel
 {
-
 	private String[] options;
 	private JComboBox<String> myDropdownList;
 	private JTable myTable;
-	private Vector<Vector> tableEntries;
+	private SingleColumnTableModel myTableModel;
 	private JButton buttonAdd;
 	private JButton buttonDelete;
 	private ITextFacade myTextBundle;
@@ -31,7 +30,7 @@ public class TableSelectionPanel
 	{
 		super(new GridBagLayout());
 		options = selectables;
-		tableEntries = new Vector<>();
+		myTableModel = new SingleColumnTableModel();
 		myTextBundle = ITextFacade.getInstance();
 
 		init();
@@ -41,23 +40,10 @@ public class TableSelectionPanel
 	{
 		super(new GridBagLayout());
 		options = selectables;
-		this.tableEntries = castArrayToVector(tableEntries);
+		myTableModel = new SingleColumnTableModel(tableEntries, null);
 		myTextBundle = ITextFacade.getInstance();
 
 		init();
-	}
-
-	private static Vector<Vector> castArrayToVector(String[] stringArray)
-	{
-		Vector<Vector> myVector = new Vector<>();
-		for(String s: stringArray)
-		{
-			Vector<String> rowVector = new Vector<>();
-			rowVector.add(s);
-			myVector.add(rowVector);
-		}
-
-		return myVector;
 	}
 
 	private void init()
@@ -73,7 +59,7 @@ public class TableSelectionPanel
 		add(myDropdownList,constraints);
 
 		constraints.gridy = 1;
-		myTable = new JTable(tableEntries,getColumnNames());
+		myTable = new JTable(myTableModel);
 		myTable.setTableHeader(null);
 		JScrollPane scrollableTable = new JScrollPane(myTable);
 		scrollableTable.setPreferredSize(new Dimension(100,100));
@@ -93,23 +79,36 @@ public class TableSelectionPanel
 		setActionCommands();
 	}
 
-	public String getSelectedItem()
+	public String getSelectedItemToAdd()
 	{
 		return (String)myDropdownList.getSelectedItem();
 	}
 
+	public String getSelectedItemToDelete()
+	{
+		String selectedItem;
+		int selectedRowIndex = myTable.getSelectedRow();
+
+		if(selectedRowIndex == -1)
+		{
+			selectedItem = null;
+		}
+		else
+		{
+			selectedItem = myTableModel.getValueAt(selectedRowIndex);
+		}
+
+		return selectedItem;
+	}
+
 	public void addSelectedItemToTable()
 	{
-		Vector<String> rowVector = new Vector<>();
-		rowVector.add((String)myDropdownList.getSelectedItem());
-		tableEntries.add(rowVector);
-		repaint();
+		myTableModel.addRow((String)myDropdownList.getSelectedItem());
 	}
 
 	public void deleteSelectedItemFromTable()
 	{
-		tableEntries.remove(myTable.getSelectedRow());
-		repaint();
+		myTableModel.deleteRow(myTable.getSelectedRow());
 	}
 
 	public void setSelectables(String[] selectables)
@@ -120,15 +119,13 @@ public class TableSelectionPanel
 
 	private void checkTableEntries()
 	{
-		String[] tableEntries = getTableEntries();
+		String[] tableEntries = myTableModel.getTableEntries();
 
-		int removedRows = 0;
-		for(int row=0;row<tableEntries.length;row++)
+		for(int rowIndex=0;rowIndex<tableEntries.length;rowIndex++)
 		{
-			if(!isStringInDropdownList(tableEntries[row]))
+			if(!isStringInDropdownList(tableEntries[rowIndex]))
 			{
-				removeTableRow(row-removedRows);
-				removedRows++;
+				myTableModel.deleteRow(rowIndex);
 			}
 		}
 	}
@@ -141,35 +138,17 @@ public class TableSelectionPanel
 
 	private void removeTableRow(int rowIndex)
 	{
-		DefaultTableModel myTableModel = (DefaultTableModel)myTable.getModel();
-		myTableModel.removeRow(rowIndex);
+		myTableModel.deleteRow(rowIndex);
+	}
+
+	public void setTableEntries(String[] tableEntriesArray)
+	{
+		myTableModel.setTableEntries(tableEntriesArray);
 	}
 
 	public String[] getTableEntries()
 	{
-		String[] myEntries = new String[myTable.getRowCount()];
-
-		for (int row=0; row<myTable.getRowCount(); row++)
-		{
-			myEntries[row] = (String)myTable.getValueAt(row,0);
-		}
-
-		return myEntries;
-	}
-
-	private Vector<String> getColumnNames()
-	{
-		Vector<String> columnNames = new Vector<>();
-		columnNames.add("");
-
-		return columnNames;
-	}
-
-	public void setTableEntries(String[] tableEntries)
-	{
-		String[][] widerTableEntries = new String[1][tableEntries.length];
-		widerTableEntries[0] = tableEntries;
-		myTable.setModel(new DefaultTableModel(widerTableEntries,null));
+		return myTableModel.getTableEntries();
 	}
 
 	private void setActionCommands()

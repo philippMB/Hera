@@ -38,21 +38,32 @@ public enum ViewActions
 	RESET("RESET"),
 	CREATE("CREATE");
 
-	private final String text;
+	private final String propertyName;
 
 	/**
-	 * @param text
+	 * @param propertyName
 	 */
-	private ViewActions(final String text) {
-		this.text = text;
+	private ViewActions(final String propertyName) {
+		this.propertyName = propertyName;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Enum#toString()
 	 */
 	@Override
 	public String toString() {
-		return text;
+		return propertyName;
+	}
+
+	public static ViewActions fromString(String text) {
+		ViewActions matchingAction = null;
+		for (ViewActions action : ViewActions.values()) {
+			if (action.propertyName.equalsIgnoreCase(text)) {
+				matchingAction = action;
+				break;
+			}
+		}
+		return matchingAction;
 	}
 
 }

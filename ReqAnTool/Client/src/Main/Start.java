@@ -1,8 +1,11 @@
 package Main;
 
+import Controller.ControllerManager;
 import Controller.ProjectViewController;
 import Controller_Interfaces.ViewActions;
-import Logging.LogSystem;
+import Logging.ILogger;
+import Logging.ILoggerFactory;
+import Logging.TraceLoggerFactory;
 import Model_Interfaces.ErrorCodes;
 import View.*;
 import Model.Model;
@@ -37,18 +40,14 @@ public class Start {
 		JOptionPane.showMessageDialog(new JFrame(), "Message", "Dialog",
 				JOptionPane.INFORMATION_MESSAGE);
 		*/
-    	Logging.Logger myLogger = LogSystem.getLogger();
-		Model newModel = new Model();
+    	ILogger myLogger = ILoggerFactory.getInstance().createLogger();
+    	Model newModel = new Model();
 		newModel.makeNewReqAn("Anforderungsanalysentool","Ich","ll@sd.com","049");
 		ErrorCodes errorCode = newModel.addFReq("/222/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
 		ErrorCodes errorCode2 = newModel.addNFReq("/223/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
 		ErrorCodes errorCode3 = newModel.addProdData("/224/","Das ist ein Titel","Ich","100",new ArrayList<String>());
-		System.out.println(errorCode);
-		IViewFacadeFactory viewFacade = IViewFacadeFactory.getInstance(newModel);
 
-		ProjectViewController projectViewController = new ProjectViewController(newModel, viewFacade.createProjectView());
-        StartView myStartView = new StartView();
-        //ErrorDialog myDialog = new ErrorDialog("Titel","Das ist eine Infromationejkhfasekjghksdjhgkjhvk<haskv");
-        //WarningDialog myWarning = new WarningDialog("Titel", "Das ist eine Beschreibung der aufgetretenen Warnung",paarActions);
+		ControllerManager controllerManager = ControllerManager.getInstance(newModel);
+		controllerManager.createControlledStartView();
     }
 }

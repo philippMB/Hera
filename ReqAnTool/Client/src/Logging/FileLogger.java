@@ -8,8 +8,11 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- * This logger sets a basic structure for handling with logfiles. The loggers output will be written in a file,
- * named as the logger itself, and continual updated.
+ * This logger sets a basic structure for handling logfiles.
+ * <p>
+ * For analysing the loggers output without observing its output stream from terminal the output will be written in a
+ * file, named as the logger itself. The file is constantly updated so that the logfile could be read in parallel with
+ * executing the program.
  * <p>
  *     For customizing the file design two methods are implemented which could be overwritten:
  *     <ul>
@@ -21,7 +24,7 @@ import java.util.logging.SimpleFormatter;
  *             session.
  *         </li>
  *     </ul>
- * </p>
+ *
  *
  * @author 9045534
  * @version 1.0

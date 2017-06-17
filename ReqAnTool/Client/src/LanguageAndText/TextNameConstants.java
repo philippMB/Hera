@@ -1,11 +1,43 @@
 package LanguageAndText;
 
 /**
- * Created by phlippe on 02.05.17.
+ * This class contains solely constants for property names in the properties files "title" and "properties". In these
+ * properties files the value of the string is used for the property name. For example is in the title-properties file
+ * a property saved for "ADDITION" - Constant TITLE_ADDITION. So this file represents a standard for names used
+ * in the property files.
+ * <p>
+ *     Use this in combination with the {@link ITextFacade} as follows:<br>
+ *     <code>
+ *         ITextFacade myTextFacade = ITextFacade.getInstance(); //creating an ITextFacade object<br>
+ *         String titleForAddition = myTextFacade.getTitle(TextNameConstants.TITLE_ADDITION);<br>
+ *     </code>
+ *     As a result the string <code>titleForAddition</code> has now the value of the title which the property file
+ *     contains for "ADDITION".
+ * </p>
+ * <p>
+ *     If you create or edit a property file please confirm that the constant is entered in this class and also
+ *     corresponds to the name given in the property file.
+ * </p>
+ * <p>
+ *     For the property file "button" the names are standardized in {@link Controller_Interfaces.ViewActions}.<br>
+ *     All the names and more for the "dialog"-property file are specified in an one class {@link DialogConstants},
+ *     in which next to the name strings also the standard buttons for each dialog are given. The titles of
+ *     dialogs are still defined in the title property file. Due to this the TITLE_... constant in this file
+ *     and DIALOG_... in {@link DialogConstants} must be excluding each other.
+ * </p>
+ *
+ * @author 9045534
+ * @version 1.0
+ * @see ITextFacade
+ * @see Controller_Interfaces.ViewActions
+ * @see DialogConstants
  */
 public abstract class TextNameConstants
 {
 
+	/**
+	 * Constants for title-properties file
+	 */
 	public static final String TITLE_ADDITION = "ADDITION";
 	public static final String TITLE_COST_ESTIMATION = "COST_ESTIMATION";
 	public static final String TITLE_GLOSSARY = "GLOSSARY";
@@ -39,8 +71,11 @@ public abstract class TextNameConstants
 	public static final String TITLE_COMPANY = "COMPANY";
 	public static final String TITLE_PROJECT_CREATE = "PROJECT_CREATE";
 	public static final String TITLE_SUPPLIER = "SUPPLIER";
-	public static final String TITLE_SAVE_WARNING="SAVE_WARNING";
+	public static final String TITLE_INFO = "INFO";
 
+	/**
+	 * Constants for parameter-properties file
+	 */
 	public static final String PAR_ADDITION = "ADDITION";
 	public static final String PAR_COST_EST = "COST_ESTIMATION";
 	public static final String PAR_DFP = "DATA_FUNCTION_POINT";
@@ -95,5 +130,11 @@ public abstract class TextNameConstants
 	public static final String PAR_IMPORTANT = "IMPORTANT";
 	public static final String PAR_VERY_IMPORTANT = "VERY_IMPORTANT";
 	public static final String PAR_NOT_RELEVANT = "NOT_RELEVANT";
+	public static final String PAR_XML_FORMAT = "XML_FORMAT";
+	public static final String PAR_REQAN_FORMAT = "REQAN_FORMAT";
+	public static final String PAR_FREQ = "FREQ";
+	public static final String PAR_NFREQ = "NFREQ";
+	public static final String PAR_PRODUCTDATA = "PROD_DATA";
+	public static final String PAR_REQAN = "REQAN";
 
 }

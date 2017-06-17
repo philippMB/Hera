@@ -5,15 +5,15 @@ import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IProductData;
 import Model_Interfaces.IRequirement;
 import View_Interfaces.IProductDataEditView;
+import View_Interfaces.IProductDataShowView;
 
 import javax.swing.*;
 
 public class ProductDataEditView
-	extends RequirementFormView
-	implements IProductDataEditView
+	extends RequirementFormView<IProductData>
+	implements IProductDataEditView, IProductDataShowView
 {
 
-	private IProductData myReq;
 	private JTextField fieldContent;
 	private JTextField fieldID;
 	private JTextField fieldMaxCount;
@@ -28,21 +28,7 @@ public class ProductDataEditView
 
 	public ProductDataEditView(IModelGetData model, String ID, boolean isEditable)
 	{
-		super(model,isEditable);
-		if(ID != null)
-		{
-			myReq = myModel.getProductDataByID(ID);
-		}
-		else
-		{
-			myReq = null;
-			//Falls keine ID übergeben wird, muss die View editierbar sein
-			if(!isEditable)
-			{
-				this.isEditable = true;
-			}
-		}
-		init();
+		super(model,ID,isEditable);
 	}
 
 	@Override
@@ -50,9 +36,7 @@ public class ProductDataEditView
 	{
 		setResizable(false);
 
-		String titleText = getTitleText();
-
-		myBuilder.addTitle(titleText);
+		myBuilder.addTitle(getTitleText());
 		fieldContent = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_CONTENT),
 				"",
@@ -82,8 +66,6 @@ public class ProductDataEditView
 		getContentPane().add(myBuilder.getResult());
 		pack();
 		setLocationRelativeTo(null);
-
-		setVisible(true);
 	}
 
 	private String getTitleText()
@@ -116,9 +98,8 @@ public class ProductDataEditView
 	}
 
 	@Override
-	protected IRequirement getReqFromModel()
+	protected IProductData getReqFromModel(String ID)
 	{
-		String ID = myReq.getID();
 		return myModel.getProductDataByID(ID);
 	}
 
@@ -135,21 +116,9 @@ public class ProductDataEditView
 	}
 
 	@Override
-	public String[] getLinkEntry()
-	{
-		return getTableEntries();
-	}
-
-	@Override
 	public String getAttributeEntry()
 	{
 		return fieldAttributes.getText();
-	}
-
-	@Override
-	public IRequirement getMyRequirement()
-	{
-		return myReq;
 	}
 
 	@Override

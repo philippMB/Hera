@@ -1,7 +1,8 @@
 package View;
 
 import Controller_Interfaces.IController;
-import Logging.LogSystem;
+import Logging.ILoggerFactory;
+import Logging.TraceLoggerFactory;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirementAnalysis;
 import View_Interfaces.IProjectView;
@@ -35,7 +36,9 @@ public class ProjectView
 		}
 		else
 		{
-			LogSystem.getLogger().warning("Analysis can not be null!");
+			ILoggerFactory.getInstance().createLogger().error(
+					"RequirementsAnalysis can not be null in the model!"
+			);
 		}
 	}
 
@@ -49,8 +52,6 @@ public class ProjectView
 
 		tabPanel = new JTabbedPane();
 		getContentPane().add(tabPanel);
-
-		setVisible(true);
 	}
 
 	protected void addTab(String tabName, JPanel newTab)
@@ -68,7 +69,16 @@ public class ProjectView
 	@Override
 	public void addController(IController newController)
 	{
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(newController);
+	}
+
+	@Override
+	public void showView()
+	{
+		SwingUtilities.invokeLater(
+				() -> setVisible(true)
+		);
 	}
 
 	@Override
@@ -76,6 +86,12 @@ public class ProjectView
 	{
 		setVisible(false);
 		dispose();
+	}
+
+	@Override
+	public void bringToFront()
+	{
+		toFront();
 	}
 
 	@Override

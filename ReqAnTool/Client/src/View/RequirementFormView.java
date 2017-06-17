@@ -6,64 +6,81 @@ import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirement;
 import View_Interfaces.IRequirementFormView;
+import View_Interfaces.IRequirementShowView;
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Observable;
 
 /**
  * Created by phlippe on 30.04.17.
  */
-public abstract class RequirementFormView
+public abstract class RequirementFormView<RequirementType extends IRequirement>
 	extends FormWindow
-	implements IRequirementFormView
+	implements IRequirementFormView, IRequirementShowView<RequirementType>
 {
 
-	private final ViewActions[] BUTTON_ACTIONS_EDITABLE = {ViewActions.ADD, ViewActions.CANCEL};
-	private final ViewActions[] BUTTON_ACTIONS_NOT_EDITABLE = {ViewActions.EDIT, ViewActions.DELETE, ViewActions.CANCEL};
+	private final ViewActions[] BUTTON_ACTIONS_EDITABLE = {ViewActions.SAVE, ViewActions.CANCEL};
+	private final ViewActions[] BUTTON_ACTIONS_NOT_EDITABLE = {ViewActions.EDIT, ViewActions.DELETE};
 
 	protected IModelGetData myModel;
 	protected boolean isEditable;
-	private TableSelectionPanel tableSelectionLinks;
-	private JTable tableLinks;
+	protected RequirementType myReq;
+	private TableSelectionPanel tableSelectRef;
+	private JTable tableReferences;
+	private SingleColumnTableModel refTableModel;
 
 
-	public RequirementFormView(IModelGetData model, boolean isEditable)
+	public RequirementFormView(@NotNull IModelGetData model, @Nullable String ID, boolean isEditable)
 	{
 		super();
+		Objects.requireNonNull(model);
+
 		myModel = model;
 		this.isEditable = isEditable;
+		if(ID != null)
+		{
+			myReq = getReqFromModel(ID);
+		}
+		else
+		{
+			myReq = null;
+			//If the ID is null the view has to be editable. Otherwise no data could be shown
+			if(!isEditable)
+			{
+				this.isEditable = true;
+			}
+		}
+		init();
 	}
 
 	protected void buildLinkTable()
 	{
-		String[] tableEntries;
-		IRequirement myReq = getMyRequirement();
-
-		if(myReq != null)
-		{
-			tableEntries = getMyRequirement().getReferenceIDs().toArray(new String[0]);
-		}
-		else
-		{
-			tableEntries = new String[0];
-		}
-
 		if(isEditable)
 		{
-
-			tableSelectionLinks = myBuilder.addTableSelection(
+			String[] reqReferences;
+			if(myReq != null)
+			{
+				reqReferences = myReq.getReferenceIDs().toArray(new String[0]);
+			}
+			else
+			{
+				reqReferences = null;
+			}
+			tableSelectRef = myBuilder.addTableSelection(
 					myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES),
 					new String[0],
-					new String[0]
+					reqReferences
 			);
 		}
 		else
 		{
-			tableLinks = myBuilder.addTable(
+			tableReferences = myBuilder.addTable(
 					myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES),
 					new String[0][0],
 					new String[0]
@@ -84,6 +101,7 @@ public abstract class RequirementFormView
 			setButtonActions(BUTTON_ACTIONS_NOT_EDITABLE);
 		}
 		myButtons = myBuilder.addButtonBar(myButtonActions);
+		setActionCommands();
 	}
 
 	protected String[] getTableEntries()
@@ -92,53 +110,64 @@ public abstract class RequirementFormView
 
 		if(isEditable)
 		{
-			myTableEntries = tableSelectionLinks.getTableEntries();
+			myTableEntries = tableSelectRef.getTableEntries();
 		}
 		else
 		{
-			myTableEntries = new String[tableLinks.getRowCount()];
+			myTableEntries = new String[tableReferences.getRowCount()];
 
-			for(int row=0;row<tableLinks.getRowCount();row++)
+			for(int row = 0; row< tableReferences.getRowCount(); row++)
 			{
-				myTableEntries[row] = (String)tableLinks.getValueAt(row,0);
+				myTableEntries[row] = (String) tableReferences.getValueAt(row,0);
 			}
 		}
 		return myTableEntries;
 	}
 
 	@Override
-	public String getSelectedLink()
+	public String[] getRefEntry()
+	{
+		return getTableEntries();
+	}
+
+	@Override
+	public String getSelectedRefToAdd()
 	{
 		String selectedLink = null;
 		if(isEditable)
 		{
-			selectedLink = tableSelectionLinks.getSelectedItem();
+			selectedLink = tableSelectRef.getSelectedItemToAdd();
 		}
 		return selectedLink;
 	}
 
 	@Override
-	public void addSelectedLink()
+	public String getSelectedLinkToDelete()
+	{
+		String selectedLink = null;
+		if(isEditable)
+		{
+			selectedLink = tableSelectRef.getSelectedItemToDelete();
+		}
+		return selectedLink;
+	}
+
+	@Override
+	public void addSelectedRef()
 	{
 		if(isEditable)
 		{
-			tableSelectionLinks.addSelectedItemToTable();
+			tableSelectRef.addSelectedItemToTable();
 		}
 	}
 
 	@Override
-	public void deleteSelectedLink()
+	public void deleteSelectedRef()
 	{
 		if(isEditable)
 		{
-			tableSelectionLinks.deleteSelectedItemFromTable();
+			tableSelectRef.deleteSelectedItemFromTable();
 		}
-	}
-
-	@Override
-	public void destruct()
-	{
-
 	}
 
 	@Override
@@ -163,12 +192,10 @@ public abstract class RequirementFormView
 	private boolean isReqDeleted()
 	{
 		boolean isReqDeleted;
-		IRequirement myReq = getMyRequirement();
 
 		if(myReq != null)
 		{
-			IRequirement newReq = getReqFromModel();	//TODO: Ersetzen mit Include-Anweisung
-
+			RequirementType newReq = getReqFromModel(myReq.getID());	//TODO: Ersetzen mit Include-Anweisung
 			isReqDeleted = (newReq == null);
 		}
 		else
@@ -183,54 +210,51 @@ public abstract class RequirementFormView
 	{
 		if(isEditable)
 		{
-			ArrayList<String> tableEntries = new ArrayList<>(Arrays.asList(tableSelectionLinks.getTableEntries()));
-
-			for(String ID: tableEntries)
-			{
-				//TODO: IModelGetData-Interface mit einer Include-Anweisung versehen
-				/*
-				if(myModel.getReqByID(ID) == null)
-				{
-					tableEntries.remove(ID);
-				}
-				*/
-			}
-
-//			tableSelectionLinks.setTableEntries((String[])(tableEntries.toArray()));
 			ArrayList<String> allReqIDs = myModel.getAllReqIDs();
-			IRequirement myReq = getMyRequirement();
 			if(myReq != null)
 			{
 				allReqIDs.remove(myReq.getID());
 			}
+			tableSelectRef.setSelectables(allReqIDs.toArray(new String[0]));
 
-			tableSelectionLinks.setSelectables(allReqIDs.toArray(new String[0]));
 		}
 		else
 		{
-			String[] myLinkIDs = getMyRequirement().getReferenceIDs().toArray(new String[0]);
-			String[][] wideTableEntries = new String[1][myLinkIDs.length];
-			wideTableEntries[0] = myLinkIDs;
+			if(refTableModel == null)
+			{
+				refTableModel = new SingleColumnTableModel();
+				tableReferences.setModel(refTableModel);
+				tableReferences.setTableHeader(null);
+			}
 
-			tableLinks.setModel(new DefaultTableModel(wideTableEntries,null));
+			String[] myRefIDs = myReq.getReferenceIDs().toArray(new String[0]);
+			refTableModel.setTableEntries(myRefIDs);
+
 		}
+	}
+
+	@Override
+	public RequirementType getReq()
+	{
+		return myReq;
 	}
 
 	@Override
 	public void addController(IController newController)
 	{
 		super.addController(newController);
-		tableSelectionLinks.addController(newController);
+		if(isEditable)
+		{
+			tableSelectRef.addController(newController);
+		}
 	}
 
 	protected abstract void updateFields();
-
-	public abstract IRequirement getMyRequirement();
 
 	protected abstract void setIDEntry(String ID);
 
 	public abstract String getIDEntry();
 
-	protected abstract IRequirement getReqFromModel();
+	protected abstract RequirementType getReqFromModel(String ID);
 
 }

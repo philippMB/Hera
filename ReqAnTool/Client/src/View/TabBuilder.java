@@ -23,7 +23,7 @@ public class TabBuilder
 		myPanel.setLayout(new GridBagLayout());
 		myPanel.setOpaque(false);
 		globalRowNumber = -1;
-		globalColumnNumber = -1;
+		globalColumnNumber = 0;
 		section = 0;
 		splitNextUp = false;
 		textStyler = new TabTextStyle();
@@ -44,7 +44,6 @@ public class TabBuilder
 
 		JLabel nameLabel = new JLabel(titleText,SwingConstants.CENTER);
 		textStyler.styleAsTitle(nameLabel);
-		layoutConstraints.gridx = globalColumnNumber;
 		myPanel.add(nameLabel,layoutConstraints);
     }
 
@@ -71,6 +70,8 @@ public class TabBuilder
 		layoutConstraints.gridx = GRID_WIDTH*section+globalColumnNumber;
 		layoutConstraints.anchor = GridBagConstraints.CENTER;
 		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.gridheight = 100;
+		layoutConstraints.weighty = 1.0f;
 
 		if(buttonNames != null && buttonNames.length != 0)
 		{
@@ -121,21 +122,36 @@ public class TabBuilder
     @Override
     public JTextField addNamedTextField(String name, String content, boolean isEditable)
 	{
-        // TODO Implement this method
+		globalRowNumber++;
 
-        return null;
+		addLeftNameTag(name);
+
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber+1;
+		layoutConstraints.insets = new Insets(10,5,10,10);
+		layoutConstraints.weightx = 1.0f;
+		//layoutConstraints.weighty = 1.0f;
+
+		JTextField myTextField = new JTextField(20);
+		myTextField.setEditable(isEditable);
+		myTextField.setText(content);
+		myPanel.add(myTextField,layoutConstraints);
+
+		return myTextField;
     }
 
     @Override
     public JTextArea addNamedTextArea(String name, String content, boolean isEditable)
 	{
 		globalRowNumber++;
-		globalColumnNumber = section*GRID_WIDTH+0;
 		splitNextUp = true;
 
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
 		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = globalColumnNumber;
+		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
 		layoutConstraints.anchor = GridBagConstraints.CENTER;
 		layoutConstraints.fill = GridBagConstraints.BOTH;
 		layoutConstraints.insets = new Insets(10,10,10,10);
@@ -170,12 +186,11 @@ public class TabBuilder
     public JTable addTable(String name, String[][] elements, String[] columnNames)
 	{
 		globalRowNumber++;
-		globalColumnNumber = section*GRID_WIDTH+0;
 		splitNextUp = true;
 
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
 		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = globalColumnNumber;
+		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
 		layoutConstraints.anchor = GridBagConstraints.CENTER;
 		layoutConstraints.fill = GridBagConstraints.BOTH;
 		layoutConstraints.insets = new Insets(10,10,10,10);
@@ -249,7 +264,7 @@ public class TabBuilder
 	{
 		section++;
 		globalRowNumber = -1;
-		globalColumnNumber = -1;
+		globalColumnNumber = 0;
 	}
 
 	@Override
@@ -262,6 +277,20 @@ public class TabBuilder
 	public void addPanel(JPanel newPanel)
 	{
 
+	}
+
+	private void addLeftNameTag(String name)
+	{
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,10,10,5);
+
+		JLabel nameLabel = new JLabel(name);
+		textStyler.styleAsTagedNameToField(nameLabel);
+		myPanel.add(nameLabel,layoutConstraints);
 	}
 
 }

@@ -64,7 +64,6 @@ public class WeightFactorEditView
 		getContentPane().add(myBuilder.getResult());
 
 		pack();
-		setVisible(true);
 	}
 
 	@Override

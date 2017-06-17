@@ -3,7 +3,9 @@ package Logging;
 import java.util.MissingResourceException;
 
 /**
- * A logger based on {@link FileLogger}. While printing info and warning in the same way as its superclass,
+ * A logger based on {@link FileLogger} which documents the stack trace of all errors and warnings.
+ * <p>
+ * While printing info and warning in the same way as its superclass,
  * a preamble showing the calling functions is added. An error is written like an warning,
  * but it is marked with a <code>"=====...ERROR...======"</code>-tag in the beginning.
  *
@@ -98,9 +100,9 @@ public class TraceLogger
 	@Override
 	public void error(String msg)
 	{
-		String preambel = makeErrorPreamble() + makeFunctionTreePreamble();
+		String preambel = makeErrorPreamble() + makeFunctionTreePreamble() + msg;
 
-		this.warning(preambel);
+		super.warning(preambel);
 	}
 
 	/**

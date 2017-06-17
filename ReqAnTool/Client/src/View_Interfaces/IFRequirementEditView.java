@@ -11,8 +11,6 @@ public interface IFRequirementEditView
 
 	public String getActorEntry();
 
-	public String[] getLinkEntry();
-
 	public String getDescriptionEntry();
 
 }

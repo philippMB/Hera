@@ -62,10 +62,24 @@ public abstract class FormWindow
 	}
 
 	@Override
+	public void showView()
+	{
+		SwingUtilities.invokeLater(
+				() -> setVisible(true)
+		);
+	}
+
+	@Override
 	public void destruct()
 	{
 		setVisible(false);
 		dispose();
+	}
+
+	@Override
+	public void bringToFront()
+	{
+		toFront();
 	}
 
     protected abstract void init();
