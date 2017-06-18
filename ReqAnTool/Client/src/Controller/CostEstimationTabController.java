@@ -1,5 +1,7 @@
 package Controller;
 
+import LanguageAndText.DialogConstants;
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.ICostEstimationTab;
 
@@ -41,7 +43,30 @@ public class CostEstimationTabController
 	@Override
 	protected void executeOptimizeWFAction()
 	{
-		//TODO: Implement this method
+		controllerManager.createControlledWarningDialog(
+				DialogConstants.DIALOG_WFOPT_WARNING,
+				new WarningController(myModel, null)
+				{
+					@Override
+					protected void executeOptimizeWFAction()
+					{
+						closeView();
+						optimizeWF();
+					}
+
+					@Override
+					protected void executeCancelAction()
+					{
+						closeView();
+					}
+				}
+		);
+	}
+
+	private void optimizeWF()
+	{
+		ErrorCodes optimizeError = myModel.calcOptWeightFactor();
+		handleErrorCode(optimizeError);
 	}
 
 	@Override
@@ -53,7 +78,7 @@ public class CostEstimationTabController
 	@Override
 	protected void executeEnterASAction()
 	{
-		//TODO: Implement this method
+		controllerManager.createControlledActualStateEditView();
 	}
 
 }

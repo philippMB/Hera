@@ -1,5 +1,7 @@
 package Logging;
 
+import com.sun.istack.internal.Nullable;
+
 import java.util.MissingResourceException;
 
 /**
@@ -38,7 +40,7 @@ public class TraceLogger
 	 * @throws MissingResourceException if the resourceBundleName is non-null and
 	 *                                  no corresponding resource can be found.
 	 */
-	protected TraceLogger(String name, String resourceBundleName)
+	protected TraceLogger(@Nullable String name,@Nullable String resourceBundleName)
 	{
 		super(name, resourceBundleName, true);
 	}
@@ -64,10 +66,7 @@ public class TraceLogger
 	@Override
 	public void warning(String msg)
 	{
-		String preamble = makeFunctionTreePreamble();
-		msg = preamble+"\n"+msg+"\n";
-
-		super.warning(msg);
+		this.warning(msg, null);
 	}
 
 	/**
@@ -83,9 +82,12 @@ public class TraceLogger
 	 * @see TraceLogger#makeExceptionText(Exception)
 	 */
 	@Override
-	public void warning(String msg, Exception thrownException)
+	public void warning(String msg,@Nullable Exception thrownException)
 	{
-		String warnMessage = msg+"\n"+makeExceptionText(thrownException);
+		String warnMessage =
+				makeFunctionTreePreamble() +
+				"\n" + msg + "\n" +
+				makeExceptionText(thrownException);
 
 		this.warning(warnMessage);
 	}
@@ -100,9 +102,7 @@ public class TraceLogger
 	@Override
 	public void error(String msg)
 	{
-		String preambel = makeErrorPreamble() + makeFunctionTreePreamble() + msg;
-
-		super.warning(preambel);
+		this.error(msg, null);
 	}
 
 	/**
@@ -115,22 +115,33 @@ public class TraceLogger
 	 * @see TraceLogger#makeErrorPreamble()
 	 */
 	@Override
-	public void error(String msg, Exception thrownException)
+	public void error(String msg,@Nullable Exception thrownException)
 	{
-		String errorMessage = msg+"\n"+makeExceptionText(thrownException);
-
-		this.error(errorMessage);
+		String errorMessage =
+						makeErrorPreamble() +
+						makeFunctionTreePreamble() +
+						"\n" + msg + "\n" +
+						makeExceptionText(thrownException);
+		super.warning(errorMessage);
 	}
 
 	/**
 	 * Generates a description to a given exception.
 	 * @param exceptionToText Exception which should be described
-	 * @return Generated description of the exception
+	 * @return Generated description of the exception. If exception is null an empty string will be returned
 	 */
-	private String makeExceptionText(Exception exceptionToText)
+	private String makeExceptionText(@Nullable Exception exceptionToText)
 	{
-		String exceptionMessage = exceptionToText.getClass().getName();
-		return "Exception: "+exceptionMessage;
+		String exceptionMessage;
+		if(exceptionToText != null)
+		{
+			exceptionMessage = "Exception: "+exceptionToText.getClass().getName();
+		}
+		else
+		{
+			exceptionMessage = "";
+		}
+		return exceptionMessage;
 	}
 
 	/**

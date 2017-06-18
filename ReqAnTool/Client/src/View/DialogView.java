@@ -77,9 +77,12 @@ public abstract class DialogView
 	@Override
 	public void addController(IController newController)
 	{
-		for(JButton b: myButtons)
+		if(myButtons != null)
 		{
-			b.addActionListener(newController);
+			for (JButton b : myButtons)
+			{
+				b.addActionListener(newController);
+			}
 		}
 		addWindowListener(newController);
 	}

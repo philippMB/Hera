@@ -9,6 +9,7 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.Path;
 import Logging.ILogger;
+import com.sun.istack.internal.Nullable;
 
 /**
  * Created by phlippe on 28.04.17.
@@ -22,21 +23,34 @@ public class ImageLabel
 
 	public ImageLabel()
 	{
-		super();
-		myLogger = ILoggerFactory.getInstance().createLogger();
+		this(null);
 	}
 
-	public ImageLabel(Path imagePath)
+	public ImageLabel(@Nullable Path imagePath)
 	{
 		this(imagePath,0,0);
 	}
 
-	public ImageLabel(Path imagePath, int imageWidth, int imageHeight)
+	public ImageLabel(@Nullable Path imagePath, int imageWidth, int imageHeight)
+	{
+		this(imagePath, imageWidth, imageHeight, false);
+	}
+
+	public ImageLabel(@Nullable Path imagePath, int imageWidth, int imageHeight, boolean isGIF)
 	{
 		super();
 		myLogger = ILoggerFactory.getInstance().createLogger();
-
-		setScaledImage(imagePath,imageWidth,imageHeight);
+		if(imagePath != null)
+		{
+			if (isGIF)
+			{
+				setGIF(imagePath);
+			}
+			else
+			{
+				setScaledImage(imagePath, imageWidth, imageHeight);
+			}
+		}
 	}
 
 	public void setScaledImage(Path imagePath, int imageWidth, int imageHeight)

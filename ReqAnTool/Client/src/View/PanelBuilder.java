@@ -61,9 +61,14 @@ public abstract class PanelBuilder
     
     public abstract TableSelectionPanel addTableSelection(String name, String[] selectionList, String[] defaultEntries);
 
-    public abstract void addImage(Path imagePath);
+    public void addImage(Path imagePath)
+    {
+    	addImage(imagePath, false);
+	}
 
-    public abstract SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue);
+	public abstract void addImage(Path imagePath, boolean isGIF);
+
+	public abstract SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue);
 
     public abstract void addNewSection();
 

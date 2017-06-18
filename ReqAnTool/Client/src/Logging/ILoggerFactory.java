@@ -63,7 +63,7 @@ public interface ILoggerFactory
 	public ILogger createLogger(int priority);
 
 	/**
-	 * Returns a logger with given name
+	 * Returns a logger with the given name.
 	 * @param loggerName Name of the new logger
 	 * @return Logger with given name
 	 */

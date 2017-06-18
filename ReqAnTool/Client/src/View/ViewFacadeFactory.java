@@ -488,6 +488,13 @@ public class ViewFacadeFactory
 	}
 
 	@Override
+	public ILoadingDialog createLoadingDialog()
+	{
+		ILoadingDialog myView = new LoadingDialog();
+		return myView;
+	}
+
+	@Override
 	public IWeightFactorEditView createWeightFactorEditView()
 	{
 		IWeightFactorEditView myView = new WeightFactorEditView(myModel);

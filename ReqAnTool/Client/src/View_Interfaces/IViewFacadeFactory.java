@@ -101,6 +101,8 @@ public interface IViewFacadeFactory
 
 	public IInfoDialog createInfoDialog(@NotNull String warnTitle, @NotNull String warnDescription);
 
+	public ILoadingDialog createLoadingDialog();
+
 	public IWeightFactorEditView createWeightFactorEditView();
 
 }

@@ -50,7 +50,9 @@ public class ActualStateEditDialog
 		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
 
 		setActualStateField();
+		setActionCommands();
 		getContentPane().add(myBuilder.getResult());
+		pack();
 	}
 
 	private void setActualStateField()
@@ -58,6 +60,17 @@ public class ActualStateEditDialog
 		IRequirementAnalysis requirementAnalysis = myModel.getReqAnalysis();
 		double actualState = requirementAnalysis.getActualState();
 		fieldActualState.setText(Double.toString(actualState));
+	}
+
+	/**
+	 * Dialog is not modal
+	 */
+	@Override
+	public void showView()
+	{
+		SwingUtilities.invokeLater(
+				() -> setVisible(true)
+		);
 	}
 
 	@Override

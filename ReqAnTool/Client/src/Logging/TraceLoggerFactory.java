@@ -13,11 +13,6 @@ import java.util.logging.FileHandler;
  * same name already exists, it returns this one. Otherwise a new one is build up. Until now only
  * {@link TraceLogger} are supported.
  * </p>
- * <p>
- * For each logger the TraceLoggerFactory sets up a {@link FileHandler}, which automatically writes the logs into a logfile
- * and updating it while execution. If the program stops and starts later again, a logger with the same name
- * will append to the same file from the earlier logger.
- * </p>
  *
  * @author 9045534
  * @version 1.0

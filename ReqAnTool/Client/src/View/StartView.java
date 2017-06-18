@@ -25,7 +25,7 @@ public class StartView
 {
 
 	private static final String WARN_IMAGE_PATH_STRING =
-			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/loading.gif";
+			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/warnschild.png";
 	private final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.NEW_PROJECT,
 			ViewActions.OPEN_PROJECT,
@@ -60,25 +60,10 @@ public class StartView
 
 		JPanel aPanel = myBuilder.getResult();
 		aPanel.setOpaque(false);
-		aPanel.add(new ImageTextButton(null));
+		aPanel.add(new ImageTextButton(Paths.get(WARN_IMAGE_PATH_STRING)));
 		setActionCommands();
 		getContentPane().add(aPanel, BorderLayout.CENTER);
 		getContentPane().setBackground(Color.WHITE);
-
-
-		try
-		{
-			Path imagePath = Paths.get(WARN_IMAGE_PATH_STRING);
-			Image image = ImageIO.read(new File(String.valueOf(imagePath)));
-			if(image == null)
-				System.out.println("Image is null");
-			setIconImage(image);
-		}
-		catch (IOException ex)
-		{
-			System.out.println("Can not set new Icon Image");
-		}
-
 
 		pack();
 		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));

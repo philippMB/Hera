@@ -193,6 +193,13 @@ public class ControllerManager
 		}
 	}
 
+	public void createControlledActualStateEditView()
+	{
+		IActualStateEditView editView = myViewFacadeFactory.createActualStateEditView();
+		ActualStateEditController controller = new ActualStateEditController(myModel, editView);
+		allControllers.add(controller);
+	}
+
 	public void createControlledFRequirementEditView(String reqID)
 	{
 		IFRequirementEditView reqEditView;
@@ -424,6 +431,14 @@ public class ControllerManager
 		InfoDialogController controller = new InfoDialogController(myModel, myInfoDialog);
 	}
 
+	public LoadingController createControlledLoadingDialog()
+	{
+		ILoadingDialog myLoadingDialog = myViewFacadeFactory.createLoadingDialog();
+		LoadingController controller = new LoadingController(myModel, myLoadingDialog);
+		allControllers.add(controller);
+		return controller;
+	}
+
 	/**
 	 * Removes the given controller from the list of all controller. Should be done if controller is not used anymore.
 	 * @param controllerToBeRemoved Controller which should be removed from the list
@@ -443,7 +458,12 @@ public class ControllerManager
 		boolean canBeClosed = closeAllActiveViews();
 		if(canBeClosed)
 		{
+			System.out.println("Close Program");
 			System.exit(0);
+		}
+		else
+		{
+			System.out.println("Could not close Program");
 		}
 		return canBeClosed;
 	}
@@ -457,7 +477,10 @@ public class ControllerManager
 			{
 				BasicController controllerToClose = allControllers.get(0);
 				controllerToClose.closeView();
-				//removeController(controllerToClose);
+				if(allControllers.contains(controllerToClose))
+				{
+					removeController(controllerToClose);
+				}
 			}
 		}
 		return canBeClosed;
@@ -478,14 +501,6 @@ public class ControllerManager
 		IFileChooser myFileChooser = myViewFacadeFactory.createFileChooser(null, accessType);
 		return myFileChooser;
 	}
-
-	/**
-	 * Stops {@link ControllerManager#closeProgram()} if something is not ready to be closed.
-	 */
-	/*public void stopClosing()
-	{
-
-	}*/
 
 
 }

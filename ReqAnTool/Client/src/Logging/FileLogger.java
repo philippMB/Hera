@@ -100,7 +100,7 @@ public abstract class FileLogger
 	}
 
 	/**
-	 * Writes an start message to mark the beginning of the logging (especially while appending the file).
+	 * Writes an start message to mark the beginning of the logging (especially recommended while appending the file).
 	 */
 	protected void writeStartMessage()
 	{

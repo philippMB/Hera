@@ -120,9 +120,23 @@ public class DialogBuilder
     @Override
     public JTextField addNamedTextField(String name, String content, boolean isEditable)
 	{
-        // TODO Implement this method
+		globalRowNumber++;
 
-        return null;
+		addLeftNameTag(name);
+
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.gridx = 1;
+		layoutConstraints.insets = new Insets(10,5,10,10);
+
+		JTextField myTextField = new JTextField(10);
+		myTextField.setEditable(isEditable);
+		myTextField.setText(content);
+		myPanel.add(myTextField,layoutConstraints);
+
+		return myTextField;
     }
 
     @Override
@@ -149,7 +163,7 @@ public class DialogBuilder
     }
 
 	@Override
-	public void addImage(Path imagePath)
+	public void addImage(Path imagePath, boolean isGIF)
 	{
 		globalRowNumber++;
 
@@ -160,7 +174,7 @@ public class DialogBuilder
 		layoutConstraints.weightx = 0;
 		layoutConstraints.insets = new Insets(5,5,5,0);
 
-		ImageLabel myImage = new ImageLabel(imagePath,50,50);
+		ImageLabel myImage = new ImageLabel(imagePath,50,50, isGIF);
 		myPanel.add(myImage,layoutConstraints);
 		imageAdded = true;
 	}
@@ -187,6 +201,20 @@ public class DialogBuilder
 	public void addPanel(JPanel newPanel)
 	{
 
+	}
+
+	private void addLeftNameTag(String name)
+	{
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,10,10,5);
+
+		JLabel nameLabel = new JLabel(name);
+		textStyler.styleAsTagedNameToField(nameLabel);
+		layoutConstraints.gridx = 0;
+		myPanel.add(nameLabel,layoutConstraints);
 	}
 
 }

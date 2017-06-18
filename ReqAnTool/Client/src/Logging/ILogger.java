@@ -17,7 +17,7 @@ import com.sun.istack.internal.Nullable;
  *     <i>Info</i>, <i>Warning</i> and <i>Error</i>.
  *     <ul>
  *         <li><b>Info</b> - An information, which could be helpful for debugging. Even many messages could be useful
- *         for debugging use it rarely.
+ *         for debugging it is recommended to use it rarely.
  *         <li><b>Warning</b> - A message to give notice that something unexpected has happened.
  *         <li><b>Error</b> - An error, which occurred while executing. Necessary for debugging.
  *     </ul>

@@ -247,7 +247,7 @@ public class TabBuilder
     }
 
 	@Override
-	public void addImage(Path imagePath)
+	public void addImage(Path imagePath, boolean isGIF)
 	{
 
 	}

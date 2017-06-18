@@ -214,7 +214,7 @@ public class FormulaBuilder
     }
 
 	@Override
-	public void addImage(Path imagePath)
+	public void addImage(Path imagePath, boolean isGIF)
 	{
 		globalRowNumber++;
 
@@ -225,7 +225,7 @@ public class FormulaBuilder
 		layoutConstraints.weightx = 0;
 		layoutConstraints.insets = new Insets(5,10,5,10);
 
-		ImageLabel myImage = new ImageLabel(imagePath,50,50);
+		ImageLabel myImage = new ImageLabel(imagePath,50,50, isGIF);
 		myPanel.add(myImage,layoutConstraints);
 	}
 

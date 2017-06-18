@@ -10,6 +10,8 @@ import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IView;
 import View_Interfaces.IViewFacadeFactory;
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -29,16 +31,21 @@ public abstract class BasicController <ViewType extends IView>
 	protected ITextFacade myTextBundle;
 
 
-	public BasicController(IModel modelToBeControlled, ViewType viewToBeControlled)
+	public BasicController(@NotNull IModel modelToBeControlled, @Nullable ViewType viewToBeControlled)
 	{
 		myModel = modelToBeControlled;
-		setView(viewToBeControlled);
-		controllerManager = ControllerManager.getInstance(myModel);
 		myLogger = ILoggerFactory.getInstance().createLogger();
+		controllerManager = ControllerManager.getInstance(myModel);
 		myTextBundle = ITextFacade.getInstance();
+		setView(viewToBeControlled);
 	}
 
 	public void setView(ViewType viewToBeControlled)
+	{
+		setView(viewToBeControlled, true);
+	}
+
+	public void setView(ViewType viewToBeControlled, boolean showViewAfterwards)
 	{
 		//TODO: Controller muss sich von View abmelden
 		myView = viewToBeControlled;
@@ -46,11 +53,14 @@ public abstract class BasicController <ViewType extends IView>
 		if(myView != null)
 		{
 			myView.addController(this);
-			myView.showView();
+			if(showViewAfterwards)
+			{
+				myView.showView();
+			}
 		}
 		else
 		{
-			System.out.println("View ist null");
+			myLogger.warning("myView is null");
 		}
 	}
 
