@@ -18,15 +18,16 @@ public class CustomerData
     private PersonalData projectManager;
     private Validator myValidator;
 
-    CustomerData(String pmName, String pmMail, String pmPhone)
+    CustomerData(String pmName, String pmMail, String pmPhone, String companyName, String city, String companyStreet,
+                 String country, String zip, String cName, String cMail, String cPhone)
     {
         this.projectManager = new PersonalData(pmName, pmMail, pmPhone);
-        this.companyName = null;
-        this.city = null;
-        this.companyStreet = null;
-        this.country = null;
-        this.zip = null;
-        this.customer = null;
+        this.companyName = companyName;
+        this.city = city;
+        this.companyStreet = companyStreet;
+        this.country = country;
+        this.zip = zip;
+        this.customer = new PersonalData(cName, cMail, cPhone);
         this.myValidator = new Validator();
     }
 

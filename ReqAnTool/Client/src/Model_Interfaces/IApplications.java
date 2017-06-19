@@ -12,7 +12,9 @@ public interface IApplications
 
     public ErrorCodes deleteReqAn();
     
-    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone);
+    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
+                                String city, String companyStreet, String country, String zip, String cName,
+                                String cMail, String cPhone);
 
     public boolean isReqAnUnsaved();
 

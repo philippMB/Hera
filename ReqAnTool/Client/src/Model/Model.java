@@ -831,12 +831,15 @@ public class Model
     }
 
     @Override
-    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone)
+    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
+                                String city, String companyStreet, String country, String zip, String cName,
+                                String cMail, String cPhone)
     {
         boolean success = false;
         if (myReqAn == null)
         {
-            this.myReqAn = new RequirementAnalysis(title, pmName, pmMail, pmPhone);
+            this.myReqAn = new RequirementAnalysis(title, pmName, pmMail, pmPhone, companyName, city, companyStreet,
+                                                   country, zip, cName, cMail, cPhone );
             success = true;
         }
         return success;

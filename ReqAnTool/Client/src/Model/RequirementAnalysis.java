@@ -46,11 +46,13 @@ public class RequirementAnalysis
      */
     private QualityRequirementList<IQualityRequirement> myQualityRequirements;
 
-    RequirementAnalysis(String title, String pmName, String pmMail, String pmPhone)
+    RequirementAnalysis(String title, String pmName, String pmMail, String pmPhone, String companyName, String city,
+                        String companyStreet, String country, String zip, String cName, String cMail, String cPhone)
     {
         this.title = title;
         this.customerDescription = null;
-        this.myCustomerData = new CustomerData(pmName, pmMail, pmPhone);
+        this.myCustomerData = new CustomerData(pmName, pmMail, pmPhone, companyName, city, companyStreet, country,  zip,
+                                               cName, cMail, cPhone);
         this.myAdditions = new AdditionList<IAddition>();
         this.myCostEstimation = null;
         this.myFRequirements = new RequirementList<IFRequirement>();
