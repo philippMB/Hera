@@ -10,6 +10,13 @@ public class WeightFactor
     private int maxValue;
     private String title;
 
+    public WeightFactor(String title, int score, int maxValue)
+    {
+        this.title = title;
+        this.maxValue = maxValue;
+        this.score = score;
+    }
+
     @Override
     public String getTitle()
     {

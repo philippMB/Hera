@@ -3,6 +3,7 @@ package Model;
 import Model_Interfaces.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Model
     implements IModelGetData, IModelSetData, IApplications
@@ -14,7 +15,7 @@ public class Model
 
     public Model()
     {
-        // TODO uncomment this: myConfig = new Configuration();
+        myConfig = new Configuration();
         unsaved = true;
         myReqAn = null;
     }
@@ -40,7 +41,7 @@ public class Model
         ErrorCodes retValue = ErrorCodes.NO_REQAN;
         if (myReqAn != null)
         {
-            retValue = myReqAn.addCostEstimation(myConfig.getComplexityMatrix(), myConfig.getComplexityWeightMatrix());
+            retValue = myReqAn.addCostEstimation(myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix());
         }
         return retValue;
     }
@@ -470,12 +471,12 @@ public class Model
     }
 
     @Override
-    public ErrorCodes rateWeightFactor(ArrayList<Integer> values)
+    public ErrorCodes rateWeightFactor(Map<String, Integer> myWeightFactors)
     {
         ErrorCodes retValue = ErrorCodes.NO_REQAN;
         if (myReqAn != null)
         {
-            retValue = myReqAn.rateWeightFactor(values);
+            retValue = myReqAn.rateWeightFactor(myWeightFactors);
         }
         return retValue;
 

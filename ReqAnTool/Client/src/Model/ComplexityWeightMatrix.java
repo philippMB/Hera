@@ -5,18 +5,27 @@ import Model_Interfaces.ClassOfTransactionFP;
 
 public class ComplexityWeightMatrix
 {
+    /*
+    Format of Matrix:
+            EI  EO  EQ  ILF EIF
+    EASY    x   x   x   x   x
+    MEDIUM  x   x   x   x   x
+    COMPLEX x   x   x   x   x
+     */
     private ClassOfTransactionFP[] myTransactionTypeIndexes;
     private ClassOfDataFP[] myDataTypeIndexes;
     private Complexities[] myComplexityIndexes;
     private int[][] myFPMatrix;
 
-    public ComplexityWeightMatrix(ClassOfTransactionFP[] myTransactionTypeIndexes, ClassOfDataFP[] myDataTypeIndexes,
-                                  Complexities[] myComplexityIndexes, int[][] myFPMatrix)
+    public ComplexityWeightMatrix(int[][] myFPMatrix)
     {
-        this.myTransactionTypeIndexes = myTransactionTypeIndexes;
-        this.myDataTypeIndexes = myDataTypeIndexes;
+        this.myTransactionTypeIndexes = new ClassOfTransactionFP[] {ClassOfTransactionFP.EI_INPUT,
+                                                                    ClassOfTransactionFP.EO_OUTPUT,
+                                                                    ClassOfTransactionFP.EQ_QUERY};
+        this.myDataTypeIndexes = new ClassOfDataFP[] {ClassOfDataFP.ILF_INTERNAL_LOGICAL_FILE,
+                                                      ClassOfDataFP.EIF_EXTERNAL_INPUT_FILE};
+        this.myComplexityIndexes = new Complexities[] {Complexities.EASY, Complexities.MEDIUM, Complexities.COMPLEX};
         this.myFPMatrix = myFPMatrix;
-        this.myComplexityIndexes = myComplexityIndexes;
     }
 
     public int getFPvalue(Complexities myComplexity, ClassOfTransactionFP type)
@@ -60,7 +69,7 @@ public class ComplexityWeightMatrix
         {
             if (myDataTypeIndexes[j].equals(type))
             {
-                y = j;
+                y = j + 3; // +3 for right Index (see Matrix format in class description)
                 break;
             }
         }

@@ -1,6 +1,7 @@
 package Model_Interfaces;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface IApplications
 {
@@ -37,7 +38,7 @@ public interface IApplications
 
     public ErrorCodes remDataFPByID(String id);
 
-    public ErrorCodes rateWeightFactor(ArrayList<Integer> values);
+    public ErrorCodes rateWeightFactor(Map<String, Integer> mapOfWeightFactors);
 
     public ErrorCodes calcFPCount();
 

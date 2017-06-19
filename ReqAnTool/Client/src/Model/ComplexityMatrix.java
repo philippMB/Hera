@@ -2,20 +2,29 @@ package Model;
 
 public class ComplexityMatrix
 {
-    private Complexities[][] detFtrMat;
-    private Complexities[][] detRetMat;
+    /*
+    Format of Matrices:
+    detFtrMatrix:
+                <= x1 DET    <= x2 DET    > x2 DET
+    <= y1 FTR    EASY         EASY         MEDIUM
+    <= y2 FTR    EASY         MEDIUM       COMPLEX
+    >  y2 FTR    MEDIUM       COMPLEX      COMPLEX
+    (equals for detRetMatrix but 'ftr' replaced with 'ret'
+     */
+
+    private Complexities[][] Matrix;
     private int[] detIndexes;
     private int[] ftrIndexes;
     private int[] retIndexes;
 
-    public ComplexityMatrix(Complexities[][] detFtrMat, Complexities[][] detRetMat, int[] detIndexes,
-                            int[] ftrIndexes, int[] retIndexes)
+    public ComplexityMatrix(int[] detIndexes, int[] ftrIndexes, int[] retIndexes)
     {
         this.detIndexes = detIndexes;
         this.ftrIndexes = ftrIndexes;
         this.retIndexes = retIndexes;
-        this.detFtrMat = detFtrMat;
-        this.detRetMat = detRetMat;
+        this.Matrix = new Complexities[][] {{Complexities.EASY, Complexities.EASY, Complexities.MEDIUM},
+                                            {Complexities.EASY, Complexities.MEDIUM, Complexities.COMPLEX},
+                                            {Complexities.MEDIUM, Complexities.COMPLEX, Complexities.COMPLEX}};
     }
 
     public Complexities getDetFtrValue(int det, int ftr)
@@ -40,7 +49,7 @@ public class ComplexityMatrix
         }
         if (!(x == -1 || y == -1))
         {
-            retValue = detFtrMat[x][y];
+            retValue = Matrix[x][y];
         }
         return retValue;
 
@@ -50,7 +59,7 @@ public class ComplexityMatrix
     {
         int x = -1, y = -1;
         Complexities retValue = Complexities.ERROR;
-        for (int i = 1; i < detRetMat[0].length; i++)
+        for (int i = 1; i < Matrix[0].length; i++)
         {
             if (detIndexes[i] >= det)
             {
@@ -68,7 +77,7 @@ public class ComplexityMatrix
         }
         if (!(x == -1 || y == -1))
         {
-            retValue = detFtrMat[x][y];
+            retValue = Matrix[x][y];
         }
         return retValue;
     }

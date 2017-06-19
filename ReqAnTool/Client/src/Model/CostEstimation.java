@@ -3,6 +3,7 @@ package Model;
 import Model_Interfaces.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CostEstimation 
     implements ICostEstimation
@@ -10,7 +11,7 @@ public class CostEstimation
     private double fPCount;
     private double manMonthCount;
     private ComplexityWeightMatrix myComplexityWeightMatrix;
-    private ComplexityMatrix myComplexityMatrix;
+    private Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices;
     /**
      * @associates <{Model.TransactionFP}>
      */
@@ -25,7 +26,7 @@ public class CostEstimation
      */
     private ArrayList<IWeightFactor> myWeightFactors;
 
-    public CostEstimation(ComplexityWeightMatrix myWeightMatrix, ComplexityMatrix myComplexityMatrix)
+    public CostEstimation(ComplexityWeightMatrix myWeightMatrix, Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices)
     {
         this.fPCount = -1.0;
         this.manMonthCount = -1.0;
@@ -33,7 +34,7 @@ public class CostEstimation
         myTransactionFPs = new ArrayList<ITransactionFP>();
         myWeightFactors = new ArrayList<IWeightFactor>();
         this.myComplexityWeightMatrix = myWeightMatrix;
-        this.myComplexityMatrix = myComplexityMatrix;
+        this.myComplexityMatrices = myComplexityMatrices;
     }
 
     @Override
@@ -61,7 +62,8 @@ public class CostEstimation
         for (ITransactionFP myITransactionFP : myTransactionFPs)
         {
             TransactionFP myTransactionFP = (TransactionFP)myITransactionFP;
-            int myFPvalue = myTransactionFP.getFPvalue(myComplexityMatrix, myComplexityWeightMatrix);
+            int myFPvalue = myTransactionFP.getFPvalue(myComplexityMatrices.get(myITransactionFP.getType()),
+                                                       myComplexityWeightMatrix);
             if (myFPvalue != -1) // check for error from getFPvalue (error = -1)
             {
                 sumOfWeightedComplexities += myFPvalue;
@@ -70,7 +72,8 @@ public class CostEstimation
         for (IDataFP myIDataFP : myDataFPs)
         {
             DataFP myDataFP = (DataFP)myIDataFP;
-            int myFPvalue = myDataFP.getFPvalue(myComplexityMatrix, myComplexityWeightMatrix);
+            int myFPvalue = myDataFP.getFPvalue(myComplexityMatrices.get(myDataFP.getType()),
+                                                myComplexityWeightMatrix);
             if (myFPvalue != -1) // check for error from getFPvalue (error = -1)
             {
                 sumOfWeightedComplexities += myFPvalue;
@@ -189,26 +192,30 @@ public class CostEstimation
         return myWeightFactors;
     }
 
-    public ArrayList<ErrorCodes> rateWeightFactor(ArrayList<Integer> values)
+    public ArrayList<ErrorCodes> rateWeightFactor(Map<String, Integer> mapOfWeightFactors)
     {
-        // TODO map or WeightFactor
         ArrayList<ErrorCodes> retValue = new ArrayList<ErrorCodes>();
-        if (values.size() == getWeightFactors().size())
+        if (mapOfWeightFactors.size() == getWeightFactors().size())
         {
-            int i = 0;
             WeightFactor tmp;
-            for (Integer value : values)
+            for (String key : mapOfWeightFactors.keySet())
             {
-                tmp = (WeightFactor) myWeightFactors.get(i);
-                retValue.add(tmp.setValue(value));
+                for (IWeightFactor factor : myWeightFactors)
+                {
+                    if (factor.getTitle().equals(key))
+                    {
+                        tmp = (WeightFactor)factor;
+                        retValue.add(tmp.setValue(mapOfWeightFactors.get(key)));
+                    }
+                }
             }
-            return retValue;
         }
         else
         {
             retValue.add(ErrorCodes.INVALID_ARGUMENT);
-            return retValue;
         }
+        return retValue;
+
     }
 
     public ErrorCodes setDataFP(ClassOfDataFP type, IRequirement reference, int det, int ret)

@@ -6,6 +6,7 @@ import Model_Interfaces.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class RequirementAnalysis
     implements IRequirementAnalysis
@@ -848,13 +849,13 @@ public class RequirementAnalysis
 
     }
 
-    public ErrorCodes rateWeightFactor(ArrayList<Integer> values)
+    public ErrorCodes rateWeightFactor(Map<String, Integer> myWeightFactors)
     {
         ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         boolean success = true;
         if (getCostEstimation() != null)
         {
-            ArrayList<ErrorCodes> errors = myCostEstimation.rateWeightFactor(values);
+            ArrayList<ErrorCodes> errors = myCostEstimation.rateWeightFactor(myWeightFactors);
             for (ErrorCodes error : errors)
             {
                 if (!(error == ErrorCodes.NO_ERROR))
@@ -1055,10 +1056,10 @@ public class RequirementAnalysis
 
     }
 
-    public ErrorCodes addCostEstimation(ComplexityMatrix myComplexityMatrix,
+    public ErrorCodes addCostEstimation(Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
                                         ComplexityWeightMatrix myComplexityWeightMatrix)
     {
-        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrix);
+        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrices);
         return ErrorCodes.NO_ERROR;
 
     }
