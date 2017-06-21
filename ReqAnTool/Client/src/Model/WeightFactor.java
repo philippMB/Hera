@@ -6,7 +6,7 @@ import Model_Interfaces.IWeightFactor;
 public class WeightFactor
     implements IWeightFactor
 {
-    private int score;
+    private double score;
     private int maxValue;
     private String title;
 
@@ -27,6 +27,12 @@ public class WeightFactor
     @Override
     public int getValue()
     {
+        return (int) Math.round(score);
+    }
+
+
+    public double getExactValue()
+    {
         return score;
 
     }
@@ -38,7 +44,7 @@ public class WeightFactor
 
     }
 
-    public ErrorCodes setValue(Integer value)
+    public ErrorCodes setValue(double value)
     {
         ErrorCodes retValue = ErrorCodes.INVALID_ARGUMENT;
         if (value >= 0 && value <= maxValue)

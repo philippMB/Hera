@@ -1176,4 +1176,9 @@ public class RequirementAnalysis
         }
         return retValue;
     }
+
+    protected void setWeightFactors(WeightFactorList<IWeightFactor> myWeightFactors)
+    {
+        myCostEstimation.setWeightFactors(myWeightFactors);
+    }
 }

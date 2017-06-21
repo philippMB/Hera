@@ -24,7 +24,7 @@ public class CostEstimation
     /**
      * @associates <{Model.WeightFactor}>
      */
-    private ArrayList<IWeightFactor> myWeightFactors;
+    private WeightFactorList<IWeightFactor> myWeightFactors;
 
     public CostEstimation(ComplexityWeightMatrix myWeightMatrix, Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices)
     {
@@ -32,7 +32,7 @@ public class CostEstimation
         this.manMonthCount = -1.0;
         myDataFPs = new ArrayList<IDataFP>();
         myTransactionFPs = new ArrayList<ITransactionFP>();
-        myWeightFactors = new ArrayList<IWeightFactor>();
+        myWeightFactors = new WeightFactorList<IWeightFactor>();
         this.myComplexityWeightMatrix = myWeightMatrix;
         this.myComplexityMatrices = myComplexityMatrices;
     }
@@ -42,16 +42,17 @@ public class CostEstimation
     {
 
         int unweightedFPcount = getSumOfDataAndTransactionFPs();
-        double factorOfInfluences = determineInfluences();
+        double factorOfInfluences = sumOfWeightFactors();
         this.fPCount = unweightedFPcount * factorOfInfluences;
     }
 
-    private double determineInfluences()
+    public double sumOfWeightFactors()
     {
         int sumOfFactors = 0;
-        for (IWeightFactor myWeightFactor : myWeightFactors)
+        for (IWeightFactor myIWeightFactor : myWeightFactors)
         {
-            sumOfFactors += myWeightFactor.getValue();
+            WeightFactor myWeightFactor = (WeightFactor) myIWeightFactor;
+            sumOfFactors += myWeightFactor.getExactValue();
         }
         return (sumOfFactors / 100 + 0.7);
     }
@@ -370,5 +371,10 @@ public class CostEstimation
         {
             return ErrorCodes.FP_NOT_EXISTENT;
         }
+    }
+
+    public void setWeightFactors(WeightFactorList<IWeightFactor> weightFactors)
+    {
+        this.myWeightFactors = weightFactors;
     }
 }

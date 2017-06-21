@@ -357,6 +357,14 @@ public class Model
     }
 
     @Override
+    public void adjustWeightFactor() throws Exception
+    {
+        WeightFactorList<IWeightFactor> adjWeightFac = myConfig.adjustOptWeightFactors(myReqAn);
+        CostEstimation myCostEstimation = (CostEstimation) myReqAn.getCostEstimation();
+        myCostEstimation.setWeightFactors(adjWeightFac);
+    }
+
+    @Override
     public ArrayList<IAddition> getAllAddition()
     {
         ArrayList<IAddition> myAdditions = null;
@@ -764,7 +772,7 @@ public class Model
         IWeightFactor myWeightFactor = null;
         if (myReqAn != null)
         {
-            return myReqAn.getWeightFactorByTitle(title);
+            myWeightFactor = myReqAn.getWeightFactorByTitle(title);
         }
         return myWeightFactor;
 

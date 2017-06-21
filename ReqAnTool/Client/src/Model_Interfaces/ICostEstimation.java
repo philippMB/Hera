@@ -32,4 +32,6 @@ public interface ICostEstimation
     public IDataFP getDataFPByID(String id);
 
     public ITransactionFP getTransactionFPByID(String id);
+
+    public double sumOfWeightFactors();
 }

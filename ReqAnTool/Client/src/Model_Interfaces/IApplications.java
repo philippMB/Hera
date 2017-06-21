@@ -52,4 +52,6 @@ public interface IApplications
 
     public boolean existsOptWeightFactor();
 
+    public void adjustWeightFactor() throws Exception;
+
 }
