@@ -9,7 +9,7 @@ import View_Interfaces.IStartView;
  * Created by phlippe on 11.06.17.
  */
 public class StartViewController
-	extends BasicController<IStartView>
+	extends BasicViewController<IStartView>
 {
 
 	public StartViewController(IModel model, IStartView viewToBeControlled)

@@ -9,7 +9,7 @@ import static java.lang.Thread.sleep;
  * Created by phlippe on 11.06.17.
  */
 public class ProjectCreateController
-	extends BasicController<IProjectCreateView>
+	extends BasicViewController<IProjectCreateView>
 {
 
 	private LoadingController loadingController;
@@ -24,7 +24,7 @@ public class ProjectCreateController
 	protected void executeCreateAction()
 	{
 		//TODO: Test values, give user feedback and create new ReqAn
-		loadingController = controllerManager.createControlledLoadingDialog();
+		loadingController = controllerManager.createControlledLoadingDialog(myView);
 		loadingController.startLoadingDialog();
 		new Thread(
 				() -> {

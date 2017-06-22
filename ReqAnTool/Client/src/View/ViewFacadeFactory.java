@@ -24,12 +24,14 @@ public class ViewFacadeFactory
 
 	private IModelGetData myModel;
 	private ILogger myLogger;
+	private JFrame mainView;	//Holds the main view to which the dialogs positions are adjusted
 
 
 	private ViewFacadeFactory(@NotNull IModelGetData model)
 	{
 		myModel = model;
 		myLogger = ILoggerFactory.getInstance().createLogger();
+		mainView = null;
 	}
 
 	/**
@@ -51,9 +53,9 @@ public class ViewFacadeFactory
 	 * @return
 	 */
 	@Override
-	public IActualStateEditView createActualStateEditView()
+	public IActualStateEditView createActualStateEditView(IView parentView)
 	{
-		IActualStateEditView myView = new ActualStateEditDialog(myModel);
+		ActualStateEditDialog myView = new ActualStateEditDialog(getFrameOfView(parentView), myModel);
 		return myView;
 	}
 
@@ -104,31 +106,31 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode)
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode)
 	{
-		IErrorDialog myView = new ErrorDialog(errorCode);
+		IErrorDialog myView = new ErrorDialog(getFrameOfView(parentView), errorCode);
 		return myView;
 	}
 
 	@Override
-	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode, @Nullable String[] placeholderInText)
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode,
+										  @Nullable String[] placeholderInText)
 	{
-		IErrorDialog myView = new ErrorDialog(errorCode, placeholderInText);
+		IErrorDialog myView = new ErrorDialog(getFrameOfView(parentView), errorCode, placeholderInText);
 		return myView;
 	}
 
 	@Override
-	public IErrorDialog createErrorDialog(@NotNull String title,@NotNull String message)
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull String title,@NotNull String message)
 	{
-		IErrorDialog myView = new ErrorDialog(title, message);
+		IErrorDialog myView = new ErrorDialog(getFrameOfView(parentView), title, message);
 		return myView;
 	}
 
 	@Override
-	public IFileChooser createFileChooser(@Nullable JFrame parentView,@NotNull FileAccessType accessType)
+	public IFileChooser createFileChooser(@Nullable IView parentView, @NotNull FileAccessType accessType)
 	{
-		IFileChooser myView = new FileChooser(parentView,accessType);
-
+		IFileChooser myView = new FileChooser(getFrameOfView(parentView),accessType);
 		return myView;
 	}
 
@@ -400,13 +402,14 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName)
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String dialogPropertyName)
 	{
-		return createWarningDialog(dialogPropertyName, (String[])null);
+		return createWarningDialog(parentView, dialogPropertyName, (String[])null);
 	}
 
 	@Override
-	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName, @Nullable String[] placeholderInText)
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String dialogPropertyName,
+											  @Nullable String[] placeholderInText)
 	{
 		//TODO: Put TextBundle access in warning dialog
 		IWarningDialog newWarningDialog = null;
@@ -425,7 +428,7 @@ public class ViewFacadeFactory
 			}
 			ViewActions[] warnButtonActions = DialogConstants.DIALOG_NAME_TO_VIEW_ACTIONS.get(dialogPropertyName);
 
-			newWarningDialog = createWarningDialog(warnTitle, warnDescription, warnButtonActions);
+			newWarningDialog = createWarningDialog(parentView, warnTitle, warnDescription, warnButtonActions);
 		}
 		return newWarningDialog;
 	}
@@ -452,45 +455,54 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription)
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String warnTitle,
+											  @NotNull String warnDescription)
 	{
-		IWarningDialog myView = new WarningDialog(warnTitle, warnDescription);
+		IWarningDialog myView = new WarningDialog(getFrameOfView(parentView), warnTitle, warnDescription);
 		return myView;
 	}
 
 	@Override
-	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription,
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String warnTitle,
+											  @NotNull String warnDescription,
 											  @NotNull ViewActions[] warnButtonActions)
 	{
-		IWarningDialog myView = new WarningDialog(warnTitle, warnDescription, warnButtonActions);
+		IWarningDialog myView = new WarningDialog(
+				getFrameOfView(parentView),
+				warnTitle,
+				warnDescription,
+				warnButtonActions
+		);
 		return myView;
 	}
 
 	@Override
-	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName)
+	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String dialogPropertyName)
 	{
-		IInfoDialog myView = new InfoDialog(dialogPropertyName);
+		IInfoDialog myView = new InfoDialog(getFrameOfView(parentView), dialogPropertyName);
 		return myView;
 	}
 
 	@Override
-	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName, @Nullable String[] placeholderInText)
+	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String dialogPropertyName,
+										@Nullable String[] placeholderInText)
 	{
-		IInfoDialog myView = new InfoDialog(dialogPropertyName, placeholderInText);
+		IInfoDialog myView = new InfoDialog(getFrameOfView(parentView), dialogPropertyName, placeholderInText);
 		return myView;
 	}
 
 	@Override
-	public IInfoDialog createInfoDialog(@NotNull String infoTitle, @NotNull String infoMessage)
+	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String infoTitle,
+										@NotNull String infoMessage)
 	{
-		IInfoDialog myView = new InfoDialog(infoTitle, infoMessage);
+		IInfoDialog myView = new InfoDialog(getFrameOfView(parentView), infoTitle, infoMessage);
 		return myView;
 	}
 
 	@Override
-	public ILoadingDialog createLoadingDialog()
+	public ILoadingDialog createLoadingDialog(@Nullable IView parentView)
 	{
-		ILoadingDialog myView = new LoadingDialog();
+		ILoadingDialog myView = new LoadingDialog(getFrameOfView(parentView));
 		return myView;
 	}
 
@@ -515,6 +527,16 @@ public class ViewFacadeFactory
 		}
 
 		return myErrorCode;
+	}
+
+	private @Nullable JFrame getFrameOfView(IView view)
+	{
+		JFrame frameOfView = null;
+		if(view instanceof JFrame)
+		{
+			frameOfView = (JFrame)view;
+		}
+		return frameOfView;
 	}
 
 }

@@ -1,16 +1,11 @@
 package View;
 
-import Controller_Interfaces.ViewActions;
-import LanguageAndText.ITextFacade;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IAddition;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.IAdditionTab;
 
-import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -38,12 +33,12 @@ public class AdditionTab
 	}
 
 	@Override
-	protected String[][] getTableEntries()
+	protected String[][] createTableEntries()
 	{
 		String[][] tableEntries;
 		ArrayList<IAddition> allAdditions = myModel.getAllAddition();
 
-		tableEntries = new String[allAdditions.size()][getColumnNames().length];
+		tableEntries = new String[allAdditions.size()][createColumnNames().length];
 
 		for(int row = 0; row < tableEntries.length; row++)
 		{
@@ -56,7 +51,7 @@ public class AdditionTab
 	}
 
 	@Override
-	protected String[] getColumnNames()
+	protected String[] createColumnNames()
 	{
 		return new String[]{
 				myTextBundle.getParameterText(TextNameConstants.PAR_TITLE),

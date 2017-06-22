@@ -1,72 +1,37 @@
 package Controller;
 
-import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import Logging.ILogger;
 import Logging.ILoggerFactory;
-import Logging.TraceLoggerFactory;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
-import View_Interfaces.IView;
-import View_Interfaces.IViewFacadeFactory;
 import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
+import java.awt.event.ActionListener;
 
 /**
- * Default controller class which provides a general structure for handling actions which are performed and errors
- * with creating dialogs.
+ * Created by phlippe on 18.06.17.
  */
-public abstract class BasicController <ViewType extends IView>
-	implements IController
+public class BasicController
+	implements ActionListener
 {
 
 	protected ControllerManager controllerManager;
 	protected IModel myModel;
-	protected ViewType myView;
 	protected ILogger myLogger;
+	private ILogger actionLogger;
 	protected ITextFacade myTextBundle;
 
 
-	public BasicController(@NotNull IModel modelToBeControlled, @Nullable ViewType viewToBeControlled)
+	public BasicController(@NotNull IModel modelToBeControlled)
 	{
 		myModel = modelToBeControlled;
 		myLogger = ILoggerFactory.getInstance().createLogger();
+		actionLogger = ILoggerFactory.getInstance().createLogger("ReqAn_actionLogger");
 		controllerManager = ControllerManager.getInstance(myModel);
 		myTextBundle = ITextFacade.getInstance();
-		setView(viewToBeControlled);
-	}
-
-	public void setView(ViewType viewToBeControlled)
-	{
-		setView(viewToBeControlled, true);
-	}
-
-	public void setView(ViewType viewToBeControlled, boolean showViewAfterwards)
-	{
-		//TODO: Controller muss sich von View abmelden
-		myView = viewToBeControlled;
-
-		if(myView != null)
-		{
-			myView.addController(this);
-			if(showViewAfterwards)
-			{
-				myView.showView();
-			}
-		}
-		else
-		{
-			myLogger.warning("myView is null");
-		}
-	}
-
-	public ViewType getControlledView()
-	{
-		return myView;
 	}
 
 	@Override
@@ -80,12 +45,15 @@ public abstract class BasicController <ViewType extends IView>
 		}
 		catch(IllegalArgumentException ex)
 		{
-			myLogger.error("Controller "+this.getClass().toString()+
-					" got ActionCommand \""+actionCommand+"\" which is no viewAction.", ex);
+			String logMessage = "Controller "+this.getClass().toString()+
+					" got ActionCommand \""+actionCommand+"\" which is no viewAction.";
+			myLogger.error(logMessage, ex);
+			actionLogger.error(logMessage, ex);
 		}
 
 		if(viewAction != null)
 		{
+			actionLogger.info(this.getClass().toString()+": performing "+viewAction.toString());
 			switch (viewAction)
 			{
 				case OK:
@@ -184,6 +152,24 @@ public abstract class BasicController <ViewType extends IView>
 				case CREATE:
 					executeCreateAction();
 					break;
+				case ADD_FREQ:
+					executeAddFReqAction();
+					break;
+				case ADD_NFREQ:
+					executeAddNFReqAction();
+					break;
+				case ADD_PROD:
+					executeAddProdDataAction();
+					break;
+				case ADD_QR:
+					executeAddQRAction();
+					break;
+				case ADD_GLOS:
+					executeAddGlossaryAction();
+					break;
+				case ADD_ADDIT:
+					executeAddAdditionAction();
+					break;
 				default:
 					executeDefaultAction(event);
 					break;
@@ -191,6 +177,7 @@ public abstract class BasicController <ViewType extends IView>
 		}
 		else
 		{
+			actionLogger.warning("Default action will be executed for command "+actionCommand);
 			executeDefaultAction(event);
 		}
 
@@ -356,6 +343,36 @@ public abstract class BasicController <ViewType extends IView>
 		logMissingActionExecution(ViewActions.CREATE);
 	}
 
+	protected void executeAddFReqAction()
+	{
+		logMissingActionExecution(ViewActions.ADD_FREQ);
+	}
+
+	protected void executeAddNFReqAction()
+	{
+		logMissingActionExecution(ViewActions.ADD_NFREQ);
+	}
+
+	protected void executeAddProdDataAction()
+	{
+		logMissingActionExecution(ViewActions.ADD_PROD);
+	}
+
+	protected void executeAddQRAction()
+	{
+		logMissingActionExecution(ViewActions.ADD_QR);
+	}
+
+	protected void executeAddGlossaryAction()
+	{
+		logMissingActionExecution(ViewActions.ADD_GLOS);
+	}
+
+	protected void executeAddAdditionAction()
+	{
+		logMissingActionExecution(ViewActions.ADD_ADDIT);
+	}
+
 	protected void executeDefaultAction(ActionEvent action)
 	{
 
@@ -365,50 +382,8 @@ public abstract class BasicController <ViewType extends IView>
 	{
 		String warningMsg = "Action "+action.toString()+" was performed without any execution by the controller.\n";
 		warningMsg += "Controller:"+this.getClass().toString()+"\n";
-		warningMsg += "View:"+myView.getClass().toString()+"\n";
 		myLogger.warning( warningMsg );
-	}
-
-	@Override
-	public void windowOpened(WindowEvent e)
-	{
-
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e)
-	{
-		controllerManager.removeController(this);
-	}
-
-	@Override
-	public void windowClosed(WindowEvent e)
-	{
-		controllerManager.removeController(this);
-	}
-
-	@Override
-	public void windowIconified(WindowEvent e)
-	{
-
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e)
-	{
-
-	}
-
-	@Override
-	public void windowActivated(WindowEvent e)
-	{
-
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e)
-	{
-
+		actionLogger.warning( warningMsg );
 	}
 
 	protected void handleErrorCode(ErrorCodes errorCode)
@@ -561,28 +536,15 @@ public abstract class BasicController <ViewType extends IView>
 
 	protected void handleECByDialog(ErrorCodes errorCode)
 	{
-		controllerManager.createControlledErrorDialog(errorCode);
+		controllerManager.createControlledErrorDialog(null, errorCode);
 	}
 
 	protected void logErrorCode(ErrorCodes errorCode, int errorID)
 	{
 		String warningMsg = "ErrorCode "+errorCode.toString()+" (ID = "+errorID+")"
-								+" occurred with default execution of BasicController.\n";
+				+" occurred with default execution of BasicController.\n";
 		warningMsg += "Controller:"+this.getClass().toString()+"\n";
-		warningMsg += "View:"+myView.getClass().toString()+"\n";
 		myLogger.warning( warningMsg );
-	}
-
-
-	protected void closeView()	//TODO: Rename that also controller will be destructed
-	{
-		myView.destruct();
-		controllerManager.removeController(this);
-	}
-
-	protected boolean canViewBeClosed()
-	{
-		return true;
 	}
 
 }

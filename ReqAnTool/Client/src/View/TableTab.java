@@ -6,7 +6,6 @@ import View_Interfaces.ITableTab;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,6 +25,7 @@ public abstract class TableTab
 	};
 
 	private JTable myTable;
+	private StandardTableModel myTableModel;
 
 
 	public TableTab(IModelGetData model, String titleConstant)
@@ -37,7 +37,13 @@ public abstract class TableTab
 	{
 		setButtonActions(BUTTON_ACTIONS);
 
-		myTable = myBuilder.addTable(null, getTableEntries(), getColumnNames());
+		myTable = myBuilder.addTable(
+				null,
+				new String[0][0],
+				new String[0]
+		);
+		myTableModel = new StandardTableModel(createTableEntries(), createColumnNames());
+		myTable.setModel(myTableModel);
 		myButtons = myBuilder.addButtonBar(myButtonActions);
 
 		setActionCommands();
@@ -46,45 +52,18 @@ public abstract class TableTab
 	@Override
 	public String[] getSelectedRow()
 	{
-		String[] rowContent;
-		int rowIndex = myTable.getSelectedRow();
-
-		if(rowIndex >= 0)
-		{
-			rowContent = new String[myTable.getColumnCount()];
-
-			for(int column = 0;column<myTable.getColumnCount();column++)
-			{
-				rowContent[column] = (String)myTable.getValueAt(rowIndex,column);
-			}
-		}
-		else
-		{
-			rowContent = null;
-		}
-
+		String[] rowContent = myTableModel.getRow(myTable.getSelectedRow());
 		return rowContent;
 	}
 
 	protected void updateTable()
 	{
-		String[][] tableEntries = getTableEntries();
-		String[] columnNames = getColumnNames();
-
-		DefaultTableModel defaultTableModel = new DefaultTableModel(tableEntries,columnNames){
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		};
-		myTable.setModel(defaultTableModel);
-
+		myTableModel.setTableEntries(createTableEntries());
 	}
 
-	protected abstract String[][] getTableEntries();
+	protected abstract String[][] createTableEntries();
 
-	protected abstract String[] getColumnNames();
+	protected abstract String[] createColumnNames();
 
 	protected static String convertListToSingleString(String[] arrayOfStrings)
 	{

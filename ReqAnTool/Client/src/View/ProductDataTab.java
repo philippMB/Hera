@@ -2,7 +2,6 @@ package View;
 
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
-import Model_Interfaces.INFRequirement;
 import Model_Interfaces.IProductData;
 import View_Interfaces.IProductDataTab;
 
@@ -35,12 +34,12 @@ public class ProductDataTab
 	}
 
 	@Override
-	protected String[][] getTableEntries()
+	protected String[][] createTableEntries()
 	{
 		String[][] tableEntries;
 		ArrayList<IProductData> allProductData = myModel.getAllProdData();
 
-		tableEntries = new String[allProductData.size()][getColumnNames().length];
+		tableEntries = new String[allProductData.size()][createColumnNames().length];
 
 		for(int row = 0; row < tableEntries.length; row++)
 		{
@@ -55,7 +54,7 @@ public class ProductDataTab
 	}
 
 	@Override
-	protected String[] getColumnNames()
+	protected String[] createColumnNames()
 	{
 		return new String[]{
 				myTextBundle.getParameterText(TextNameConstants.PAR_ID),

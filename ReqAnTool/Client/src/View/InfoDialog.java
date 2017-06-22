@@ -26,31 +26,40 @@ public class InfoDialog
 	private String titleText;
 
 
-	public InfoDialog(String dialogPropertyName)
+	public InfoDialog(JFrame parentView, String dialogPropertyName)
 	{
-		super(TextNameConstants.TITLE_INFO);
+		super(parentView, TextNameConstants.TITLE_INFO);
 
-		titleText = myTextBundle.getTitleText(dialogPropertyName);
-		descriptionText = myTextBundle.getDialogText(dialogPropertyName);
+		initText(
+				myTextBundle.getTitleText(dialogPropertyName),
+				myTextBundle.getDialogText(dialogPropertyName)
+		);
 		init();
 	}
 
-	public InfoDialog(String dialogPropertyName, String[] placeholderInText)
+	public InfoDialog(JFrame parentView, String dialogPropertyName, String[] placeholderInText)
 	{
-		super(TextNameConstants.TITLE_INFO);
+		super(parentView, TextNameConstants.TITLE_INFO);
 
-		titleText = myTextBundle.getTitleText(dialogPropertyName);
-		descriptionText = myTextBundle.getDialogText(dialogPropertyName, placeholderInText);
+		initText(
+				myTextBundle.getTitleText(dialogPropertyName),
+				myTextBundle.getDialogText(dialogPropertyName, placeholderInText)
+		);
 		init();
 	}
 
-	public InfoDialog(String title, String informationMessage)
+	public InfoDialog(JFrame parentView, String title, String informationMessage)
 	{
-		super(TextNameConstants.TITLE_INFO);
+		super(parentView, TextNameConstants.TITLE_INFO);
 
-		titleText = title;
-		descriptionText = informationMessage;
+		initText(title, informationMessage);
 		init();
+	}
+
+	private void initText(String titleText, String descriptionText)
+	{
+		this.titleText = titleText;
+		this.descriptionText = descriptionText;
 	}
 
 	private Path getInfoImagePath()

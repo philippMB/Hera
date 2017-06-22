@@ -1,9 +1,10 @@
 package View;
 
-import Controller_Interfaces.IController;
+import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import Model_Interfaces.IModelGetData;
+import View_Interfaces.IMenuBar;
 import View_Interfaces.ITab;
 
 import javax.swing.*;
@@ -66,7 +67,7 @@ public abstract class TabPanel
 	}
 
 	@Override
-	public void addController(IController newController)
+	public void addController(IViewController newController)
 	{
 		for(JButton b: myButtons)
 		{
@@ -83,9 +84,7 @@ public abstract class TabPanel
 	@Override
 	public void showView()
 	{
-		SwingUtilities.invokeLater(
-				() -> setVisible(true)
-		);
+		//Nothing to do because JTabbedPane in ProjectView regulates the visibility of the tabs
 	}
 
 	@Override
@@ -105,6 +104,17 @@ public abstract class TabPanel
 	public JPanel getPanel()
 	{
 		return this;
+	}
+
+	/**
+	 * Returns the belonging menu bar
+	 *
+	 * @return Menu bar which belongs to the view
+	 */
+	@Override
+	public IMenuBar getViewMenu()
+	{
+		return null;
 	}
 
 	protected abstract void init();

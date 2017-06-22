@@ -1,8 +1,9 @@
 package View;
 
-import Controller_Interfaces.IController;
+import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
+import View_Interfaces.IMenuBar;
 import View_Interfaces.IView;
 
 import javax.swing.*;
@@ -52,7 +53,7 @@ public abstract class FormWindow
 	}
 
 	@Override
-	public void addController(IController newController)
+	public void addController(IViewController newController)
 	{
 		for(JButton b: myButtons)
 		{
@@ -82,6 +83,17 @@ public abstract class FormWindow
 		toFront();
 	}
 
-    protected abstract void init();
+	/**
+	 * Returns the belonging menu bar
+	 *
+	 * @return Menu bar which belongs to the view
+	 */
+	@Override
+	public IMenuBar getViewMenu()
+	{
+		return null;
+	}
+
+	protected abstract void init();
 
 }

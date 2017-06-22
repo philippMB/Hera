@@ -260,14 +260,14 @@ public class CostEstimationShowView
 		}
 		else
 		{
-			textFP = Double.toString(functionPoints);
+			textFP = myTextBundle.convertDoubleToString(functionPoints);
 			if(manMonths <= 0)
 			{
 				textMM = myTextBundle.getParameterText(TextNameConstants.PAR_NOT_CALCULATED);
 			}
 			else
 			{
-				textMM = Double.toString(manMonths);
+				textMM = myTextBundle.convertDoubleToString(manMonths);
 			}
 		}
 

@@ -4,12 +4,8 @@ import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Vector;
 
 /**
  * Created by phlippe on 28.04.17.
@@ -119,7 +115,7 @@ public class TableSelectionPanel
 
 	private void checkTableEntries()
 	{
-		String[] tableEntries = myTableModel.getTableEntries();
+		String[] tableEntries = myTableModel.getOneColumnTableEntries();
 
 		for(int rowIndex=0;rowIndex<tableEntries.length;rowIndex++)
 		{
@@ -148,7 +144,7 @@ public class TableSelectionPanel
 
 	public String[] getTableEntries()
 	{
-		return myTableModel.getTableEntries();
+		return myTableModel.getOneColumnTableEntries();
 	}
 
 	private void setActionCommands()

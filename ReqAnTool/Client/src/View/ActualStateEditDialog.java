@@ -6,6 +6,7 @@ import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirement;
 import Model_Interfaces.IRequirementAnalysis;
 import View_Interfaces.IActualStateEditView;
+import com.sun.istack.internal.Nullable;
 
 import javax.swing.*;
 import java.util.Observable;
@@ -27,9 +28,9 @@ public class ActualStateEditDialog
 	private IModelGetData myModel;
 
 
-	public ActualStateEditDialog(IModelGetData model)
+	public ActualStateEditDialog(@Nullable JFrame parentView, IModelGetData model)
 	{
-		super(TextNameConstants.TITLE_ACTUAL_STATE_EDIT);
+		super(parentView, TextNameConstants.TITLE_ACTUAL_STATE_EDIT);
 		myModel = model;
 		setButtonActions(BUTTON_ACTIONS);
 
@@ -59,7 +60,14 @@ public class ActualStateEditDialog
 	{
 		IRequirementAnalysis requirementAnalysis = myModel.getReqAnalysis();
 		double actualState = requirementAnalysis.getActualState();
-		fieldActualState.setText(Double.toString(actualState));
+		if(actualState > 0)
+		{
+			fieldActualState.setText(myTextBundle.convertDoubleToString(actualState));
+		}
+		else
+		{
+			fieldActualState.setText("");
+		}
 	}
 
 	/**
@@ -69,7 +77,13 @@ public class ActualStateEditDialog
 	public void showView()
 	{
 		SwingUtilities.invokeLater(
-				() -> setVisible(true)
+				() -> {
+					if(getParent() != null)
+					{
+						setLocationRelativeTo(getParent());
+					}
+					setVisible(true);
+				}
 		);
 	}
 

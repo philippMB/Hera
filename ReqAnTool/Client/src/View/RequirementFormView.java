@@ -1,6 +1,6 @@
 package View;
 
-import Controller_Interfaces.IController;
+import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
@@ -11,9 +11,7 @@ import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Observable;
 
@@ -240,7 +238,7 @@ public abstract class RequirementFormView<RequirementType extends IRequirement>
 	}
 
 	@Override
-	public void addController(IController newController)
+	public void addController(IViewController newController)
 	{
 		super.addController(newController);
 		if(isEditable)

@@ -5,17 +5,18 @@ import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IProjectTab;
+import View_Interfaces.IView;
 
 /**
  * Created by phlippe on 17.06.17.
  */
 public class ProjectTabController
-	extends BasicController<IProjectTab>
+	extends TabController<IProjectTab>
 {
 
-	public ProjectTabController(IModel modelToBeControlled, IProjectTab viewToBeControlled)
+	public ProjectTabController(IModel modelToBeControlled, IView parentView, IProjectTab viewToBeControlled)
 	{
-		super(modelToBeControlled, viewToBeControlled);
+		super(modelToBeControlled, parentView, viewToBeControlled);
 	}
 
 	@Override
@@ -27,13 +28,20 @@ public class ProjectTabController
 	@Override
 	protected void executeToPDFAction()
 	{
-		controllerManager.createControlledInfoDialog(DialogConstants.DIALOG_INFO_NOT_IMPLEMENTED);
+		controllerManager.createControlledInfoDialog(parentView, DialogConstants.DIALOG_INFO_NOT_IMPLEMENTED);
+	}
+
+	@Override
+	protected void executeToXMLAction()
+	{
+
 	}
 
 	@Override
 	protected void executeDeleteAction()
 	{
 		controllerManager.createControlledWarningDialog(
+				parentView,
 				DialogConstants.DIALOG_DELETE_WARNING,
 				new String[]{
 					myTextBundle.getParameterText(TextNameConstants.PAR_REQAN) +
@@ -45,12 +53,13 @@ public class ProjectTabController
 					protected void deleteObject()
 					{
 						deleteReqAn();
+						closeView();
 					}
 
 					@Override
 					protected void cancelDeletion()
 					{
-
+						closeView();
 					}
 				}
 		);
@@ -59,7 +68,11 @@ public class ProjectTabController
 	@Override
 	protected void executeCloseAction()
 	{
-		changeToStartView();
+		boolean viewsClosed = controllerManager.tryClosingAllActiveViews();
+		if(viewsClosed)
+		{
+			controllerManager.createControlledStartView();
+		}
 	}
 
 	private void deleteReqAn()
@@ -72,15 +85,7 @@ public class ProjectTabController
 		}
 		else
 		{
-			changeToStartView();
-		}
-	}
-
-	private void changeToStartView()
-	{
-		boolean viewsClosed = controllerManager.closeAllActiveViews();
-		if(viewsClosed)
-		{
+			controllerManager.forceQuitAllViews();
 			controllerManager.createControlledStartView();
 		}
 	}

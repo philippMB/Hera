@@ -1,9 +1,11 @@
 package View;
 
-import Controller_Interfaces.IController;
+import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
+import View_Interfaces.IMenuBar;
 import View_Interfaces.IView;
+import com.sun.istack.internal.Nullable;
 
 import javax.swing.*;
 import java.nio.file.Path;
@@ -22,8 +24,9 @@ public abstract class DialogView
 	protected ITextFacade myTextBundle;
 	protected PanelBuilder myBuilder;
 
-	public DialogView(String titleConstant){
-		super();
+
+	public DialogView(@Nullable JFrame parentView, String titleConstant){
+		super(parentView);
 
 		setSize(300,200);   //approx. size so that the correct factory can be build.
 		setResizable(false);
@@ -75,7 +78,7 @@ public abstract class DialogView
 	}
 
 	@Override
-	public void addController(IController newController)
+	public void addController(IViewController newController)
 	{
 		if(myButtons != null)
 		{
@@ -93,6 +96,10 @@ public abstract class DialogView
 	@Override
 	public void showView()
 	{
+		if(getParent() != null)
+		{
+			setLocationRelativeTo(getParent());
+		}
 		setModal(true);
 		setVisible(true);
 	}
@@ -123,6 +130,17 @@ public abstract class DialogView
 	public void update(Observable o, Object arg)
 	{
 		//As default dialogs do not have to be updated
+	}
+
+	/**
+	 * Returns the belonging menu bar
+	 *
+	 * @return Menu bar which belongs to the view
+	 */
+	@Override
+	public IMenuBar getViewMenu()
+	{
+		return null;
 	}
 
 	protected abstract void init();

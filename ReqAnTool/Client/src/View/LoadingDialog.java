@@ -19,10 +19,13 @@ public class LoadingDialog
 	private static final String PATH_TO_LOADING_GIF =
 			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/loading_small.gif";
 
+	private boolean isDestructed;
 
-	public LoadingDialog()
+
+	public LoadingDialog(JFrame parentView)
 	{
-		super(DialogConstants.DIALOG_LOADING);
+		super(parentView, DialogConstants.DIALOG_LOADING);
+		isDestructed = false;
 		init();
 	}
 
@@ -49,7 +52,19 @@ public class LoadingDialog
 	public void showView()
 	{
 		SwingUtilities.invokeLater(
-				() -> {setModal(true);setVisible(true);}
+				() -> {
+					if(!isDestructed)
+					{
+						super.showView();
+					}
+				}
 		);
+	}
+
+	@Override
+	public void destruct()
+	{
+		isDestructed = true;
+		super.destruct();
 	}
 }

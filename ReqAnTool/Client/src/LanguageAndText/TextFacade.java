@@ -1,13 +1,13 @@
 package LanguageAndText;
 
 import Controller_Interfaces.ViewActions;
-import Model_Interfaces.ErrorCodes;
 
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * This class is a realisation of {@link ITextFacade} and handles the different property files with objects of
@@ -37,6 +37,7 @@ public class TextFacade
 	private TextResourceBundle dialogTextBundle;
 	private TextResourceBundle parameterTextBundle;
 	private TextResourceBundle titleTextBundle;
+	private NumberFormat numberFormatter;
 	private Locale currentLocalisation;
 
 	/**
@@ -60,6 +61,7 @@ public class TextFacade
 		dialogTextBundle = new TextResourceBundle(BASE_NAME+"_dialog_converted", currentLocalisation,loader);
 		parameterTextBundle = new TextResourceBundle(BASE_NAME+"_parameter_converted", currentLocalisation,loader);
 		titleTextBundle = new TextResourceBundle(BASE_NAME+"_title_converted", currentLocalisation,loader);
+		numberFormatter = NumberFormat.getInstance(currentLocalisation);
 	}
 
 	/**
@@ -101,6 +103,7 @@ public class TextFacade
 			dialogTextBundle.setLocalisation(newLocalisation);
 			parameterTextBundle.setLocalisation(newLocalisation);
 			titleTextBundle.setLocalisation(newLocalisation);
+			numberFormatter = NumberFormat.getInstance(newLocalisation);
 			currentLocalisation = newLocalisation;
 		}
 
@@ -220,4 +223,62 @@ public class TextFacade
 		return titleTextBundle.getString(titleName);
 	}
 
+	/**
+	 * Parses a string to a number within a specific {@link Locale}.
+	 * The given string parameter will be parsed to a {@link Number} object from which the client can get different
+	 * types of numbers (int, double, float etc.). While doing this the current location is taken into account
+	 * which was set by {@link ITextFacade#setLocalisation(Locale)}. This is done to deal with e.g. double values
+	 * independently of a language (european: "5,2" english: "5.2").
+	 *
+	 * @param stringToParse String which should be parsed
+	 *
+	 * @return The parsed {@link Number} object. If it could not be parsed a null value will be returned.
+	 */
+	@Override
+	public Number convertStringToNumber(String stringToParse)
+	{
+		Number parsedNumber;
+		try{
+			parsedNumber = numberFormatter.parse(stringToParse);
+		}
+		catch (ParseException e)
+		{
+			parsedNumber = null;
+		}
+		return parsedNumber;
+	}
+
+	/**
+	 * Converts a double to a string within a specific {@link Locale}.
+	 * The given double value will be converted taking the current location in account. This method is the counterpart
+	 * to {@link ITextFacade#convertStringToNumber(String)} and similar to
+	 * {@link ITextFacade#convertIntegerToString(int)}.
+	 *
+	 * @param doubleToParse Double value which should be converted to string
+	 *
+	 * @return String converted from given double
+	 */
+	@Override
+	public String convertDoubleToString(double doubleToParse)
+	{
+		String doubleString = numberFormatter.format(doubleToParse);
+		return doubleString;
+	}
+
+	/**
+	 * Converts an integer to a string within a specific {@link Locale}.
+	 * The given integer value will be converted taking the current location in account. This method is the counterpart
+	 * to {@link ITextFacade#convertStringToNumber(String)} and similar to
+	 * {@link ITextFacade#convertDoubleToString(double)}.
+	 *
+	 * @param integerToParse Integer value which should be converted to string
+	 *
+	 * @return String converted from given integer
+	 */
+	@Override
+	public String convertIntegerToString(int integerToParse)
+	{
+		String integerString = numberFormatter.format(integerToParse);
+		return integerString;
+	}
 }

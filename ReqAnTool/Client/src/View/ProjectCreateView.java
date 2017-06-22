@@ -60,6 +60,7 @@ public class ProjectCreateView
 		add(myBuilder.getResult(), BorderLayout.CENTER);
 		setActionCommands();
 		pack();
+		setLocationRelativeTo(null);
 	}
 
 	private void buildProjectSection()

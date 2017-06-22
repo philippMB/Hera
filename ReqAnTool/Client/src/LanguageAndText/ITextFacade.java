@@ -106,4 +106,35 @@ public interface ITextFacade
 	 */
 	public String getTitleText(String titleName);
 
+	/**
+	 * Converts a string to a number within a specific {@link Locale}.
+	 * The given string parameter will be parsed to a {@link Number} object from which the client can get different
+	 * types of numbers (int, double, float etc.). While doing this the current location is taken into account
+	 * which was set by {@link ITextFacade#setLocalisation(Locale)}. This is done to deal with e.g. double values
+	 * independently of a language (european: "5,2" english: "5.2").
+	 * @param stringToParse String which should be parsed
+	 * @return The parsed {@link Number} object. If it could not be parsed a null value will be returned.
+	 */
+	public Number convertStringToNumber(String stringToParse);
+
+	/**
+	 * Converts a double to a string within a specific {@link Locale}.
+	 * The given double value will be converted taking the current location in account. This method is the counterpart
+	 * to {@link ITextFacade#convertStringToNumber(String)} and similar to
+	 * {@link ITextFacade#convertIntegerToString(int)}.
+	 * @param doubleToParse Double value which should be converted to string
+	 * @return String converted from given double
+	 */
+	public String convertDoubleToString(double doubleToParse);
+
+	/**
+	 * Converts an integer to a string within a specific {@link Locale}.
+	 * The given integer value will be converted taking the current location in account. This method is the counterpart
+	 * to {@link ITextFacade#convertStringToNumber(String)} and similar to
+	 * {@link ITextFacade#convertDoubleToString(double)}.
+	 * @param integerToParse Integer value which should be converted to string
+	 * @return String converted from given integer
+	 */
+	public String convertIntegerToString(int integerToParse);
+
 }

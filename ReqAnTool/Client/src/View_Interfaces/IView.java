@@ -1,7 +1,9 @@
 package View_Interfaces;
 
-import Controller_Interfaces.IController;
+import Controller_Interfaces.IViewController;
+import com.sun.istack.internal.Nullable;
 
+import javax.swing.*;
 import java.util.Observer;
 
 
@@ -24,7 +26,7 @@ import java.util.Observer;
  * </p>
  * @author 9045534
  * @version 1.1
- * @see IController
+ * @see IViewController
  * @see java.awt.event.ActionListener
  * @see java.awt.event.WindowListener
  * @see Observer
@@ -38,7 +40,7 @@ public interface IView
 	 * {@link java.awt.event.WindowListener} to the frame if supported by the view.
 	 * @param newController Controller that should be added to the view
 	 */
-	public void addController(IController newController);
+	public void addController(IViewController newController);
 
 	/**
 	 * Sets a created view visible. Splits the creation and setting visible (for performance)
@@ -54,5 +56,11 @@ public interface IView
 	 * Brings view to the front
 	 */
 	public void bringToFront();
+
+	/**
+	 * Returns the belonging menu bar
+	 * @return Menu bar which belongs to the view
+	 */
+	public @Nullable IMenuBar getViewMenu();
 
 }

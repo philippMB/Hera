@@ -1,30 +1,28 @@
 package Controller;
 
 import LanguageAndText.DialogConstants;
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.ICostEstimationTab;
+import View_Interfaces.IView;
 
 /**
  * Created by phlippe on 17.06.17.
  */
 public class CostEstimationTabController
-	extends BasicController<ICostEstimationTab>
+	extends TabController<ICostEstimationTab>
 {
 
-	public CostEstimationTabController(IModel model, ICostEstimationTab viewToBeControlled)
+	public CostEstimationTabController(IModel model, IView parentView, ICostEstimationTab viewToBeControlled)
 	{
-		super(model, viewToBeControlled);
+		super(model, parentView, viewToBeControlled);
 	}
 
 	@Override
 	protected void executeShowCEAction()
 	{
 		//TODO: Implement this method
-		if(myModel.getCostEstimation() == null)
-		{
-			myModel.addCostEstimation();
-		}
 		controllerManager.createControlledCostEstShowView();
 	}
 
@@ -43,7 +41,9 @@ public class CostEstimationTabController
 	@Override
 	protected void executeOptimizeWFAction()
 	{
+
 		controllerManager.createControlledWarningDialog(
+				parentView,
 				DialogConstants.DIALOG_WFOPT_WARNING,
 				new WarningController(myModel, null)
 				{
@@ -72,13 +72,39 @@ public class CostEstimationTabController
 	@Override
 	protected void executeDeleteCEAction()
 	{
-		//TODO: Implement this method
+		controllerManager.createControlledWarningDialog(
+				parentView,
+				DialogConstants.DIALOG_DELETE_WARNING,
+				new String[]{
+						myTextBundle.getParameterText(TextNameConstants.PAR_COST_EST)
+				},
+				new WarningController(myModel, null)
+				{
+					@Override
+					protected void executeDeleteAction()
+					{
+						deleteCostEstimation();
+						closeView();
+					}
+
+					@Override
+					protected void executeCancelAction()
+					{
+						closeView();
+					}
+				}
+		);
+	}
+
+	private void deleteCostEstimation()
+	{
+		//TODO:Implement this method
 	}
 
 	@Override
 	protected void executeEnterASAction()
 	{
-		controllerManager.createControlledActualStateEditView();
+		controllerManager.createControlledActualStateEditView(parentView);
 	}
 
 }

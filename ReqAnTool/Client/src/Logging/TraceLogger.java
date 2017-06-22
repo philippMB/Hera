@@ -89,7 +89,7 @@ public class TraceLogger
 				"\n" + msg + "\n" +
 				makeExceptionText(thrownException);
 
-		this.warning(warnMessage);
+		super.warning(warnMessage);
 	}
 
 	/**

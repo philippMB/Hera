@@ -72,6 +72,8 @@ public abstract class TextNameConstants
 	public static final String TITLE_PROJECT_CREATE = "PROJECT_CREATE";
 	public static final String TITLE_SUPPLIER = "SUPPLIER";
 	public static final String TITLE_INFO = "INFO";
+	public static final String TITLE_FILE_MENU = "FILE_MENU";
+	public static final String TITLE_EDIT_MENU = "EDIT_MENU";
 
 	/**
 	 * Constants for parameter-properties file

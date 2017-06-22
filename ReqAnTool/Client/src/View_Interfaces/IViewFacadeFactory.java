@@ -20,7 +20,7 @@ public interface IViewFacadeFactory
 		return ViewFacadeFactory.getInstance(model);
 	}
 
-	public IActualStateEditView createActualStateEditView();
+	public IActualStateEditView createActualStateEditView(@Nullable IView parentView);
 
 	public IAdditionTab createAdditionTab(@NotNull IProjectView tabView);
 
@@ -32,13 +32,15 @@ public interface IViewFacadeFactory
 
 	public ICustomerTab createCustomerTab(@NotNull IProjectView tabView);
 
-	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode);
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode);
 
-	public IErrorDialog createErrorDialog(@NotNull ErrorCodes errorCode, @Nullable String[] placeholderInText);
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode,
+										  @Nullable String[] placeholderInText);
 
-	public IErrorDialog createErrorDialog(@NotNull String title, @NotNull String message);
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull String title,
+										  @NotNull String message);
 
-	public IFileChooser createFileChooser(@Nullable JFrame parentView, @NotNull FileAccessType accessType);
+	public IFileChooser createFileChooser(@Nullable IView parentView, @NotNull FileAccessType accessType);
 
 	public IFRequirementEditView createIFRequirementAddView();
 
@@ -86,22 +88,27 @@ public interface IViewFacadeFactory
 
 	public ITargetDefinitionTab createTargetDefinitionTab(@NotNull IProjectView tabView);
 
-	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName);
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String dialogPropertyName);
 
-	public IWarningDialog createWarningDialog(@NotNull String dialogPropertyName,@Nullable String[] placeholderInText);
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String dialogPropertyName,
+											  @Nullable String[] placeholderInText);
 
-	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription);
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String warnTitle,
+											  @NotNull String warnDescription);
 
-	public IWarningDialog createWarningDialog(@NotNull String warnTitle, @NotNull String warnDescription,
+	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String warnTitle,
+											  @NotNull String warnDescription,
 											  @NotNull ViewActions[] warnButtonActions);
 
-	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName);
+	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String dialogPropertyName);
 
-	public IInfoDialog createInfoDialog(@NotNull String dialogPropertyName,@Nullable String[] placeholderInText);
+	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String dialogPropertyName,
+										@Nullable String[] placeholderInText);
 
-	public IInfoDialog createInfoDialog(@NotNull String warnTitle, @NotNull String warnDescription);
+	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String warnTitle,
+										@NotNull String warnDescription);
 
-	public ILoadingDialog createLoadingDialog();
+	public ILoadingDialog createLoadingDialog(@Nullable IView parentView);
 
 	public IWeightFactorEditView createWeightFactorEditView();
 

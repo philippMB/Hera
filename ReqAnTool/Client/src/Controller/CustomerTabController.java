@@ -5,6 +5,7 @@ import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.ICustomerTab;
+import View_Interfaces.IView;
 
 import java.util.ArrayList;
 
@@ -12,12 +13,12 @@ import java.util.ArrayList;
  * Created by phlippe on 16.06.17.
  */
 public class CustomerTabController
-	extends BasicController<ICustomerTab>
+	extends TabController<ICustomerTab>
 {
 
-	public CustomerTabController(IModel model, ICustomerTab viewToBeControlled)
+	public CustomerTabController(IModel model, IView parentView, ICustomerTab viewToBeControlled)
 	{
-		super(model, viewToBeControlled);
+		super(model, parentView, viewToBeControlled);
 	}
 
 	@Override
@@ -43,8 +44,9 @@ public class CustomerTabController
 		}
 		else
 		{
-			//TODO: Info to user that names are saved
-			controllerManager.createControlledInfoDialog(DialogConstants.DIALOG_INFO_SAVING_DATA,
+			controllerManager.createControlledInfoDialog(
+					parentView,
+					DialogConstants.DIALOG_INFO_SAVING_DATA,
 					new String[]{
 						myTextBundle.getParameterText(TextNameConstants.PAR_CUSTOMER)
 					});
@@ -54,7 +56,9 @@ public class CustomerTabController
 	@Override
 	protected void executeResetAction()
 	{
-		controllerManager.createControlledInfoDialog(DialogConstants.DIALOG_INFO_SAVING_DATA,
+		controllerManager.createControlledInfoDialog(
+				parentView,
+				DialogConstants.DIALOG_INFO_SAVING_DATA,
 				new String[]{
 						myTextBundle.getParameterText(TextNameConstants.PAR_CUSTOMER)
 				});

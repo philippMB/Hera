@@ -1,5 +1,6 @@
 package Controller;
 
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IFRequirementEditView;
@@ -26,7 +27,7 @@ public class FRequirementEditController
 	@Override
 	protected boolean tryToSaveReq()
 	{
-		boolean reqIsSaved = false;
+		boolean reqIsSaved;
 		ErrorCodes saveError;
 		ArrayList<String> referenceList = new ArrayList<>( Arrays.asList(myView.getRefEntry()) );
 
@@ -65,19 +66,12 @@ public class FRequirementEditController
 	}
 
 	@Override
-	protected void executeSaveAction()
+	protected String[] createSaveDataWarningPlaceholder()
 	{
-		boolean couldBeSaved = tryToSaveReq();
-		if(couldBeSaved)
-		{
-			closeView();
-		}
+		return new String[]{
+				myTextBundle.getParameterText(TextNameConstants.PAR_FREQ) + " " + myReqID
+		};
 	}
 
-	@Override
-	protected void executeCancelAction()
-	{
-		closeView();
-	}
 
 }

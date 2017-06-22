@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
  * Created by phlippe on 11.05.17.
  */
 public class ProjectViewController
-		extends BasicController <IProjectView>
+		extends BasicViewController<IProjectView>
 {
 
 	boolean couldBeClosed;
@@ -51,6 +51,7 @@ public class ProjectViewController
 		if(!couldBeClosed)
 		{
 			controllerManager.createControlledWarningDialog(
+					myView,
 					DialogConstants.DIALOG_SAVE_REQAN_WARNING,
 					new SaveWarningController(myModel, null)
 					{

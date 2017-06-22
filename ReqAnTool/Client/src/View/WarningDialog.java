@@ -1,15 +1,14 @@
 package View;
 
-import Controller_Interfaces.IController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
 import View_Interfaces.IWarningDialog;
+import com.sun.istack.internal.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Observable;
 
 /**
  * Created by phlippe on 27.04.17.
@@ -31,20 +30,23 @@ public class WarningDialog
 	private String description;
 
 
-	public WarningDialog(String warnTitle, String warnDescription){
-		super(TextNameConstants.TITLE_WARNING);
-		title = warnTitle;
-		description = warnDescription;
-		setButtonActions(DEFAULT_BUTTON_ACTIONS);
-
-		init();
+	public WarningDialog(@Nullable JFrame parentView, String warnTitle, String warnDescription){
+		this(parentView, warnTitle, warnDescription, null);
 	}
 
-	public WarningDialog(String warnTitle, String warnDescription, ViewActions[] warnButtonActions){
-		super(TextNameConstants.TITLE_WARNING);
+	public WarningDialog(@Nullable JFrame parentView, String warnTitle, String warnDescription,
+						 @Nullable ViewActions[] warnButtonActions){
+		super(parentView, TextNameConstants.TITLE_WARNING);
 		title = warnTitle;
 		description = warnDescription;
-		setButtonActions(warnButtonActions);
+		if(warnButtonActions != null)
+		{
+			setButtonActions(warnButtonActions);
+		}
+		else
+		{
+			setButtonActions(DEFAULT_BUTTON_ACTIONS);
+		}
 
 		init();
 	}

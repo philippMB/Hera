@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
  * Created by phlippe on 17.06.17.
  */
 public class LoadingController
-	extends BasicController<ILoadingDialog>
+	extends BasicViewController<ILoadingDialog>
 {
 
 

@@ -7,7 +7,7 @@ import View_Interfaces.IView;
  * Created by phlippe on 17.06.17.
  */
 public class DialogController<DialogType extends IView>
-	extends BasicController<DialogType>
+	extends BasicViewController<DialogType>
 {
 
 

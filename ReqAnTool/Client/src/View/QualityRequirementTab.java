@@ -32,12 +32,12 @@ public class QualityRequirementTab
 	}
 
 	@Override
-	protected String[][] getTableEntries()
+	protected String[][] createTableEntries()
 	{
 		String[][] tableEntries;
 		ArrayList<IQualityRequirement> allQualityRequirements = myModel.getAllQualReq();
 
-		tableEntries = new String[allQualityRequirements.size()][getColumnNames().length];
+		tableEntries = new String[allQualityRequirements.size()][createColumnNames().length];
 
 		for(int row = 0; row < tableEntries.length; row++)
 		{
@@ -70,7 +70,7 @@ public class QualityRequirementTab
 	}
 
 	@Override
-	protected String[] getColumnNames()
+	protected String[] createColumnNames()
 	{
 		return new String[]{
 				myTextBundle.getParameterText(TextNameConstants.PAR_NAME),

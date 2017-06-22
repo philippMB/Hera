@@ -5,7 +5,6 @@ import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.IFRequirementTab;
 
-import javax.xml.soap.Text;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -34,12 +33,12 @@ public class FRequirementTab
 	}
 
 	@Override
-	protected String[][] getTableEntries()
+	protected String[][] createTableEntries()
 	{
 		String[][] tableEntries;
 		ArrayList<IFRequirement> allFRequirements = myModel.getAllFReq();
 
-		tableEntries = new String[allFRequirements.size()][getColumnNames().length];
+		tableEntries = new String[allFRequirements.size()][createColumnNames().length];
 
 		for(int row = 0; row < tableEntries.length; row++)
 		{
@@ -54,7 +53,7 @@ public class FRequirementTab
 	}
 
 	@Override
-	protected String[] getColumnNames()
+	protected String[] createColumnNames()
 	{
 		return new String[]{
 				myTextBundle.getParameterText(TextNameConstants.PAR_ID),

@@ -8,12 +8,12 @@ import View_Interfaces.IView;
  * Created by phlippe on 11.05.17.
  */
 public abstract class TableTabController <TableTabType extends ITableTab>
-	extends BasicController <TableTabType>
+	extends TabController<TableTabType>
 {
 
-	public TableTabController(IModel model, TableTabType tableTab)
+	public TableTabController(IModel model, IView parentView, TableTabType tableTab)
 	{
-		super(model, tableTab);
+		super(model, parentView, tableTab);
 	}
 
 	protected String getSelectedIdentifier()

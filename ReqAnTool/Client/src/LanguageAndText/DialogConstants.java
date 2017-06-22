@@ -39,6 +39,7 @@ public abstract class DialogConstants
 	public static final String DIALOG_WFOPT_WARNING = "WFOPT_WARNING";
 	public static final String DIALOG_INFO_SAVING_DATA = "INFO_SAVING_DATA";
 	public static final String DIALOG_INFO_SAVING_FILE = "INFO_SAVING_FILE";
+	public static final String DIALOG_INFO_EXPORT_FILE = "INFO_EXPORT_FILE";
 	public static final String DIALOG_INFO_NOT_IMPLEMENTED = "INFO_NOT_IMPLEMENTED";
 	public static final String DIALOG_LOADING = "LOADING";
 

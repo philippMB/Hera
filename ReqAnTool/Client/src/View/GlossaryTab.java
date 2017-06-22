@@ -3,8 +3,6 @@ package View;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IGlossaryEntry;
 import Model_Interfaces.IModelGetData;
-import Model_Interfaces.IProductData;
-import View.TableTab;
 import View_Interfaces.IGlossaryTab;
 
 import java.awt.*;
@@ -34,12 +32,12 @@ public class GlossaryTab
 	}
 
 	@Override
-	protected String[][] getTableEntries()
+	protected String[][] createTableEntries()
 	{
 		String[][] tableEntries;
 		ArrayList<IGlossaryEntry> allGlossaryEntries = myModel.getAllGlossEntries();
 
-		tableEntries = new String[allGlossaryEntries.size()][getColumnNames().length];
+		tableEntries = new String[allGlossaryEntries.size()][createColumnNames().length];
 
 		for(int row = 0; row < tableEntries.length; row++)
 		{
@@ -53,7 +51,7 @@ public class GlossaryTab
 	}
 
 	@Override
-	protected String[] getColumnNames()
+	protected String[] createColumnNames()
 	{
 		return new String[]{
 				myTextBundle.getParameterText(TextNameConstants.PAR_TERM),

@@ -11,13 +11,13 @@ import View_Interfaces.IView;
  * Created by phlippe on 11.05.17.
  */
 public class FRequirementTabController
-	extends TableTabController <IFRequirementTab>
+	extends TableTabController<IFRequirementTab>
 {
 
 
-	public FRequirementTabController(IModel model, IFRequirementTab fRequirementTab)
+	public FRequirementTabController(IModel model, IView parentView, IFRequirementTab fRequirementTab)
 	{
-		super(model,fRequirementTab);
+		super(model, parentView, fRequirementTab);
 	}
 
 	@Override
@@ -45,7 +45,6 @@ public class FRequirementTabController
 	protected void executeShowAction()
 	{
 		String ID = getSelectedIdentifier();
-		System.out.println("Show "+ID);
 		if(ID != null)
 		{
 			controllerManager.createControlledFRequirementShowView(ID);
@@ -60,6 +59,7 @@ public class FRequirementTabController
 	protected void executeDeleteAction()
 	{
 		controllerManager.createControlledWarningDialog(
+				parentView,
 				DialogConstants.DIALOG_DELETE_WARNING,
 				new String[]{
 						myTextBundle.getParameterText(TextNameConstants.PAR_FREQ) + " " + getSelectedIdentifier()
@@ -76,7 +76,7 @@ public class FRequirementTabController
 					@Override
 					protected void cancelDeletion()
 					{
-						//Do nothing
+						closeView();
 					}
 				}
 		);

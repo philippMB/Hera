@@ -32,32 +32,42 @@ public class ErrorDialog
 	private String title;
 
 
-	public ErrorDialog(ErrorCodes errorCode){
-		super(TextNameConstants.TITLE_ERROR);
+	public ErrorDialog(JFrame parentView, ErrorCodes errorCode){
+		super(parentView, TextNameConstants.TITLE_ERROR);
 
 		String errorCodeString = errorCode.toString();
-		this.title = myTextBundle.getTitleText(errorCodeString);
-		this.descriptionText = myTextBundle.getDialogText(errorCodeString);
+		initText(
+				myTextBundle.getTitleText(errorCodeString),
+				myTextBundle.getDialogText(errorCodeString)
+		);
+
 
 		init();
 	}
 
-	public ErrorDialog(ErrorCodes errorCode, String[] placeholderInText){
-		super(TextNameConstants.TITLE_ERROR);
+	public ErrorDialog(JFrame parentView, ErrorCodes errorCode, String[] placeholderInText){
+		super(parentView, TextNameConstants.TITLE_ERROR);
 
 		String errorCodeString = errorCode.toString();
-		this.title = myTextBundle.getTitleText(errorCodeString);
-		this.descriptionText = myTextBundle.getDialogText(errorCodeString, placeholderInText);
+		initText(
+				myTextBundle.getTitleText(errorCodeString),
+				myTextBundle.getDialogText(errorCodeString, placeholderInText)
+		);
 
 		init();
 	}
 
-	public ErrorDialog(String title, String errorDescription){
-		super(TextNameConstants.TITLE_ERROR);
+	public ErrorDialog(JFrame parentView, String title, String errorDescription){
+		super(parentView, TextNameConstants.TITLE_ERROR);
+
+		initText(title, errorDescription);
+		init();
+	}
+
+	private void initText(String title, String descriptionText)
+	{
 		this.title = title;
-		descriptionText = errorDescription;
-
-		init();
+		this.descriptionText = descriptionText;
 	}
 
 	private Path getErrorImagePath()

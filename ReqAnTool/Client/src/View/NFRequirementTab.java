@@ -1,7 +1,6 @@
 package View;
 
 import LanguageAndText.TextNameConstants;
-import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
 import View_Interfaces.INFRequirementTab;
@@ -33,12 +32,12 @@ public class NFRequirementTab
 	}
 
 	@Override
-	protected String[][] getTableEntries()
+	protected String[][] createTableEntries()
 	{
 		String[][] tableEntries;
 		ArrayList<INFRequirement> allNFRequirements = myModel.getAllNFReq();
 
-		tableEntries = new String[allNFRequirements.size()][getColumnNames().length];
+		tableEntries = new String[allNFRequirements.size()][createColumnNames().length];
 
 		for(int row = 0; row < tableEntries.length; row++)
 		{
@@ -53,7 +52,7 @@ public class NFRequirementTab
 	}
 
 	@Override
-	protected String[] getColumnNames()
+	protected String[] createColumnNames()
 	{
 		return new String[]{
 				myTextBundle.getParameterText(TextNameConstants.PAR_ID),

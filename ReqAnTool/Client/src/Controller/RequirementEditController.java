@@ -1,6 +1,7 @@
 package Controller;
 
 import LanguageAndText.DialogConstants;
+import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IRequirementFormView;
 
@@ -11,15 +12,17 @@ import java.util.Arrays;
  * Created by phlippe on 04.06.17.
  */
 public abstract class RequirementEditController<ViewType extends IRequirementFormView>
-	extends BasicController<ViewType>
+	extends BasicViewController<ViewType>
 {
 
 	private boolean readyForBeClosed;
+	protected String myReqID;
 
 
 	public RequirementEditController(IModel model, ViewType viewToBeControlled)
 	{
 		super(model, viewToBeControlled);
+		myReqID = myView.getIDEntry();
 	}
 
 	@Override
@@ -57,7 +60,9 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		//TODO: Ask if changes should be deleted
+		canViewBeClosed();
+		super.windowClosing(e);
+		//TODO: Stop closing
 	}
 
 	@Override
@@ -65,10 +70,9 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 	{
 		readyForBeClosed = isReqEqualsViewEntries();
 		controllerManager.createControlledWarningDialog(
-				DialogConstants.DIALOG_SAVE_REQAN_WARNING,
-				new String[]{
-
-				},
+				myView,
+				DialogConstants.DIALOG_SAVE_DATA_WARNING,
+				createSaveDataWarningPlaceholder(),
 				new SaveWarningController(myModel, null)
 				{
 					@Override
@@ -96,6 +100,34 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 		return readyForBeClosed;
 	}
 
+	@Override
+	protected void executeSaveAction()
+	{
+		boolean couldBeSaved = tryToSaveReq();
+		if(couldBeSaved)
+		{
+			closeView();
+		}
+	}
+
+	@Override
+	protected void executeCancelAction()
+	{
+		closeView();
+	}
+
+	@Override
+	protected void handleECDuplicate(int errorID)
+	{
+		controllerManager.createControlledErrorDialog(
+				myView,
+				ErrorCodes.DUPLICATE,
+				new String[]{
+						myReqID
+				}
+		);
+	}
+
 	private boolean isReqEqualsViewEntries()
 	{
 		//TODO: Compare given Requirement to the entries in view (if req null, everytime false)
@@ -103,5 +135,7 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 	}
 
 	protected abstract boolean tryToSaveReq();
+
+	protected abstract String[] createSaveDataWarningPlaceholder();
 
 }

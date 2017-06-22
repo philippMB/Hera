@@ -8,7 +8,7 @@ import View_Interfaces.IActualStateEditView;
  * Created by phlippe on 17.06.17.
  */
 public class ActualStateEditController
-	extends BasicController<IActualStateEditView>
+	extends BasicViewController<IActualStateEditView>
 {
 
 
@@ -21,38 +21,21 @@ public class ActualStateEditController
 	protected void executeSaveAction()
 	{
 		String actualStateEntry = myView.getActualState();
-		Double actualState = parseToDouble(actualStateEntry);
-		if(actualState != null)
+		Number actualStateNumber = myTextBundle.convertStringToNumber(actualStateEntry);
+		if(actualStateNumber != null)
 		{
-			saveActualState(actualState);
+			saveActualState(actualStateNumber.doubleValue());
 		}
 		else
 		{
 			controllerManager.createControlledErrorDialog(
+					myView,
 					ErrorCodes.STRING_NO_DOUBLE,
 					new String[]{
 						actualStateEntry
 					}
 			);
 		}
-	}
-
-	private Double parseToDouble(String castToDouble)
-	{
-		Double result = null;
-		try{
-			result = Double.parseDouble(castToDouble);
-		}
-		catch(NumberFormatException ex)
-		{
-			myLogger.info("Tried to parse \""+castToDouble+"\" to double but it was not possible:\n"+
-							ex.getMessage());
-		}
-		catch(NullPointerException ex)
-		{
-			myLogger.warning("Tried to parse a string to double but it was null", ex);
-		}
-		return result;
 	}
 
 	private void saveActualState(double actualState)

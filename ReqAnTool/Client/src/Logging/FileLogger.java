@@ -2,10 +2,7 @@ package Logging;
 
 import java.io.IOException;
 import java.util.MissingResourceException;
-import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 /**
  * This logger sets a basic structure for handling logfiles.
@@ -36,6 +33,16 @@ public abstract class FileLogger
 	extends Logger
 	implements ILogger
 {
+
+	/**
+	 * Defines the maximum size of a file in bytes.
+	 */
+	private static final int MAX_BYTE_SIZE = 100000;
+	/**
+	 * Specifies how many output files to cycle through
+	 */
+	private static final int FILE_COUNT = 2;
+
 
 	/**
 	 * Protected method to construct a logger for a named subsystem.
@@ -70,13 +77,13 @@ public abstract class FileLogger
 	 */
 	private void buildFileHandler(String filename, boolean append)
 	{
-		FileHandler fh;
 		try
 		{
 			// This block configure the loggers handler and formatter
-			fh = new FileHandler(filename + ".log", append);
-			addHandler(fh);
+
+			FileHandler fh = new FileHandler(filename + ".log", MAX_BYTE_SIZE, FILE_COUNT, append);
 			fh.setFormatter( createFormatter() );
+			addHandler(fh);
 		}
 		catch (SecurityException e)
 		{

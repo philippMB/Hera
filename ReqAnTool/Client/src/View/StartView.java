@@ -1,18 +1,15 @@
 package View;
 
-import Controller_Interfaces.IController;
+import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import LanguageAndText.TextNameConstants;
+import View_Interfaces.IMenuBar;
 import View_Interfaces.IStartView;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Observable;
 
@@ -35,6 +32,7 @@ public class StartView
 	private PanelBuilder myBuilder;
 	private ITextFacade myTextBundle;
 	private JButton[] myButtons;
+	private MenuBar myMenuBar;
 
 
 	public StartView()
@@ -44,7 +42,9 @@ public class StartView
 		setTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_REQAN_TOOL));
 		setSize(500,500);
 		myBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
+		myMenuBar = new StandardMenuBar(false);
 
+		setJMenuBar(myMenuBar);
 		init();
 	}
 
@@ -80,7 +80,7 @@ public class StartView
 	}
 
 	@Override
-	public void addController(IController newController)
+	public void addController(IViewController newController)
 	{
 		for(JButton b: myButtons)
 		{
@@ -116,4 +116,14 @@ public class StartView
 		//Nothing to be updated
 	}
 
+	/**
+	 * Returns the belonging menu bar
+	 *
+	 * @return Menu bar which belongs to the view
+	 */
+	@Override
+	public IMenuBar getViewMenu()
+	{
+		return myMenuBar;
+	}
 }

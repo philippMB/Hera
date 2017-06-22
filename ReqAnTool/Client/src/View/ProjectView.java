@@ -1,10 +1,10 @@
 package View;
 
-import Controller_Interfaces.IController;
+import Controller_Interfaces.IViewController;
 import Logging.ILoggerFactory;
-import Logging.TraceLoggerFactory;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IRequirementAnalysis;
+import View_Interfaces.IMenuBar;
 import View_Interfaces.IProjectView;
 import View_Interfaces.ITab;
 
@@ -23,12 +23,15 @@ public class ProjectView
 	private JTabbedPane tabPanel;
 	private IModelGetData myModel;
 	private IRequirementAnalysis myAnalysis;
+	private MenuBar myMenuBar;
 
 
 	public ProjectView(IModelGetData model)
 	{
 		super();
 		myModel = model;
+		myMenuBar = new StandardMenuBar(true);
+		setJMenuBar(myMenuBar);
 		myAnalysis = myModel.getReqAnalysis();
 		if(myAnalysis != null)
 		{
@@ -52,12 +55,12 @@ public class ProjectView
 
 		tabPanel = new JTabbedPane();
 		getContentPane().add(tabPanel);
+		setLocationRelativeTo(null);
 	}
 
 	protected void addTab(String tabName, JPanel newTab)
 	{
 		tabPanel.add(tabName, newTab);
-		repaint();
 	}
 
 	@Override
@@ -67,7 +70,7 @@ public class ProjectView
 	}
 
 	@Override
-	public void addController(IController newController)
+	public void addController(IViewController newController)
 	{
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(newController);
@@ -77,7 +80,10 @@ public class ProjectView
 	public void showView()
 	{
 		SwingUtilities.invokeLater(
-				() -> setVisible(true)
+				() -> {
+					setVisible(true);
+					repaint();
+				}
 		);
 	}
 
@@ -100,4 +106,14 @@ public class ProjectView
 
 	}
 
+	/**
+	 * Returns the belonging menu bar
+	 *
+	 * @return Menu bar which belongs to the view
+	 */
+	@Override
+	public IMenuBar getViewMenu()
+	{
+		return myMenuBar;
+	}
 }
