@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * <p>
- * This class contains solely constants for the structure of common warning dialogs including
+ * This class solely contains constants for the structure of common warning dialogs including
  * <ul>
  *     <li>property names for the property file "dialog" to get language-independent message</li>
  *     <li>{@link ViewActions} of the buttons in a specific dialog</li>

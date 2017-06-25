@@ -21,7 +21,14 @@ public class CostEstimationEditView
 	implements ICostEstimationEditView
 {
 
-	private final ViewActions[] BUTTON_ACTIONS = {ViewActions.EDIT_EP, ViewActions.RATE_WF, ViewActions.SAVE,ViewActions.CANCEL};
+	//TODO: REFACTOR TABLE
+
+	private final ViewActions[] BUTTON_ACTIONS = {
+			ViewActions.EDIT_EP,
+			ViewActions.RATE_WF,
+			ViewActions.SAVE,
+			ViewActions.CANCEL
+	};
 
 	private IModelGetData myModel;
 	private JTable tableProcesses;

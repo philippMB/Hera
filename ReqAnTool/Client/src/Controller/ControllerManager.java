@@ -1,14 +1,10 @@
 package Controller;
 
-import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.DialogConstants;
 import Logging.ILogger;
 import Logging.ILoggerFactory;
-import Model.ProductData;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
-import Model_Interfaces.IProductData;
 import View_Interfaces.*;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
@@ -440,7 +436,7 @@ public class ControllerManager
 	}
 
 	/**
-	 * Creates an {@link View.ErrorDialog} corresponding to the given errorCode and a default {@link ErrorController}
+	 * Creates an {@link View.ErrorDialog} corresponding to the thrown exception and a default {@link ErrorController}
 	 * to control this dialog.
 	 * <p>
 	 *     <b>Caution:</b> calling this method will block the running thread until the generated dialog is closed.
@@ -448,17 +444,17 @@ public class ControllerManager
 	 *     the view is destructed after this method.
 	 * </p>
 	 * @param parentView View which calls this dialog. Could be null
-	 * @param errorCode Error which the dialog should show
+	 * @param thrownException Exception/Error which the dialog should show
 	 */
-	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode)
+	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException)
 	{
-		managerLogger.info("Creating ErrorDialog for error "+errorCode.toString());
-		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, errorCode);
+		managerLogger.info("Creating ErrorDialog for error "+thrownException.toString());
+		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, thrownException);
 		ErrorController controller = new ErrorController(myModel, myErrorDialog);
 	}
 
 	/**
-	 * Creates an {@link View_Interfaces.IErrorDialog} corresponding to the given errorCode and a default
+	 * Creates an {@link View_Interfaces.IErrorDialog} corresponding to the thrown exception and a default
 	 * {@link ErrorController} to control this dialog. The placeholder in the dialog text are replaced by elements of
 	 * the given string array.
 	 * <p>
@@ -467,23 +463,23 @@ public class ControllerManager
 	 *     the view is destructed after this method.
 	 * </p>
 	 * @param parentView View which calls this dialog. Could be null
-	 * @param errorCode Error which the dialog should show
+	 * @param thrownException Exception/Error which the dialog should show
 	 * @param placeholderInText Strings with which the placeholder in the dialog text should be replaced
 	 *                          (see {@link LanguageAndText.ITextFacade#getDialogText(String, String[])})
 	 * @see View_Interfaces.IErrorDialog
 	 * @see LanguageAndText.ITextFacade#getDialogText(String, String[])
 	 */
-	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode,
+	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException,
 											@Nullable String[] placeholderInText)
 	{
-		managerLogger.info("Creating ErrorDialog for error "+errorCode.toString()+
+		managerLogger.info("Creating ErrorDialog for error "+thrownException.toString()+
 				" with "+placeholderInText.length+" placeholder");
-		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, errorCode, placeholderInText);
+		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, thrownException, placeholderInText);
 		ErrorController controller = new ErrorController(myModel, myErrorDialog);
 	}
 
 	/**
-	 * Creates an {@link View_Interfaces.IErrorDialog} corresponding to the given errorCode. To this dialog the given
+	 * Creates an {@link View_Interfaces.IErrorDialog} corresponding to the thrown exception. To this dialog the given
 	 * {@link ErrorController} will be set as the controller. The controller will also be added to the list of all
 	 * controllers in the system.
 	 * <p>
@@ -492,20 +488,20 @@ public class ControllerManager
 	 *     the view is destructed after this method.
 	 * </p>
 	 * @param parentView View which calls this dialog. Could be null
-	 * @param errorCode Error which the dialog should show
+	 * @param thrownException Error which the dialog should show
 	 * @param controllerForErrorDialog Controller which will control the dialog
 	 * @see View_Interfaces.IErrorDialog
 	 */
-	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode,
+	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException,
 											@NotNull ErrorController controllerForErrorDialog)
 	{
-		managerLogger.info("Creating ErrorDialog for error "+errorCode.toString()+" with given controller");
-		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, errorCode);
+		managerLogger.info("Creating ErrorDialog for error "+thrownException.toString()+" with given controller");
+		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, thrownException);
 		controllerForErrorDialog.setView(myErrorDialog);
 	}
 
 	/**
-	 * Creates an {@link View_Interfaces.IErrorDialog} corresponding to the given errorCode. To this dialog the given
+	 * Creates an {@link View_Interfaces.IErrorDialog} corresponding to the thrown exception. To this dialog the given
 	 * {@link ErrorController} will be set as the controller. The controller will also be added to the list of all
 	 * controllers in the system. The placeholder in the dialog text are replaced by elements of the given string array.
 	 * <p>
@@ -514,20 +510,20 @@ public class ControllerManager
 	 *     the view is destructed after this method.
 	 * </p>
 	 * @param parentView View which calls
-	 * @param errorCode Error which the dialog should show
+	 * @param thrownException Exception/Error which the dialog should show
 	 * @param placeholderInText Strings with which the placeholder in the dialog text should be replaced
 	 *                          (see {@link LanguageAndText.ITextFacade#getDialogText(String, String[])})
 	 * @param controllerForErrorDialog Controller which will control the dialog
 	 * @see View_Interfaces.IErrorDialog
 	 * @see LanguageAndText.ITextFacade#getDialogText(String, String[])
 	 */
-	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode,
+	public void createControlledErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException,
 											@Nullable String[] placeholderInText,
 											@NotNull ErrorController controllerForErrorDialog)
 	{
-		managerLogger.info("Creating ErrorDialog for error "+errorCode.toString()+
+		managerLogger.info("Creating ErrorDialog for error "+thrownException.toString()+
 				" with "+placeholderInText.length+" placeholder and given controller");
-		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, errorCode, placeholderInText);
+		IErrorDialog myErrorDialog = myViewFacadeFactory.createErrorDialog(parentView, thrownException, placeholderInText);
 		controllerForErrorDialog.setView(myErrorDialog);
 	}
 

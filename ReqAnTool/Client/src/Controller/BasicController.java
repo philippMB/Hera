@@ -1,10 +1,10 @@
 package Controller;
 
 import Controller_Interfaces.ViewActions;
+import Exceptions.MissingReqAnException;
 import LanguageAndText.ITextFacade;
 import Logging.ILogger;
 import Logging.ILoggerFactory;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import com.sun.istack.internal.NotNull;
 
@@ -386,162 +386,30 @@ public class BasicController
 		actionLogger.warning( warningMsg );
 	}
 
-	protected void handleErrorCode(ErrorCodes errorCode)
+	protected void handleException(Exception thrownException)
 	{
-		handleErrorCode(errorCode, 0);
+		handleException(thrownException, 0);
 	}
 
-	protected void handleErrorCode(ErrorCodes errorCode, int errorID)
+	protected void handleException(Exception thrownException, int errorID)
 	{
-
-		switch(errorCode)
-		{
-			case NO_ERROR:
-				handleECNoError(errorID);
-				break;
-			case NO_REQAN:
-				handleECNoReqan(errorID);
-				break;
-			case DUPLICATE:
-				handleECDuplicate(errorID);
-				break;
-			case INVALID_ID:
-				handleECInvalidID(errorID);
-				break;
-			case INVALID_MAIL:
-				handleECInvalidMail(errorID);
-				break;
-			case INVALID_PHONE:
-				handleECInvalidPhone(errorID);
-				break;
-			case INVALID_ADDRESS:
-				handleECInvalidAddress(errorID);
-				break;
-			case INVALID_ARGUMENT:
-				handleECInvalidArgument(errorID);
-				break;
-			case NOT_EXISTENT:
-				handleECNotExistent(errorID);
-				break;
-			case NULL_POINTER:
-				handleECNullPointer(errorID);
-				break;
-			case LIST_OVERFLOW:
-				handleECListOverflow(errorID);
-				break;
-			case FP_NOT_EXISTENT:
-				handleECFPNotExistent(errorID);
-				break;
-			case NO_COST_ESTIMATION:
-				handleECNoCostEstimation(errorID);
-				break;
-			case REFERENCES_NOT_SOLVED:
-				handleECRefNotSolved(errorID);
-				break;
-			case REFERENCES_ON_ITEM_DELETED:
-				handleECRefOnItemDeleted(errorID);
-				break;
-			default:
-				handleDefaultEC();
-				break;
-		}
-
+		handleExByDefault(thrownException, errorID);
 	}
 
-	protected void handleECNoError(int errorID)
+	protected void handleExByDefault(Exception thrownException, int errorID)
 	{
-		//No action, when no error occurred
+		handleExByDialog(thrownException);
+		logException(thrownException, errorID);
 	}
 
-	protected void handleECNoReqan(int errorID)
+	protected void handleExByDialog(Exception thrownException)
 	{
-		handleECByDefault(ErrorCodes.NO_REQAN, errorID);
+		controllerManager.createControlledErrorDialog(null, thrownException);
 	}
 
-	protected void handleECDuplicate(int errorID)
+	protected void logException(Exception thrownException, int errorID)
 	{
-		handleECByDefault(ErrorCodes.DUPLICATE, errorID);
-	}
-
-	protected void handleECInvalidID(int errorID)
-	{
-		handleECByDefault(ErrorCodes.INVALID_ID, errorID);
-	}
-
-	protected void handleECInvalidMail(int errorID)
-	{
-		handleECByDefault(ErrorCodes.INVALID_MAIL, errorID);
-	}
-
-	protected void handleECInvalidPhone(int errorID)
-	{
-		handleECByDefault(ErrorCodes.INVALID_PHONE, errorID);
-	}
-
-	protected void handleECInvalidAddress(int errorID)
-	{
-		handleECByDefault(ErrorCodes.INVALID_ADDRESS, errorID);
-	}
-
-	protected void handleECInvalidArgument(int errorID)
-	{
-		handleECByDefault(ErrorCodes.INVALID_ARGUMENT, errorID);
-	}
-
-	protected void handleECNotExistent(int errorID)
-	{
-		handleECByDefault(ErrorCodes.NOT_EXISTENT, errorID);
-	}
-
-	protected void handleECNullPointer(int errorID)
-	{
-		handleECByDefault(ErrorCodes.NULL_POINTER, errorID);
-	}
-
-	protected void handleECListOverflow(int errorID)
-	{
-		handleECByDefault(ErrorCodes.LIST_OVERFLOW,errorID);
-	}
-
-	protected void handleECFPNotExistent(int errorID)
-	{
-		handleECByDefault(ErrorCodes.NOT_EXISTENT,errorID);
-	}
-
-	protected void handleECNoCostEstimation(int errorID)
-	{
-		handleECByDefault(ErrorCodes.NO_COST_ESTIMATION,errorID);
-	}
-
-	protected void handleECRefNotSolved(int errorID)
-	{
-		handleECByDefault(ErrorCodes.REFERENCES_NOT_SOLVED,errorID);
-	}
-
-	protected void handleECRefOnItemDeleted(int errorID)
-	{
-		handleECByDefault(ErrorCodes.REFERENCES_ON_ITEM_DELETED,errorID);
-	}
-
-	protected void handleDefaultEC()
-	{
-
-	}
-
-	protected void handleECByDefault(ErrorCodes errorCode, int errorID)
-	{
-		handleECByDialog(errorCode);
-		logErrorCode(errorCode, errorID);
-	}
-
-	protected void handleECByDialog(ErrorCodes errorCode)
-	{
-		controllerManager.createControlledErrorDialog(null, errorCode);
-	}
-
-	protected void logErrorCode(ErrorCodes errorCode, int errorID)
-	{
-		String warningMsg = "ErrorCode "+errorCode.toString()+" (ID = "+errorID+")"
+		String warningMsg = "ErrorCode "+thrownException+" (errorID = "+errorID+")"
 				+" occurred with default execution of BasicController.\n";
 		warningMsg += "Controller:"+this.getClass().toString()+"\n";
 		myLogger.warning( warningMsg );

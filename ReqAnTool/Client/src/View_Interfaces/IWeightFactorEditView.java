@@ -1,7 +1,9 @@
 package View_Interfaces;
 
 /**
- * Created by phlippe on 01.05.17.
+ * @author 9045534
+ * @version 1.0
+ *
  */
 public interface IWeightFactorEditView
 	extends IView

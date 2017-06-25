@@ -117,7 +117,7 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 	}
 
 	@Override
-	protected void handleECDuplicate(int errorID)
+	protected void handleExDuplicate(int errorID)
 	{
 		controllerManager.createControlledErrorDialog(
 				myView,

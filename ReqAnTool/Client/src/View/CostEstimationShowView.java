@@ -19,7 +19,7 @@ public class CostEstimationShowView
 {
 
 	private final ViewActions[] BUTTON_ACTIONS = {
-			ViewActions.OK,
+			ViewActions.EDIT,
 			ViewActions.CLOSE
 	};
 

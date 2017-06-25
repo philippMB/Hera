@@ -81,7 +81,7 @@ public class ProjectTabController
 
 		if(deleteError != ErrorCodes.NO_ERROR)
 		{
-			handleErrorCode(deleteError);
+			handleException(deleteError);
 		}
 		else
 		{

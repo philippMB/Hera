@@ -1,5 +1,6 @@
 package View;
 
+import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IWeightFactor;
@@ -18,13 +19,20 @@ public class OptimizedWeightFactorsView
 	implements IOptimizedWeightFactorsView
 {
 
+	private static ViewActions[] BUTTON_ACTIONS = {
+					ViewActions.SAVE,
+					ViewActions.CANCEL
+			};
+
 	private IModelGetData myModel;
 	private JTable tableWeightFactor;
+
 
 	public OptimizedWeightFactorsView(IModelGetData model)
 	{
 		super();
 		myModel = model;
+		setButtonActions(BUTTON_ACTIONS);
 
 		init();
 	}
@@ -35,11 +43,16 @@ public class OptimizedWeightFactorsView
 		myBuilder.addTitle(
 				myTextBundle.getTitleText(TextNameConstants.TITLE_OPTIMIZED_WF)
 		);
-		myBuilder.addTable(
+		tableWeightFactor = myBuilder.addTable(
 				"",
 				calcTableEntries(),
 				getColumnNames()
 		);
+		myBuilder.addButtonBar(myButtonActions);
+		setActionCommands();
+
+		getContentPane().add(myBuilder.getResult());
+		pack();
 	}
 
 	private String[] getColumnNames()

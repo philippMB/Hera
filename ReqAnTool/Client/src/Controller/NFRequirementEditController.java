@@ -3,7 +3,6 @@ package Controller;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
-import View_Interfaces.IFRequirementEditView;
 import View_Interfaces.INFRequirementEditView;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class NFRequirementEditController
 		else
 		{
 			reqIsSaved = false;
-			handleErrorCode(saveError);
+			handleException(saveError);
 		}
 		return reqIsSaved;
 	}

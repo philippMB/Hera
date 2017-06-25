@@ -60,7 +60,7 @@ public class FRequirementEditController
 		else
 		{
 			reqIsSaved = false;
-			handleErrorCode(saveError);
+			handleException(saveError);
 		}
 		return reqIsSaved;
 	}

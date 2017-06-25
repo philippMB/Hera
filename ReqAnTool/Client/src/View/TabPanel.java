@@ -100,12 +100,6 @@ public abstract class TabPanel
 		((JTabbedPane)this.getParent()).setSelectedComponent(this);
 	}
 
-	@Override
-	public JPanel getPanel()
-	{
-		return this;
-	}
-
 	/**
 	 * Returns the belonging menu bar
 	 *

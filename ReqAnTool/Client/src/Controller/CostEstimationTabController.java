@@ -66,7 +66,7 @@ public class CostEstimationTabController
 	private void optimizeWF()
 	{
 		ErrorCodes optimizeError = myModel.calcOptWeightFactor();
-		handleErrorCode(optimizeError);
+		handleException(optimizeError);
 	}
 
 	@Override

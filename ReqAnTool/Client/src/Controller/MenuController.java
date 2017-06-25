@@ -26,7 +26,7 @@ public class MenuController
 		ErrorCodes saveError = myModel.saveReqAn(null);
 		if(saveError != ErrorCodes.NO_ERROR)
 		{
-			handleErrorCode(saveError);
+			handleException(saveError);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class MenuController
 			}
 			else
 			{
-				handleErrorCode(openError);
+				handleException(openError);
 			}
 		}
 	}
@@ -89,7 +89,7 @@ public class MenuController
 				}
 				else
 				{
-					handleErrorCode(openError);
+					handleException(openError);
 				}
 			}
 		}
@@ -116,7 +116,7 @@ public class MenuController
 				}
 				else
 				{
-					handleErrorCode(importError);
+					handleException(importError);
 					controllerManager.createControlledStartView();
 				}
 			}
@@ -147,7 +147,7 @@ public class MenuController
 			}
 			else
 			{
-				handleErrorCode(openError);
+				handleException(openError);
 			}
 		}
 	}

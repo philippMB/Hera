@@ -26,6 +26,7 @@ public class StartView
 	private final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.NEW_PROJECT,
 			ViewActions.OPEN_PROJECT,
+			ViewActions.FROM_XML,
 			ViewActions.CLOSE
 	};
 

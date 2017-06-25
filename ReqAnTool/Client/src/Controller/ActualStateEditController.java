@@ -43,7 +43,7 @@ public class ActualStateEditController
 		ErrorCodes saveError = myModel.setActualState(actualState);
 		if (saveError != ErrorCodes.NO_ERROR)
 		{
-			handleErrorCode(saveError);
+			handleException(saveError);
 		}
 		else
 		{

@@ -1,17 +1,11 @@
 package Controller;
 
 import Controller_Interfaces.IViewController;
-import Controller_Interfaces.ViewActions;
-import LanguageAndText.ITextFacade;
-import Logging.ILogger;
-import Logging.ILoggerFactory;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IView;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 
 /**
@@ -104,9 +98,9 @@ public abstract class BasicViewController<ViewType extends IView>
 	}
 
 	@Override
-	protected void handleECByDialog(ErrorCodes errorCode)
+	protected void handleExByDialog(IException thrownException)
 	{
-		controllerManager.createControlledErrorDialog(myView, errorCode);
+		controllerManager.createControlledErrorDialog(myView, thrownException);
 	}
 
 	protected void closeView()	//TODO: Rename that also controller will be destructed

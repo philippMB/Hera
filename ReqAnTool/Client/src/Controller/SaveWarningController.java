@@ -4,7 +4,6 @@ import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.FileAccessType;
 import View_Interfaces.IFileChooser;
-import View_Interfaces.IViewFacadeFactory;
 import View_Interfaces.IWarningDialog;
 
 /**
@@ -23,7 +22,7 @@ public class SaveWarningController
 	protected void executeSaveAction()
 	{
 		ErrorCodes errorCode = myModel.saveReqAn(null);
-		handleErrorCode(errorCode);
+		handleException(errorCode);
 		if(errorCode == ErrorCodes.NO_ERROR)
 		{
 			closeProgram();
@@ -40,7 +39,7 @@ public class SaveWarningController
 		if(filePath != null)
 		{
 			ErrorCodes errorCode = myModel.saveReqAn(filePath);
-			handleErrorCode(errorCode);
+			handleException(errorCode);
 			if(errorCode == ErrorCodes.NO_ERROR)
 			{
 				closeProgram();

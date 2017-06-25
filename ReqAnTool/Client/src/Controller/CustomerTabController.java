@@ -40,7 +40,7 @@ public class CustomerTabController
 
 		if(errorCodesList.size() != 0)
 		{
-			handleErrorCode(errorCodesList.get(0));
+			handleException(errorCodesList.get(0));
 		}
 		else
 		{

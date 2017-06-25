@@ -22,7 +22,7 @@ public class TabController<TabType extends ITab>
 	}
 
 	@Override
-	protected void handleECByDialog(ErrorCodes errorCode)
+	protected void handleExByDialog(ErrorCodes errorCode)
 	{
 		controllerManager.createControlledErrorDialog(parentView, errorCode);
 	}

@@ -66,7 +66,10 @@ public class ProjectView
 	@Override
 	public void addTab(ITab newTab)
 	{
-		addTab(newTab.getTabName(), newTab.getPanel());
+		if(newTab instanceof JPanel)
+		{
+			addTab(newTab.getTabName(), (JPanel)newTab);
+		}
 	}
 
 	@Override

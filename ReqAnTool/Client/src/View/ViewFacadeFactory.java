@@ -106,17 +106,17 @@ public class ViewFacadeFactory
 	}
 
 	@Override
-	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode)
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException)
 	{
-		IErrorDialog myView = new ErrorDialog(getFrameOfView(parentView), errorCode);
+		IErrorDialog myView = new ErrorDialog(getFrameOfView(parentView), thrownException);
 		return myView;
 	}
 
 	@Override
-	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull ErrorCodes errorCode,
+	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException,
 										  @Nullable String[] placeholderInText)
 	{
-		IErrorDialog myView = new ErrorDialog(getFrameOfView(parentView), errorCode, placeholderInText);
+		IErrorDialog myView = new ErrorDialog(getFrameOfView(parentView), thrownException, placeholderInText);
 		return myView;
 	}
 

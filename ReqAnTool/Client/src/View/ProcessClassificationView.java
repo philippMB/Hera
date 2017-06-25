@@ -255,27 +255,28 @@ public abstract class ProcessClassificationView
 		}
 	}
 
-	@Override
-	public void showDataFP()
+	//TODO: Write internal controller who handles setting DataFP and TransactionFP
+
+	private void showDataFP()
 	{
 		panelTFP.setVisible(false);
 		panelDFP.setVisible(true);
 	}
 
-	@Override
-	public void showTransactionFP()
+	private void showTransactionFP()
 	{
 		panelDFP.setVisible(false);
 		panelTFP.setVisible(true);
 	}
 
-	@Override
-	public void showDefault()
+	private void showDefault()
 	{
 		panelDFP.setVisible(false);
 		panelTFP.setVisible(false);
 	}
 
+
+	//TODO: Rewrite to enum instead of real class
 	@Override
 	public Class getSelectedClass()
 	{

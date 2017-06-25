@@ -1,14 +1,12 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.ExceptionConstants;
 import LanguageAndText.TextNameConstants;
-import Model_Interfaces.ErrorCodes;
 import View_Interfaces.IErrorDialog;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Observable;
@@ -32,26 +30,26 @@ public class ErrorDialog
 	private String title;
 
 
-	public ErrorDialog(JFrame parentView, ErrorCodes errorCode){
+	public ErrorDialog(JFrame parentView, Exception thrownException){
 		super(parentView, TextNameConstants.TITLE_ERROR);
 
-		String errorCodeString = errorCode.toString();
 		initText(
-				myTextBundle.getTitleText(errorCodeString),
-				myTextBundle.getDialogText(errorCodeString)
+				myTextBundle.getTitleText(ExceptionConstants.getExTitleProperty(thrownException)),
+				myTextBundle.getDialogText(ExceptionConstants.getExMessageProperty(thrownException),
+						ExceptionConstants.getExPlaceholders(myTextBundle, thrownException))
 		);
 
 
 		init();
 	}
 
-	public ErrorDialog(JFrame parentView, ErrorCodes errorCode, String[] placeholderInText){
+	public ErrorDialog(JFrame parentView, Exception thrownException, String[] placeholderInText){
 		super(parentView, TextNameConstants.TITLE_ERROR);
 
-		String errorCodeString = errorCode.toString();
 		initText(
-				myTextBundle.getTitleText(errorCodeString),
-				myTextBundle.getDialogText(errorCodeString, placeholderInText)
+				myTextBundle.getTitleText(ExceptionConstants.getExTitleProperty(thrownException)),
+				myTextBundle.getDialogText(ExceptionConstants.getExMessageProperty(thrownException),
+						placeholderInText)
 		);
 
 		init();
