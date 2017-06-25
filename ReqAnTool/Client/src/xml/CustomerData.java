@@ -1,12 +1,13 @@
 package xml;
 
-import javax.xml.bind.annotation.XmlAttribute;
-// Needs refactoring in accessors
+import Model_Interfaces.ICustomerData;
+
 public class CustomerData
+  implements ICustomerData
 {
-  private String pmName;
-  private String pmPNumber;
-  private String pmEMail;
+  private String pMName;
+  private String pMPNumber;
+  private String pMEMail;
   private String cName;
   private String cNumber;
   private String cEMail;
@@ -15,35 +16,39 @@ public class CustomerData
   private int companyPLZ;
   private String companyCity;
   private String companyCountry;
-  
-  public CustomerData(String pmName, String pmPNumber, String pmEMail, String cName, String cNumber, String cEMail, String companyName, String companyStreet, int companyPLZ, String companyCity, String companyCountry)
+
+  public CustomerData(ICustomerData origin)
   {
-    this.pmName = pmName;
-    this.pmPNumber = pmPNumber;
-    this.pmEMail = pmEMail;
-    this.cName = cName;
-    this.cNumber = cNumber;
-    this.cEMail = cEMail;
-    this.companyName = companyName;
-    this.companyStreet = companyStreet;
-    this.companyPLZ = companyPLZ;
-    this.companyCity = companyCity;
-    this.companyCountry = companyCountry;
+    pMName = origin.getPMName();
+    pMPNumber = origin.getPMPNumber();
+    pMEMail = origin.getPMEMail();
+    cName = origin.getCName();
+    cNumber = origin.getCNumber();
+    cEMail = origin.getCEMail();
+    companyName = origin.getCompanyName();
+    companyPLZ = origin.getCompanyPLZ();
+    companyCity = origin.getCompanyCity();
+    companyCountry = origin.getCompanyCountry();
   }
 
-  public String getPmName()
+  public CustomerData()
   {
-    return pmName;
+    // Default Constructor
   }
 
-  public String getPmPNumber()
+  public String getPMName()
   {
-    return pmPNumber;
+    return pMName;
   }
 
-  public String getPmEMail()
+  public String getPMPNumber()
   {
-    return pmEMail;
+    return pMPNumber;
+  }
+
+  public String getPMEMail()
+  {
+    return pMEMail;
   }
 
   public String getCName()
@@ -76,31 +81,29 @@ public class CustomerData
     return companyPLZ;
   }
 
-  public String getCompanyCountry()
+    public String getCompanyCity()
+    {
+        return companyCity;
+    }
+
+    public String getCompanyCountry()
   {
     return companyCountry;
   }
   
-  // für JavaBeans
-  
-  public CustomerData()
+  public void setPMName(String PMName)
   {
-    
+    this.pMName = PMName;
   }
 
-  public void setPmName(String PMName)
+  public void setPMPNumber(String PMPNumber)
   {
-    this.pmName = PMName;
+    this.pMPNumber = PMPNumber;
   }
 
-  public void setPmPNumber(String PMPNumber)
+  public void setPMEMail(String PMEmail)
   {
-    this.pmPNumber = PMPNumber;
-  }
-
-  public void setPmEMail(String PMEmail)
-  {
-    this.pmEMail = PMEmail;
+    this.pMEMail = PMEmail;
   }
 
   public void setCName(String CName)
@@ -136,11 +139,6 @@ public class CustomerData
   public void setCompanyCity(String Company)
   {
     this.companyCity = Company;
-  }
-
-  public String getCompanyCity()
-  {
-    return companyCity;
   }
 
   public void setCompanyCountry(String CompanyCountry)

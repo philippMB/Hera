@@ -1,10 +1,13 @@
 package xml;
 
+import Model_Interfaces.IGlossaryEntry;
+
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
 public class GlossaryEntry
+  implements IGlossaryEntry
 {
   private String term;
   private String sense;
@@ -12,16 +15,22 @@ public class GlossaryEntry
   private String label;
   private String validity;
   private String obscurities;
-  private ArrayList<String> references;
+  private ArrayList<String> referenceTerms;
 
-  public GlossaryEntry(String term, String sense, String boundary, String label, String validity, String obscurities)
+  public GlossaryEntry(IGlossaryEntry origin)
   {
-    this.term = term;
-    this.sense = sense;
-    this.boundary = boundary;
-    this.label = label;
-    this.validity = validity;
-    this.obscurities = obscurities;
+    term = origin.getTerm();
+    sense = origin.getSense();
+    boundary = origin.getBoundary();
+    label = origin.getLabel();
+    validity = origin.getValidity();
+    obscurities = origin.getObscurities();
+    referenceTerms = origin.getReferenceTerms();
+  }
+
+  public GlossaryEntry()
+  {
+    // Default-Constructor
   }
 
   public String getTerm()
@@ -53,12 +62,16 @@ public class GlossaryEntry
   {
     return obscurities;
   }
-  
-  // für JavaBeans
-  
-  public GlossaryEntry()
+
+  public ArrayList<String> getReferenceTerms()
   {
-    // Default-Constructor
+    return referenceTerms;
+  }
+
+  @Override
+  public ArrayList<IGlossaryEntry> getReferences() {
+    // nicht implementiert
+    return null;
   }
 
   public void setTerm(String term)
@@ -91,13 +104,9 @@ public class GlossaryEntry
     this.obscurities = obscurities;
   }
 
-  public void setReferences(ArrayList<String> references)
+  public void setReferenceTerms(ArrayList<String> referenceTerms)
   {
-    this.references = references;
+    this.referenceTerms = referenceTerms;
   }
 
-  public ArrayList<String> getReferences()
-  {
-    return references;
-  }
 }

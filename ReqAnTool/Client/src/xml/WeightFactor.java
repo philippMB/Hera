@@ -1,51 +1,52 @@
 package xml;
 
-public class WeightFactor
-{
-  private String title;
-  private int value;
-  private int maxValue;
-  
-  public WeightFactor(String title, int value, int maxValue)
-  {
-    this.title = title;
-    this.value = value;
-    this.maxValue = maxValue;
-  }
+import Model_Interfaces.IWeightFactor;
 
-  public String getTitle()
+public class WeightFactor
+    implements IWeightFactor
+{
+    private String title;
+    private int value;
+    private int maxValue;
+
+    public  WeightFactor(IWeightFactor origin)
+    {
+        title = origin.getTitle();
+        value = origin.getValue();
+        maxValue = origin.getMaxValue();
+    }
+
+    public WeightFactor()
+    {
+        // Default-Constructor
+    }
+
+    public String getTitle()
   {
     return title;
   }
 
-  public int getValue()
+    public int getValue()
   {
     return value;
   }
 
-  public int getMaxValue()
+    public int getMaxValue()
   {
     return maxValue;
   }
   
-  // für JavaBeans
-  
-  public WeightFactor()
-  {
-    // Default-Constructor
-  }
-  
-  public void setTitle(String title)
+    public void setTitle(String title)
   {
     this.title = title;
   }
 
-  public void setValue(int value)
+    public void setValue(int value)
   {
     this.value = value;
   }
 
-  public void setMaxValue(int maxValue)
+    public void setMaxValue(int maxValue)
   {
     this.maxValue = maxValue;
   }

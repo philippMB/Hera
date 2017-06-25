@@ -2,9 +2,6 @@ package xml;
 
 import Model_Interfaces.IFRequirement;
 
-import java.util.ArrayList;
-
-
 public class FRequirement
         extends Requirement
         implements IFRequirement
@@ -13,19 +10,16 @@ public class FRequirement
   private String actor;
   private String description;
 
-  public FRequirement(String title, String actor, String description)
-  {
-    this.title = title;
-    this.actor = actor;
-    this.description = description;
-  }
-
   public FRequirement(IFRequirement origin)
   {
     super(origin);
     title = origin.getTitle();
     actor = origin.getActor();
     description = origin.getDescription();
+  }
+  public FRequirement()
+  {
+  // Default-Constructor
   }
 
   public String getTitle()
@@ -42,14 +36,7 @@ public class FRequirement
   {
     return description;
   }
-  
-  // für JavaBeans
-  
-  public FRequirement()
-  {
-    // Default-Constructor
-  }
-  
+
   public void setTitle(String title)
   {
     this.title = title;

@@ -10,46 +10,44 @@ public class ProductData
   private String content;
   private String maxCount;
 
-    public ProductData(String attribute, String content, String maxCount)
-  {
-    this.attribute = attribute;
-    this.content = content;
-    this.maxCount = maxCount;
-  }
+    public ProductData(IProductData origin)
+    {
+        attribute = origin.getAttribute();
+        content = origin.getContent();
+        maxCount = origin.getMaxCount();
+    }
 
-  public String getAttribute()
+    public ProductData()
+    {
+        // Default-Constructor
+    }
+
+    public String getAttribute()
   {
     return attribute;
   }
 
-  public String getContent()
+    public String getContent()
   {
     return content;
   }
 
-  public String getMaxCount()
+    public String getMaxCount()
   {
     return maxCount;
   }
-  
-  // für JavaBeans
-  
-  public ProductData()
-  {
-    // Default-Constructor
-  }
 
-  public void setAttribute(String attribute)
+    public void setAttribute(String attribute)
   {
     this.attribute = attribute;
   }
 
-  public void setContent(String content)
+    public void setContent(String content)
   {
     this.content = content;
   }
 
-  public void setMaxCount(String maxCount)
+    public void setMaxCount(String maxCount)
   {
     this.maxCount = maxCount;
   }

@@ -10,21 +10,35 @@ import java.util.ArrayList;
  * Created by Philipp on 13.06.17.
  */
 @XmlTransient
-public class Requirement implements IRequirement
+public class Requirement
+        implements IRequirement
 {
     @XmlElement(name="ID")
     protected String id;
     protected ArrayList<String> referenceIDs;
+
+    public Requirement(IRequirement origin)
+    {
+        id = origin.getID();
+        referenceIDs = origin.getReferenceIDs();
+    }
 
     public Requirement()
     {
         // Default Constructor
     }
 
-    public Requirement(IRequirement origin)
-    {
-        id = origin.getID();
-        referenceIDs = origin.getReferenceIDs();
+    public String getID() {
+        return id;
+    }
+
+    public ArrayList<String> getReferenceIDs() {
+        return referenceIDs;
+    }
+
+    public ArrayList<IRequirement> getReferences() {
+        // nicht implementiert
+        return null;
     }
 
     public void setReferenceIDs(ArrayList<String> referenceIDs)
@@ -37,18 +51,4 @@ public class Requirement implements IRequirement
         this.id = id;
     }
 
-    @Override
-    public String getID() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<IRequirement> getReferences() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> getReferenceIDs() {
-        return null;
-    }
 }

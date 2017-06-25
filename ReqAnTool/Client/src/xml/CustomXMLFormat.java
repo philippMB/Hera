@@ -1,6 +1,8 @@
 package xml;
 
 import Model_Interfaces.*;
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import java.util.*;
 import javax.xml.bind.annotation.*;
@@ -13,36 +15,24 @@ public class CustomXMLFormat
   // new fehlt?
   @XmlElementWrapper(name="Functional_Requirements")
   @XmlElement(name="Requirement")
-  private ArrayList<FRequirement> funcRequirementList;
-
-  //@XmlElementWrapper(name="Data_FunctionPoints")
-  //@XmlElement(name="FunctionPoint")
-  private ArrayList<DataFP> dataFuncPointList;
+  private ArrayList<FRequirement> funcRequirementList = new ArrayList<>();
 
   @XmlElementWrapper(name="Non-Functional_Requirements")
   @XmlElement(name="Requirement")
-  private ArrayList<NFRequirement> nonFuncRequirementList;
+  private ArrayList<NFRequirement> nonFuncRequirementList = new ArrayList<>();
 
   @XmlElement(name="CustomerData")
   private CustomerData custData;
 
   @XmlElementWrapper(name="Glossary")
   @XmlElement(name="Glossary_Entry")
-  private ArrayList<GlossaryEntry> glossary;
+  private ArrayList<GlossaryEntry> glossary = new ArrayList<>();
 
-  private ArrayList<ProductData> productDataList;
+  private ArrayList<ProductData> productDataList = new ArrayList<>();
 
   @XmlElementWrapper(name="Quality_Requirements")
   @XmlElement(name="Requirement")
-  private ArrayList<QualityRequirement> qualityRequirementList;
-
-  //@XmlElementWrapper(name="Transaction_FunctionPoints")
-  //@XmlElement(name="FunctionPoint")
-  private ArrayList<TransactionFP> transactionFPList;
-
-  //@XmlElementWrapper(name="Weightfactors")
-  //@XmlElement(name="Factor")
-  private ArrayList<WeightFactor> weightFactorList;
+  private ArrayList<QualityRequirement> qualityRequirementList = new ArrayList<>();
 
   @XmlElement(name="Cost_Estimation")
   private CostEstimation costEstimation;
@@ -52,176 +42,163 @@ public class CustomXMLFormat
 
   @XmlElement(name="Target_Definition")
   private TargetDefinition targetDef;
-  private ArrayList<Supplement> supplements;
-  private Title reqAnTitle;
 
+  private ArrayList<Supplement> supplements = new ArrayList<>();
+
+  private Date createDate;
+
+  private String title;
+
+  private double actualState;
+
+  private String customerDescription;
+
+  // TODO: @NotNull für den alles
+  // TODO: docu sagen dass nicht null sonst null-pointer-exception(interface & hier)
   @Override
   public void createFragments(IRequirementAnalysis rawData)
   {
-    addFuncRequirements(rawData);
-    addDataFP(rawData);
-    addNonFuncRequirements(rawData);
-    addCustomerData(rawData);
-    addGlossary(rawData);
-    addProductData(rawData);
-    addQualityRequirements(rawData);
-    addTransactionFP(rawData);
-    addWeightFactor(rawData);
-    addCostEstimation(rawData);
-    addProductApplication(rawData);
-    addTargetDefinition(rawData);
-
-    // Rückgabe?
+    addFuncRequirements(rawData.getFRequirements());
+    addNonFuncRequirements(rawData.getNFRequirements());
+    addCustomerData(rawData.getCustomerData());
+    addGlossary(rawData.getGlossaryEntries());
+    addProductData(rawData.getProductData());
+    addQualityRequirements(rawData.getQualityRequirements());
+    addCostEstimation(rawData.getCostEstimation());
+    addProductApplication(rawData.getProductApplication());
+    addTargetDefinition(rawData.getTargetDefinition());
+    setCreateDate(rawData.getCreateDate());
+    setTitle(rawData.getTitle());
+    setActualState(rawData.getActualState());
+    setCustomerDescription(rawData.getCustomerDescription());
+    addSupplements(rawData.getAdditions());
   }
 
-  private void addFuncRequirements(IRequirementAnalysis data)
+  /**
+   * Was ich mache.
+   * @param additions wer ich bin.
+   * @see IAddition
+   */
+  private void addSupplements(@NotNull  ArrayList<IAddition> additions)
   {
-    for(IFRequirement obj : data.getFRequirements())
+    for (IAddition obj : additions)
     {
-      String title = obj.getTitle();
-      String actor = obj.getActor();
-      String description = obj.getDescription();
-      ArrayList<String> referenceIds = obj.getReferenceIDs();
-      FRequirement req = new FRequirement(title, actor, description);
-      // TODO: trennen
-      req.setId(obj.getID());
+      Supplement sup = new Supplement(obj);
+      supplements.add(sup);
+    }
+  }
+
+  private void addFuncRequirements(@NotNull ArrayList<IFRequirement> data)
+  {
+    for(IFRequirement obj : data)
+    {
+      FRequirement req = new FRequirement(obj);
       funcRequirementList.add(req);
     }
   }
 
-  private void addDataFP(IRequirementAnalysis data)
+  private ArrayList<DataFP> addDataFP(@NotNull ArrayList<IDataFP> data)
   {
-    ICostEstimation costEst = data.getCostEstimation();
-    for(IDataFP obj : costEst.getDataFPs())
+    ArrayList<DataFP> dataFuncPointList = new ArrayList<>();
+    for(IDataFP obj : data)
     {
-      int det = obj.getDET();
-      int ret = obj.getRET();
-      ArrayList<String> ref = obj.getRequirement().getReferenceIDs();
-      ClassOfDataFP type = obj.getType();
-      String reqID = obj.getRequirement().getID();
-      DataFP funcPoint = new DataFP(det, ret, ref, type, reqID);
-      dataFuncPointList.add(funcPoint);
+      DataFP funcPoint = new DataFP(obj);
+        dataFuncPointList.add(funcPoint);
     }
+
+    return dataFuncPointList;
   }
 
-  private void addNonFuncRequirements(IRequirementAnalysis data)
+  private void addNonFuncRequirements(@NotNull ArrayList<INFRequirement> data)
   {
-    for(INFRequirement obj : data.getNFRequirements())
+    for(INFRequirement obj : data)
     {
-      String title = obj.getTitle();
-      String actor = obj.getActor();
-      String description = obj.getDescription();
-      NFRequirement req = new NFRequirement(title, actor, description);
+      NFRequirement req = new NFRequirement(obj);
       nonFuncRequirementList.add(req);
     }
   }
 
-  private void addCustomerData(IRequirementAnalysis data)
+  private void addCustomerData(@NotNull ICustomerData data)
   {
-    ICustomerData custData = data.getCustomerData();
-    String PMName = custData.getPMName();
-    String PMPNumber = custData.getPMPNumber();
-    String PMEmail = custData.getPMEMail();
-    String CName = custData.getCName();
-    String CNumber = custData.getCNumber();
-    String CEmail = custData.getCEMail();
-    String CompanyName = custData.getCompanyName();
-    String CompanyStreet = custData.getCompanyStreet();
-    int CompanyPLZ = custData.getCompanyPLZ();
-    String Company = custData.getCompanyCity();
-    String CompanyCountry = custData.getCompanyCountry();
-    this.custData = new CustomerData(PMName, PMPNumber, PMEmail, CName, CNumber, CEmail, CompanyName,
-                                     CompanyStreet, CompanyPLZ, Company, CompanyCountry);
+    custData = new CustomerData(data);
   }
   
-  private void addGlossary(IRequirementAnalysis data)
+  private void addGlossary(@NotNull ArrayList<IGlossaryEntry> data)
   {
-    for(IGlossaryEntry obj : data.getGlossaryEntries())
+    for(IGlossaryEntry obj : data)
     {
-      String term = obj.getTerm();
-      String sense = obj.getSense();
-      String boundary = obj.getBoundary();
-      String label = obj.getLabel();
-      String validity = obj.getValidity();
-      String obscurities = obj.getObscurities();
-      GlossaryEntry entry = new GlossaryEntry(term, sense, boundary, label, validity, obscurities);
+      GlossaryEntry entry = new GlossaryEntry(obj);
       glossary.add(entry);
     }
   }
   
-  private void addProductData(IRequirementAnalysis data)
+  private void addProductData(@NotNull ArrayList<IProductData> data)
   {
-    for(IProductData obj : data.getProductData())
+    for(IProductData obj : data)
     {
-      String attribute = obj.getAttribute();
-      String content = obj.getContent();
-      String maxCount = obj.getMaxCount();
-      ProductData prodData = new ProductData(attribute, content, maxCount);
+      ProductData prodData = new ProductData(obj);
       productDataList.add(prodData);
     }
   }
   
-  private void addQualityRequirements(IRequirementAnalysis data)
+  private void addQualityRequirements(@NotNull ArrayList<IQualityRequirement> data)
   {
-    for(IQualityRequirement obj : data.getQualityRequirements())
+    for(IQualityRequirement obj : data)
     {
-      String criteria = obj.getCriteria();
-      QualityRequirement req = new QualityRequirement(criteria);
+      QualityRequirement req = new QualityRequirement(obj);
       qualityRequirementList.add(req);
     }
   }
   
-  private void addTransactionFP(IRequirementAnalysis data)
+  private ArrayList<TransactionFP> addTransactionFP(@NotNull ArrayList<ITransactionFP> data)
   {
-    ICostEstimation costEst = data.getCostEstimation();
-    for(ITransactionFP obj : costEst.getTransactionFPs())
+    ArrayList<TransactionFP> transactionFPList = new ArrayList<>();
+    for(ITransactionFP obj : data)
     {
-      int ftr = obj.getFTR();
-      int det = obj.getDET();
-      ArrayList<String> ref = obj.getRequirement().getReferenceIDs();
-      ClassOfTransactionFP type = obj.getType();
-      String reqID = obj.getRequirement().getID();
-      TransactionFP funcPoint = new TransactionFP(det, ftr, ref, type, reqID);
+      TransactionFP funcPoint = new TransactionFP(obj);
       transactionFPList.add(funcPoint);
     }
+
+    return transactionFPList;
+  }
+
+  private ArrayList<WeightFactor> addWeightFactor(@NotNull ArrayList<IWeightFactor> data)
+  {
+    ArrayList<WeightFactor> weightFactorList = new ArrayList<>();
+    for(IWeightFactor obj : data)
+    {
+      WeightFactor wFac = new WeightFactor(obj);
+      weightFactorList.add(wFac);
+    }
+
+    return weightFactorList;
   }
   
-  private void addWeightFactor(IRequirementAnalysis data)
+  private void addCostEstimation(@Nullable ICostEstimation data)
   {
-    for(IWeightFactor obj : data.getWeightFactors())
+    if(data != null)
     {
-      String title = obj.getTitle();
-      int value = obj.getValue();
-      int maxValue = obj.getMaxValue();
-      WeightFactor wFac = new WeightFactor(title, value, maxValue);
-      weightFactorList.add(wFac);
+      ArrayList<DataFP> dataFuncPointList = addDataFP(data.getDataFPs());
+      ArrayList<TransactionFP> transactionFPList = addTransactionFP(data.getTransactionFPs());
+      ArrayList<WeightFactor> weightFactorList = addWeightFactor(data.getWeightFactors());
+      costEstimation = new CostEstimation(data, dataFuncPointList, transactionFPList, weightFactorList);
+    }
+    else
+    {
+      costEstimation = null;
     }
   }
   
-  private void addCostEstimation(IRequirementAnalysis data)
+  private void addProductApplication(@NotNull IProductApplication data)
   {
-    ICostEstimation cEst = data.getCostEstimation();
-    double functionPoints = cEst.getFunctionPoints();
-    double manMonth = cEst.getManMonth();
-    costEstimation = new CostEstimation(functionPoints, manMonth, dataFuncPointList,
-            transactionFPList, weightFactorList);
+    productApplication = new ProductApplication(data);
   }
   
-  private void addProductApplication(IRequirementAnalysis data)
+  private void addTargetDefinition(@NotNull ITargetDefinition data)
   {
-    IProductApplication prodApp = data.getProductApplication();
-    String description = prodApp.getDescription();
-    productApplication = new ProductApplication(description);
-  }
-  
-  private void addTargetDefinition(IRequirementAnalysis data)
-  {
-    ITargetDefinition targetDef = data.getTargetDefinition();
-    String description = targetDef.getDescription();
-    this.targetDef = new TargetDefinition(description);
+    this.targetDef = new TargetDefinition(data);
   }
 
-// Um es JavaBeans zu machen, Refaktoring: obere Methoden austauschen
   public void setFuncRequirementList(ArrayList<FRequirement> funcRequirementList)
   {
     this.funcRequirementList = funcRequirementList;
@@ -231,20 +208,6 @@ public class CustomXMLFormat
   {
     return funcRequirementList;
   }
-
-/*
-  public void setDataFuncPointList(ArrayList<DataFP> dataFuncPointList)
-  {
-    this.dataFuncPointList = dataFuncPointList;
-  }
-*/
-
-/*
-  public ArrayList<DataFP> getDataFuncPointList()
-  {
-    return dataFuncPointList;
-  }
-*/
 
   public void setNonFuncRequirementList(ArrayList<NFRequirement> nonFuncRequirementList)
   {
@@ -291,43 +254,120 @@ public class CustomXMLFormat
     this.qualityRequirementList = qualityRequirementList;
   }
 
+  public void setCreateDate(Date createDate)
+  {
+    this.createDate = createDate;
+  }
+
   public ArrayList<QualityRequirement> getQualityRequirementList()
   {
     return qualityRequirementList;
   }
-
-  /*public void setTransactionFPList(ArrayList<TransactionFP> transactionFPList)
-  {
-    this.transactionFPList = transactionFPList;
-  }*/
-
-/*
-  public ArrayList<TransactionFP> getTransactionFPList()
-  {
-    return transactionFPList;
-  }
-*/
-/*
-  public void setWeightFactorList(ArrayList<WeightFactor> weightFactorList)
-  {
-    this.weightFactorList = weightFactorList;
-  }*/
-
-/*
-  public ArrayList<WeightFactor> getWeightFactorList()
-  {
-    return weightFactorList;
-  }
-*/
 
   public void setCostEstimation(CostEstimation costEstimation)
   {
     this.costEstimation = costEstimation;
   }
 
-  public CostEstimation getCostEstimation()
+  @Override
+  public double getActualState() {
+    return actualState;
+  }
+
+  public void setActualState(double actualState) {
+    this.actualState = actualState;
+  }
+
+  // TODO:
+  @Override
+  public Date getCreateDate() {
+    return createDate;
+  }
+
+  // TODO:
+  @Override
+  public String getCustomerDescription() {
+    return customerDescription;
+  }
+
+  public void setCustomerDescription(String customerDescription) {
+    this.customerDescription = customerDescription;
+  }
+
+  // TODO:
+  @Override
+  public ArrayList<IAddition> getAdditions() {
+    ArrayList<IAddition> iAdd = new ArrayList<>();
+    for (IAddition obj : supplements)
+    {
+      iAdd.add(obj);
+    }
+    return iAdd;
+  }
+
+  public ICostEstimation getCostEstimation()
   {
     return costEstimation;
+  }
+
+  @Override
+    public ArrayList<IFRequirement> getFRequirements() {
+      ArrayList<IFRequirement> iFReq = new ArrayList<>();
+      for (IFRequirement obj : funcRequirementList)
+      {
+        iFReq.add(obj);
+      }
+      return iFReq;
+    }
+
+    @Override
+    public ArrayList<INFRequirement> getNFRequirements() {
+      ArrayList<INFRequirement> iNFReq = new ArrayList<>();
+      for (INFRequirement obj : nonFuncRequirementList)
+      {
+        iNFReq.add(obj);
+      }
+      return iNFReq;
+    }
+
+    @Override
+    public ArrayList<IGlossaryEntry> getGlossaryEntries() {
+      ArrayList<IGlossaryEntry> iGlo = new ArrayList<>();
+      for (IGlossaryEntry obj : glossary)
+      {
+        iGlo.add(obj);
+      }
+      return iGlo;
+    }
+
+    @Override
+    public ArrayList<IProductData> getProductData() {
+      ArrayList<IProductData> iProd = new ArrayList<>();
+      for (IProductData obj : productDataList)
+      {
+        iProd.add(obj);
+      }
+      return iProd;
+    }
+
+  @Override
+  public ArrayList<IQualityRequirement> getQualityRequirements() {
+    ArrayList<IQualityRequirement> iQual = new ArrayList<>();
+    for (IQualityRequirement obj : qualityRequirementList)
+    {
+      iQual.add(obj);
+    }
+    return iQual;  }
+
+    // TODO: null beachten
+  @Override
+  public ArrayList<IWeightFactor> getWeightFactors() {
+    return costEstimation.getWeightFactors();
+  }
+
+  @Override
+  public ITargetDefinition getTargetDefinition() {
+    return targetDef;
   }
 
   public void setProductApplication(ProductApplication productApplication)
@@ -335,9 +375,49 @@ public class CustomXMLFormat
     this.productApplication = productApplication;
   }
 
-  public ProductApplication getProductApplication()
+  public IProductApplication getProductApplication()
   {
     return productApplication;
+  }
+
+  @Override
+  public ICustomerData getCustomerData() {
+    return custData;
+  }
+
+  @Override
+  public IGlossaryEntry getGlossaryEntriesByTerm(String term) {
+    return null;
+  }
+
+  @Override
+  public IQualityRequirement getQualityRequirementsByCriteria(String criteria) {
+    return null;
+  }
+
+  @Override
+  public IAddition getAdditionByTitle(String title) {
+    return null;
+  }
+
+  @Override
+  public IWeightFactor getWeightFactorByTitle(String title) {
+    return null;
+  }
+
+  @Override
+  public IFRequirement getFRequirementByID(String id) {
+    return null;
+  }
+
+  @Override
+  public INFRequirement getNFRequirementByID(String id) {
+    return null;
+  }
+
+  @Override
+  public IProductData getProductDataByID(String id) {
+    return null;
   }
 
   public void setTargetDef(TargetDefinition targetDef)
@@ -360,13 +440,13 @@ public class CustomXMLFormat
     return supplements;
   }
 
-  public void setReqAnTitle(Title reqAnTitle)
+  public void setTitle(String reqAnTitle)
   {
-    this.reqAnTitle = reqAnTitle;
+    this.title = reqAnTitle;
   }
 
-  public Title getReqAnTitle()
+  public String getTitle()
   {
-    return reqAnTitle;
+    return title;
   }
 }

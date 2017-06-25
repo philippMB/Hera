@@ -1,17 +1,19 @@
 package xml;
 
 import Model_Interfaces.ClassOfTransactionFP;
+import Model_Interfaces.IRequirement;
+import Model_Interfaces.ITransactionFP;
 
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlEnum;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 
 public class TransactionFP
+  implements ITransactionFP
 {
   private int det;
   private int ftr;
@@ -20,34 +22,22 @@ public class TransactionFP
   private ClassOfTransactionFP type;
   private String reqID;
 
-  public ArrayList<String> getReferenceIDs() {
-    return referenceIDs;
-  }
-
-  public void setReferenceIDs(ArrayList<String> referenceIDs) {
-    this.referenceIDs = referenceIDs;
-  }
-
-  public String getReqID() {
-    return reqID;
-  }
-
-  public void setReqID(String reqID) {
-    this.reqID = reqID;
+  public TransactionFP(ITransactionFP origin)
+  {
+    det = origin.getDet();
+    ftr = origin.getFtr();
+    // TODO:
+    // referenceIDs = origin.getRequirement().getReferenceIDs();
+    referenceIDs = null;
+    type = origin.getType();
+    // TODO:
+    // reqID = origin.getRequirement().getID();
+    reqID = null;
   }
 
   public TransactionFP()
   {
     // Default-Constructor
-  }
-
-  public TransactionFP(int det, int ftr, ArrayList<String> referenceIDs, ClassOfTransactionFP type, String reqID)
-  {
-    this.det = det;
-    this.ftr = ftr;
-    this.referenceIDs = referenceIDs;
-    this.type = type;
-    this.reqID = reqID;
   }
 
   public int getDet()
@@ -59,9 +49,20 @@ public class TransactionFP
   {
     return ftr;
   }
-  
-  // für JavaBeans
-  
+
+  public ArrayList<String> getReferenceIDs() {
+    return referenceIDs;
+  }
+
+  public ClassOfTransactionFP getType()
+  {
+    return type;
+  }
+
+  public String getReqID() {
+    return reqID;
+  }
+
   public void setDet(int det)
   {
     this.det = det;
@@ -72,13 +73,22 @@ public class TransactionFP
     this.ftr = ftr;
   }
 
+  public void setReferenceIDs(ArrayList<String> referenceIDs) {
+    this.referenceIDs = referenceIDs;
+  }
+
   public void setType(ClassOfTransactionFP type)
   {
     this.type = type;
   }
 
-  public ClassOfTransactionFP getType()
-  {
-    return type;
+  public void setReqID(String reqID) {
+    this.reqID = reqID;
+  }
+
+  @Override
+  public IRequirement getRequirement() {
+    // nicht implementiert
+    return null;
   }
 }

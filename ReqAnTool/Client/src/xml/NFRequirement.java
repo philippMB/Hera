@@ -6,50 +6,49 @@ public class NFRequirement
         extends Requirement
         implements INFRequirement
 {
-  private String title;
-  private String actor;
-  private String description;
-  
-  public NFRequirement(String title, String actor, String description)
-  {
-    this.title = title;
-    this.actor = actor;
-    this.description = description;
-  }
+    private String title;
+    private String actor;
+    private String description;
 
-  public String getTitle()
+    public NFRequirement(INFRequirement origin)
+    {
+        super(origin);
+        title = origin.getTitle();
+        actor = origin.getActor();
+        description = origin.getDescription();
+    }
+
+    public NFRequirement()
+    {
+        // Default-Constructor
+    }
+
+    public String getTitle()
   {
     return title;
   }
 
-  public String getActor()
+    public String getActor()
   {
     return actor;
   }
 
-  public String getDescription()
+    public String getDescription()
   {
     return description;
   }
 
-  // für JavaBeans
-  
-  public NFRequirement()
-  {
-    // Default-Constructor
-  }
-  
-  public void setTitle(String title)
+    public void setTitle(String title)
   {
     this.title = title;
   }
 
-  public void setActor(String actor)
+    public void setActor(String actor)
   {
     this.actor = actor;
   }
 
-  public void setDescription(String description)
+    public void setDescription(String description)
   {
     this.description = description;
   }

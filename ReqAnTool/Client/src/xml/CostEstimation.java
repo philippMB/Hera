@@ -1,5 +1,10 @@
 package xml;
 
+import Model_Interfaces.ICostEstimation;
+import Model_Interfaces.IDataFP;
+import Model_Interfaces.ITransactionFP;
+import Model_Interfaces.IWeightFactor;
+
 import java.util.ArrayList;
 
 import java.util.*;
@@ -7,7 +12,9 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CostEstimation
+  implements  ICostEstimation
 {
+
   private double functionPoints;
   private double manMonth;
   @XmlElementWrapper(name="Data_FunctionPoints")
@@ -20,14 +27,20 @@ public class CostEstimation
   @XmlElement(name="Factor")
   private ArrayList<WeightFactor> weightFactorList;
 
-  public CostEstimation(double functionPoints, double manMonth, ArrayList<DataFP> dataFPList,
-                        ArrayList<TransactionFP> transactionFPList, ArrayList<WeightFactor> weightFactorList)
+
+  public CostEstimation(ICostEstimation origin, ArrayList<DataFP> dataFPs, ArrayList<TransactionFP> transactionFPs,
+                        ArrayList<WeightFactor> weightFactors )
   {
-    this.functionPoints = functionPoints;
-    this.manMonth = manMonth;
-    this.dataFPList = dataFPList;
-    this.transactionFPList = transactionFPList;
-    this.weightFactorList = weightFactorList;
+    functionPoints = origin.getFunctionPoints();
+    manMonth = origin.getManMonth();
+    dataFPList = dataFPs;
+    transactionFPList = transactionFPs;
+    weightFactorList = weightFactors;
+  }
+
+  public CostEstimation()
+  {
+    // Default-Constructor
   }
 
   public double getFunctionPoints()
@@ -39,12 +52,48 @@ public class CostEstimation
   {
     return manMonth;
   }
-  
-  // für JavaBeans
-  
-  public CostEstimation()
+
+  public ArrayList<DataFP> getDataFPList()
   {
-     // Default-Constructor
+    return dataFPList;
+  }
+
+  @Override
+  public ArrayList<IDataFP> getDataFPs() {
+    ArrayList<IDataFP> dataFPs = new ArrayList<>();
+    for (IDataFP obj : dataFPList)
+    {
+      dataFPs.add(obj);
+    }
+    return dataFPs;
+  }
+
+  @Override
+  public ArrayList<ITransactionFP> getTransactionFPs() {
+    ArrayList<ITransactionFP> transFPs = new ArrayList<>();
+    for (ITransactionFP obj : transactionFPList)
+    {
+      transFPs.add(obj);
+    }
+    return transFPs;  }
+
+  public ArrayList<TransactionFP> getTransactionFPList()
+  {
+    return transactionFPList;
+  }
+
+  @Override
+  public ArrayList<IWeightFactor> getWeightFactors() {
+    ArrayList<IWeightFactor> weightFPs = new ArrayList<>();
+    for (IWeightFactor obj : weightFPs)
+    {
+      weightFPs.add(obj);
+    }
+    return weightFPs;  }
+
+  public ArrayList<WeightFactor> getWeightFactorList()
+  {
+    return weightFactorList;
   }
   
   public void setFunctionPoints(double functionPoints)
@@ -62,19 +111,9 @@ public class CostEstimation
     this.dataFPList = dataFPList;
   }
 
-  public ArrayList<DataFP> getDataFPList()
-  {
-    return dataFPList;
-  }
-
   public void setTransactionFPList(ArrayList<TransactionFP> transactionFPList)
   {
     this.transactionFPList = transactionFPList;
-  }
-
-  public ArrayList<TransactionFP> getTransactionFPList()
-  {
-    return transactionFPList;
   }
 
   public void setWeightFactorList(ArrayList<WeightFactor> weightFactorList)
@@ -82,8 +121,43 @@ public class CostEstimation
     this.weightFactorList = weightFactorList;
   }
 
-  public ArrayList<WeightFactor> getWeightFactorList()
-  {
-    return weightFactorList;
+  @Override
+  public IWeightFactor getWeightFactorByTitle(String title) {
+    // TODO: javadoc, nicht implementiert
+    return null;
+  }
+
+  @Override
+  public boolean hasIDDataFP(String id) {
+    // TODO: javadoc, nicht implementiert
+    return false;
+  }
+
+  @Override
+  public boolean hasIDTransactionFP(String id) {
+    // TODO: javadoc, nicht implementiert
+    return false;
+  }
+
+  @Override
+  public IDataFP getDataFPByID(String id) {
+    // TODO: javadoc, nicht implementiert
+    return null;
+  }
+
+  @Override
+  public ITransactionFP getTransactionFPByID(String id) {
+    // TODO: javadoc, nicht implementiert
+    return null;
+  }
+
+  @Override
+  public void calculateFP() {
+    // TODO: javadoc, nicht implementiert
+  }
+
+  @Override
+  public void calculateManMonth() {
+    // TODO: javadoc, nicht implementiert
   }
 }

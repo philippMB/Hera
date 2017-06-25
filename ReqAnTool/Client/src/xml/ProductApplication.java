@@ -1,27 +1,28 @@
 package xml;
 
-public class ProductApplication
-{
-  private String description;
-  
-  public ProductApplication(String description)
-  {
-    this.description = description;
-  }
+import Model_Interfaces.IProductApplication;
 
-  public String getDescription()
+public class ProductApplication
+    implements IProductApplication
+{
+    private String description;
+
+    public ProductApplication(IProductApplication origin)
+    {
+        description = origin.getDescription();
+    }
+
+    public ProductApplication()
+    {
+        // Default-Constructor
+    }
+
+    public String getDescription()
   {
     return description;
   }
-  
-  // für JavaBeans
-  
-  public ProductApplication()
-  {
-    // Default-Constructor
-  }
-  
-  public void setDescription(String description)
+
+    public void setDescription(String description)
   {
     this.description = description;
   }
