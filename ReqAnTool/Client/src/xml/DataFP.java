@@ -3,39 +3,56 @@ package xml;
 import Model_Interfaces.ClassOfDataFP;
 import Model_Interfaces.IDataFP;
 import Model_Interfaces.IRequirement;
-
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 
+/**
+ * Class to hold the DataFunctionPoint of the requirement analysis.
+ * This class provides JAXB support and can be accessed via the {@link IDataFP} Interface.
+ * Getter and Setter must be provided to be JAXB conform.
+ * It is implemented in the {@link CustomXMLFormat}.
+ *
+ * @author 3852430
+ * @version 1.0
+ *
+ * @see IDataFP
+ * @see CustomXMLFormat
+ */
 public class DataFP
     implements IDataFP
 {
     private int det;
     private int ret;
     private ArrayList<String> referenceIDs;
-    // TODO enum in JAXB
     @XmlElement(name="Data_Function_Point")
     private ClassOfDataFP type;
     private String reqID;
 
+    /**
+     * The constructor for the DataFP class.
+     * The data from the original DataFP instance is copied into this JAXB conform class.
+     * @param origin The DataFP instance from the original {@link Model_Interfaces.IRequirementAnalysis} which holds
+     *               all the data that has to be stored in the XML file.
+     */
     public DataFP(IDataFP origin)
     {
       det = origin.getDet();
       ret = origin.getRet();
-        // TODO: in echt nachher so?:
-        // referenceIDs = origin.getRequirement().getReferenceIDs();
-        referenceIDs = null;
-        type = origin.getType();
-      // TODO:
-        // reqID = origin.getRequirement().getID();
-        reqID = null;
+      referenceIDs = origin.getRequirement().getReferenceIDs();
+      referenceIDs = null;
+      type = origin.getType();
+      reqID = origin.getRequirement().getID();
+      reqID = null;
     }
 
+    /**
+     * The default constructor for the DataFP class.
+     * Must be provided to be JAXB conform.
+     */
     public DataFP()
     {
-        // Default-Constructor
     }
 
     public int getDet()
@@ -86,8 +103,12 @@ public class DataFP
         this.reqID = reqID;
     }
 
+    /**
+     * This method from the {@link IDataFP} interface is not implemented, because only the data should be available,
+     * no functionality should be provided.
+     * @return Always returns null.
+     */
     public IRequirement getRequirement() {
-        // Nicht implementiert
         return null;
     }
 }

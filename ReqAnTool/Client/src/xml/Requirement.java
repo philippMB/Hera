@@ -9,7 +9,21 @@ import java.util.ArrayList;
 /**
  * Created by Philipp on 13.06.17.
  */
+
 @XmlTransient
+
+/**
+ * Class to hold the Requirements of the requirement analysis.
+ * This class provides JAXB support and can be accessed via the {@link IRequirement} Interface.
+ * Getter and Setter must be provided to be JAXB conform.
+ * It is implemented in the {@link CustomXMLFormat}.
+ *
+ * @author 3852430
+ * @version 1.0
+ *
+ * @see IRequirement
+ * @see CustomXMLFormat
+ */
 public class Requirement
         implements IRequirement
 {
@@ -17,15 +31,24 @@ public class Requirement
     protected String id;
     protected ArrayList<String> referenceIDs;
 
+    /**
+     * The constructor for the Requirement class.
+     * The data from the original Requirement instance is copied into this JAXB conform class.
+     * @param origin The Requirement instance from the original {@link Model_Interfaces.IRequirementAnalysis} which holds
+     *               all the data that has to be stored in the XML file.
+     */
     public Requirement(IRequirement origin)
     {
         id = origin.getID();
         referenceIDs = origin.getReferenceIDs();
     }
 
+    /**
+     * The default constructor for the Requirement class.
+     * Must be provided to be JAXB conform.
+     */
     public Requirement()
     {
-        // Default Constructor
     }
 
     public String getID() {

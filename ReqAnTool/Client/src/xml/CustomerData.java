@@ -2,6 +2,18 @@ package xml;
 
 import Model_Interfaces.ICustomerData;
 
+/**
+ * Class to hold the CustomerData of the requirement analysis.
+ * This class provides JAXB support and can be accessed via the {@link ICustomerData} Interface.
+ * Getter and Setter must be provided to be JAXB conform.
+ * It is implemented in the {@link CustomXMLFormat}.
+ *
+ * @author 3852430
+ * @version 1.0
+ *
+ * @see ICustomerData
+ * @see CustomXMLFormat
+ */
 public class CustomerData
   implements ICustomerData
 {
@@ -17,6 +29,12 @@ public class CustomerData
   private String companyCity;
   private String companyCountry;
 
+    /**
+     * The constructor for the CustomerData class.
+     * The data from the original CustomerData instance is copied into this JAXB conform class.
+     * @param origin The CustomerData instance from the original {@link Model_Interfaces.IRequirementAnalysis} which holds
+     *               all the data that has to be stored in the XML file.
+     */
   public CustomerData(ICustomerData origin)
   {
     pMName = origin.getPMName();
@@ -31,52 +49,55 @@ public class CustomerData
     companyCountry = origin.getCompanyCountry();
   }
 
-  public CustomerData()
-  {
-    // Default Constructor
-  }
+    /**
+     * The default constructor for the CustomerData class.
+     * Must be provided to be JAXB conform.
+     */
+    public CustomerData()
+    {
+    }
 
-  public String getPMName()
+    public String getPMName()
   {
     return pMName;
   }
 
-  public String getPMPNumber()
+    public String getPMPNumber()
   {
     return pMPNumber;
   }
 
-  public String getPMEMail()
+    public String getPMEMail()
   {
     return pMEMail;
   }
 
-  public String getCName()
+    public String getCName()
   {
     return cName;
   }
 
-  public String getCNumber()
+    public String getCNumber()
   {
     return cNumber;
   }
 
-  public String getCEMail()
+    public String getCEMail()
   {
     return cEMail;
   }
 
-  public String getCompanyName()
+    public String getCompanyName()
   {
     return companyName;
   }
 
-  public String getCompanyStreet()
+    public String getCompanyStreet()
   {
     return companyStreet;
   }
 
-  public int getCompanyPLZ()
+    public int getCompanyPLZ()
   {
     return companyPLZ;
   }
@@ -91,57 +112,57 @@ public class CustomerData
     return companyCountry;
   }
   
-  public void setPMName(String PMName)
+    public void setPMName(String PMName)
   {
     this.pMName = PMName;
   }
 
-  public void setPMPNumber(String PMPNumber)
+    public void setPMPNumber(String PMPNumber)
   {
     this.pMPNumber = PMPNumber;
   }
 
-  public void setPMEMail(String PMEmail)
+    public void setPMEMail(String PMEmail)
   {
     this.pMEMail = PMEmail;
   }
 
-  public void setCName(String CName)
+    public void setCName(String CName)
   {
     this.cName = CName;
   }
 
-  public void setCNumber(String CNumber)
+    public void setCNumber(String CNumber)
   {
     this.cNumber = CNumber;
   }
 
-  public void setCEMail(String CEmail)
+    public void setCEMail(String CEmail)
   {
     this.cEMail = CEmail;
   }
 
-  public void setCompanyName(String CompanyName)
+    public void setCompanyName(String CompanyName)
   {
     this.companyName = CompanyName;
   }
 
-  public void setCompanyStreet(String CompanyStreet)
+    public void setCompanyStreet(String CompanyStreet)
   {
     this.companyStreet = CompanyStreet;
   }
 
-  public void setCompanyPLZ(int CompanyPLZ)
+    public void setCompanyPLZ(int CompanyPLZ)
   {
     this.companyPLZ = CompanyPLZ;
   }
 
-  public void setCompanyCity(String Company)
+    public void setCompanyCity(String Company)
   {
     this.companyCity = Company;
   }
 
-  public void setCompanyCountry(String CompanyCountry)
+    public void setCompanyCountry(String CompanyCountry)
   {
     this.companyCountry = CompanyCountry;
   }
