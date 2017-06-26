@@ -1,8 +1,7 @@
 package xml;
 
-import Model_Interfaces.XMLErrorCodes;
-
 import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBException;
 import java.io.*;
 
 public class FileOperator
@@ -12,54 +11,40 @@ public class FileOperator
         // Default-Constructor
     }
 
-    // Exception handling
-  public XMLErrorCodes writeToFile(String address, IXMLFormat xmlData)
-  {
-      XMLErrorCodes error = XMLErrorCodes.NO_ERROR;
-    // trennen in neue Methode
-    FileOutputStream out = openFile(address);
-    if(out != null)
-    {
-        JAXB.marshal(xmlData, out);
-    }
-    else
-    {
-        error = XMLErrorCodes.FILE_NOT_FOUND;
-    }
+    // TODO: Exception handling
+    public void writeToFile(String address, IXMLFormat xmlData)
+            throws FileNotFoundException, JAXBException {
+      FileOutputStream out = openFile(address);
 
-    // Rückgabe nutzen
-    return error;
-  }
+      JAXB.marshal(xmlData, out);
+    }
 
   private FileOutputStream openFile(String filename)
-  {
+          throws FileNotFoundException {
       FileOutputStream out = null;
-      try {
-          out = new FileOutputStream("xmlTest.xml"); // TODO: spaeter variable
-      } catch (FileNotFoundException e) {
-          e.printStackTrace(); // TODO: Logger die Exception reinschmeissen
-      }
+
+      out = new FileOutputStream(filename);
 
       return out;
   }
 
   public IXMLFormat readFromFile(String address, Class<? extends IXMLFormat> format)
+          throws FileNotFoundException, JAXBException
   {
-    FileInputStream in = null;
+    FileInputStream in;
     IXMLFormat reqData = null;
-
-    try {
-        // TODO: address einsetzen
-      in = new FileInputStream("xmlTest.xml");
-    } catch (FileNotFoundException e) {
-        // TODO: Logger
-    }
-
-    if(in != null)
-    {
-        reqData = JAXB.unmarshal(in, format);
-    }
+    in = openFileForReading(address);
+    reqData = JAXB.unmarshal(in, format);
 
     return reqData;
+  }
+
+  private FileInputStream openFileForReading(String filename)
+          throws FileNotFoundException {
+      FileInputStream in = null;
+
+      in = new FileInputStream(filename);
+
+      return in;
   }
 }
