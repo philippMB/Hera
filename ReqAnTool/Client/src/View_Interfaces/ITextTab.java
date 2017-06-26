@@ -44,6 +44,11 @@ public interface ITextTab
 	public String getDescription();
 
 	/**
+	 * Sets the content of the text area to the saved description and deletes changes which the user could have done.
+	 */
+	public void resetDescription();
+
+	/**
 	 * Adds a {@link ITextController} to the text field to observe the changes of text. It will be notified whenever
 	 * the text is changed by the user in this view.
 	 * @param textfieldController Controller which should be notified

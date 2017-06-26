@@ -6,10 +6,14 @@ import LanguageAndText.ITextFacade;
 import Logging.ILogger;
 import Logging.ILoggerFactory;
 import Model_Interfaces.IModel;
+import View_Interfaces.FileAccessType;
+import View_Interfaces.IFileChooser;
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Handler;
 
 /**
  * Created by phlippe on 18.06.17.
@@ -413,6 +417,45 @@ public class BasicController
 				+" occurred with default execution of BasicController.\n";
 		warningMsg += "Controller:"+this.getClass().toString()+"\n";
 		myLogger.warning( warningMsg );
+	}
+
+	protected void accessFile(FileHandler handlerForChosenFile, FileAccessType fileAccessType,
+							  @Nullable String successInfoDialog)
+	{
+		IFileChooser fileChooser = controllerManager.createFileChooser(fileAccessType);
+		fileChooser.showView();
+		String filePath = fileChooser.getChosenFilePath();
+		if (filePath != null)
+		{
+			LoadingController loadingController = controllerManager.createControlledLoadingDialog(null);
+			loadingController.startLoadingDialog();
+			boolean exceptionThrown = false;
+			try
+			{
+				handlerForChosenFile.handleFile(filePath);
+			}
+			catch(Exception exportException)
+			{
+				exceptionThrown = true;
+				loadingController.stopLoadingDialog();
+				handleException(exportException);
+			}
+
+			if(!exceptionThrown)
+			{
+				loadingController.stopLoadingDialog();
+				if(successInfoDialog != null)
+				{
+					controllerManager.createControlledInfoDialog(
+							null,
+							successInfoDialog,
+							new String[]{
+									filePath
+							}
+					);
+				}
+			}
+		}
 	}
 
 }

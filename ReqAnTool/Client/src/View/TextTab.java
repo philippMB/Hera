@@ -51,8 +51,7 @@ public abstract class TextTab
 	}
 
 	/**
-	 * Returns the entered string/description of the user.
-	 * @return Text which user has entered
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getDescription()
@@ -60,12 +59,19 @@ public abstract class TextTab
 		return textAreaDescription.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void resetDescription()
+	{
+		textAreaDescription.setText(getDescriptionFromModel());
+	}
+
 	protected abstract String getDescriptionFromModel();
 
 	/**
-	 * Adds a {@link ITextController} to the text field to observe the changes of text. It will be notified whenever
-	 * the text is changed by the user in this view.
-	 * @param textfieldController Controller which should be notified
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addTextController(ITextController textfieldController)

@@ -4,6 +4,7 @@ import LanguageAndText.DialogConstants;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
+import View_Interfaces.FileAccessType;
 import View_Interfaces.IProjectTab;
 import View_Interfaces.IView;
 
@@ -22,7 +23,7 @@ public class ProjectTabController
 	@Override
 	protected void executeSaveAction()
 	{
-
+		//TODO: Check if model has path. If not make save as
 	}
 
 	@Override
@@ -34,7 +35,11 @@ public class ProjectTabController
 	@Override
 	protected void executeToXMLAction()
 	{
-
+		accessFile(
+				(absolutePath) -> {},//myModel.exportReqAn(absolutePath),
+				FileAccessType.EXPORT,
+				DialogConstants.DIALOG_INFO_EXPORT_FILE
+		);
 	}
 
 	@Override
@@ -77,13 +82,19 @@ public class ProjectTabController
 
 	private void deleteReqAn()
 	{
-		ErrorCodes deleteError = myModel.deleteReqAn();
-
-		if(deleteError != ErrorCodes.NO_ERROR)
+		boolean isDeleted;
+		try
 		{
-			handleException(deleteError);
+			myModel.deleteReqAn();
+			isDeleted = true;
 		}
-		else
+		catch(Exception deleteException)
+		{
+			isDeleted = false;
+			handleException(deleteException);
+		}
+
+		if(isDeleted)
 		{
 			controllerManager.forceQuitAllViews();
 			controllerManager.createControlledStartView();

@@ -3,7 +3,6 @@ package View;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IProductData;
-import Model_Interfaces.IRequirement;
 import View_Interfaces.IProductDataEditView;
 import View_Interfaces.IProductDataShowView;
 
@@ -36,7 +35,9 @@ public class ProductDataEditView
 	{
 		setResizable(false);
 
-		myBuilder.addTitle(getTitleText());
+		String titleText = getTitleText();
+		setTitle(titleText);
+		myBuilder.addTitle(titleText);
 		fieldContent = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_CONTENT),
 				"",
@@ -47,7 +48,7 @@ public class ProductDataEditView
 				"",
 				isEditable
 		);
-		buildLinkTable();
+		buildRefTable();
 		fieldMaxCount = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_MAX_COUNT),
 				"",

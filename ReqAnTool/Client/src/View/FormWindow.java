@@ -3,6 +3,8 @@ package View;
 import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
+import Logging.ILogger;
+import Logging.ILoggerFactory;
 import View_Interfaces.IMenuBar;
 import View_Interfaces.IView;
 
@@ -17,6 +19,7 @@ public abstract class FormWindow
 	protected JButton[] myButtons;
 	protected PanelBuilder myBuilder;
     protected ITextFacade myTextBundle;
+    protected ILogger myLogger;
 
 
     public FormWindow()
@@ -24,6 +27,8 @@ public abstract class FormWindow
         setSize(250,500);   //Ungefähre Größe, damit Factory richtigen Builder erzeugen kann
         myBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
         myTextBundle = ITextFacade.getInstance();
+        myLogger = ILoggerFactory.getInstance().createLogger();
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
 
     protected void setButtonActions(ViewActions[] buttonActions)

@@ -22,44 +22,28 @@ public class NFRequirementEditController
 	}
 
 	@Override
-	protected boolean tryToSaveReq()
+	protected void addRequirementToModel(ArrayList<String> referenceList)
 	{
-		boolean reqIsSaved = false;
-		ErrorCodes saveError;
-		ArrayList<String> referenceList = new ArrayList<>( Arrays.asList(myView.getRefEntry()) );
+		myModel.addNFReq(
+				myView.getIDEntry(),
+				myView.getTitleEntry(),
+				"", //TODO: Change model that NFReq has no actor
+				myView.getDescriptionEntry(),
+				referenceList
+		);
+	}
 
-		if(myReqID == null || myReqID.equals(""))
-		{
-			saveError = myModel.addNFReq(
-					myView.getIDEntry(),
-					myView.getTitleEntry(),
-					"", //TODO: Change model that NFReq has no actor
-					myView.getDescriptionEntry(),
-					referenceList
-			);
-		}
-		else
-		{
-			saveError = myModel.editNFReq(
-					myReqID,
-					myView.getIDEntry(),
-					myView.getTitleEntry(),
-					"", //TODO: Change model that NFReq has no actor
-					myView.getDescriptionEntry(),
-					referenceList
-			);
-		}
-
-		if(saveError == ErrorCodes.NO_ERROR)
-		{
-			reqIsSaved = true;
-		}
-		else
-		{
-			reqIsSaved = false;
-			handleException(saveError);
-		}
-		return reqIsSaved;
+	@Override
+	protected void editRequirementFromModel(ArrayList<String> referenceList)
+	{
+		myModel.editNFReq(
+				myReqID,
+				myView.getIDEntry(),
+				myView.getTitleEntry(),
+				"", //TODO: Change model that NFReq has no actor
+				myView.getDescriptionEntry(),
+				referenceList
+		);
 	}
 
 	@Override

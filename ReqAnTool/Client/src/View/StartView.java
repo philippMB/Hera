@@ -4,6 +4,7 @@ import Controller_Interfaces.IViewController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.ITextFacade;
 import LanguageAndText.TextNameConstants;
+import View.ImageTextButton.ImageTextMouseListener;
 import View_Interfaces.IMenuBar;
 import View_Interfaces.IStartView;
 
@@ -21,18 +22,9 @@ public class StartView
 	implements IStartView
 {
 
-	private static final String WARN_IMAGE_PATH_STRING =
-			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/warnschild.png";
-	private final ViewActions[] BUTTON_ACTIONS = {
-			ViewActions.NEW_PROJECT,
-			ViewActions.OPEN_PROJECT,
-			ViewActions.FROM_XML,
-			ViewActions.CLOSE
-	};
-
 	private PanelBuilder myBuilder;
 	private ITextFacade myTextBundle;
-	private JButton[] myButtons;
+	private ImageTextButton[] myButtons;
 	private MenuBar myMenuBar;
 
 
@@ -51,18 +43,21 @@ public class StartView
 
 	private void init()
 	{
-		getContentPane().setBackground(Color.BLUE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Already there
+		initializeImageTextButtons();
 		setUndecorated(true);
 		getContentPane().setLayout(new GridLayout());
 
-		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_MAIN_MENU));
-		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
+		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_MAIN_MENU);
+		setTitle(titleText);
+		myBuilder.addImage(Paths.get(ImagePathConstants.LOGO_IMAGE_PATH_STRING));
+		myBuilder.addTitle(titleText);
+		for(ImageTextButton buttonPanel: myButtons)
+		{
+			myBuilder.addPanel(buttonPanel);
+		}
 
 		JPanel aPanel = myBuilder.getResult();
 		aPanel.setOpaque(false);
-		aPanel.add(new ImageTextButton(Paths.get(WARN_IMAGE_PATH_STRING)));
-		setActionCommands();
 		getContentPane().add(aPanel, BorderLayout.CENTER);
 		getContentPane().setBackground(Color.WHITE);
 
@@ -70,22 +65,40 @@ public class StartView
 		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
 		setLocationRelativeTo(null);
 		setVisible(true);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
 
-	private void setActionCommands()
+	private void initializeImageTextButtons()
 	{
-		for(int i=0;i<BUTTON_ACTIONS.length;i++)
-		{
-			myButtons[i].setActionCommand(BUTTON_ACTIONS[i].toString());
-		}
+		myButtons = new ImageTextButton[4];
+		myButtons[0] = new ImageTextButton(
+						Paths.get(ImagePathConstants.NEW_PROJECT_IMAGE_PATH_STRING),
+						myTextBundle.getButtonText(ViewActions.NEW_PROJECT),
+						ViewActions.NEW_PROJECT
+				);
+		myButtons[1] = new ImageTextButton(
+						Paths.get(ImagePathConstants.OPEN_PROJECT_IMAGE_PATH_STRING),
+						myTextBundle.getButtonText(ViewActions.OPEN_PROJECT),
+						ViewActions.OPEN_PROJECT
+				);
+		myButtons[2] = new ImageTextButton(
+						Paths.get(ImagePathConstants.IMPORT_IMAGE_PATH_STRING),
+						myTextBundle.getButtonText(ViewActions.FROM_XML),
+						ViewActions.FROM_XML
+				);
+		myButtons[3] = new ImageTextButton(
+						Paths.get(ImagePathConstants.CLOSE_IMAGE_PATH_STRING),
+						myTextBundle.getButtonText(ViewActions.CLOSE),
+						ViewActions.CLOSE
+				);
 	}
 
 	@Override
 	public void addController(IViewController newController)
 	{
-		for(JButton b: myButtons)
+		for(ImageTextButton b: myButtons)
 		{
-			b.addActionListener(newController);
+			b.addController(newController);
 		}
 		addWindowListener(newController);
 	}

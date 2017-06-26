@@ -21,8 +21,6 @@ public class CostEstimationEditView
 	implements ICostEstimationEditView
 {
 
-	//TODO: REFACTOR TABLE
-
 	private final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.EDIT_EP,
 			ViewActions.RATE_WF,
@@ -32,6 +30,7 @@ public class CostEstimationEditView
 
 	private IModelGetData myModel;
 	private JTable tableProcesses;
+	private SingleColumnTableModel tableProcessesModel;
 
 
 	public CostEstimationEditView(IModelGetData model)
@@ -46,13 +45,17 @@ public class CostEstimationEditView
 	@Override
 	protected void init()
 	{
-		String[][] tableProcessEntries = calcTableProcessEntries();
-
-		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION));
+		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION);
+		setTitle(titleText);
+		myBuilder.addTitle(titleText);
 		tableProcesses = myBuilder.addTable(
 				myTextBundle.getParameterText(TextNameConstants.PAR_ELEMENTARY_PROCESSES),
-				tableProcessEntries
+				new String[0][0],
+				new String[0]
 		);
+		tableProcessesModel = new SingleColumnTableModel(calcTableProcessEntries(), null);
+		tableProcesses.setModel(tableProcessesModel);
+
 		JButton[] buttonBar0 = myBuilder.addButtonBar(Arrays.copyOfRange(myButtonActions,0,1));
 		myButtons[0] = buttonBar0[0];
 		JButton[] buttonBar1 = myBuilder.addButtonBar(Arrays.copyOfRange(myButtonActions,1,2));
@@ -67,23 +70,11 @@ public class CostEstimationEditView
 		pack();
 	}
 
-	private String[][] calcTableProcessEntries()
+	private String[] calcTableProcessEntries()
 	{
-		String[][] tableEntries;
-
-		ArrayList<String> allRequirementIDs = myModel.getAllReqIDs();
-
-		int amountRequirements = allRequirementIDs.size();
-		tableEntries = new String[amountRequirements][1];
-
-		for(int row = 0;row < amountRequirements; row++)
-		{
-			tableEntries[row][0] = allRequirementIDs.get(0);
-		}
-
-		return tableEntries;
+		String[] allRequirementIDs = myModel.getAllReqIDs().toArray(new String[0]);
+		return allRequirementIDs;
 	}
-
 
 	@Override
 	public String getSelectedID()
@@ -116,9 +107,7 @@ public class CostEstimationEditView
 
 	private void updateTable()
 	{
-		String[][] updatedTableEntries = calcTableProcessEntries();
-		TableModel myTableModel = new DefaultTableModel(updatedTableEntries,null);
-		tableProcesses.setModel(myTableModel);
+		tableProcessesModel.setTableEntries(calcTableProcessEntries());
 	}
 
 }

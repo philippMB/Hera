@@ -1,5 +1,7 @@
 package Controller;
 
+import Exceptions.NumberType;
+import Exceptions.StringNoNumberException;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IActualStateEditView;
@@ -28,26 +30,19 @@ public class ActualStateEditController
 		}
 		else
 		{
-			controllerManager.createControlledErrorDialog(
-					myView,
-					ErrorCodes.STRING_NO_DOUBLE,
-					new String[]{
-						actualStateEntry
-					}
-			);
+			handleException(new StringNoNumberException(NumberType.DOUBLE, actualStateEntry));
 		}
 	}
 
 	private void saveActualState(double actualState)
 	{
-		ErrorCodes saveError = myModel.setActualState(actualState);
-		if (saveError != ErrorCodes.NO_ERROR)
-		{
-			handleException(saveError);
-		}
-		else
-		{
+		try{
+			myModel.setActualState(actualState);
 			closeView();
+		}
+		catch(Exception ex)
+		{
+			handleException(ex);
 		}
 	}
 

@@ -16,8 +16,6 @@ public class InfoDialog
 	implements IInfoDialog
 {
 
-	private static final String INFO_IMAGE_PATH_STRING =
-			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/Fehlerschild.png";
 	private static final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.OK
 	};
@@ -64,14 +62,14 @@ public class InfoDialog
 
 	private Path getInfoImagePath()
 	{
-		return Paths.get(INFO_IMAGE_PATH_STRING);
+		return Paths.get(ImagePathConstants.INFO_IMAGE_PATH_STRING);
 	}
 
 	@Override
 	protected void init()
 	{
 		setButtonActions(BUTTON_ACTIONS);
-		buildDefaultStructure(titleText, descriptionText, getInfoImagePath());
+		buildDefaultDialogStructure(titleText, descriptionText, getInfoImagePath());
 		getContentPane().add(
 				new BorderDecorater(myBuilder.getResult())
 		);

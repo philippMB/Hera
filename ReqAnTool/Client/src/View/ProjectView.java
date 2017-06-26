@@ -56,6 +56,7 @@ public class ProjectView
 		tabPanel = new JTabbedPane();
 		getContentPane().add(tabPanel);
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
 
 	protected void addTab(String tabName, JPanel newTab)
@@ -75,7 +76,6 @@ public class ProjectView
 	@Override
 	public void addController(IViewController newController)
 	{
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(newController);
 	}
 

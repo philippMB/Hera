@@ -39,13 +39,18 @@ public class WeightFactorEditView
 		init();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void init()
 	{
 		ArrayList<IWeightFactor> myWeightFactors = myModel.getAllWeightFactor();
 		myScrollBarPanels = new HashMap<>();
 
-		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_WEIGHT_FACTOR_EDIT));
+		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_WEIGHT_FACTOR_EDIT);
+		setTitle(titleText);
+		myBuilder.addTitle(titleText);
 
 		for(int i = 0; i<myWeightFactors.size(); i++)
 		{
@@ -66,6 +71,9 @@ public class WeightFactorEditView
 		pack();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getValueByTitle(String title)
 	{
@@ -73,6 +81,9 @@ public class WeightFactorEditView
 		return sliderPanel.getSliderValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{

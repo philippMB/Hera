@@ -27,20 +27,31 @@ public class StartViewController
 	@Override
 	protected void executeOpenProjectAction()
 	{
-		IFileChooser myFileChooser = controllerManager.createFileChooser(FileAccessType.OPEN);
-		myFileChooser.showView();
-		String filePath = myFileChooser.getChosenFilePath();
+		accessFile(
+				(absolutePath) ->
+				{
+					//myModel.openReqAn(absolutePath);
+					controllerManager.createControlledProjectView();
+					closeView();
+				},
+				FileAccessType.OPEN,
+				null
+		);
+	}
 
-		if(filePath != null)
-		{
-			//TODO: Model open ReqAn
-			controllerManager.createControlledProjectView();
-			closeView();
-		}
-		else
-		{
-
-		}
+	@Override
+	protected void executeFromXMLAction()
+	{
+		accessFile(
+				(absolutePath) ->
+				{
+					//myModel.importReqAn(absolutePath);
+					controllerManager.createControlledProjectView();
+					closeView();
+				},
+				FileAccessType.IMPORT,
+				null
+		);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package Main;
 import Controller.ControllerManager;
 import Controller.ProjectViewController;
 import Controller_Interfaces.ViewActions;
+import Exceptions.MissingReqAnException;
 import Logging.ILogger;
 import Logging.ILoggerFactory;
 import Logging.TraceLoggerFactory;
@@ -45,11 +46,12 @@ public class ReqAn
     	ILogger myLogger = ILoggerFactory.getInstance().createLogger();
     	Model newModel = new Model();
 		newModel.makeNewReqAn("Anforderungsanalysentool","Ich","ll@sd.com","049");
-		ErrorCodes errorCode = newModel.addFReq("/222/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
-		ErrorCodes errorCode2 = newModel.addNFReq("/223/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
-		ErrorCodes errorCode3 = newModel.addProdData("/224/","Das ist ein Titel","Ich","100",new ArrayList<String>());
+		newModel.addFReq("/222/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
+		newModel.addNFReq("/223/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
+		newModel.addProdData("/224/","Das ist ein Titel","Ich","100",new ArrayList<String>());
 
 		ControllerManager controllerManager = ControllerManager.getInstance(newModel);
 		controllerManager.createControlledStartView();
+		controllerManager.createControlledErrorDialog(null, new MissingReqAnException());
     }
 }

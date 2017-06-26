@@ -25,8 +25,11 @@ public class CostEstimationShowView
 
 	private IModelGetData myModel;
 	private JTable tableDataFP;
+	private StandardTableModel tableDataFPModel;
 	private JTable tableTransactionFP;
+	private StandardTableModel tableTransactionFPModel;
 	private JTable tableWeightFactors;
+	private StandardTableModel tableWeightFactorsModel;
 	private JTextField fieldFunctionPoint;
 	private JTextField fieldManMonth;
 
@@ -42,25 +45,35 @@ public class CostEstimationShowView
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle(
-				myTextBundle.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION)
-		);
+		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION);
+		setTitle(titleText);
+		myBuilder.addTitle(titleText);
 
 		tableDataFP = myBuilder.addTable(
 				myTextBundle.getParameterText(TextNameConstants.PAR_DFP),
-				calcTableEntriesDFP(),
-				getColumnNamesDFP()
+				new String[0][0],
+				new String[0]
 		);
+		tableDataFPModel = new StandardTableModel(calcTableEntriesDFP(), getColumnNamesDFP());
+		tableDataFP.setModel(tableDataFPModel);
+
 		tableTransactionFP = myBuilder.addTable(
 				myTextBundle.getParameterText(TextNameConstants.PAR_TFP),
-				calcTableEntriesTFP(),
-				getColumnNamesTFP()
+				new String[0][0],
+				new String[0]
 		);
+		tableTransactionFPModel = new StandardTableModel(calcTableEntriesTFP(), getColumnNamesTFP());
+		tableTransactionFP.setModel(tableTransactionFPModel);
+
+
 		tableWeightFactors = myBuilder.addTable(
 				myTextBundle.getParameterText(TextNameConstants.PAR_WEIGHT_FACTORS),
-				calcTableEntriesWF(),
-				getColumnNamesWF()
+				new String[0][0],
+				new String[0]
 		);
+		tableWeightFactorsModel = new StandardTableModel(calcTableEntriesWF(), getColumnNamesWF());
+		tableWeightFactors.setModel(tableWeightFactorsModel);
+
 		fieldFunctionPoint = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_FP),
 				"",
@@ -126,6 +139,7 @@ public class CostEstimationShowView
 					break;
 				default:
 					classOfTransactionFP = "---";
+					myLogger.warning("Found unknown class of transaction FP: "+transactionFP.getType().name());
 					break;
 			}
 
@@ -163,6 +177,7 @@ public class CostEstimationShowView
 					break;
 				default:
 					classOfDataFP = "---";
+					myLogger.warning("Found unknown class of data FP: "+dataFP.getType().name());
 					break;
 			}
 
@@ -220,29 +235,17 @@ public class CostEstimationShowView
 
 	private void updateTableTFP()
 	{
-		String[][] tableEntries = calcTableEntriesTFP();
-		String[] columnNames = getColumnNamesTFP();
-
-		DefaultTableModel defaultTableModel = new DefaultTableModel(tableEntries,columnNames);
-		tableTransactionFP.setModel(defaultTableModel);
+		tableTransactionFPModel.setTableEntries(calcTableEntriesTFP());
 	}
 
 	private void updateTableDFP()
 	{
-		String[][] tableEntries = calcTableEntriesDFP();
-		String[] columnNames = getColumnNamesDFP();
-
-		DefaultTableModel defaultTableModel = new DefaultTableModel(tableEntries,columnNames);
-		tableDataFP.setModel(defaultTableModel);
+		tableDataFPModel.setTableEntries(calcTableEntriesDFP());
 	}
 
 	private void updateTableWeightFactors()
 	{
-		String[][] tableEntries = calcTableEntriesWF();
-		String[] columnNames = getColumnNamesWF();
-
-		DefaultTableModel defaultTableModel = new DefaultTableModel(tableEntries,columnNames);
-		tableWeightFactors.setModel(defaultTableModel);
+		tableWeightFactorsModel.setTableEntries(calcTableEntriesWF());
 	}
 
 	private void updateFields()

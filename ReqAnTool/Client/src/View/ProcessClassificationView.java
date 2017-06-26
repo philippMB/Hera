@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Observable;
 
 /**
- * Created by phlippe on 01.05.17.
+ *
  */
 public abstract class ProcessClassificationView
 	extends FormWindow
@@ -30,6 +30,7 @@ public abstract class ProcessClassificationView
 	protected IModelGetData myModel;
 	private JTextField fieldID;
 	private JTable tableReferences;
+	private SingleColumnTableModel tableRefModel;
 	private JComboBox<String> comboBoxClass;
 	private JComboBox<String> comboBoxTyp_DFP;
 	private JComboBox<String> comboBoxTyp_TFP;
@@ -53,6 +54,9 @@ public abstract class ProcessClassificationView
 		init();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void init()
 	{
@@ -64,7 +68,9 @@ public abstract class ProcessClassificationView
 		panelHolder.add(panelDFP);
 		panelHolder.add(panelTFP);
 
-		myBuilder.addTitle(myTextBundle.getTitleText(TextNameConstants.TITLE_PROCESS_CLASSIFICATION));
+		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_PROCESS_CLASSIFICATION);
+		setTitle(titleText);
+		myBuilder.addTitle(titleText);
 		fieldID = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_ID),
 				getMyRequirement().getID(),
@@ -72,8 +78,10 @@ public abstract class ProcessClassificationView
 		);
 		tableReferences = myBuilder.addTable(
 				myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES),
-				calcReferenceTableEntries()
+				new String[0][0]
 		);
+		tableRefModel = new SingleColumnTableModel(getReferencesAsArray(), null);
+		tableReferences.setModel(tableRefModel);
 
 		buildReqSpecificDescription();
 
@@ -89,19 +97,10 @@ public abstract class ProcessClassificationView
 		setUpForRequirement();
 	}
 
-	private String[][] calcReferenceTableEntries()
+	private String[] getReferencesAsArray()
 	{
-		String[][] tableEntries;
-		ArrayList<String> referencesID = getMyRequirement().getReferenceIDs();
-		int amountReferences = referencesID.size();
-		tableEntries = new String[amountReferences][1];
-
-		for(int row = 0; row < amountReferences; row++)
-		{
-			tableEntries[row][0] = referencesID.get(row);
-		}
-
-		return tableEntries;
+		String[] referencesID = getMyRequirement().getReferenceIDs().toArray(new String[0]);
+		return referencesID;
 	}
 
 	private void buildDFPSelection()
@@ -428,11 +427,7 @@ public abstract class ProcessClassificationView
 
 	private void updateReferences()
 	{
-		String[][] tableReferenceEntries;
-		tableReferenceEntries = calcReferenceTableEntries();
-
-		DefaultTableModel tableModel = new DefaultTableModel(tableReferenceEntries,null);
-		tableReferences.setModel(tableModel);
+		tableRefModel.setTableEntries(getReferencesAsArray());
 	}
 
 	protected abstract void loadInternRequirement(String ID);

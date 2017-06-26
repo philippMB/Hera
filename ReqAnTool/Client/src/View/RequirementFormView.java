@@ -57,7 +57,7 @@ public abstract class RequirementFormView<RequirementType extends IRequirement>
 		init();
 	}
 
-	protected void buildLinkTable()
+	protected void buildRefTable()
 	{
 		if(isEditable)
 		{
@@ -114,7 +114,7 @@ public abstract class RequirementFormView<RequirementType extends IRequirement>
 		{
 			myTableEntries = new String[tableReferences.getRowCount()];
 
-			for(int row = 0; row< tableReferences.getRowCount(); row++)
+			for(int row = 0; row < tableReferences.getRowCount(); row++)
 			{
 				myTableEntries[row] = (String) tableReferences.getValueAt(row,0);
 			}

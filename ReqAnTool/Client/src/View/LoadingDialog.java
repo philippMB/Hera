@@ -34,13 +34,6 @@ public class LoadingDialog
 {
 
 	/**
-	 * Final absolute path where the GIF animation is stored.
-	 * TODO: Place it in own static class with constants of all images/gifs in this project
-	 */
-	private static final String PATH_TO_LOADING_GIF =
-			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/loading_small.gif";
-
-	/**
 	 * Attribute that stores if the method {@link LoadingDialog#destruct()} is already called. Needed because showing
 	 * the dialog takes place in another thread.
 	 */
@@ -59,12 +52,12 @@ public class LoadingDialog
 	}
 
 	/**
-	 * Converts the final string path {@link LoadingDialog#PATH_TO_LOADING_GIF} into a {@link Path} object.
-	 * @return {@link Path} object of the string path {@link LoadingDialog#PATH_TO_LOADING_GIF}
+	 * Converts the final string path {@link ImagePathConstants#LOADING_GIF_PATH_STRING} into a {@link Path} object.
+	 * @return {@link Path} object of the string path {@link ImagePathConstants#LOADING_GIF_PATH_STRING}
 	 */
 	private Path getLoadingGIF()
 	{
-		return Paths.get(PATH_TO_LOADING_GIF);
+		return Paths.get(ImagePathConstants.LOADING_GIF_PATH_STRING);
 	}
 
 	//TODO: Get comments on init

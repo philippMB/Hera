@@ -3,6 +3,8 @@ package Controller;
 import Model_Interfaces.IModel;
 import View_Interfaces.IProjectCreateView;
 
+import java.awt.event.WindowEvent;
+
 import static java.lang.Thread.sleep;
 
 /**
@@ -50,4 +52,9 @@ public class ProjectCreateController
 		closeView();
 	}
 
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		executeCancelAction();
+	}
 }

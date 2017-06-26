@@ -1,5 +1,8 @@
 package View;
 
+import Logging.ILogger;
+import Logging.ILoggerFactory;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -16,6 +19,7 @@ public class TabBuilder
 	private int globalColumnNumber;
 	private int section;
 	private boolean splitNextUp;
+	private ILogger myLogger;
 
 	public TabBuilder()
 	{
@@ -27,6 +31,7 @@ public class TabBuilder
 		section = 0;
 		splitNextUp = false;
 		textStyler = new TabTextStyle();
+		myLogger = ILoggerFactory.getInstance().createLogger();
 	}
 
     @Override
@@ -36,7 +41,7 @@ public class TabBuilder
 
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
 		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = section*GRID_WIDTH+0;
+		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
 		layoutConstraints.anchor = GridBagConstraints.WEST;
 		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 		layoutConstraints.insets = new Insets(10,0,10,0);
@@ -50,7 +55,7 @@ public class TabBuilder
     @Override
     public JTextArea addText(String textContent)
 	{
-        // TODO Implement this method
+		myLogger.error("This function is not implemented yet - addNamedDropdownList - DialogBuilder");
 		return null;
     }
 
@@ -126,14 +131,12 @@ public class TabBuilder
 
 		addLeftNameTag(name);
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.anchor = GridBagConstraints.LINE_START;
 		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber+1;
 		layoutConstraints.insets = new Insets(10,5,10,10);
-		layoutConstraints.weightx = 1.0f;
-		//layoutConstraints.weighty = 1.0f;
+		layoutConstraints.weighty = 0.0f;
 
 		JTextField myTextField = new JTextField(20);
 		myTextField.setEditable(isEditable);
@@ -149,14 +152,7 @@ public class TabBuilder
 		globalRowNumber++;
 		splitNextUp = true;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
-		layoutConstraints.anchor = GridBagConstraints.CENTER;
-		layoutConstraints.fill = GridBagConstraints.BOTH;
-		layoutConstraints.insets = new Insets(10,10,10,10);
-		layoutConstraints.weightx = 1.0f;
-		layoutConstraints.weighty = 1.0f;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 
 		if(name != null && name.length() > 0)
 		{
@@ -188,14 +184,7 @@ public class TabBuilder
 		globalRowNumber++;
 		splitNextUp = true;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
-		layoutConstraints.anchor = GridBagConstraints.CENTER;
-		layoutConstraints.fill = GridBagConstraints.BOTH;
-		layoutConstraints.insets = new Insets(10,10,10,10);
-		layoutConstraints.weightx = 1.0f;
-		layoutConstraints.weighty = 1.0f;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 
 		if(name != null && name.length() > 0)
 		{
@@ -241,21 +230,26 @@ public class TabBuilder
     @Override
     public TableSelectionPanel addTableSelection(String name, String[] selectionList, String[] defaultEntries)
 	{
-        // TODO Implement this method
-
+		myLogger.error("This function is not implemented yet - addTableSelection - TabBuilder");
         return null;
     }
 
 	@Override
 	public void addImage(Path imagePath, boolean isGIF)
 	{
+		globalRowNumber++;
+		globalColumnNumber++;
 
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
+		ImageLabel myImage = new ImageLabel(imagePath,75,75, isGIF);
+		myPanel.add(myImage,layoutConstraints);
+		globalRowNumber--;
 	}
 
 	@Override
 	public SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue)
 	{
-		//Not used yet. Has to be implemented when used.
+		myLogger.error("This function is not implemented yet - addNamedScrollBarPanel - TabBuilder");
 		return null;
 	}
 
@@ -270,27 +264,43 @@ public class TabBuilder
 	@Override
 	public JComboBox<String> addNamedDropdownList(String name, String[] options)
 	{
+		myLogger.error("This function is not implemented yet - addNamedDropdownList - TabBuilder");
 		return null;
 	}
 
 	@Override
 	public void addPanel(JPanel newPanel)
 	{
-
+		globalRowNumber++;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
+		myPanel.add(newPanel, layoutConstraints);
 	}
 
 	private void addLeftNameTag(String name)
 	{
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.anchor = GridBagConstraints.LINE_START;
 		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 		layoutConstraints.insets = new Insets(10,10,10,5);
+		layoutConstraints.weightx = 0.0f;
+		layoutConstraints.weighty = 0.0f;
 
 		JLabel nameLabel = new JLabel(name);
 		textStyler.styleAsTagedNameToField(nameLabel);
 		myPanel.add(nameLabel,layoutConstraints);
+	}
+
+	private GridBagConstraints getDefaultConstraints()
+	{
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = section*GRID_WIDTH+globalColumnNumber;
+		layoutConstraints.anchor = GridBagConstraints.CENTER;
+		layoutConstraints.fill = GridBagConstraints.BOTH;
+		layoutConstraints.insets = new Insets(10,10,10,10);
+		layoutConstraints.weightx = 1.0f;
+		layoutConstraints.weighty = 1.0f;
+		return layoutConstraints;
 	}
 
 }

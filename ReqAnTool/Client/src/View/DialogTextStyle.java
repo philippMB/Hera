@@ -57,6 +57,15 @@ public class DialogTextStyle implements TextStyleBridge {
         pLabel.setFont(titleFont);
     }
 
+    /**
+     * @param pLabel
+     */
+    @Override
+    public void styleAsSubtitle(JLabel pLabel)
+    {
+
+    }
+
     @Override
     public void styleAsInformation(JTextComponent pLabel) {
 

@@ -38,7 +38,7 @@ public abstract class DialogView
 		setTitle(myTextBundle.getTitleText(titleConstant));
 	}
 
-	protected void buildDefaultStructure(String titleText, String descriptionText, Path imagePath)
+	protected void buildDefaultDialogStructure(String titleText, String descriptionText, Path imagePath)
 	{
 		myBuilder.addTitle(titleText);
 		myBuilder.addImage(imagePath);

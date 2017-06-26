@@ -3,7 +3,6 @@ package View;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
-import Model_Interfaces.IRequirement;
 import View_Interfaces.IFRequirementEditView;
 import View_Interfaces.IFRequirementShowView;
 
@@ -36,7 +35,7 @@ public class FRequirementEditView
         setResizable(false);
 
         String titleText = getTitleText();
-
+		setTitle(titleText);
         myBuilder.addTitle(titleText);
         fieldTitle = myBuilder.addNamedTextField(
         		myTextBundle.getParameterText(TextNameConstants.PAR_TITLE)+":",
@@ -53,7 +52,7 @@ public class FRequirementEditView
 				"",
 				isEditable
 		);
-		buildLinkTable();
+		buildRefTable();
 		fieldDescription = myBuilder.addNamedTextArea(
 				myTextBundle.getParameterText(TextNameConstants.PAR_DESC),
 				"",

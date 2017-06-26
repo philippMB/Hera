@@ -40,9 +40,9 @@ public class ActualStateEditDialog
 	@Override
 	protected void init()
 	{
-		myBuilder.addTitle(
-				myTextBundle.getTitleText(TextNameConstants.TITLE_ACTUAL_STATE_EDIT)
-		);
+		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_ACTUAL_STATE_EDIT);
+		setTitle(titleText);
+		myBuilder.addTitle(titleText);
 		fieldActualState = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_ACTUAL_STATE),
 				"",

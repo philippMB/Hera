@@ -24,32 +24,32 @@ public class CustomerTabController
 	@Override
 	protected void executeSaveAction()
 	{
-		ArrayList<ErrorCodes> errorCodesList = myModel.editCustData(
-				myView.getCompName(),
-				myView.getCompCity(),
-				myView.getCompStreet(),
-				myView.getCompPLZ(),
-				myView.getCompCountry(),
-				myView.getCustName(),
-				myView.getCustEMail(),
-				myView.getCustPhoneNumber(),
-				myModel.getCustomerData().getPMName(),
-				myModel.getCustomerData().getPMEMail(),
-				myModel.getCustomerData().getPMPNumber()
-		);
 
-		if(errorCodesList.size() != 0)
-		{
-			handleException(errorCodesList.get(0));
-		}
-		else
-		{
+
+		try{
+			myModel.editCustData(
+					myView.getCompName(),
+					myView.getCompCity(),
+					myView.getCompStreet(),
+					myView.getCompPLZ(),
+					myView.getCompCountry(),
+					myView.getCustName(),
+					myView.getCustEMail(),
+					myView.getCustPhoneNumber(),
+					myModel.getCustomerData().getPMName(),
+					myModel.getCustomerData().getPMEMail(),
+					myModel.getCustomerData().getPMPNumber()
+			);
 			controllerManager.createControlledInfoDialog(
 					parentView,
 					DialogConstants.DIALOG_INFO_SAVING_DATA,
 					new String[]{
-						myTextBundle.getParameterText(TextNameConstants.PAR_CUSTOMER)
+							myTextBundle.getParameterText(TextNameConstants.PAR_CUSTOMER)
 					});
+		}
+		catch(Exception custException)
+		{
+			handleException(custException);
 		}
 	}
 
@@ -62,6 +62,6 @@ public class CustomerTabController
 				new String[]{
 						myTextBundle.getParameterText(TextNameConstants.PAR_CUSTOMER)
 				});
-		//myView.resetData();
+		myView.resetData();
 	}
 }

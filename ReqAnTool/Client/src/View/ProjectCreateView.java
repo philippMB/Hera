@@ -65,9 +65,9 @@ public class ProjectCreateView
 
 	private void buildProjectSection()
 	{
-		myBuilder.addTitle(
-				myTextBundle.getTitleText(TextNameConstants.TITLE_PROJECT_CREATE)
-		);
+		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_PROJECT_CREATE);
+		setTitle(titleText);
+		myBuilder.addTitle(titleText);
 		fieldProjectTitle = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_TITLE),
 				"",

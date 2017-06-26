@@ -1,7 +1,7 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
-import LanguageAndText.ExceptionConstants;
+import LanguageAndText.ExceptionToTextConverter;
 import LanguageAndText.TextNameConstants;
 import View_Interfaces.IErrorDialog;
 
@@ -19,8 +19,6 @@ public class ErrorDialog
 	implements IErrorDialog
 {
 
-	private static final String ERROR_IMAGE_PATH_STRING =
-			"/Users/phlippe/Documents/DHBW Stuttgart/4. Semester/Softwareengineering/Bilder/Fehlerschild.png";
 	private static final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.OK,
 			ViewActions.CANCEL
@@ -32,11 +30,12 @@ public class ErrorDialog
 
 	public ErrorDialog(JFrame parentView, Exception thrownException){
 		super(parentView, TextNameConstants.TITLE_ERROR);
+		ExceptionToTextConverter exceptionConverter = ExceptionToTextConverter.getInstance();
 
 		initText(
-				myTextBundle.getTitleText(ExceptionConstants.getExTitleProperty(thrownException)),
-				myTextBundle.getDialogText(ExceptionConstants.getExMessageProperty(thrownException),
-						ExceptionConstants.getExPlaceholders(myTextBundle, thrownException))
+				myTextBundle.getTitleText(exceptionConverter.getExTitleProperty(thrownException)),
+				myTextBundle.getDialogText(exceptionConverter.getExMessageProperty(thrownException),
+						exceptionConverter.getExPlaceholders(myTextBundle, thrownException))
 		);
 
 
@@ -45,10 +44,11 @@ public class ErrorDialog
 
 	public ErrorDialog(JFrame parentView, Exception thrownException, String[] placeholderInText){
 		super(parentView, TextNameConstants.TITLE_ERROR);
+		ExceptionToTextConverter exceptionConverter = ExceptionToTextConverter.getInstance();
 
 		initText(
-				myTextBundle.getTitleText(ExceptionConstants.getExTitleProperty(thrownException)),
-				myTextBundle.getDialogText(ExceptionConstants.getExMessageProperty(thrownException),
+				myTextBundle.getTitleText(exceptionConverter.getExTitleProperty(thrownException)),
+				myTextBundle.getDialogText(exceptionConverter.getExMessageProperty(thrownException),
 						placeholderInText)
 		);
 
@@ -70,14 +70,14 @@ public class ErrorDialog
 
 	private Path getErrorImagePath()
 	{
-		return Paths.get(ERROR_IMAGE_PATH_STRING);
+		return Paths.get(ImagePathConstants.ERROR_IMAGE_PATH_STRING);
 	}
 
 	@Override
 	protected void init()
 	{
 		setButtonActions(BUTTON_ACTIONS);
-		buildDefaultStructure(title, descriptionText, getErrorImagePath());
+		buildDefaultDialogStructure(title, descriptionText, getErrorImagePath());
 		getContentPane().add(
 				new BorderDecorater(
 						myBuilder.getResult(),

@@ -1,5 +1,8 @@
 package View;
 
+import Logging.ILogger;
+import Logging.ILoggerFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Path;
@@ -11,6 +14,7 @@ public class FormulaBuilder
     private static final int GRID_WIDTH = 2;
 
 	private int globalRowNumber;
+	private ILogger myLogger;
 
 
 	public FormulaBuilder()
@@ -20,6 +24,7 @@ public class FormulaBuilder
 		myPanel.setLayout(new GridBagLayout());
 		globalRowNumber = -1;
 		textStyler = new DialogTextStyle();
+		myLogger = ILoggerFactory.getInstance().createLogger();
 	}
 
     @Override
@@ -29,10 +34,7 @@ public class FormulaBuilder
 
         addLeftNameTag(name);
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.gridx = 1;
 		layoutConstraints.insets = new Insets(10,5,10,10);
 
@@ -49,16 +51,12 @@ public class FormulaBuilder
 	{
         globalRowNumber++;
 
-        GridBagConstraints layoutConstraints = new GridBagConstraints();
-        layoutConstraints.gridy = globalRowNumber;
-        layoutConstraints.anchor = GridBagConstraints.LINE_START;
-        layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+        GridBagConstraints layoutConstraints = getDefaultConstraints();
+		layoutConstraints.gridwidth = GRID_WIDTH;
         layoutConstraints.insets = new Insets(10,10,10,5);
 
         JLabel nameLabel = new JLabel(name);
         textStyler.styleAsTagedNameToArea(nameLabel);
-        layoutConstraints.gridx = 0;
-        layoutConstraints.gridwidth = GRID_WIDTH;
         myPanel.add(nameLabel,layoutConstraints);
 
         globalRowNumber++;
@@ -71,11 +69,8 @@ public class FormulaBuilder
 			myTextArea.setBackground(null);
 		}
         JScrollPane scrollableTextArea = new JScrollPane(myTextArea);
-        layoutConstraints.gridy = globalRowNumber;
+        layoutConstraints = getDefaultConstraints();
         layoutConstraints.gridwidth = GRID_WIDTH;
-        layoutConstraints.gridx = 0;
-        layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
-        layoutConstraints.insets = new Insets(10,10,10,10);
         myPanel.add(scrollableTextArea,layoutConstraints);
 
         return myTextArea;
@@ -86,15 +81,12 @@ public class FormulaBuilder
 	{
         globalRowNumber++;
 
-        GridBagConstraints layoutConstraints = new GridBagConstraints();
-        layoutConstraints.gridy = globalRowNumber;
+        GridBagConstraints layoutConstraints = getDefaultConstraints();
         layoutConstraints.anchor = GridBagConstraints.WEST;
-        layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
         layoutConstraints.insets = new Insets(10,0,10,0);
         layoutConstraints.gridwidth = GRID_WIDTH;
 
         JLabel titleLabel = new JLabel(title,SwingConstants.CENTER);
-        layoutConstraints.gridx = 0;
         myPanel.add(titleLabel,layoutConstraints);
     }
 
@@ -105,12 +97,9 @@ public class FormulaBuilder
 
 		JButton[] myButtons;
 
-        GridBagConstraints layoutConstraints = new GridBagConstraints();
-        layoutConstraints.gridy = globalRowNumber;
+        GridBagConstraints layoutConstraints = getDefaultConstraints();
         layoutConstraints.anchor = GridBagConstraints.LINE_END;
-        layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
         layoutConstraints.gridwidth = GRID_WIDTH;
-        layoutConstraints.gridx = 0;
 
         if(buttonNames != null && buttonNames.length != 0)
 		{
@@ -141,13 +130,10 @@ public class FormulaBuilder
 	{
         globalRowNumber++;
 
-        GridBagConstraints layoutConstraints = new GridBagConstraints();
-        layoutConstraints.gridy = globalRowNumber;
+        GridBagConstraints layoutConstraints = getDefaultConstraints();
         layoutConstraints.anchor = GridBagConstraints.WEST;
         layoutConstraints.fill = GridBagConstraints.BOTH;
         layoutConstraints.gridwidth = GRID_WIDTH;
-		layoutConstraints.insets = new Insets(10,10,10,10);
-        layoutConstraints.gridx = 0;
 
 		JTextArea myText = new JTextArea(textContent);
 		myText.setEditable(false);
@@ -168,17 +154,10 @@ public class FormulaBuilder
 	{
         globalRowNumber++;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		addLeftNameTag(name);
+
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.insets = new Insets(10,10,10,5);
-
-		layoutConstraints.gridx = 0;
-		JLabel nameLabel = new JLabel(name);
-		textStyler.styleAsTagedNameToField(nameLabel);
-		myPanel.add(nameLabel,layoutConstraints);
-
 		layoutConstraints.gridx = 1;
         JTable myTable = new JTable(elements,columnNames);
 		myTable.setPreferredScrollableViewportSize(new Dimension(100,100));
@@ -193,14 +172,10 @@ public class FormulaBuilder
 	{
         globalRowNumber++;
 
-        GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
+        GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.anchor = GridBagConstraints.PAGE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
-		layoutConstraints.insets = new Insets(10,10,10,5);
-		
-		layoutConstraints.gridx = 0;
-		layoutConstraints.insets.top = 15;
+		layoutConstraints.insets = new Insets(15,10,10,5);
+
 		JLabel nameLabel = new JLabel(name);
 		textStyler.styleAsTagedNameToField(nameLabel);
 		myPanel.add(nameLabel,layoutConstraints);
@@ -218,8 +193,7 @@ public class FormulaBuilder
 	{
 		globalRowNumber++;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.anchor = GridBagConstraints.CENTER;
 		layoutConstraints.fill = GridBagConstraints.BOTH;
 		layoutConstraints.weightx = 0;
@@ -236,11 +210,8 @@ public class FormulaBuilder
 
 		addLeftNameTag(name);
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.gridx = 1;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 		layoutConstraints.insets = new Insets(10,5,10,10);
 
 		SliderPanel mySliderPanel = new SliderPanel(initValue,minimumValue,maximumValue);
@@ -255,12 +226,8 @@ public class FormulaBuilder
 	{
 		globalRowNumber++;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = 0;
-		layoutConstraints.gridwidth = 2;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
-		layoutConstraints.insets = new Insets(10,10,10,10);
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
+		layoutConstraints.gridwidth = GRID_WIDTH;
 
 		JSeparator mySeparator = new JSeparator(SwingConstants.HORIZONTAL);
 		myPanel.add(mySeparator,layoutConstraints);
@@ -273,11 +240,8 @@ public class FormulaBuilder
 
 		addLeftNameTag(name);
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.gridx = 1;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 		layoutConstraints.insets = new Insets(10,5,10,10);
 
 		JComboBox<String> myDropdownList = new JComboBox<>(options);
@@ -292,28 +256,18 @@ public class FormulaBuilder
 	public void addPanel(JPanel newPanel)
 	{
 		globalRowNumber++;
-
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.gridx = 0;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.gridwidth = GRID_WIDTH;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
-		layoutConstraints.insets = new Insets(10,10,10,10);
-
 		myPanel.add(newPanel, layoutConstraints);
 	}
 
 	private void addLeftNameTag(String name)
 	{
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.insets = new Insets(10,10,10,5);
 
 		JLabel nameLabel = new JLabel(name);
 		textStyler.styleAsTagedNameToField(nameLabel);
-		layoutConstraints.gridx = 0;
 		myPanel.add(nameLabel,layoutConstraints);
 	}
 
@@ -323,4 +277,16 @@ public class FormulaBuilder
 		myPanel = new BorderDecorater(myPanel);
 		return super.getResult();
 	}
+
+	private GridBagConstraints getDefaultConstraints()
+	{
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = 0;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.insets = new Insets(10,10,10,10);
+		return layoutConstraints;
+	}
+
 }

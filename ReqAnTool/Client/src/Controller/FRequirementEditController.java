@@ -25,44 +25,28 @@ public class FRequirementEditController
 	}
 
 	@Override
-	protected boolean tryToSaveReq()
+	protected void addRequirementToModel(ArrayList<String> referenceList)
 	{
-		boolean reqIsSaved;
-		ErrorCodes saveError;
-		ArrayList<String> referenceList = new ArrayList<>( Arrays.asList(myView.getRefEntry()) );
+		myModel.addFReq(
+				myView.getIDEntry(),
+				myView.getTitleEntry(),
+				myView.getActorEntry(),
+				myView.getDescriptionEntry(),
+				referenceList
+		);
+	}
 
-		if(myReqID == null || myReqID.equals(""))
-		{
-			saveError = myModel.addFReq(
-					myView.getIDEntry(),
-					myView.getTitleEntry(),
-					myView.getActorEntry(),
-					myView.getDescriptionEntry(),
-					referenceList
-			);
-		}
-		else
-		{
-			saveError = myModel.editFReq(
-					myReqID,
-					myView.getIDEntry(),
-					myView.getTitleEntry(),
-					myView.getActorEntry(),
-					myView.getDescriptionEntry(),
-					referenceList
-			);
-		}
-
-		if(saveError == ErrorCodes.NO_ERROR)
-		{
-			reqIsSaved = true;
-		}
-		else
-		{
-			reqIsSaved = false;
-			handleException(saveError);
-		}
-		return reqIsSaved;
+	@Override
+	protected void editRequirementFromModel(ArrayList<String> referenceList)
+	{
+		myModel.editFReq(
+				myReqID,
+				myView.getIDEntry(),
+				myView.getTitleEntry(),
+				myView.getActorEntry(),
+				myView.getDescriptionEntry(),
+				referenceList
+		);
 	}
 
 	@Override

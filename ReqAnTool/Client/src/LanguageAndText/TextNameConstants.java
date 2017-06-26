@@ -138,5 +138,10 @@ public abstract class TextNameConstants
 	public static final String PAR_NFREQ = "NFREQ";
 	public static final String PAR_PRODUCTDATA = "PROD_DATA";
 	public static final String PAR_REQAN = "REQAN";
+	public static final String PAR_INTEGER = "INTEGER";
+	public static final String PAR_DOUBLE = "DOUBLE";
+	public static final String PAR_PRODUCT_APPLICATION = "PRODUCT_APPLICATION";
+	public static final String PAR_PRODUCT_ENVIRONMENT = "PRODUCT_ENVIRONMENT";
+	public static final String PAR_TARGET_DEFINITION = "TARGET_DEFINITION";
 
 }

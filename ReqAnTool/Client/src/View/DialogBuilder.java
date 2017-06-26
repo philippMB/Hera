@@ -1,5 +1,8 @@
 package View;
 
+import Logging.ILogger;
+import Logging.ILoggerFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Path;
@@ -18,6 +21,7 @@ public class DialogBuilder
 
     private int globalRowNumber;
     private boolean imageAdded;
+    private ILogger myLogger;
 
 
     public DialogBuilder()
@@ -28,6 +32,7 @@ public class DialogBuilder
         globalRowNumber = -1;
         imageAdded = false;
         textStyler = new DialogTextStyle();
+        myLogger = ILoggerFactory.getInstance().createLogger();
     }
 
     public JButton[] addButtonBar(String[] buttonNames)
@@ -36,12 +41,11 @@ public class DialogBuilder
 
 		JButton[] myButtons;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
+		layoutConstraints.fill = GridBagConstraints.NONE;
 		layoutConstraints.anchor = GridBagConstraints.LINE_END;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
 		layoutConstraints.gridwidth = GRID_WIDTH;
-		layoutConstraints.gridx = 0;
+		layoutConstraints.insets = new Insets(0,0,0,0);
 
 		if(buttonNames != null && buttonNames.length != 0)
 		{
@@ -71,13 +75,11 @@ public class DialogBuilder
 			globalRowNumber++;
 		}
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
+    	layoutConstraints.insets = new Insets(0,0,0,0);
 		if(!imageAdded)
 		{
-			layoutConstraints.gridwidth = 2;
+			layoutConstraints.gridwidth = GRID_WIDTH;
 			layoutConstraints.gridx = 0;
 		}
 		else
@@ -105,12 +107,9 @@ public class DialogBuilder
 
 		globalRowNumber++;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.CENTER;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
-		layoutConstraints.gridwidth = 2;
-		layoutConstraints.gridx = 0;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
+		layoutConstraints.insets = new Insets(0,0,0,0);
+		layoutConstraints.gridwidth = GRID_WIDTH;
 
 		JLabel titleLabel = new JLabel(title);
 		textStyler.styleAsTitle(titleLabel);
@@ -124,10 +123,7 @@ public class DialogBuilder
 
 		addLeftNameTag(name);
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.gridx = 1;
 		layoutConstraints.insets = new Insets(10,5,10,10);
 
@@ -142,23 +138,21 @@ public class DialogBuilder
     @Override
     public JTextArea addNamedTextArea(String name, String content, boolean isEditable)
 	{
-        // TODO Implement this method
-
+		myLogger.error("This function is not implemented yet - addNamedTextArea - DialogBuilder");
         return null;
     }
 
     @Override
     public JTable addTable(String name, String[][] elements, String[] columnNames)
 	{
-        // TODO Implement this method
+		myLogger.error("This function is not implemented yet - addTable - DialogBuilder");
         return null;
     }
 
     @Override
     public TableSelectionPanel addTableSelection(String name, String[] selectionList, String[] defaultEntries)
 	{
-        // TODO Implement this method
-
+		myLogger.error("This function is not implemented yet - addTableSelection - DialogBuilder");
         return null;
     }
 
@@ -167,10 +161,7 @@ public class DialogBuilder
 	{
 		globalRowNumber++;
 
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.BOTH;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.weightx = 0;
 		layoutConstraints.insets = new Insets(5,5,5,0);
 
@@ -182,39 +173,48 @@ public class DialogBuilder
 	@Override
 	public SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue)
 	{
+		myLogger.error("This function is not implemented yet - addNamedScrollBarPanel - DialogBuilder");
 		return null;
 	}
 
 	@Override
 	public void addNewSection()
 	{
-
+		myLogger.error("This function is not implemented yet - addNewSection - DialogBuilder");
 	}
 
 	@Override
 	public JComboBox<String> addNamedDropdownList(String name, String[] options)
 	{
+		myLogger.error("This function is not implemented yet - addNamedDropdownList - DialogBuilder");
 		return null;
 	}
 
 	@Override
 	public void addPanel(JPanel newPanel)
 	{
-
+		myLogger.error("This function is not implemented yet - addPanel - DialogBuilder");
 	}
 
 	private void addLeftNameTag(String name)
 	{
-		GridBagConstraints layoutConstraints = new GridBagConstraints();
-		layoutConstraints.gridy = globalRowNumber;
-		layoutConstraints.anchor = GridBagConstraints.LINE_START;
-		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		GridBagConstraints layoutConstraints = getDefaultConstraints();
 		layoutConstraints.insets = new Insets(10,10,10,5);
 
 		JLabel nameLabel = new JLabel(name);
 		textStyler.styleAsTagedNameToField(nameLabel);
-		layoutConstraints.gridx = 0;
 		myPanel.add(nameLabel,layoutConstraints);
+	}
+
+	private GridBagConstraints getDefaultConstraints()
+	{
+		GridBagConstraints layoutConstraints = new GridBagConstraints();
+		layoutConstraints.gridy = globalRowNumber;
+		layoutConstraints.gridx = 0;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
+		layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+		layoutConstraints.insets = new Insets(10,10,10,10);
+		return layoutConstraints;
 	}
 
 }

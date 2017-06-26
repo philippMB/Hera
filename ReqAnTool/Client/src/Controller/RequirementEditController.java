@@ -6,6 +6,7 @@ import Model_Interfaces.IModel;
 import View_Interfaces.IRequirementFormView;
 
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -60,9 +61,11 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		canViewBeClosed();
-		super.windowClosing(e);
-		//TODO: Stop closing
+		if(canViewBeClosed())
+		{
+			closeView();
+			controllerManager.removeController(this);
+		}
 	}
 
 	@Override
@@ -116,25 +119,40 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 		closeView();
 	}
 
-	@Override
-	protected void handleExDuplicate(int errorID)
-	{
-		controllerManager.createControlledErrorDialog(
-				myView,
-				ErrorCodes.DUPLICATE,
-				new String[]{
-						myReqID
-				}
-		);
-	}
-
 	private boolean isReqEqualsViewEntries()
 	{
 		//TODO: Compare given Requirement to the entries in view (if req null, everytime false)
 		return false;
 	}
 
-	protected abstract boolean tryToSaveReq();
+	protected boolean tryToSaveReq()
+	{
+		boolean reqIsSaved = true;
+		ArrayList<String> referenceList = new ArrayList<>( Arrays.asList(myView.getRefEntry()) );
+
+		try
+		{
+			if(myReqID == null || myReqID.equals(""))
+			{
+				addRequirementToModel(referenceList);
+			}
+			else
+			{
+				editRequirementFromModel(referenceList);
+			}
+		}
+		catch (Exception saveException)
+		{
+			handleException(saveException);
+			reqIsSaved = false;
+		}
+
+		return reqIsSaved;
+	}
+
+	protected abstract void addRequirementToModel(ArrayList<String> referenceList);
+
+	protected abstract void editRequirementFromModel(ArrayList<String> referenceList);
 
 	protected abstract String[] createSaveDataWarningPlaceholder();
 

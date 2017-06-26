@@ -10,7 +10,6 @@ public class WarningController
 	extends DialogController<IWarningDialog>
 {
 
-
 	public WarningController(IModel model, IWarningDialog viewToBeControlled)
 	{
 		super(model,viewToBeControlled);

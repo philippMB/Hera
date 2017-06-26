@@ -13,6 +13,7 @@ public class TabTextStyle
 {
 
 	private Font titleFont;
+	private Font subtitleFont;
 	private Font tagedToFieldFont;
 	private Font tagedToAreaFont;
 	private Font informationFont;
@@ -35,6 +36,7 @@ public class TabTextStyle
 		}
 
 		titleFont = new Font(titleFontName,Font.BOLD,16);
+		subtitleFont = new Font(titleFontName,Font.BOLD,14);
 	}
 
 	@Override
@@ -54,6 +56,16 @@ public class TabTextStyle
 	{
 		pLabel.setFont(titleFont);
 		pLabel.setHorizontalAlignment(JLabel.CENTER);
+	}
+
+	/**
+	 * @param pLabel
+	 */
+	@Override
+	public void styleAsSubtitle(JLabel pLabel)
+	{
+		pLabel.setFont(subtitleFont);
+		pLabel.setHorizontalAlignment(JLabel.LEFT);
 	}
 
 	@Override

@@ -64,13 +64,14 @@ public abstract class BasicViewController<ViewType extends IView>
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
+		closeView();
 		controllerManager.removeController(this);
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e)
 	{
-		controllerManager.removeController(this);
+		//controllerManager.removeController(this);
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public abstract class BasicViewController<ViewType extends IView>
 	}
 
 	@Override
-	protected void handleExByDialog(IException thrownException)
+	protected void handleExByDialog(Exception thrownException)
 	{
 		controllerManager.createControlledErrorDialog(myView, thrownException);
 	}

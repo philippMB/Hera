@@ -23,40 +23,24 @@ public class MenuController
 	@Override
 	protected void executeSaveAction()
 	{
-		ErrorCodes saveError = myModel.saveReqAn(null);
-		if(saveError != ErrorCodes.NO_ERROR)
+		try
 		{
-			handleException(saveError);
+			myModel.saveReqAn(null);
+		}
+		catch(Exception saveException)
+		{
+			handleException(saveException);
 		}
 	}
 
 	@Override
 	protected void executeSaveAsAction()
 	{
-		IFileChooser fileChooser = controllerManager.createFileChooser(FileAccessType.SAVE);
-		fileChooser.showView();
-		String savePath = fileChooser.getChosenFilePath();
-		if (savePath != null)
-		{
-			LoadingController loadingController = controllerManager.createControlledLoadingDialog(null);
-			loadingController.startLoadingDialog();
-			ErrorCodes openError = myModel.saveReqAn(savePath);
-			loadingController.stopLoadingDialog();
-			if(openError == ErrorCodes.NO_ERROR)
-			{
-				controllerManager.createControlledInfoDialog(
-						null,
-						DialogConstants.DIALOG_INFO_SAVING_FILE,
-						new String[]{
-								savePath
-						}
-				);
-			}
-			else
-			{
-				handleException(openError);
-			}
-		}
+		accessFile(
+				(absoluteFile) -> myModel.saveReqAn(absoluteFile),
+				FileAccessType.SAVE,
+				DialogConstants.DIALOG_INFO_SAVING_FILE
+		);
 	}
 
 	@Override
@@ -73,25 +57,15 @@ public class MenuController
 	{
 		if(controllerManager.canAllViewsBeClosed())
 		{
-			IFileChooser fileChooser = controllerManager.createFileChooser(FileAccessType.OPEN);
-			fileChooser.showView();
-			String filePath = fileChooser.getChosenFilePath();
-			if (filePath != null)
-			{
-				//LoadingController loadingController = controllerManager.createControlledLoadingDialog();
-				//loadingController.startLoadingDialog();
-				ErrorCodes openError = ErrorCodes.NO_ERROR;//TODO: myModel.openReqAn(filePath);
-				//loadingController.stopLoadingDialog();
-				if(openError == ErrorCodes.NO_ERROR)
-				{
-					controllerManager.tryClosingAllActiveViews();
-					controllerManager.createControlledProjectView();
-				}
-				else
-				{
-					handleException(openError);
-				}
-			}
+			accessFile(
+					(absolutePath) -> {
+						//myModel.openReqAn(absolutePath);
+						controllerManager.forceQuitAllViews();
+						controllerManager.createControlledProjectView();
+					},
+					FileAccessType.OPEN,
+					null
+			);
 		}
 	}
 
@@ -100,56 +74,26 @@ public class MenuController
 	{
 		if (controllerManager.canAllViewsBeClosed())
 		{
-			IFileChooser fileChooser = controllerManager.createFileChooser(FileAccessType.IMPORT);
-			fileChooser.showView();
-			String chosenPath = fileChooser.getChosenFilePath();
-			if (chosenPath != null)
-			{
-				LoadingController loadingController = controllerManager.createControlledLoadingDialog(null);
-				loadingController.startLoadingDialog();
-				ErrorCodes importError = ErrorCodes.NO_ERROR;//TODO: myModel.import(chosenPath);
-				loadingController.stopLoadingDialog();
-				if (importError == ErrorCodes.NO_ERROR)
-				{
-					controllerManager.tryClosingAllActiveViews();
-					controllerManager.createControlledProjectView();
-				}
-				else
-				{
-					handleException(importError);
-					controllerManager.createControlledStartView();
-				}
-			}
+			accessFile(
+					(absolutePath) -> {
+						//myModel.importReqAn(absolutePath);
+						controllerManager.forceQuitAllViews();
+						controllerManager.createControlledProjectView();
+					},
+					FileAccessType.IMPORT,
+					null
+			);
 		}
 	}
 
 	@Override
 	protected void executeToXMLAction()
 	{
-		IFileChooser fileChooser = controllerManager.createFileChooser(FileAccessType.EXPORT);
-		fileChooser.showView();
-		String exportPath = fileChooser.getChosenFilePath();
-		if (exportPath != null)
-		{
-			LoadingController loadingController = controllerManager.createControlledLoadingDialog(null);
-			loadingController.startLoadingDialog();
-			ErrorCodes openError = myModel.saveReqAn(exportPath);
-			loadingController.stopLoadingDialog();
-			if(openError == ErrorCodes.NO_ERROR)
-			{
-				controllerManager.createControlledInfoDialog(
-						null,
-						DialogConstants.DIALOG_INFO_EXPORT_FILE,
-						new String[]{
-								exportPath
-						}
-				);
-			}
-			else
-			{
-				handleException(openError);
-			}
-		}
+		accessFile(
+				(absolutePath) -> {},//myModel.exportReqAn(absolutePath),
+				FileAccessType.EXPORT,
+				DialogConstants.DIALOG_INFO_EXPORT_FILE
+		);
 	}
 
 	@Override
@@ -235,4 +179,6 @@ public class MenuController
 	{
 		controllerManager.createControlledInfoDialog(null, DialogConstants.DIALOG_INFO_NOT_IMPLEMENTED);
 	}
+
+
 }

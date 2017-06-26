@@ -21,9 +21,20 @@ public class SaveWarningController
 	@Override
 	protected void executeSaveAction()
 	{
-		ErrorCodes errorCode = myModel.saveReqAn(null);
-		handleException(errorCode);
-		if(errorCode == ErrorCodes.NO_ERROR)
+		boolean isSaved;
+
+		try
+		{
+			myModel.saveReqAn(null);
+			isSaved = true;
+		}
+		catch(Exception saveException)
+		{
+			isSaved = false;
+			handleException(saveException);
+		}
+
+		if(isSaved)
 		{
 			closeProgram();
 		}
@@ -38,9 +49,19 @@ public class SaveWarningController
 
 		if(filePath != null)
 		{
-			ErrorCodes errorCode = myModel.saveReqAn(filePath);
-			handleException(errorCode);
-			if(errorCode == ErrorCodes.NO_ERROR)
+			boolean isSaved;
+			try
+			{
+				myModel.saveReqAn(filePath);
+				isSaved = true;
+			}
+			catch(Exception saveException)
+			{
+				isSaved = false;
+				handleException(saveException);
+			}
+
+			if(isSaved)
 			{
 				closeProgram();
 			}

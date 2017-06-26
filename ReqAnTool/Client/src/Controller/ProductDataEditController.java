@@ -25,44 +25,28 @@ public class ProductDataEditController
 	}
 
 	@Override
-	protected boolean tryToSaveReq()
+	protected void addRequirementToModel(ArrayList<String> referenceList)
 	{
-		boolean reqIsSaved;
-		ErrorCodes saveError;
-		ArrayList<String> referenceList = new ArrayList<>( Arrays.asList(myView.getRefEntry()) );
+		myModel.addProdData(
+				myView.getIDEntry(),
+				myView.getContentEntry(),
+				myView.getAttributeEntry(),
+				myView.getMaxCountEntry(),
+				referenceList
+		);
+	}
 
-		if(myReqID == null || myReqID.equals(""))
-		{
-			saveError = myModel.addProdData(
-					myView.getIDEntry(),
-					myView.getContentEntry(),
-					myView.getAttributeEntry(),
-					myView.getMaxCountEntry(),
-					referenceList
-			);
-		}
-		else
-		{
-			saveError = myModel.editNFReq(
-					myReqID,
-					myView.getIDEntry(),
-					myView.getContentEntry(),
-					myView.getAttributeEntry(),
-					myView.getMaxCountEntry(),
-					referenceList
-			);
-		}
-
-		if(saveError == ErrorCodes.NO_ERROR)
-		{
-			reqIsSaved = true;
-		}
-		else
-		{
-			reqIsSaved = false;
-			handleException(saveError);
-		}
-		return reqIsSaved;
+	@Override
+	protected void editRequirementFromModel(ArrayList<String> referenceList)
+	{
+		myModel.editNFReq(
+				myReqID,
+				myView.getIDEntry(),
+				myView.getContentEntry(),
+				myView.getAttributeEntry(),
+				myView.getMaxCountEntry(),
+				referenceList
+		);
 	}
 
 	@Override

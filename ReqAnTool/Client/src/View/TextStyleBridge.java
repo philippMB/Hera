@@ -15,11 +15,16 @@ public interface TextStyleBridge {
      */
     public void styleAsTagedNameToArea(JLabel pLabel);
 
-    /**
-     * @param pLabel
-     */
-    public void styleAsTitle(JLabel pLabel);
+	/**
+	 * @param pLabel
+	 */
+	public void styleAsTitle(JLabel pLabel);
 
+
+	/**
+	 * @param pLabel
+	 */
+	public void styleAsSubtitle(JLabel pLabel);
 
     public void styleAsInformation(JTextComponent pLabel);
     

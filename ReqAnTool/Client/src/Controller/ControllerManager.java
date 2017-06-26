@@ -37,30 +37,6 @@ public class ControllerManager
 		myLogger = ILoggerFactory.getInstance().createLogger();
 		managerLogger = ILoggerFactory.getInstance().createLogger("ReqAn_controllerManagement");
 		allViewControllers = new ArrayList<>();
-
-		/*
-		Thread myThread = new Thread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				for(BasicViewController controller: allViewControllers)
-				{
-					controller.myView.update(null,null);
-				}
-				try
-				{
-					sleep(10000);
-				}
-				catch(Exception e)
-				{
-
-				}
-				run();
-			}
-		});
-		myThread.start();
-		*/
 	}
 
 	public static ControllerManager getInstance(IModel model)
@@ -122,21 +98,36 @@ public class ControllerManager
 	{
 		managerLogger.info("Creating ProductApplicationTab");
 		IProductApplicationTab productApplicationTab = myViewFacadeFactory.createProductApplicationTab(tabView);
-		//TODO: Implement this
+		ProductApplicationTabController controller = new ProductApplicationTabController(
+				myModel,
+				tabView,
+				productApplicationTab
+		);
+		addControllerToSystem(controller);
 	}
 
 	public void createControlledProductEnvironmentTab(IProjectView tabView)
 	{
 		managerLogger.info("Creating ProductEnvironmentTab");
 		IProductEnvironmentTab productEnvironmentTab = myViewFacadeFactory.createProductEnvironmentTab(tabView);
-		//TODO: Implement this
+		ProductEnvironmentTabController controller = new ProductEnvironmentTabController(
+				myModel,
+				tabView,
+				productEnvironmentTab
+		);
+		addControllerToSystem(controller);
 	}
 
 	public void createControlledTargetDefinitionTab(IProjectView tabView)
 	{
 		managerLogger.info("Creating TargetDefinitionTab");
 		ITargetDefinitionTab targetDefinitionTab = myViewFacadeFactory.createTargetDefinitionTab(tabView);
-
+		TargetDefinitionTabController controller = new TargetDefinitionTabController(
+				myModel,
+				tabView,
+				targetDefinitionTab
+		);
+		addControllerToSystem(controller);
 	}
 
 	public void createControlledFRequirementTab(IProjectView tabView)
@@ -638,9 +629,13 @@ public class ControllerManager
 		boolean canBeClosed = true;
 		for(int controllerIndex = 0; controllerIndex < allViewControllers.size(); controllerIndex++)
 		{
-			managerLogger.info("Can view of controller "+ allViewControllers.get(controllerIndex)+" be closed?");
 			canBeClosed = canBeClosed & allViewControllers.get(controllerIndex).canViewBeClosed();
-			managerLogger.info("canBeClosed = "+canBeClosed);
+			if(!canBeClosed)
+			{
+				managerLogger.info("Controller "+allViewControllers.get(controllerIndex).toString()+
+						" could not be closed");
+				break;
+			}
 		}
 		return canBeClosed;
 	}

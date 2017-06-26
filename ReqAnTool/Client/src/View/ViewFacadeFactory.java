@@ -13,31 +13,56 @@ import com.sun.istack.internal.Nullable;
 import javax.swing.*;
 
 /**
+ * This class is a implementation of {@link IViewFacadeFactory} and represents the interface between the view and
+ * other components.
+ * <p>
+ *     To standardize the interface between the view component and other components like the controller this class
+ *     represents a facade for component interaction. Due to the interaction mainly focuses on creating views this
+ *     facade simultaneously implements the abstract factory method. In addition to give the factory the management of
+ *     all views there is only one instantiation of this class (singleton method).<br>
+ *     All created views are based on {@link IView} and could be created through different functions. To simplify the
+ *     functions for creating views the factory holds a instance of {@link IModelGetData} on which all views will
+ *     operate.
+ * </p>
+ * <p>
+ *     A view component itself has to contain a class implementing this interface. To retain the small linking between
+ *     the different components this class provides an API for creating an instance of this facade from a specific
+ *     component:
+ * </p>
+ * <p>
+ *     <code>
+ *         IViewFacadeFactory myViewFacadeFactory = IViewFacadeFactory.getInstance(<i>IModelGetData</i>);
+ *     </code>
+ * </p>
+ * <p>
+ *     For more details look at the specific functions.
+ * </p>
+ *
  * @author 9045534
+ * @version 1.0
  * @see IViewFacadeFactory
  */
 public class ViewFacadeFactory
 	implements IViewFacadeFactory
 {
 
+	/**
+	 * Singleton object
+	 */
 	private static ViewFacadeFactory singletonViewFF;
 
 	private IModelGetData myModel;
 	private ILogger myLogger;
-	private JFrame mainView;	//Holds the main view to which the dialogs positions are adjusted
 
 
 	private ViewFacadeFactory(@NotNull IModelGetData model)
 	{
 		myModel = model;
 		myLogger = ILoggerFactory.getInstance().createLogger();
-		mainView = null;
 	}
 
 	/**
-	 *
-	 * @param model
-	 * @return
+	 * {@inheritDoc}
 	 */
 	public static ViewFacadeFactory getInstance(@NotNull IModelGetData model)
 	{
@@ -49,8 +74,7 @@ public class ViewFacadeFactory
 	}
 
 	/**
-	 *
-	 * @return
+	 * {@inheritDoc}
 	 */
 	@Override
 	public IActualStateEditView createActualStateEditView(IView parentView)
@@ -60,9 +84,7 @@ public class ViewFacadeFactory
 	}
 
 	/**
-	 *
-	 * @param tabView
-	 * @return
+	 * {@inheritDoc}
 	 */
 	@Override
 	public IAdditionTab createAdditionTab(@NotNull IProjectView tabView)
@@ -73,6 +95,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ICostEstimationTab createCostEstimationTab(IProjectView tabView)
 	{
@@ -82,6 +107,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ICostEstimationEditView createCostEstimationEditView()
 	{
@@ -89,6 +117,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ICostEstimationShowView createCostEstimationShowView()
 	{
@@ -96,6 +127,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ICustomerTab createCustomerTab(@NotNull IProjectView tabView)
 	{
@@ -105,6 +139,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException)
 	{
@@ -112,6 +149,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException,
 										  @Nullable String[] placeholderInText)
@@ -120,6 +160,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull String title,@NotNull String message)
 	{
@@ -127,6 +170,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IFileChooser createFileChooser(@Nullable IView parentView, @NotNull FileAccessType accessType)
 	{
@@ -134,6 +180,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IFRequirementEditView createIFRequirementAddView()
 	{
@@ -141,6 +190,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IFRequirementEditView createIFRequirementEditView(@Nullable String ID)
 	{
@@ -158,6 +210,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IFRequirementShowView createIFRequirementShowView(@NotNull String ID)
 	{
@@ -175,6 +230,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public INFRequirementEditView createINFRequirementAddView()
 	{
@@ -182,6 +240,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public INFRequirementEditView createINFRequirementEditView(@Nullable String ID)
 	{
@@ -199,6 +260,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public INFRequirementShowView createINFRequirementShowView(@NotNull String ID)
 	{
@@ -216,6 +280,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IOptimizedWeightFactorsView createOptimizedWeightFactorsView()
 	{
@@ -223,6 +290,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProductDataEditView createProductDataAddView()
 	{
@@ -230,6 +300,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProductDataEditView createProductDataEditView(@Nullable String ID)
 	{
@@ -247,6 +320,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProductDataShowView createProductDataShowView(@NotNull String ID)
 	{
@@ -264,6 +340,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IFRequirementTab createFRequirementTab(@NotNull IProjectView tabView)
 	{
@@ -273,6 +352,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public INFRequirementTab createNFRequirementTab(@NotNull IProjectView tabView)
 	{
@@ -282,6 +364,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProductDataTab createProductDataTab(@NotNull IProjectView tabView)
 	{
@@ -291,6 +376,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IGlossaryTab createGlossaryTab(@NotNull IProjectView tabView)
 	{
@@ -300,6 +388,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProcessClassificationView createProcessClassificationView(@NotNull String ID)
 	{
@@ -335,6 +426,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProductApplicationTab createProductApplicationTab(@NotNull IProjectView tabView)
 	{
@@ -344,6 +438,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProductEnvironmentTab createProductEnvironmentTab(@NotNull IProjectView tabView)
 	{
@@ -353,6 +450,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProjectCreateView createProjectCreateView()
 	{
@@ -360,6 +460,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProjectTab createProjectTab(@NotNull IProjectView tabView)
 	{
@@ -369,6 +472,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IProjectView createProjectView()
 	{
@@ -376,6 +482,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IQualityRequirementTab createQualityRequirementTab(@NotNull IProjectView tabView)
 	{
@@ -385,6 +494,9 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IStartView createStartView()
 	{
@@ -392,6 +504,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ITargetDefinitionTab createTargetDefinitionTab(@NotNull IProjectView tabView)
 	{
@@ -401,59 +516,34 @@ public class ViewFacadeFactory
 		return myTab;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String dialogPropertyName)
 	{
 		return createWarningDialog(parentView, dialogPropertyName, (String[])null);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String dialogPropertyName,
 											  @Nullable String[] placeholderInText)
 	{
 		//TODO: Put TextBundle access in warning dialog
-		IWarningDialog newWarningDialog = null;
-		if(containsMapDialogPropertyName(dialogPropertyName))
-		{
-			ITextFacade myTextBundle = ITextFacade.getInstance();
-			String warnTitle = myTextBundle.getTitleText(dialogPropertyName);
-			String warnDescription;
-			if(placeholderInText != null)
-			{
-				warnDescription = myTextBundle.getDialogText(dialogPropertyName, placeholderInText);
-			}
-			else
-			{
-				warnDescription = myTextBundle.getDialogText(dialogPropertyName);
-			}
-			ViewActions[] warnButtonActions = DialogConstants.DIALOG_NAME_TO_VIEW_ACTIONS.get(dialogPropertyName);
-
-			newWarningDialog = createWarningDialog(parentView, warnTitle, warnDescription, warnButtonActions);
-		}
+		IWarningDialog newWarningDialog = new WarningDialog(
+				getFrameOfView(parentView),
+				dialogPropertyName,
+				placeholderInText
+		);
 		return newWarningDialog;
 	}
 
-	private boolean containsMapDialogPropertyName(String dialogPropertyName)
-	{
-		boolean containing = true;
-		try
-		{
-			DialogConstants.DIALOG_NAME_TO_VIEW_ACTIONS.get(dialogPropertyName);
-		}
-		catch(NullPointerException ex)
-		{
-			myLogger.warning("Given key is null.", ex);
-			containing = false;
-		}
-		catch(ClassCastException ex)
-		{
-			myLogger.warning("Given key has wrong class for dialog-Map in DialogConstants. Class: "+
-							dialogPropertyName.getClass().toString(), ex);
-			containing = false;
-		}
-		return containing;
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String warnTitle,
 											  @NotNull String warnDescription)
@@ -462,6 +552,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String warnTitle,
 											  @NotNull String warnDescription,
@@ -476,6 +569,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String dialogPropertyName)
 	{
@@ -483,6 +579,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String dialogPropertyName,
 										@Nullable String[] placeholderInText)
@@ -491,6 +590,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IInfoDialog createInfoDialog(@Nullable IView parentView, @NotNull String infoTitle,
 										@NotNull String infoMessage)
@@ -499,6 +601,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ILoadingDialog createLoadingDialog(@Nullable IView parentView)
 	{
@@ -506,6 +611,9 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IWeightFactorEditView createWeightFactorEditView()
 	{

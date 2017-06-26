@@ -36,5 +36,4 @@ public class TargetDefinitionTab
 		ITargetDefinition myTargetDefinition = myModel.getTargetDef();
 		return myTargetDefinition.getDescription();
 	}
-
 }
