@@ -1,9 +1,9 @@
 package Model;
 
+import Exceptions.ArgumentPatternException;
+import Exceptions.PatternType;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.ICustomerData;
-
-import java.util.ArrayList;
 
 public class CustomerData 
     implements ICustomerData
@@ -31,78 +31,66 @@ public class CustomerData
         this.myValidator = new Validator();
     }
 
-    public ArrayList<ErrorCodes> edit(String companyName, String companyCity, String companyStreet, String zip,
+    public void edit(String companyName, String companyCity, String companyStreet, String zip,
                                       String companyCountry, String custName, String custMail, String custPhone,
                                       String pmName, String pmMail, String pmPhone)
+            throws Exception
     {
-        ArrayList<ErrorCodes> myErrors = new ArrayList<ErrorCodes>();
-        boolean error = false;
-        if (!validMail(custMail, pmMail))
-        {
-            error = true;
-            myErrors.add(ErrorCodes.INVALID_MAIL);
-        }
-        if (!validPhone(custPhone, pmPhone))
-        {
-            error = true;
-            myErrors.add(ErrorCodes.INVALID_PHONE);
-        }
-        if (!validAdress(companyCountry, companyCity, companyStreet, zip))
-        {
-            error = true;
-            myErrors.add(ErrorCodes.INVALID_ADRESS);
-        }
-        if (!error)
-        {
-            this.companyName = companyName;
-            this.city = companyCity;
-            this.companyStreet = companyStreet;
-            this.zip = zip;
-            this.country = companyCountry;
-            this.customer = new PersonalData(custName, custMail, custPhone);
-            this.projectManager = new PersonalData(pmName, pmMail, pmPhone);
-            myErrors.add(ErrorCodes.NO_ERROR);
-        }
-        return myErrors;
+        validateMail(custMail, pmMail);
+        validatePhone(custPhone, pmPhone);
+        validateAdress(companyCountry, companyCity, companyStreet, zip);
+
+        this.companyName = companyName;
+        this.city = companyCity;
+        this.companyStreet = companyStreet;
+        this.zip = zip;
+        this.country = companyCountry;
+        this.customer = new PersonalData(custName, custMail, custPhone);
+        this.projectManager = new PersonalData(pmName, pmMail, pmPhone);
+
     }
 
-    private boolean validAdress(String companyCountry, String companyCity, String companyStreet, String zip)
+    private void validateAdress(String companyCountry, String companyCity, String companyStreet, String zip)
+            throws Exception
     {
         boolean validCountry = myValidator.isValidCountry(companyCountry);
         boolean validCity = myValidator.isValidCity(companyCity);
         boolean validStreet = myValidator.isValidStreet(companyStreet);
         boolean validZIP = myValidator.isValidZIP(zip);
-        boolean isValid = false;
-        if (validCountry && validCity && validStreet && validZIP)
+        if (!(validCountry && validCity && validStreet && validZIP))
         {
-            isValid = true;
+            throw new ArgumentPatternException(PatternType.ADDRESS, companyStreet + ", " + zip + " " + companyCity + ", " +
+                                            companyCountry, "Mercedesstr. 121, 70546 Stuttgart, Germany" );
         }
-        return isValid;
     }
 
-    private boolean validMail(String custMail, String pmMail)
+    private void validateMail(String custMail, String pmMail) throws Exception
     {
         boolean validCustMail = myValidator.isValidEmail(custMail);
         boolean validpmMail = myValidator.isValidEmail(pmMail);
-        boolean isValid = false;
-        if (validCustMail && validpmMail)
+        if (!validCustMail)
         {
-            isValid = true;
+            throw new ArgumentPatternException(PatternType.EMAIL, custMail, "max.mustermann@gmail.com");
         }
-        return isValid;
+        if (!validpmMail)
+        {
+            throw new ArgumentPatternException(PatternType.EMAIL, pmMail, "max.mustermann@gmail.com");
+        }
 
     }
 
-    private boolean validPhone(String custPhone, String pmPhone)
+    private void validatePhone(String custPhone, String pmPhone) throws Exception
     {
         boolean validCustPhone = myValidator.isValidPhone(custPhone);
         boolean validpmPhone = myValidator.isValidPhone(pmPhone);
-        boolean isValid = false;
-        if (validCustPhone && validpmPhone)
+        if (!validCustPhone)
         {
-            isValid = true;
+            throw new ArgumentPatternException(PatternType.TELEPHONE_NUMBER, custPhone, "+49 711 123647");
         }
-        return isValid;
+        if (!validpmPhone)
+        {
+            throw new ArgumentPatternException(PatternType.TELEPHONE_NUMBER, pmPhone, "+49 711 123647");
+        }
 
     }
 

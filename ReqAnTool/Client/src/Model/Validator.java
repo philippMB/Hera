@@ -1,5 +1,7 @@
 package Model;
 
+import Exceptions.NumberOutOfBoundsException;
+
 import java.util.regex.Pattern;
 
 /**
@@ -72,36 +74,30 @@ public class Validator
 
     }
 
-    public boolean isValidDET(int det)
+    public void validateDET(int det) throws Exception
     {
-        boolean isValid = false;
-        if (det >= 0)
+        if (det < 0)
         {
-            isValid = true;
+            throw new NumberOutOfBoundsException(det, 0, Double.POSITIVE_INFINITY);
         }
-        return isValid;
 
     }
 
-    public boolean isValidRET(int ret)
+    public void validateRET(int ret) throws Exception
     {
-        boolean isValid = false;
-        if (ret >= 0)
+        if (ret < 0)
         {
-            isValid = true;
+            throw new NumberOutOfBoundsException(ret, 0, Double.POSITIVE_INFINITY);
         }
-        return isValid;
 
     }
 
-    public boolean isValidFTR(int ftr)
+    public void validateFTR(int ftr) throws Exception
     {
-        boolean isValid = false;
-        if (ftr >= 0)
+        if (ftr < 0)
         {
-            isValid = true;
+            throw new NumberOutOfBoundsException(ftr, 0, Double.POSITIVE_INFINITY);
         }
-        return isValid;
 
     }
 

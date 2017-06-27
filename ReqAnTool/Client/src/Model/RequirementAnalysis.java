@@ -2,6 +2,7 @@ package Model;
 
 // TODO check Map for WeightFactors
 
+import Exceptions.*;
 import Model_Interfaces.*;
 
 import java.util.ArrayList;
@@ -88,34 +89,27 @@ public class RequirementAnalysis
 
     }
 
-    private boolean solveGlossaryTerms(ArrayList<String> terms)
+    private void solveGlossaryTerms(ArrayList<String> terms) throws Exception
     {
-        int flag = 0;
         for (String term : terms)
         {
-            for (IGlossaryEntry entry : myGlossaryEntries)
+            if (!myGlossaryEntries.isIncluded(term))
             {
-                if (term.equals(entry.getTerm()))
-                {
-                    flag++;
-                }
+                throw new UnknownReferenceException(term);
             }
         }
-        return flag == terms.size();
 
     }
     
-    private boolean solveReqReferences(ArrayList<String> references)
+    private void solveReqReferences(ArrayList<String> references) throws Exception
     {
-        int flag = 0;
         for (String ref : references)
         {
-            if (isReqIncluded(ref))
+            if (!isReqIncluded(ref))
             {
-                flag++;
+                throw new UnknownReferenceException(ref);
             }
         }
-        return flag == references.size();
 
     }
 
@@ -473,684 +467,512 @@ public class RequirementAnalysis
 
     }
 
-    public ErrorCodes addAddition(String title, String description)
+    public void addAddition(String title, String description) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.DUPLICATE;
-        if (!myAdditions.isIncluded(title))
+        if (myAdditions.isIncluded(title))
+        {
+            throw new DuplicateIDException(title);
+        }
+        else
         {
             Addition myAdd = new Addition(title, description);
             myAdditions.add(myAdd);
-            retValue = ErrorCodes.NO_ERROR;
         }
-        return retValue;
 
     }
 
-    public ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    public void addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-        if (solveReqReferences(references))
+        solveReqReferences(references);
+        if (!myValidator.isValidID(id))
         {
-            if (myValidator.isValidID(id))
-            {
-                if (isIDunique(id))
-                {
-                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                    for (String ref : references)
-                    {
-                        myReferences.add(getAnyReqByID(ref));
-                    }
-                    FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
-                    myFRequirements.add(myReq);
-                    retValue = ErrorCodes.NO_ERROR;
-                }
-                else
-                {
-                    retValue = ErrorCodes.DUPLICATE;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.INVALID_ID;
-            }
+            throw new ArgumentPatternException(PatternType.ID, id, "/LFxxx/");
         }
-        return retValue;
+        if (!isIDunique(id))
+        {
+            throw new DuplicateIDException(id);
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
+        myFRequirements.add(myReq);
 
     }
     
 
-    public ErrorCodes addGlossaryEntry(String term, String sense, String boundary, String validity,
+    public void addGlossaryEntry(String term, String sense, String boundary, String validity,
                                           String obscurities, String label, ArrayList<String> crossRef)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.DUPLICATE;
-        if (!myGlossaryEntries.isIncluded(term))
+        if (myGlossaryEntries.isIncluded(term))
         {
-            if (solveGlossaryTerms(crossRef))
-            {
-                GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
-                for (String ref : crossRef)
-                {
-                    myCrossRef.add(getGlossaryEntriesByTerm(ref));
-                }
-                GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
-                myGlossaryEntries.add(myEntry);
-                retValue = ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-            }
+            throw new DuplicateIDException(term);
         }
-        return retValue;
+        solveGlossaryTerms(crossRef);
+        GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
+        for (String ref : crossRef)
+        {
+            myCrossRef.add(getGlossaryEntriesByTerm(ref));
+        }
+        GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
+        myGlossaryEntries.add(myEntry);
 
     }
 
-    public ErrorCodes addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    public void addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-        if (solveReqReferences(references))
+        solveReqReferences(references);
+        if (!myValidator.isValidID(id))
         {
-            if (myValidator.isValidID(id))
-            {
-                if (isIDunique(id))
-                {
-                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                    for (String ref : references)
-                    {
-                        myReferences.add(getAnyReqByID(ref));
-                    }
-                    NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
-                    myNFRequirements.add(myReq);
-                    retValue = ErrorCodes.NO_ERROR;
-                }
-                else
-                {
-                    retValue = ErrorCodes.DUPLICATE;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.INVALID_ID;
-            }
+            throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
         }
-        return retValue;
+        if (!isIDunique(id))
+        {
+            throw new DuplicateIDException(id);
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
+        myNFRequirements.add(myReq);
 
     }
 
-    public ErrorCodes addProductData(String id, String content, String attribute, String maxCount,
+    public void addProductData(String id, String content, String attribute, String maxCount,
                               ArrayList<String> references)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-        if (solveReqReferences(references))
+        solveReqReferences(references);
+        if (!myValidator.isValidID(id))
         {
-            if (myValidator.isValidID(id))
-            {
-                if (isIDunique(id))
-                {
-                    RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                    for (String ref : references)
-                    {
-                        myReferences.add(getAnyReqByID(ref));
-                    }
-                    ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
-                    myProductData.add(myReq);
-                    retValue = ErrorCodes.NO_ERROR;
-                }
-                else
-                {
-                    retValue = ErrorCodes.DUPLICATE;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.INVALID_ID;
-            }
+            throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
         }
-        return retValue;
+        if (!isIDunique(id))
+        {
+            throw new DuplicateIDException(id);
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
+        myProductData.add(myReq);
 
     }
 
-    public ErrorCodes addQualReq(String criteria, Score value)
+    public void addQualReq(String criteria, Score value) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.DUPLICATE;
-        if (!myQualityRequirements.isIncluded(criteria))
+        if (myQualityRequirements.isIncluded(criteria))
         {
-            IQualityRequirement myQualReq = new QualityRequirement(criteria, value);
-            myQualityRequirements.add(myQualReq);
-            retValue = ErrorCodes.NO_ERROR;
+            throw new DuplicateIDException(criteria);
         }
-        return retValue;
+        IQualityRequirement myQualReq = new QualityRequirement(criteria, value);
+        myQualityRequirements.add(myQualReq);
 
     }
 
-    public ErrorCodes editAddition(String oldTitle, String newTitle, String description)
+    public void editAddition(String oldTitle, String newTitle, String description) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myAdditions.isIncluded(oldTitle))
+        if (!myAdditions.isIncluded(oldTitle))
         {
-            if (!myAdditions.isIncluded(newTitle))
-            {
-                IAddition myIAdd = myAdditions.getAdditionByTitle(title);
-                Addition myAdd = (Addition) myIAdd;
-                myAdd.edit(title, description);
-                retValue = ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                retValue = ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldTitle);
         }
-        return retValue;
+        if (myAdditions.isIncluded(newTitle))
+        {
+            throw new DuplicateIDException(newTitle);
+        }
+        IAddition myIAdd = myAdditions.getAdditionByTitle(title);
+        Addition myAdd = (Addition) myIAdd;
+        myAdd.edit(title, description);
 
     }
 
-    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip,
+    public void editCustData(String companyName, String companyCity, String companyStreet, String zip,
                                               String companyCountry, String custName, String custMail, String custPhone,
                                               String pmName, String pmMail, String pmPhone)
+            throws Exception
     {
-        return myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
+        myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
                                     custMail, custPhone, pmName, pmMail, pmPhone);
 
     }
 
-    public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
+    public void editFReq(String oldID, String id, String title, String actor, String description,
                         ArrayList<String> references)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myFRequirements.isIncluded(oldID))
+        if (!myFRequirements.isIncluded(oldID))
         {
-            IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
-            if (isIDunique(id))
-            {
-                if (solveReqReferences(references))
-                {
-                    if (myValidator.isValidID(id))
-                    {
-                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                        FRequirement myFReq = (FRequirement) myIFReq;
-
-                        for (String ref : references)
-                        {
-                            myReferences.add(getAnyReqByID(ref));
-                        }
-                        retValue = myFReq.edit(id, title, actor, description, myReferences);
-                        if (isReferenceOnID(oldID))
-                        {
-                            refreshReferences(oldID, id);
-                        }
-                    }
-                    else
-                    {
-                        retValue = ErrorCodes.INVALID_ID;
-                    }
-                }
-                else
-                {
-                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldID);
         }
-        return retValue;
+        IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
+        if (!isIDunique(id))
+        {
+            throw new DuplicateIDException(id);
+        }
+        solveReqReferences(references);
+        if (!myValidator.isValidID(id))
+        {
+            throw new ArgumentPatternException(PatternType.ID, id, "");
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        FRequirement myFReq = (FRequirement) myIFReq;
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        myFReq.edit(id, title, actor, description, myReferences);
+        if (isReferenceOnID(oldID))
+        {
+            refreshReferences(oldID, id);
+        }
 
     }
 
-    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+    public void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                      String obscurities, String label, ArrayList<String> crossRef)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myGlossaryEntries.isIncluded(oldTerm))
+        if (!myGlossaryEntries.isIncluded(oldTerm))
         {
-            IGlossaryEntry myIEntry = myGlossaryEntries.getEntryByTerm(oldTerm);
-            if (!myGlossaryEntries.isIncluded(term)) // Test for duplicate Term in GlossaryEntries
-            {
-                if (solveGlossaryTerms(crossRef))
-                {
-                    GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
-                    GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
-                    for (String ref : crossRef)
-                    {
-                        myCrossRef.add(myGlossaryEntries.getEntryByTerm(ref));
-                    }
-                    retValue = myEntry.edit(term, sense, boundary, validity, obscurities, label, myCrossRef);
-                }
-                else
-                {
-                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldTerm);
         }
-        return retValue;
+        IGlossaryEntry myIEntry = myGlossaryEntries.getEntryByTerm(oldTerm);
+        if (myGlossaryEntries.isIncluded(term)) // Test for duplicate Term in GlossaryEntries
+        {
+            throw new DuplicateIDException(term);
+        }
+        solveGlossaryTerms(crossRef);
+        GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
+        GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
+        for (String ref : crossRef)
+        {
+            myCrossRef.add(myGlossaryEntries.getEntryByTerm(ref));
+        }
+        myEntry.edit(term, sense, boundary, validity, obscurities, label, myCrossRef);
 
     }
 
-    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description,
+    public void editNFReq(String oldID, String id, String title, String actor, String description,
                                 ArrayList<String> references)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myNFRequirements.isIncluded(oldID))
+        if (!myNFRequirements.isIncluded(oldID))
         {
-            INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
-            if (isIDunique(id))
-            {
-                if (solveReqReferences(references))
-                {
-                    if (myValidator.isValidID(id))
-                    {
-                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                        NFRequirement myNFReq = (NFRequirement) myINFReq;
-                        for (String ref : references)
-                        {
-                            myReferences.add(getAnyReqByID(ref));
-                        }
-                        retValue = myNFReq.edit(id, title, actor, description, myReferences);
-                        if (isReferenceOnID(oldID))
-                        {
-                            refreshReferences(oldID, id);
-                        }
-                    }
-                    else
-                    {
-                        retValue = ErrorCodes.INVALID_ID;
-                    }
-                }
-                else
-                {
-                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldID);
         }
-        return retValue;
+        INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
+        if (!isIDunique(id))
+        {
+            throw new DuplicateIDException(id);
+        }
+        solveReqReferences(references);
+        if (!myValidator.isValidID(id))
+        {
+            throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        NFRequirement myNFReq = (NFRequirement) myINFReq;
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        myNFReq.edit(id, title, actor, description, myReferences);
+        if (isReferenceOnID(oldID))
+        {
+            refreshReferences(oldID, id);
+        }
 
     }
 
-    public ErrorCodes editProdApp(String description)
+    public void editProdApp(String description) throws Exception
     {
-        return myProductApplication.edit(description);
+        myProductApplication.edit(description);
 
     }
 
-    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
+    public void editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                    ArrayList<String> references)
+            throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myProductData.isIncluded(oldID))
+        if (!myProductData.isIncluded(oldID))
         {
-            IProductData myIProdData = myProductData.getReqByID(oldID);
-            if (isIDunique(id))
-            {
-                if (solveReqReferences(references))
-                {
-                    if (myValidator.isValidID(id))
-                    {
-                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                        ProductData myProdData = (ProductData) myIProdData;
-                        for (String ref : references)
-                        {
-                            myReferences.add(getAnyReqByID(ref));
-                        }
-                        retValue = myProdData.edit(id, content, attribute, maxCount, myReferences);
-                        if (isReferenceOnID(oldID))
-                        {
-                            refreshReferences(oldID, id);
-                        }
-                    }
-                    else
-                    {
-                        retValue = ErrorCodes.INVALID_ID;
-                    }
-                }
-                else
-                {
-                    retValue = ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldID);
         }
-        return ErrorCodes.NOT_EXISTENT;
-
-    }
-
-    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value)
-    {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myQualityRequirements.isIncluded(oldCriteria))
+        IProductData myIProdData = myProductData.getReqByID(oldID);
+        if (!isIDunique(id))
         {
-            IQualityRequirement myIQualReq = myQualityRequirements.getQualReqByCriteria(oldCriteria);
-            if (!myQualityRequirements.isIncluded(criteria)) // Test for duplicate criteria
-            {
-                QualityRequirement myQualReq = (QualityRequirement) myIQualReq;
-                retValue = myQualReq.edit(criteria, value);
-            }
-            else
-            {
-                retValue = ErrorCodes.DUPLICATE;
-            }
+            throw new DuplicateIDException(id);
         }
-        return retValue;
+        solveReqReferences(references);
+        if (!myValidator.isValidID(id))
+        {
+            throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        ProductData myProdData = (ProductData) myIProdData;
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        myProdData.edit(id, content, attribute, maxCount, myReferences);
+        if (isReferenceOnID(oldID))
+        {
+            refreshReferences(oldID, id);
+        }
 
     }
 
-    public ErrorCodes editTargetDef(String description)
+    public void editQualReq(String oldCriteria, String criteria, Score value) throws Exception
     {
-        return myTargetDefinition.edit(description);
+        if (!myQualityRequirements.isIncluded(oldCriteria))
+        {
+            throw new UnknownIDException(oldCriteria);
+        }
+        IQualityRequirement myIQualReq = myQualityRequirements.getQualReqByCriteria(oldCriteria);
+        if (myQualityRequirements.isIncluded(criteria)) // Test for duplicate criteria
+        {
+            throw new DuplicateIDException(criteria);
+        }
+        QualityRequirement myQualReq = (QualityRequirement) myIQualReq;
+        myQualReq.edit(criteria, value);
 
     }
 
-    public ErrorCodes rateWeightFactor(Map<String, Integer> myWeightFactors)
+    public void editTargetDef(String description) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
+        myTargetDefinition.edit(description);
+
+    }
+
+    public void rateWeightFactor(Map<String, Integer> myWeightFactors) throws Exception
+    {
         boolean success = true;
         if (getCostEstimation() != null)
         {
-            ArrayList<ErrorCodes> errors = myCostEstimation.rateWeightFactor(myWeightFactors);
-            for (ErrorCodes error : errors)
-            {
-                if (!(error == ErrorCodes.NO_ERROR))
-                {
-                    success = false;
-                }
-            }
-            if (success)
-            {
-                retValue = ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                retValue = ErrorCodes.INVALID_ARGUMENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        myCostEstimation.rateWeightFactor(myWeightFactors);
 
     }
 
-    public ErrorCodes remAdditionByTitle(String title)
+    public void remAdditionByTitle(String title) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myAdditions.isIncluded(title))
+        if (!myAdditions.isIncluded(title))
         {
-            myAdditions.removeByTitle(title);
-            retValue = ErrorCodes.NO_ERROR;
+            throw new UnknownIDException(title);
         }
-        return retValue;
+        myAdditions.removeByTitle(title);
 
     }
 
-    public ErrorCodes remCostEstimation()
+    public void remCostEstimation() throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
-            myCostEstimation = null;
-            retValue = ErrorCodes.NO_ERROR;
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        myCostEstimation = null;
 
     }
 
-    public ErrorCodes remFReqByID(String id)
+    public void remFReqByID(String id) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myFRequirements.isIncluded(title))
+        if (!myFRequirements.isIncluded(id))
         {
-            myFRequirements.removeReqByID(id);
-            if(isReferenceOnID(id))
-            {
-                retValue = ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeRequirementReferences(id);
-                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            throw new UnknownIDException(id);
         }
-        return retValue;
-
-    }
-
-    public ErrorCodes remGlossEntryByTerm(String term)
-    {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myGlossaryEntries.isIncluded(term))
+        myFRequirements.removeReqByID(id);
+        if(isReferenceOnID(id))
         {
-            myGlossaryEntries.removeEntryByTerm(term);
-            if(!isReferenceOnTerm(term))
-            {
-                retValue = ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeGlossaryReferences(term);
-                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            removeRequirementReferences(id);
         }
-        return retValue;
 
     }
 
-    public ErrorCodes remNFReqByID(String id)
+    public void remGlossEntryByTerm(String term) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myNFRequirements.isIncluded(id))
+        if (!myGlossaryEntries.isIncluded(term))
         {
-            myNFRequirements.removeReqByID(id);
-            if (isReferenceOnID(id))
-            {
-                retValue = ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeRequirementReferences(id);
-                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            throw new UnknownIDException(term);
         }
-        return retValue;
+        myGlossaryEntries.removeEntryByTerm(term);
+        if(isReferenceOnTerm(term))
+        {
+            removeGlossaryReferences(term);
+        }
 
     }
 
-    public ErrorCodes remProdDataByID(String id)
+    public void remNFReqByID(String id) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
+        if (!myNFRequirements.isIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        myNFRequirements.removeReqByID(id);
+        if (isReferenceOnID(id))
+        {
+            removeRequirementReferences(id);
+        }
+
+    }
+
+    public void remProdDataByID(String id) throws Exception
+    {
         if (myProductData.isIncluded(id))
         {
-            myProductData.removeReqByID(id);
-            if (!isReferenceOnID(id))
-            {
-                retValue = ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeRequirementReferences(id);
-                retValue = ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            throw new UnknownIDException(id);
         }
-        return retValue;
-
-    }
-
-    public ErrorCodes remQualReqByCrit(String criteria)
-    {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (myQualityRequirements.isIncluded(criteria))
+        myProductData.removeReqByID(id);
+        if (isReferenceOnID(id))
         {
-            myQualityRequirements.removeQualReqByCriteria(criteria);
-            retValue = ErrorCodes.NO_ERROR;
+            removeRequirementReferences(id);
         }
-        return retValue;
 
     }
 
-    public ErrorCodes setActualState(double actualState)
+    public void remQualReqByCrit(String criteria) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.INVALID_ARGUMENT;
-        if(actualState > 0)
+        if (!myQualityRequirements.isIncluded(criteria))
         {
-            this.actualState = actualState;
-            retValue = ErrorCodes.NO_ERROR;
+            throw new UnknownIDException(criteria);
         }
-        return retValue;
+        myQualityRequirements.removeQualReqByCriteria(criteria);
 
     }
 
-    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret)
+    public void setActualState(double actualState) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (isReqIncluded(id))
+        if (!(actualState > 0))
         {
-            if (myCostEstimation != null)
-            {
-                if (myCostEstimation.getDataFPByID(id) == null) // Test for duplicate initialising
-                {
-                    IRequirement reference = getAnyReqByID(id);
-                    retValue = myCostEstimation.setDataFP(type, reference, det, ret);
-                }
-                else
-                {
-                    retValue = ErrorCodes.DUPLICATE;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.NO_COST_ESTIMATION;
-            }
+            throw new NumberOutOfBoundsException(actualState, 0, Double.POSITIVE_INFINITY);
         }
-        return retValue;
+        this.actualState = actualState;
 
     }
 
-    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+    public void setDataFP(ClassOfDataFP type, String id, int det, int ret) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NOT_EXISTENT;
-        if (isReqIncluded(id))
+        if (!isReqIncluded(id))
         {
-            if (myCostEstimation != null)
-            {
-                if (myCostEstimation.getTransactionFPByID(id) == null)
-                {
-                    IRequirement reference = getAnyReqByID(id);
-                    retValue = myCostEstimation.setTransactionFP(type, reference, det, ftr);
-                }
-                else
-                {
-                    retValue = ErrorCodes.DUPLICATE;
-                }
-            }
-            else
-            {
-                retValue = ErrorCodes.NO_COST_ESTIMATION;
-            }
+            throw new UnknownIDException(id);
         }
-        return retValue;
+        if (myCostEstimation == null)
+        {
+            throw new MissingCostEstimationException();
+        }
+        if (myCostEstimation.getDataFPByID(id) != null) // Test for duplicate initialising
+        {
+            throw new DuplicateIDException(id);
+        }
+        IRequirement reference = getAnyReqByID(id);
+        myCostEstimation.setDataFP(type, reference, det, ret);
 
     }
 
-    public ErrorCodes addCostEstimation(Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
+    public void setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr) throws Exception
+    {
+        if (!isReqIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        if (myCostEstimation == null)
+        {
+            throw new MissingCostEstimationException();
+        }
+        if (myCostEstimation.getTransactionFPByID(id) != null)
+        {
+            throw new DuplicateIDException(id);
+        }
+        IRequirement reference = getAnyReqByID(id);
+        myCostEstimation.setTransactionFP(type, reference, det, ftr);
+
+    }
+
+    public void addCostEstimation(Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
                                         ComplexityWeightMatrix myComplexityWeightMatrix)
     {
-        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrices);
-        return ErrorCodes.NO_ERROR;
+        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrices,
+                                                (WeightFactorList<IWeightFactor>) getWeightFactors());
 
     }
 
-    public ErrorCodes calcManMonth()
+    public void calcManMonth() throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
-            myCostEstimation.calculateManMonth();
-            retValue = ErrorCodes.NO_ERROR;
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        myCostEstimation.calculateManMonth();
 
     }
 
-    public ErrorCodes remTransactionFPByID(String id)
+    public void remTransactionFPByID(String id) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                retValue = myCostEstimation.remTransactionFPByID(ReferenceToRequirement);
-            }
-            else
-            {
-                retValue = ErrorCodes.NOT_EXISTENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        if (!isReqIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.remTransactionFPByID(ReferenceToRequirement);
 
     }
 
-    public ErrorCodes remDataFPByID(String id)
+    public void remDataFPByID(String id) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                retValue = myCostEstimation.remDataFPByID(ReferenceToRequirement);
-            }
-            else
-            {
-                retValue = ErrorCodes.NOT_EXISTENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        if (!isReqIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.remDataFPByID(ReferenceToRequirement);
 
     }
 
-    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+    public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         if (myCostEstimation != null)
         {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                retValue = myCostEstimation.editTransactionFPByID(type, ReferenceToRequirement, det, ftr);
-            }
-            else
-            {
-                retValue = ErrorCodes.NOT_EXISTENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        if (!isReqIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.editTransactionFPByID(type, ReferenceToRequirement, det, ftr);
 
     }
 
-    public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+    public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
         if (myCostEstimation != null)
         {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                retValue = myCostEstimation.editDataFPByID(type, ReferenceToRequirement, det, ret);
-            }
-            else
-            {
-                retValue = ErrorCodes.NOT_EXISTENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        if (!isReqIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.editDataFPByID(type, ReferenceToRequirement, det, ret);
 
     }
 
@@ -1160,25 +982,20 @@ public class RequirementAnalysis
 
     }
 
-    public ErrorCodes editProdEnv(String description)
+    public void editProdEnv(String description) throws Exception
     {
-        return myProductEnvironment.edit(description);
+        myProductEnvironment.edit(description);
 
     }
 
-    public ErrorCodes calcFPCount()
+    public void calcFPCount() throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.NO_COST_ESTIMATION;
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
-            myCostEstimation.calculateFP();
-            retValue = ErrorCodes.NO_ERROR;
+            throw new MissingCostEstimationException();
         }
-        return retValue;
+        myCostEstimation.calculateFP();
+
     }
 
-    protected void setWeightFactors(WeightFactorList<IWeightFactor> myWeightFactors)
-    {
-        myCostEstimation.setWeightFactors(myWeightFactors);
-    }
 }

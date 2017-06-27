@@ -1,5 +1,6 @@
 package Model;
 
+import Exceptions.ListOverflowException;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IProductApplication;
 
@@ -22,10 +23,13 @@ public class ProductApplication
 
     }
 
-    public ErrorCodes edit(String description)
+    public void edit(String description) throws Exception
     {
+        if (description.length()> 20000)
+        {
+            throw new ListOverflowException(String.class, "Product Description");
+        }
         this.description = description;
-        return ErrorCodes.NO_ERROR;
 
     }
 }

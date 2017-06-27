@@ -8,9 +8,9 @@ public interface IApplications
     
     public boolean existsID(String id);
 
-    public ErrorCodes saveReqAn(String path);
+    public void saveReqAn(String path) throws Exception;
 
-    public ErrorCodes deleteReqAn();
+    public void deleteReqAn() throws Exception;
     
     public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
                                 String city, String companyStreet, String country, String zip, String cName,
@@ -28,27 +28,25 @@ public interface IApplications
 
     public boolean existsManMonthCount();
 
-    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret);
+    public void setDataFP(ClassOfDataFP type, String id, int det, int ret) throws Exception;
 
-    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr);
+    public void setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr) throws Exception;
 
-    public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret);
+    public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret) throws Exception;
 
-    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr);
+    public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr) throws Exception;
 
-    public ErrorCodes remTransactionFPByID(String id);
+    public void remTransactionFPByID(String id) throws Exception;
 
-    public ErrorCodes remDataFPByID(String id);
+    public void remDataFPByID(String id) throws Exception;
 
-    public ErrorCodes rateWeightFactor(Map<String, Integer> mapOfWeightFactors);
+    public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors) throws Exception;
 
-    public ErrorCodes calcFPCount();
+    public void calcFPCount() throws Exception;
 
-    public ErrorCodes calcManMonth();
+    public void calcManMonth() throws Exception;
 
-    public ErrorCodes setActualState(double actStat);
-
-    public ErrorCodes calcOptWeightFactor();
+    public void setActualState(double actStat) throws Exception;
 
     public boolean existsOptWeightFactor();
 

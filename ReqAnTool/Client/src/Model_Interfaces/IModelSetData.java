@@ -5,57 +5,57 @@ import java.util.ArrayList;
 public interface IModelSetData
 {
 
-    public ErrorCodes addFReq(String id, String title, String actor, String description, ArrayList<String> references);
+    public void addFReq(String id, String title, String actor, String description, ArrayList<String> references) throws Exception;
 
-    public ErrorCodes addNFReq(String id, String title, String actor, String description, ArrayList<String> references);
+    public void addNFReq(String id, String title, String actor, String description, ArrayList<String> references) throws Exception;
 
-    public ErrorCodes addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references);
+    public void addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references) throws Exception;
 
-    public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references);
+    public void editFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references) throws Exception;
 
-    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references);
+    public void editNFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references) throws Exception;
 
-    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
-                         ArrayList<String> references);
+    public void editProdData(String oldID, String id, String content, String attribute, String maxCount,
+                         ArrayList<String> references) throws Exception;
 
-    public ErrorCodes remFReqByID(String id);
+    public void remFReqByID(String id) throws Exception;
 
-    public ErrorCodes remNFReqByID(String id);
+    public void remNFReqByID(String id) throws Exception;
 
-    public ErrorCodes remProdDataByID(String id);
+    public void remProdDataByID(String id) throws Exception;
 
-    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
+    public void editCustData(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
                          String custName, String custMail, String custPhone, String pmName, String pmMail,
-                         String pmPhone);
+                         String pmPhone) throws Exception;
 
-    public ErrorCodes editTargetDef(String description);
+    public void editTargetDef(String description) throws Exception;
 
-    public ErrorCodes editProdApp(String description);
+    public void editProdApp(String description) throws Exception;
 
-    public ErrorCodes editProdEnv(String description);
+    public void editProdEnv(String description) throws Exception;
 
-    public ErrorCodes addQualReq(String criteria, Score value);
+    public void addQualReq(String criteria, Score value) throws Exception;
 
-    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value);
+    public void editQualReq(String oldCriteria, String criteria, Score value) throws Exception;
 
-    public ErrorCodes remQualReqByCrit(String criteria);
+    public void remQualReqByCrit(String criteria) throws Exception;
 
-    public ErrorCodes addAddition(String title, String description);
+    public void addAddition(String title, String description) throws Exception;
 
-    public ErrorCodes editAddition(String oldTitle, String newTitle, String description);
+    public void editAddition(String oldTitle, String newTitle, String description) throws Exception;
 
-    public ErrorCodes remAdditionByTitle(String title);
+    public void remAdditionByTitle(String title) throws Exception;
 
-    public ErrorCodes addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
-                          String label, ArrayList<String> references);
+    public void addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
+                          String label, ArrayList<String> references) throws Exception;
 
-    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
-                           String obscurities, String label, ArrayList<String> references);
+    public void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+                           String obscurities, String label, ArrayList<String> references) throws Exception;
 
-    public ErrorCodes remGlossEntryByTerm(String term);
+    public void remGlossEntryByTerm(String term) throws Exception;
 
-    public ErrorCodes addCostEstimation();
+    public void addCostEstimation() throws Exception;
 
-    public ErrorCodes remCostEstimation();
+    public void remCostEstimation() throws Exception;
 
 }

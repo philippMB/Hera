@@ -85,7 +85,7 @@ public class GlossaryEntry
         return crossReferences;
     }
 
-    public ErrorCodes edit(String term, String sense, String boundary, String validity, String obscurities,
+    public void edit(String term, String sense, String boundary, String validity, String obscurities,
                            String label, GlossaryList<IGlossaryEntry> crossRef)
     {
         this.term = term;
@@ -95,7 +95,7 @@ public class GlossaryEntry
         this.obscurities = obscurities;
         this.label = label;
         this.crossReferences = crossRef;
-        return ErrorCodes.NO_ERROR;
+
     }
 
     public void remReference(String term)

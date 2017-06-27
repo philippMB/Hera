@@ -32,11 +32,10 @@ public class QualityRequirement
 
     }
 
-    public ErrorCodes edit(String criteria, Score value)
+    public void edit(String criteria, Score value)
     {
         this.criteria = criteria;
         this.value = value;
-        return ErrorCodes.NO_ERROR;
 
     }
 }

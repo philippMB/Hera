@@ -1,5 +1,8 @@
 package Model;
 
+import Exceptions.DuplicateIDException;
+import Exceptions.ListOverflowException;
+import Exceptions.UnknownIDException;
 import Model_Interfaces.*;
 
 import java.util.ArrayList;
@@ -26,13 +29,14 @@ public class CostEstimation
      */
     private WeightFactorList<IWeightFactor> myWeightFactors;
 
-    public CostEstimation(ComplexityWeightMatrix myWeightMatrix, Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices)
+    public CostEstimation(ComplexityWeightMatrix myWeightMatrix, Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
+                          WeightFactorList<IWeightFactor> myWeightFactors)
     {
         this.fPCount = -1.0;
         this.manMonthCount = -1.0;
         myDataFPs = new ArrayList<IDataFP>();
         myTransactionFPs = new ArrayList<ITransactionFP>();
-        myWeightFactors = new WeightFactorList<IWeightFactor>();
+        this.myWeightFactors = myWeightFactors;
         this.myComplexityWeightMatrix = myWeightMatrix;
         this.myComplexityMatrices = myComplexityMatrices;
     }
@@ -193,33 +197,28 @@ public class CostEstimation
         return myWeightFactors;
     }
 
-    public ArrayList<ErrorCodes> rateWeightFactor(Map<String, Integer> mapOfWeightFactors)
+    public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors) throws Exception
     {
-        ArrayList<ErrorCodes> retValue = new ArrayList<ErrorCodes>();
         if (mapOfWeightFactors.size() == getWeightFactors().size())
         {
-            WeightFactor tmp;
-            for (String key : mapOfWeightFactors.keySet())
+            throw new ListOverflowException(WeightFactorList.class, "given Weight Factor count");
+        }
+        WeightFactor tmp;
+        for (String key : mapOfWeightFactors.keySet())
+        {
+            for (IWeightFactor factor : myWeightFactors)
             {
-                for (IWeightFactor factor : myWeightFactors)
+                if (factor.getTitle().equals(key))
                 {
-                    if (factor.getTitle().equals(key))
-                    {
-                        tmp = (WeightFactor)factor;
-                        retValue.add(tmp.setValue(mapOfWeightFactors.get(key)));
-                    }
+                    tmp = (WeightFactor)factor;
+                    tmp.setValue(mapOfWeightFactors.get(key));
                 }
             }
         }
-        else
-        {
-            retValue.add(ErrorCodes.INVALID_ARGUMENT);
-        }
-        return retValue;
 
     }
 
-    public ErrorCodes setDataFP(ClassOfDataFP type, IRequirement reference, int det, int ret)
+    public void setDataFP(ClassOfDataFP type, IRequirement reference, int det, int ret) throws Exception
     {
         fPCount = -1.0;
         manMonthCount = -1.0;
@@ -228,23 +227,17 @@ public class CostEstimation
         {
             if (myDataFP.getRequirement().equals(reference))
             {
-                return ErrorCodes.DUPLICATE;
+                throw new DuplicateIDException(reference.getID());
             }
         }
-        if (myValidator.isValidDET(det) && myValidator.isValidRET(ret))
-        {
-            DataFP myDataFP = new DataFP(type, reference, det, ret);
-            myDataFPs.add(myDataFP);
-            return ErrorCodes.NO_ERROR;
-        }
-        else
-        {
-            return ErrorCodes.INVALID_ARGUMENT;
-        }
+        myValidator.validateDET(det);
+        myValidator.validateRET(ret);
+        DataFP myDataFP = new DataFP(type, reference, det, ret);
+        myDataFPs.add(myDataFP);
 
     }
 
-    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr)
+    public void setTransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr) throws Exception
     {
         fPCount = -1.0;
         manMonthCount = -1.0;
@@ -253,23 +246,17 @@ public class CostEstimation
         {
             if (myTransactionFP.getRequirement().equals(reference))
             {
-                return ErrorCodes.DUPLICATE;
+                throw new DuplicateIDException(reference.getID());
             }
         }
-        if (myValidator.isValidDET(det) && myValidator.isValidFTR(ftr))
-        {
-            TransactionFP myTransactionFP = new TransactionFP(type, reference, det, ftr);
-            myTransactionFPs.add(myTransactionFP);
-            return ErrorCodes.NO_ERROR;
-        }
-        else
-        {
-            return ErrorCodes.INVALID_ARGUMENT;
-        }
+        myValidator.validateDET(det);
+        myValidator.validateFTR(ftr);
+        TransactionFP myTransactionFP = new TransactionFP(type, reference, det, ftr);
+        myTransactionFPs.add(myTransactionFP);
 
     }
 
-    public ErrorCodes remTransactionFPByID(IRequirement myRefToReq)
+    public void remTransactionFPByID(IRequirement myRefToReq) throws Exception
     {
         ITransactionFP toRemove = null;
         for (ITransactionFP myTransactionFP : myTransactionFPs)
@@ -279,18 +266,15 @@ public class CostEstimation
                 toRemove = myTransactionFP;
             }
         }
-        if (toRemove != null)
+        if (toRemove == null)
         {
-            myTransactionFPs.remove(toRemove);
-            return ErrorCodes.NO_ERROR;
+            throw new UnknownIDException(toRemove.getRequirement().getID());
         }
-        else
-        {
-            return ErrorCodes.FP_NOT_EXISTENT;
-        }
+        myTransactionFPs.remove(toRemove);
+
     }
 
-    public ErrorCodes remDataFPByID(IRequirement myRefToReq)
+    public void remDataFPByID(IRequirement myRefToReq) throws Exception
     {
         IDataFP toRemove = null;
         for (IDataFP myDataFP : myDataFPs)
@@ -300,18 +284,16 @@ public class CostEstimation
                 toRemove = myDataFP;
             }
         }
-        if (toRemove != null)
+        if (toRemove == null)
         {
-            myDataFPs.remove(toRemove);
-            return ErrorCodes.NO_ERROR;
+            throw new UnknownIDException(toRemove.getRequirement().getID());
         }
-        else
-        {
-            return ErrorCodes.FP_NOT_EXISTENT;
-        }
+        myDataFPs.remove(toRemove);
+
     }
 
-    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, IRequirement myRefToReq, int det, int ftr)
+    public void editTransactionFPByID(ClassOfTransactionFP type, IRequirement myRefToReq, int det, int ftr)
+            throws Exception
     {
         fPCount = -1.0;
         manMonthCount = -1.0;
@@ -324,25 +306,17 @@ public class CostEstimation
                 fPtoEdit = (TransactionFP)myITransactionFP;
             }
         }
-        if (fPtoEdit != null)
+        if (fPtoEdit == null)
         {
-            if (myValidator.isValidDET(det) && myValidator.isValidFTR(ftr))
-            {
-                fPtoEdit.edit(type, det, ftr);
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                return ErrorCodes.INVALID_ARGUMENT;
-            }
+            throw new UnknownIDException(fPtoEdit.getRequirement().getID());
         }
-        else
-        {
-            return ErrorCodes.FP_NOT_EXISTENT;
-        }
+        myValidator.validateDET(det);
+        myValidator.validateFTR(ftr);
+        fPtoEdit.edit(type, det, ftr);
+
     }
 
-    public ErrorCodes editDataFPByID(ClassOfDataFP type, IRequirement myRefToReq, int det, int ret)
+    public void editDataFPByID(ClassOfDataFP type, IRequirement myRefToReq, int det, int ret) throws Exception
     {
         fPCount = -1.0;
         manMonthCount = -1.0;
@@ -355,26 +329,19 @@ public class CostEstimation
                 fPtoEdit = (DataFP)myIDataFP;
             }
         }
-        if (fPtoEdit != null)
+        if (fPtoEdit == null)
         {
-            if (myValidator.isValidDET(det) && myValidator.isValidRET(ret))
-            {
-                fPtoEdit.edit(type, det, ret);
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                return ErrorCodes.INVALID_ARGUMENT;
-            }
+            throw new UnknownIDException(fPtoEdit.getRequirement().getID());
         }
-        else
-        {
-            return ErrorCodes.FP_NOT_EXISTENT;
-        }
+        myValidator.validateDET(det);
+        myValidator.validateRET(ret);
+        fPtoEdit.edit(type, det, ret);
+
     }
 
     public void setWeightFactors(WeightFactorList<IWeightFactor> weightFactors)
     {
         this.myWeightFactors = weightFactors;
     }
+
 }

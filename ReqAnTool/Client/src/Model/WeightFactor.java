@@ -1,5 +1,6 @@
 package Model;
 
+import Exceptions.NumberOutOfBoundsException;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IWeightFactor;
 
@@ -44,15 +45,13 @@ public class WeightFactor
 
     }
 
-    public ErrorCodes setValue(double value)
+    public void setValue(double value) throws Exception
     {
-        ErrorCodes retValue = ErrorCodes.INVALID_ARGUMENT;
-        if (value >= 0 && value <= maxValue)
+        if (!(value >= 0 && value <= maxValue))
         {
-            this.score = value;
-            retValue = ErrorCodes.NO_ERROR;
+            throw new NumberOutOfBoundsException(value, 0, maxValue);
         }
-        return retValue;
+        this.score = value;
 
     }
 }

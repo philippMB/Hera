@@ -48,14 +48,13 @@ public class NFRequirement
 
     }
 
-    public ErrorCodes edit(String id, String title, String actor, String description,
+    public void edit(String id, String title, String actor, String description,
                            RequirementList<IRequirement> myReferences)
     {
         super.edit(id, myReferences);
         this.title = title;
         this.actor = actor;
         this.description = description;
-        return ErrorCodes.NO_ERROR;
 
     }
 }
