@@ -1,6 +1,5 @@
 package Model_Interfaces;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public interface IApplications
@@ -9,6 +8,10 @@ public interface IApplications
     public boolean existsID(String id);
 
     public void saveReqAn(String path) throws Exception;
+
+    public void exportToXML(String path, XMLFormatType type) throws Exception;
+
+    public void importToXML(String path, XMLFormatType type) throws Exception;
 
     public void deleteReqAn() throws Exception;
     

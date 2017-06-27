@@ -383,6 +383,12 @@ public class RequirementAnalysis
 
     }
 
+    public WeightFactorList<IWeightFactor> getWeightFactorList()
+    {
+        return myCostEstimation.getWeightFactorList();
+
+    }
+
     @Override
     public String getTitle()
     {
@@ -976,6 +982,7 @@ public class RequirementAnalysis
 
     }
 
+    @Override
     public IProductEnvironment getProductEnviroment()
     {
         return myProductEnvironment;
@@ -995,6 +1002,89 @@ public class RequirementAnalysis
             throw new MissingCostEstimationException();
         }
         myCostEstimation.calculateFP();
+
+    }
+
+    public void setCustomerDescription(String customerDescription)
+    {
+        this.customerDescription = customerDescription;
+
+    }
+
+    public void setCreateDate(Date createDate)
+    {
+        this.createDate = createDate;
+
+    }
+
+    public void setProductApplication(IProductApplication myProductApplication) throws Exception
+    {
+        this.myProductApplication = new ProductApplication();
+        this.myProductApplication.edit(myProductApplication.getDescription());
+
+    }
+
+    public void setProductEnvironment(IProductEnvironment myProductEnvironment) throws Exception
+    {
+        this.myProductEnvironment = new ProductEnvironment();
+        this.myProductEnvironment.edit(myProductEnvironment.getDescription());
+
+    }
+
+    public void setTargetDefinition(ITargetDefinition myTargetDefinition) throws Exception
+    {
+        this.myTargetDefinition = new TargetDefinition();
+        this.myTargetDefinition.edit(myTargetDefinition.getDescription());
+
+    }
+
+    public void setCostEstimation(ICostEstimation myCostEstimation,
+                                  Map<IClassOfFP, ComplexityMatrix> complexityMatrices,
+                                  ComplexityWeightMatrix complexityWeightMatrix)
+            throws Exception
+    {
+        this.myCostEstimation = new CostEstimation(complexityWeightMatrix, complexityMatrices, getWeightFactorList());
+        this.myCostEstimation.setWeightFactors((WeightFactorList<IWeightFactor>)myCostEstimation.getWeightFactors());
+        this.myCostEstimation.setDataFPs(myCostEstimation.getDataFPs());
+        this.myCostEstimation.setTransactionFPs(myCostEstimation.getTransactionFPs());
+        this.myCostEstimation.calculateFP();
+        this.myCostEstimation.calculateManMonth();
+
+    }
+
+    public void setFRequirements(ArrayList<IFRequirement> myFRequirements)
+    {
+        this.myFRequirements = (RequirementList<IFRequirement>) myFRequirements;
+
+    }
+
+    public void setProductData(ArrayList<IProductData> myProductData)
+    {
+        this.myProductData = (RequirementList<IProductData>) myProductData;
+
+    }
+
+    public void setNFRequirements(ArrayList<INFRequirement> myNFRequirements)
+    {
+        this.myNFRequirements = (RequirementList<INFRequirement>) myNFRequirements;
+
+    }
+
+    public void setAdditions(ArrayList<IAddition> myAdditions)
+    {
+        this.myAdditions = (AdditionList<IAddition>) myAdditions;
+
+    }
+
+    public void setGlossaryEntries(ArrayList<IGlossaryEntry> myGlossaryEntries)
+    {
+        this.myGlossaryEntries = (GlossaryList<IGlossaryEntry>) myGlossaryEntries;
+
+    }
+
+    public void setQualityRequirements(ArrayList<IQualityRequirement> myQualityRequirements)
+    {
+        this.myQualityRequirements = (QualityRequirementList<IQualityRequirement>) myQualityRequirements;
 
     }
 

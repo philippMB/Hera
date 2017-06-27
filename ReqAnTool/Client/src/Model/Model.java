@@ -16,6 +16,7 @@ public class Model extends Observable
     private Configuration myConfig;
     private IXMLManager myXMLManager;
     private boolean unsaved;
+    private String path;
 
     public Model()
     {
@@ -23,6 +24,7 @@ public class Model extends Observable
         unsaved = true;
         myReqAn = null;
         IXMLManager myIXMLManager = IXMLManager.getInstance();
+        path = "";
     }
 
     @Override
@@ -614,9 +616,65 @@ public class Model extends Observable
             throw new MissingReqAnException();
         }
         unsaved = false;
-
+        if (!this.path.equals(path))
+        {
+            this.path = path;
+        }
+        myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
         notifyAll();
 
+    }
+
+    @Override
+    public void exportToXML(String path, XMLFormatType type) throws Exception
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myXMLManager.exportAnalysis(myReqAn, path, type);
+
+    }
+
+    @Override
+    public void importToXML(String path, XMLFormatType type) throws Exception
+    {
+        if (myReqAn != null)
+        {
+            if (unsaved)
+            {
+                saveReqAn(this.path);
+            }
+        }
+        IRequirementAnalysis myIReqAn = myXMLManager.importAnalysis(path, type);
+        myReqAn = copyReqAn(myIReqAn);
+
+    }
+
+    private RequirementAnalysis copyReqAn(IRequirementAnalysis myIReqAn) throws Exception
+    {
+        RequirementAnalysis tmpReqAn = new RequirementAnalysis(myIReqAn.getTitle(),
+                myIReqAn.getCustomerData().getPMName(), myIReqAn.getCustomerData().getPMEMail(),
+                myIReqAn.getCustomerData().getPMPNumber(), myIReqAn.getCustomerData().getCompanyName(),
+                myIReqAn.getCustomerData().getCompanyCity(), myIReqAn.getCustomerData().getCompanyStreet(),
+                myIReqAn.getCustomerData().getCompanyCountry(), myIReqAn.getCustomerData().getCompanyPLZ(),
+                myIReqAn.getCustomerData().getCName(), myIReqAn.getCustomerData().getCEMail(),
+                myIReqAn.getCustomerData().getCNumber());
+        tmpReqAn.setCustomerDescription(myIReqAn.getCustomerDescription());
+        tmpReqAn.setAdditions(myIReqAn.getAdditions());
+        tmpReqAn.setCostEstimation(myIReqAn.getCostEstimation(), myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix());
+        tmpReqAn.setActualState(myIReqAn.getActualState());
+        tmpReqAn.setCreateDate(myIReqAn.getCreateDate());
+        tmpReqAn.setProductApplication(myIReqAn.getProductApplication());
+        tmpReqAn.setProductData(myIReqAn.getProductData());
+        tmpReqAn.setProductEnvironment(myIReqAn.getProductEnviroment());
+        tmpReqAn.setTargetDefinition(myIReqAn.getTargetDefinition());
+        tmpReqAn.setFRequirements(myIReqAn.getFRequirements());
+        tmpReqAn.setNFRequirements(myIReqAn.getNFRequirements());
+        tmpReqAn.setGlossaryEntries(myIReqAn.getGlossaryEntries());
+        tmpReqAn.setQualityRequirements(myIReqAn.getQualityRequirements());
+
+        return tmpReqAn;
     }
 
     @Override

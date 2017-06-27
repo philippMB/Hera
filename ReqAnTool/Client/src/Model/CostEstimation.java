@@ -197,6 +197,11 @@ public class CostEstimation
         return myWeightFactors;
     }
 
+    public WeightFactorList<IWeightFactor> getWeightFactorList()
+    {
+        return myWeightFactors;
+    }
+
     public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors) throws Exception
     {
         if (mapOfWeightFactors.size() == getWeightFactors().size())
@@ -342,6 +347,18 @@ public class CostEstimation
     public void setWeightFactors(WeightFactorList<IWeightFactor> weightFactors)
     {
         this.myWeightFactors = weightFactors;
+
     }
 
+    public void setDataFPs(ArrayList<IDataFP> dataFPs)
+    {
+        this.myDataFPs = dataFPs;
+
+    }
+
+    public void setTransactionFPs(ArrayList<ITransactionFP> transactionFPs)
+    {
+        this.myTransactionFPs = transactionFPs;
+
+    }
 }

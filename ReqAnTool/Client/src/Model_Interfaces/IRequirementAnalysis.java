@@ -1,5 +1,6 @@
 package Model_Interfaces;
 
+import Model.ProductEnvironment;
 import Model.RequirementList;
 
 import java.util.ArrayList;
@@ -54,5 +55,7 @@ public interface IRequirementAnalysis
     public INFRequirement getNFRequirementByID(String id);
     
     public IProductData getProductDataByID(String id);
+
+    public IProductEnvironment getProductEnviroment();
 
 }
