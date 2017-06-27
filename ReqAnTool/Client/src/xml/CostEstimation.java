@@ -4,13 +4,23 @@ import Model_Interfaces.ICostEstimation;
 import Model_Interfaces.IDataFP;
 import Model_Interfaces.ITransactionFP;
 import Model_Interfaces.IWeightFactor;
-
 import java.util.ArrayList;
-
-import java.util.*;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+
+/**
+ * Class to hold the CostEstimation of the requirement analysis.
+ * This class provides JAXB support and can be accessed via the {@link ICostEstimation} Interface.
+ * Getter and Setter must be provided to be JAXB conform.
+ * It is implemented in the {@link CustomXMLFormat}.
+ *
+ * @author 3852430
+ * @version 1.0
+ *
+ * @see ICostEstimation
+ * @see CustomXMLFormat
+ */
 public class CostEstimation
   implements  ICostEstimation
 {
@@ -27,7 +37,15 @@ public class CostEstimation
   @XmlElement(name="Factor")
   private ArrayList<WeightFactor> weightFactorList;
 
-
+  /**
+   * The constructor for the CostEstimation class.
+   * The data from the original CostEstimation instance is copied into this JAXB conform class.
+   * @param origin The CostEstimation instance from the original {@link Model_Interfaces.IRequirementAnalysis} which holds
+   *               all the data that has to be stored in the XML file.
+   * @param dataFPs The DataFunctionPoint array already in the custom format.
+   * @param transactionFPs The TransactionFunctionPoint array already in the custom format.
+   * @param weightFactors The WeightFactor array already in the custom format
+   */
   public CostEstimation(ICostEstimation origin, ArrayList<DataFP> dataFPs, ArrayList<TransactionFP> transactionFPs,
                         ArrayList<WeightFactor> weightFactors )
   {
@@ -38,9 +56,12 @@ public class CostEstimation
     weightFactorList = weightFactors;
   }
 
+  /**
+   * The default constructor for the CostEstimation class.
+   * Must be provided to be JAXB conform.
+   */
   public CostEstimation()
   {
-    // Default-Constructor
   }
 
   public double getFunctionPoints()
@@ -149,6 +170,11 @@ public class CostEstimation
   public ITransactionFP getTransactionFPByID(String id) {
     // TODO: javadoc, nicht implementiert
     return null;
+  }
+
+  @Override
+  public double sumOfWeightFactors() {
+    return 0;
   }
 
   @Override

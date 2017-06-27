@@ -2,6 +2,11 @@ package xml;
 
 import Model_Interfaces.IWeightFactor;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+
 /**
  * Class to hold the WeightFactors of the requirement analysis.
  * This class provides JAXB support and can be accessed via the {@link IWeightFactor} Interface.
