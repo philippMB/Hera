@@ -73,6 +73,7 @@ public class XMLExporter
      * be instantiated, because there is already one instance in the system.
      *
      * @see IXMLFormat
+     * @see XMLFormatFactory
      */
     private IXMLFormat marshall(IRequirementAnalysis analysis, XMLFormatType type)
             throws XMLFormatException, SingletonRecreationException

@@ -14,13 +14,14 @@ public class TestMain
           throws JAXBException, FileNotFoundException, XMLUnmarschallException
   {
     XMLManager manager = XMLManager.getInstance();
+    XMLFormatType formatType = XMLFormatType.CUSTOM_XML_FORMAT;
 
     IRequirementAnalysis newReqAn = null;
-    try {
-      newReqAn = manager.importAnalysis("xmlTest.xml");
+    /*try {
+      newReqAn = manager.importAnalysis("xmlTest.xml", formatType);
     } catch (Exception e) {
       e.printStackTrace();
-    }
+    }*/
 
     FileOperator fp = new FileOperator();
     CustomXMLFormat format = new CustomXMLFormat();
@@ -253,7 +254,7 @@ public class TestMain
     //ncf = fp.readFromFile("bums");
     System.out.println("Ich war nochmal hier");*/
     try {
-      newReqAn = manager.importAnalysis("xmlTest.xml");
+      newReqAn = manager.importAnalysis("xmlTest.xml", formatType);
     } catch (Exception e) {
       e.printStackTrace();
     }

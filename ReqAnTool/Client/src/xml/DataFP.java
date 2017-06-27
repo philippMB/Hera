@@ -41,10 +41,8 @@ public class DataFP
       det = origin.getDet();
       ret = origin.getRet();
       referenceIDs = origin.getRequirement().getReferenceIDs();
-      referenceIDs = null;
       type = origin.getType();
       reqID = origin.getRequirement().getID();
-      reqID = null;
     }
 
     /**
