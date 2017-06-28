@@ -173,10 +173,10 @@ public class Configuration
         WeightFactorList<IWeightFactor> myWeightFactors = (WeightFactorList<IWeightFactor>) myReqAn.getWeightFactors();
         if (!(myReqAn.getActualState() == -1.0))
         {
-            CalculateFP myCalculateFP = new CalculateFP();
+            CalculateFP calculator = new CalculateFP();
             double actualState = myReqAn.getActualState();
             double calcFP = myReqAn.getCostEstimation().getFunctionPoints();
-            double sumWeightFac = myCalculateFP.sumOfWeightFactors(myReqAn.getCostEstimation());
+            double sumWeightFac = calculator.sumOfWeightFactors(myReqAn.getCostEstimation());
             int countOfWeightFac = myWeightFactors.size();
             boolean defaultFac = true;
 
