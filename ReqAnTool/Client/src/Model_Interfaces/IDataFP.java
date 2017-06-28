@@ -7,12 +7,12 @@ package Model_Interfaces;
 public interface IDataFP 
 {
 
-    public int getDET();
+    int getDET();
     
-    public int getRET();
+    int getRET();
     
-    public IRequirement getRequirement();
+    IRequirement getRequirement();
     
-    public ClassOfDataFP getType();
+    ClassOfDataFP getType();
 
 }

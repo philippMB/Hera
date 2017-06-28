@@ -1,7 +1,6 @@
 package Model;
 
 import Exceptions.NumberOutOfBoundsException;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IWeightFactor;
 
 public class WeightFactor
@@ -45,7 +44,7 @@ public class WeightFactor
 
     }
 
-    public void setValue(double value) throws Exception
+    public void setValue(double value) throws NumberOutOfBoundsException
     {
         if (!(value >= 0 && value <= maxValue))
         {

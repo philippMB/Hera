@@ -1,58 +1,65 @@
 package Model_Interfaces;
 
+import Exceptions.*;
+
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 public interface IApplications
 {
     
-    public boolean existsID(String id);
+    boolean existsID(String id);
 
-    public void saveReqAn(String path) throws Exception;
+    void saveReqAn(String path) throws MissingReqAnException;
 
-    public void exportToXML(String path, XMLFormatType type) throws Exception;
+    void exportToXML(String path, XMLFormatType type) throws MissingReqAnException, FileNotFoundException;
 
-    public void importToXML(String path, XMLFormatType type) throws Exception;
+    void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, NumberOutOfBoundsException;
 
-    public void deleteReqAn() throws Exception;
+    void deleteReqAn() throws MissingReqAnException;
     
-    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
-                                String city, String companyStreet, String country, String zip, String cName,
-                                String cMail, String cPhone);
+    boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
+                         String city, String companyStreet, String country, String zip, String cName,
+                         String cMail, String cPhone);
 
-    public boolean isReqAnUnsaved();
+    boolean isReqAnUnsaved();
 
-    public boolean isReferenceOnID(String id);
+    boolean isFirstUseOfOpenedReqAn() throws MissingReqAnException;
 
-    public boolean isIDUnique(String id);
+    boolean isReferenceOnID(String id);
 
-    public boolean existsActualState();
+    boolean isIDUnique(String id);
 
-    public boolean existsFPCount();
+    boolean existsActualState();
 
-    public boolean existsManMonthCount();
+    boolean existsFPCount();
 
-    public void setDataFP(ClassOfDataFP type, String id, int det, int ret) throws Exception;
+    boolean existsManMonthCount();
 
-    public void setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr) throws Exception;
+    void setDataFP(ClassOfDataFP type, String id, int det, int ret) throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException, MissingCostEstimationException;
 
-    public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret) throws Exception;
+    void setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr) throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException, MissingCostEstimationException;
 
-    public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr) throws Exception;
+    void editDataFPByID(ClassOfDataFP type, String id, int det, int ret) throws Exception;
 
-    public void remTransactionFPByID(String id) throws Exception;
+    void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr) throws MissingReqAnException, UnknownIDException, MissingCostEstimationException, NumberOutOfBoundsException;
 
-    public void remDataFPByID(String id) throws Exception;
+    void remTransactionFPByID(String id) throws MissingReqAnException, MissingCostEstimationException, UnknownIDException;
 
-    public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors) throws Exception;
+    void remDataFPByID(String id) throws MissingReqAnException, MissingCostEstimationException, UnknownIDException;
 
-    public void calcFPCount() throws Exception;
+    void rateWeightFactor(Map<String, Integer> mapOfWeightFactors) throws MissingReqAnException, NumberOutOfBoundsException, MissingCostEstimationException, ListOverflowException;
 
-    public void calcManMonth() throws Exception;
+    void calcFPCount() throws MissingReqAnException, MissingCostEstimationException;
 
-    public void setActualState(double actStat) throws Exception;
+    void calcManMonth() throws MissingReqAnException, MissingCostEstimationException;
 
-    public boolean existsOptWeightFactor();
+    void setActualState(double actStat) throws MissingReqAnException, NumberOutOfBoundsException;
 
-    public void adjustWeightFactor() throws Exception;
+    boolean existsOptWeightFactor();
+
+    void adjustWeightFactor() throws MissingReqAnException, MissingCostEstimationException, MissingFPException, NumberOutOfBoundsException;
+
+    void openReqAnFile(String path);
 
 }

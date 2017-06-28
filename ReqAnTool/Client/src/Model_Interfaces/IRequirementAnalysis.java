@@ -1,8 +1,5 @@
 package Model_Interfaces;
 
-import Model.ProductEnvironment;
-import Model.RequirementList;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,50 +9,50 @@ import java.util.Date;
 public interface IRequirementAnalysis 
 {
 
-    public double getActualState();
+    double getActualState();
     
-    public Date getCreateDate();
+    Date getCreateDate();
     
-    public String getCustomerDescription();
+    String getCustomerDescription();
     
-    public ArrayList<IAddition> getAdditions();
+    ArrayList<IAddition> getAdditions();
 
-    public ICostEstimation getCostEstimation();
+    ICostEstimation getCostEstimation();
 
-    public ArrayList<IFRequirement> getFRequirements();
+    ArrayList<IFRequirement> getFRequirements();
     
-    public ArrayList<INFRequirement> getNFRequirements();
+    ArrayList<INFRequirement> getNFRequirements();
     
-    public ArrayList<IGlossaryEntry> getGlossaryEntries();
+    ArrayList<IGlossaryEntry> getGlossaryEntries();
     
-    public ArrayList<IProductData> getProductData();
+    ArrayList<IProductData> getProductData();
     
-    public ArrayList<IQualityRequirement> getQualityRequirements();
+    ArrayList<IQualityRequirement> getQualityRequirements();
     
-    public ArrayList<IWeightFactor> getWeightFactors();
+    ArrayList<IWeightFactor> getWeightFactors();
     
-    public String getTitle();
+    String getTitle();
     
-    public ITargetDefinition getTargetDefinition();
+    ITargetDefinition getTargetDefinition();
     
-    public IProductApplication getProductApplication();
+    IProductApplication getProductApplication();
     
-    public ICustomerData getCustomerData();
+    ICustomerData getCustomerData();
     
-    public IGlossaryEntry getGlossaryEntriesByTerm(String term);
+    IGlossaryEntry getGlossaryEntriesByTerm(String term);
     
-    public IQualityRequirement getQualityRequirementsByCriteria(String criteria);
+    IQualityRequirement getQualityRequirementsByCriteria(String criteria);
     
-    public IAddition getAdditionByTitle(String title);
+    IAddition getAdditionByTitle(String title);
     
-    public IWeightFactor getWeightFactorByTitle(String title);
+    IWeightFactor getWeightFactorByTitle(String title);
     
-    public IFRequirement getFRequirementByID(String id);
+    IFRequirement getFRequirementByID(String id);
     
-    public INFRequirement getNFRequirementByID(String id);
+    INFRequirement getNFRequirementByID(String id);
     
-    public IProductData getProductDataByID(String id);
+    IProductData getProductDataByID(String id);
 
-    public IProductEnvironment getProductEnviroment();
+    IProductEnvironment getProductEnviroment();
 
 }

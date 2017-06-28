@@ -7,10 +7,10 @@ public interface IProductData
     extends IRequirement
 {
     
-    public String getAttribute();
+    String getAttribute();
     
-    public String getContent();
+    String getContent();
     
-    public String getMaxCount();
+    String getMaxCount();
     
 }

@@ -1,7 +1,10 @@
 package Model;
 
+import Calculations.CalculateFP;
+import Calculations.CalculateManMonth;
 import Exceptions.DuplicateIDException;
 import Exceptions.ListOverflowException;
+import Exceptions.NumberOutOfBoundsException;
 import Exceptions.UnknownIDException;
 import Model_Interfaces.*;
 
@@ -13,8 +16,8 @@ public class CostEstimation
 {
     private double fPCount;
     private double manMonthCount;
-    private ComplexityWeightMatrix myComplexityWeightMatrix;
-    private Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices;
+    private final ComplexityWeightMatrix myComplexityWeightMatrix;
+    private final Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices;
     /**
      * @associates <{Model.TransactionFP}>
      */
@@ -44,56 +47,27 @@ public class CostEstimation
     @Override
     public void calculateFP()
     {
-
-        int unweightedFPcount = getSumOfDataAndTransactionFPs();
-        double factorOfInfluences = sumOfWeightFactors();
-        this.fPCount = unweightedFPcount * factorOfInfluences;
+        Calculations.CalculateFP myCalculateFP = new CalculateFP();
+        this.fPCount = myCalculateFP.ibmMethod(this);
     }
 
-    public double sumOfWeightFactors()
+    @Override
+    public Map<IClassOfFP, ComplexityMatrix> getComplexityMatrices()
     {
-        int sumOfFactors = 0;
-        for (IWeightFactor myIWeightFactor : myWeightFactors)
-        {
-            WeightFactor myWeightFactor = (WeightFactor) myIWeightFactor;
-            sumOfFactors += myWeightFactor.getExactValue();
-        }
-        return (sumOfFactors / 100 + 0.7);
+        return myComplexityMatrices;
     }
 
-    private int getSumOfDataAndTransactionFPs()
+    @Override
+    public ComplexityWeightMatrix getComplexityWeightMatrix()
     {
-        int sumOfWeightedComplexities = 0;
-        for (ITransactionFP myITransactionFP : myTransactionFPs)
-        {
-            TransactionFP myTransactionFP = (TransactionFP)myITransactionFP;
-            int myFPvalue = myTransactionFP.getFPvalue(myComplexityMatrices.get(myITransactionFP.getType()),
-                                                       myComplexityWeightMatrix);
-            if (myFPvalue != -1) // check for error from getFPvalue (error = -1)
-            {
-                sumOfWeightedComplexities += myFPvalue;
-            }
-        }
-        for (IDataFP myIDataFP : myDataFPs)
-        {
-            DataFP myDataFP = (DataFP)myIDataFP;
-            int myFPvalue = myDataFP.getFPvalue(myComplexityMatrices.get(myDataFP.getType()),
-                                                myComplexityWeightMatrix);
-            if (myFPvalue != -1) // check for error from getFPvalue (error = -1)
-            {
-                sumOfWeightedComplexities += myFPvalue;
-            }
-        }
-        return sumOfWeightedComplexities;
+        return myComplexityWeightMatrix;
     }
 
     @Override
     public void calculateManMonth()
     {
-        // rough Estimation by Jones:
-        double developmentTime = Math.pow(fPCount, 0.4);
-        double personCount = Math.ceil(fPCount / 150);
-        this.manMonthCount = developmentTime * personCount;
+        Calculations.CalculateManMonth myCalculateManMonth = new CalculateManMonth();
+        this.manMonthCount = myCalculateManMonth.jonesEstimation(this.fPCount);
     }
 
     @Override
@@ -202,7 +176,8 @@ public class CostEstimation
         return myWeightFactors;
     }
 
-    public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors) throws Exception
+    public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors)
+            throws ListOverflowException, NumberOutOfBoundsException
     {
         if (mapOfWeightFactors.size() == getWeightFactors().size())
         {
@@ -223,7 +198,8 @@ public class CostEstimation
 
     }
 
-    public void setDataFP(ClassOfDataFP type, IRequirement reference, int det, int ret) throws Exception
+    public void setDataFP(ClassOfDataFP type, IRequirement reference, int det, int ret)
+            throws DuplicateIDException, NumberOutOfBoundsException
     {
         fPCount = -1.0;
         manMonthCount = -1.0;
@@ -242,7 +218,8 @@ public class CostEstimation
 
     }
 
-    public void setTransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr) throws Exception
+    public void setTransactionFP(ClassOfTransactionFP type, IRequirement reference, int det, int ftr)
+            throws DuplicateIDException, NumberOutOfBoundsException
     {
         fPCount = -1.0;
         manMonthCount = -1.0;
@@ -261,7 +238,7 @@ public class CostEstimation
 
     }
 
-    public void remTransactionFPByID(IRequirement myRefToReq) throws Exception
+    public void remTransactionFPByID(IRequirement myRefToReq) throws UnknownIDException
     {
         ITransactionFP toRemove = null;
         for (ITransactionFP myTransactionFP : myTransactionFPs)
@@ -279,7 +256,7 @@ public class CostEstimation
 
     }
 
-    public void remDataFPByID(IRequirement myRefToReq) throws Exception
+    public void remDataFPByID(IRequirement myRefToReq) throws UnknownIDException
     {
         IDataFP toRemove = null;
         for (IDataFP myDataFP : myDataFPs)
@@ -298,7 +275,7 @@ public class CostEstimation
     }
 
     public void editTransactionFPByID(ClassOfTransactionFP type, IRequirement myRefToReq, int det, int ftr)
-            throws Exception
+            throws UnknownIDException, NumberOutOfBoundsException
     {
         fPCount = -1.0;
         manMonthCount = -1.0;
@@ -321,7 +298,8 @@ public class CostEstimation
 
     }
 
-    public void editDataFPByID(ClassOfDataFP type, IRequirement myRefToReq, int det, int ret) throws Exception
+    public void editDataFPByID(ClassOfDataFP type, IRequirement myRefToReq, int det, int ret)
+            throws UnknownIDException, NumberOutOfBoundsException
     {
         fPCount = -1.0;
         manMonthCount = -1.0;

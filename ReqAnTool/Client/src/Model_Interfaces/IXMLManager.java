@@ -1,7 +1,5 @@
 package Model_Interfaces;
 
-import xml.*;
-
 import java.io.FileNotFoundException;
 
 /**
@@ -15,7 +13,7 @@ public interface IXMLManager
    * Method to get an instance of the singleton class IXMLManger
    * @return An instance of IXMLManager
    */
-  public static IXMLManager getInstance()
+  static IXMLManager getInstance()
   {
     return XMLManager.getInstance();
   }
@@ -39,7 +37,7 @@ public interface IXMLManager
    *
    * @see XMLFormatType
    */
-  public void exportAnalysis(IRequirementAnalysis analysis, String address, XMLFormatType type)
+  void exportAnalysis(IRequirementAnalysis analysis, String address, XMLFormatType type)
           throws XMLMarschallingException, FileNotFoundException, XMLFormatException, SingletonRecreationException,
           SecurityException, XMLProcessingException;
 
@@ -59,7 +57,7 @@ public interface IXMLManager
    * @throws SingletonRecreationException Is thrown whenever the {@link XMLFormatFactory} could not
    * be instantiated, because there is already one instance in the system.
    */
-  public IRequirementAnalysis importAnalysis(String address, XMLFormatType type)
+  IRequirementAnalysis importAnalysis(String address, XMLFormatType type)
           throws FileNotFoundException, XMLUnmarschallException,
           SecurityException, XMLProcessingException, XMLFormatException, SingletonRecreationException;
 }

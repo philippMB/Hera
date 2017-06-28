@@ -1,12 +1,8 @@
 package Model;
 
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IFRequirement;
 
 import Model_Interfaces.IRequirement;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FRequirement
     extends Requirement

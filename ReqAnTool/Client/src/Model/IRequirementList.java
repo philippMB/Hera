@@ -2,15 +2,13 @@ package Model;
 
 import Model_Interfaces.IRequirement;
 
-import java.util.ArrayList;
-
-public interface IRequirementList<T extends IRequirement>
+interface IRequirementList<T extends IRequirement>
 {
 
-    public boolean isIncluded(String id);
+    boolean isIncluded(String id);
     
-    public T getReqByID(String id);
+    T getReqByID(String id);
     
-    public boolean removeReqByID(String id);
+    boolean removeReqByID(String id);
     
 }

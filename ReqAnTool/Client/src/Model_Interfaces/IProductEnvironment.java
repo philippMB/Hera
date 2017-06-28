@@ -6,6 +6,6 @@ package Model_Interfaces;
 public interface IProductEnvironment
 {
 
-    public String getDescription();
+    String getDescription();
 
 }

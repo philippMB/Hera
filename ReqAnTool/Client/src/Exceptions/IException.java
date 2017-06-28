@@ -37,6 +37,6 @@ public interface IException
      *     {@link Exception} to strings.
      * @return Unique string identifier of the exception class
      */
-    public String getExceptionID();
+    String getExceptionID();
 
 }

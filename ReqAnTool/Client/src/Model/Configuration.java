@@ -1,5 +1,8 @@
 package Model;
 
+import Calculations.CalculateFP;
+import Exceptions.MissingFPException;
+import Exceptions.NumberOutOfBoundsException;
 import Model_Interfaces.ClassOfDataFP;
 import Model_Interfaces.ClassOfTransactionFP;
 import Model_Interfaces.IClassOfFP;
@@ -164,14 +167,16 @@ public class Configuration
 
     }
 
-    public WeightFactorList<IWeightFactor> adjustOptWeightFactors(RequirementAnalysis myReqAn) throws Exception
+    public WeightFactorList<IWeightFactor> adjustOptWeightFactors(RequirementAnalysis myReqAn)
+            throws NumberOutOfBoundsException, MissingFPException
     {
         WeightFactorList<IWeightFactor> myWeightFactors = (WeightFactorList<IWeightFactor>) myReqAn.getWeightFactors();
         if (!(myReqAn.getActualState() == -1.0))
         {
+            CalculateFP myCalculateFP = new CalculateFP();
             double actualState = myReqAn.getActualState();
             double calcFP = myReqAn.getCostEstimation().getFunctionPoints();
-            double sumWeightFac = myReqAn.getCostEstimation().sumOfWeightFactors();
+            double sumWeightFac = myCalculateFP.sumOfWeightFactors(myReqAn.getCostEstimation());
             int countOfWeightFac = myWeightFactors.size();
             boolean defaultFac = true;
 
@@ -203,7 +208,7 @@ public class Configuration
             }
 
         }
-        else throw new Exception();
+        else throw new MissingFPException();
         optWeightFactor = myWeightFactors;
         return myWeightFactors;
 

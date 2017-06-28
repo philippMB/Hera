@@ -6,10 +6,10 @@ package Model_Interfaces;
 public interface IWeightFactor 
 {
 
-    public String getTitle();
+    String getTitle();
 
-    public int getValue();
+    int getValue();
 
-    public int getMaxValue();
+    int getMaxValue();
 
 }

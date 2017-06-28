@@ -1,7 +1,6 @@
 package Model;
 
 import Exceptions.ListOverflowException;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IProductEnvironment;
 
 /**
@@ -26,7 +25,7 @@ public class ProductEnvironment
 
     }
 
-    public void edit(String description) throws Exception
+    public void edit(String description) throws ListOverflowException
     {
         if (description.length() > 20000)
         {

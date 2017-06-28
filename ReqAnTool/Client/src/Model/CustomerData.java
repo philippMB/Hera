@@ -2,7 +2,6 @@ package Model;
 
 import Exceptions.ArgumentPatternException;
 import Exceptions.PatternType;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.ICustomerData;
 
 public class CustomerData 
@@ -16,7 +15,7 @@ public class CustomerData
     private String country;
     private PersonalData customer;
     private PersonalData projectManager;
-    private Validator myValidator;
+    private final Validator myValidator;
 
     CustomerData(String pmName, String pmMail, String pmPhone, String companyName, String city, String companyStreet,
                  String country, String zip, String cName, String cMail, String cPhone)
@@ -34,7 +33,7 @@ public class CustomerData
     public void edit(String companyName, String companyCity, String companyStreet, String zip,
                                       String companyCountry, String custName, String custMail, String custPhone,
                                       String pmName, String pmMail, String pmPhone)
-            throws Exception
+            throws ArgumentPatternException
     {
         validateMail(custMail, pmMail);
         validatePhone(custPhone, pmPhone);
@@ -51,7 +50,7 @@ public class CustomerData
     }
 
     private void validateAdress(String companyCountry, String companyCity, String companyStreet, String zip)
-            throws Exception
+            throws ArgumentPatternException
     {
         boolean validCountry = myValidator.isValidCountry(companyCountry);
         boolean validCity = myValidator.isValidCity(companyCity);
@@ -64,7 +63,7 @@ public class CustomerData
         }
     }
 
-    private void validateMail(String custMail, String pmMail) throws Exception
+    private void validateMail(String custMail, String pmMail) throws ArgumentPatternException
     {
         boolean validCustMail = myValidator.isValidEmail(custMail);
         boolean validpmMail = myValidator.isValidEmail(pmMail);
@@ -79,7 +78,7 @@ public class CustomerData
 
     }
 
-    private void validatePhone(String custPhone, String pmPhone) throws Exception
+    private void validatePhone(String custPhone, String pmPhone) throws ArgumentPatternException
     {
         boolean validCustPhone = myValidator.isValidPhone(custPhone);
         boolean validpmPhone = myValidator.isValidPhone(pmPhone);

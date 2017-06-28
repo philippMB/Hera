@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Created by mbill on 04.05.2017.
  */
-public class Validator
+class Validator
 {
 
     public boolean isValidEmail(String mail)
@@ -46,9 +46,9 @@ public class Validator
 
     }
 
-    public boolean isValidID(String id)
+    public boolean isInvalidID(String id)
     {
-        return true;
+        return false;
         // suggestion for id Format: return Pattern.matches("/[A-Z][A-Z][1-9]+/", id);
 
     }
@@ -74,7 +74,7 @@ public class Validator
 
     }
 
-    public void validateDET(int det) throws Exception
+    public void validateDET(int det) throws NumberOutOfBoundsException
     {
         if (det < 0)
         {
@@ -83,7 +83,7 @@ public class Validator
 
     }
 
-    public void validateRET(int ret) throws Exception
+    public void validateRET(int ret) throws NumberOutOfBoundsException
     {
         if (ret < 0)
         {
@@ -92,7 +92,7 @@ public class Validator
 
     }
 
-    public void validateFTR(int ftr) throws Exception
+    public void validateFTR(int ftr) throws NumberOutOfBoundsException
     {
         if (ftr < 0)
         {

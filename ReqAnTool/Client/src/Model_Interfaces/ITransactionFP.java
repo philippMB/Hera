@@ -7,12 +7,12 @@ package Model_Interfaces;
 public interface ITransactionFP 
 {
     
-    public int getDET();
+    int getDET();
     
-    public int getFTR();
+    int getFTR();
     
-    public ClassOfTransactionFP getType();
+    ClassOfTransactionFP getType();
     
-    public IRequirement getRequirement();
+    IRequirement getRequirement();
     
 }

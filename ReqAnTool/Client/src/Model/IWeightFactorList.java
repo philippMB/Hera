@@ -5,13 +5,13 @@ import Model_Interfaces.IWeightFactor;
 /**
  * Created by mbill on 04.05.2017.
  */
-public interface IWeightFactorList<IWeightFac extends IWeightFactor>
+interface IWeightFactorList<IWeightFac extends IWeightFactor>
 {
 
-    public boolean isIncluded(String title);
+    boolean isIncluded(String title);
 
-    public IWeightFac getFactorByTitle(String title);
+    IWeightFac getFactorByTitle(String title);
 
-    public boolean removeByTitle(String title);
+    boolean removeByTitle(String title);
 
 }

@@ -1,12 +1,8 @@
 package Model;
 
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IProductData;
 
 import Model_Interfaces.IRequirement;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProductData
     extends Requirement

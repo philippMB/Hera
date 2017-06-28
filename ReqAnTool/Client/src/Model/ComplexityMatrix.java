@@ -12,10 +12,10 @@ public class ComplexityMatrix
     (equals for detRetMatrix but 'ftr' replaced with 'ret'
      */
 
-    private Complexities[][] Matrix;
-    private int[] detIndexes;
-    private int[] ftrIndexes;
-    private int[] retIndexes;
+    private final Complexities[][] Matrix;
+    private final int[] detIndexes;
+    private final int[] ftrIndexes;
+    private final int[] retIndexes;
 
     public ComplexityMatrix(int[] detIndexes, int[] ftrIndexes, int[] retIndexes)
     {

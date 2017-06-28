@@ -8,20 +8,20 @@ import java.util.ArrayList;
 public interface IGlossaryEntry 
 {
     
-    public String getTerm();
+    String getTerm();
 
-    public String getSense();
+    String getSense();
     
-    public String getBoundary();
+    String getBoundary();
     
-    public String getLabel();
+    String getLabel();
     
-    public String getValidity();
+    String getValidity();
     
-    public String getObscurities();
+    String getObscurities();
     
-    public ArrayList<IGlossaryEntry> getReferences();
+    ArrayList<IGlossaryEntry> getReferences();
     
-    public ArrayList<String> getReferenceTerms();
+    ArrayList<String> getReferenceTerms();
     
 }

@@ -6,8 +6,8 @@ package Model_Interfaces;
 public interface IAddition 
 {
     
-    public String getDescription();
+    String getDescription();
     
-    public String getTitle();
+    String getTitle();
     
 }

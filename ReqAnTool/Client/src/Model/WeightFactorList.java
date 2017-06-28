@@ -1,6 +1,5 @@
 package Model;
 
-import Model_Interfaces.IAddition;
 import Model_Interfaces.IWeightFactor;
 
 import java.util.ArrayList;

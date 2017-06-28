@@ -6,6 +6,6 @@ package Model_Interfaces;
 public interface ITargetDefinition 
 {
 
-    public String getDescription();
+    String getDescription();
 
 }

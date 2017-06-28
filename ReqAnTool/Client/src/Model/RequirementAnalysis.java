@@ -1,7 +1,5 @@
 package Model;
 
-// TODO check Map for WeightFactors
-
 import Exceptions.*;
 import Model_Interfaces.*;
 
@@ -89,7 +87,7 @@ public class RequirementAnalysis
 
     }
 
-    private void solveGlossaryTerms(ArrayList<String> terms) throws Exception
+    private void solveGlossaryTerms(ArrayList<String> terms) throws UnknownReferenceException
     {
         for (String term : terms)
         {
@@ -101,7 +99,7 @@ public class RequirementAnalysis
 
     }
     
-    private void solveReqReferences(ArrayList<String> references) throws Exception
+    private void solveReqReferences(ArrayList<String> references) throws UnknownReferenceException
     {
         for (String ref : references)
         {
@@ -473,7 +471,7 @@ public class RequirementAnalysis
 
     }
 
-    public void addAddition(String title, String description) throws Exception
+    public void addAddition(String title, String description) throws DuplicateIDException
     {
         if (myAdditions.isIncluded(title))
         {
@@ -488,10 +486,10 @@ public class RequirementAnalysis
     }
 
     public void addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
-            throws Exception
+            throws ArgumentPatternException, DuplicateIDException, UnknownReferenceException
     {
         solveReqReferences(references);
-        if (!myValidator.isValidID(id))
+        if (myValidator.isInvalidID(id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "/LFxxx/");
         }
@@ -512,7 +510,7 @@ public class RequirementAnalysis
 
     public void addGlossaryEntry(String term, String sense, String boundary, String validity,
                                           String obscurities, String label, ArrayList<String> crossRef)
-            throws Exception
+            throws DuplicateIDException, UnknownReferenceException
     {
         if (myGlossaryEntries.isIncluded(term))
         {
@@ -530,10 +528,10 @@ public class RequirementAnalysis
     }
 
     public void addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
-            throws Exception
+            throws ArgumentPatternException, DuplicateIDException, UnknownReferenceException
     {
         solveReqReferences(references);
-        if (!myValidator.isValidID(id))
+        if (myValidator.isInvalidID(id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
         }
@@ -553,10 +551,10 @@ public class RequirementAnalysis
 
     public void addProductData(String id, String content, String attribute, String maxCount,
                               ArrayList<String> references)
-            throws Exception
+            throws UnknownReferenceException, ArgumentPatternException, DuplicateIDException
     {
         solveReqReferences(references);
-        if (!myValidator.isValidID(id))
+        if (myValidator.isInvalidID(id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
         }
@@ -574,7 +572,7 @@ public class RequirementAnalysis
 
     }
 
-    public void addQualReq(String criteria, Score value) throws Exception
+    public void addQualReq(String criteria, Score value) throws DuplicateIDException
     {
         if (myQualityRequirements.isIncluded(criteria))
         {
@@ -585,7 +583,8 @@ public class RequirementAnalysis
 
     }
 
-    public void editAddition(String oldTitle, String newTitle, String description) throws Exception
+    public void editAddition(String oldTitle, String newTitle, String description)
+            throws UnknownIDException, DuplicateIDException
     {
         if (!myAdditions.isIncluded(oldTitle))
         {
@@ -604,7 +603,7 @@ public class RequirementAnalysis
     public void editCustData(String companyName, String companyCity, String companyStreet, String zip,
                                               String companyCountry, String custName, String custMail, String custPhone,
                                               String pmName, String pmMail, String pmPhone)
-            throws Exception
+            throws ArgumentPatternException
     {
         myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
                                     custMail, custPhone, pmName, pmMail, pmPhone);
@@ -613,7 +612,7 @@ public class RequirementAnalysis
 
     public void editFReq(String oldID, String id, String title, String actor, String description,
                         ArrayList<String> references)
-            throws Exception
+            throws UnknownIDException, DuplicateIDException, ArgumentPatternException, UnknownReferenceException
     {
         if (!myFRequirements.isIncluded(oldID))
         {
@@ -625,7 +624,7 @@ public class RequirementAnalysis
             throw new DuplicateIDException(id);
         }
         solveReqReferences(references);
-        if (!myValidator.isValidID(id))
+        if (myValidator.isInvalidID(id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "");
         }
@@ -645,7 +644,7 @@ public class RequirementAnalysis
 
     public void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                      String obscurities, String label, ArrayList<String> crossRef)
-            throws Exception
+            throws UnknownIDException, DuplicateIDException, UnknownReferenceException
     {
         if (!myGlossaryEntries.isIncluded(oldTerm))
         {
@@ -669,7 +668,7 @@ public class RequirementAnalysis
 
     public void editNFReq(String oldID, String id, String title, String actor, String description,
                                 ArrayList<String> references)
-            throws Exception
+            throws UnknownIDException, DuplicateIDException, UnknownReferenceException, ArgumentPatternException
     {
         if (!myNFRequirements.isIncluded(oldID))
         {
@@ -681,7 +680,7 @@ public class RequirementAnalysis
             throw new DuplicateIDException(id);
         }
         solveReqReferences(references);
-        if (!myValidator.isValidID(id))
+        if (myValidator.isInvalidID(id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
         }
@@ -699,7 +698,7 @@ public class RequirementAnalysis
 
     }
 
-    public void editProdApp(String description) throws Exception
+    public void editProdApp(String description) throws ListOverflowException
     {
         myProductApplication.edit(description);
 
@@ -707,7 +706,7 @@ public class RequirementAnalysis
 
     public void editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                    ArrayList<String> references)
-            throws Exception
+            throws UnknownIDException, DuplicateIDException, UnknownReferenceException, ArgumentPatternException
     {
         if (!myProductData.isIncluded(oldID))
         {
@@ -719,7 +718,7 @@ public class RequirementAnalysis
             throw new DuplicateIDException(id);
         }
         solveReqReferences(references);
-        if (!myValidator.isValidID(id))
+        if (myValidator.isInvalidID(id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
         }
@@ -737,7 +736,8 @@ public class RequirementAnalysis
 
     }
 
-    public void editQualReq(String oldCriteria, String criteria, Score value) throws Exception
+    public void editQualReq(String oldCriteria, String criteria, Score value)
+            throws UnknownIDException, DuplicateIDException
     {
         if (!myQualityRequirements.isIncluded(oldCriteria))
         {
@@ -753,13 +753,14 @@ public class RequirementAnalysis
 
     }
 
-    public void editTargetDef(String description) throws Exception
+    public void editTargetDef(String description) throws ListOverflowException
     {
         myTargetDefinition.edit(description);
 
     }
 
-    public void rateWeightFactor(Map<String, Integer> myWeightFactors) throws Exception
+    public void rateWeightFactor(Map<String, Integer> myWeightFactors)
+            throws MissingCostEstimationException, ListOverflowException, NumberOutOfBoundsException
     {
         boolean success = true;
         if (getCostEstimation() != null)
@@ -770,7 +771,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remAdditionByTitle(String title) throws Exception
+    public void remAdditionByTitle(String title) throws UnknownIDException
     {
         if (!myAdditions.isIncluded(title))
         {
@@ -780,7 +781,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remCostEstimation() throws Exception
+    public void remCostEstimation() throws MissingCostEstimationException
     {
         if (myCostEstimation == null)
         {
@@ -790,7 +791,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remFReqByID(String id) throws Exception
+    public void remFReqByID(String id) throws UnknownIDException
     {
         if (!myFRequirements.isIncluded(id))
         {
@@ -804,7 +805,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remGlossEntryByTerm(String term) throws Exception
+    public void remGlossEntryByTerm(String term) throws UnknownIDException
     {
         if (!myGlossaryEntries.isIncluded(term))
         {
@@ -818,7 +819,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remNFReqByID(String id) throws Exception
+    public void remNFReqByID(String id) throws UnknownIDException
     {
         if (!myNFRequirements.isIncluded(id))
         {
@@ -832,7 +833,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remProdDataByID(String id) throws Exception
+    public void remProdDataByID(String id) throws UnknownIDException
     {
         if (myProductData.isIncluded(id))
         {
@@ -846,7 +847,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remQualReqByCrit(String criteria) throws Exception
+    public void remQualReqByCrit(String criteria) throws UnknownIDException
     {
         if (!myQualityRequirements.isIncluded(criteria))
         {
@@ -856,7 +857,7 @@ public class RequirementAnalysis
 
     }
 
-    public void setActualState(double actualState) throws Exception
+    public void setActualState(double actualState) throws NumberOutOfBoundsException
     {
         if (!(actualState > 0))
         {
@@ -866,7 +867,8 @@ public class RequirementAnalysis
 
     }
 
-    public void setDataFP(ClassOfDataFP type, String id, int det, int ret) throws Exception
+    public void setDataFP(ClassOfDataFP type, String id, int det, int ret)
+            throws UnknownIDException, MissingCostEstimationException, DuplicateIDException, NumberOutOfBoundsException
     {
         if (!isReqIncluded(id))
         {
@@ -885,7 +887,8 @@ public class RequirementAnalysis
 
     }
 
-    public void setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr) throws Exception
+    public void setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+            throws UnknownIDException, MissingCostEstimationException, DuplicateIDException, NumberOutOfBoundsException
     {
         if (!isReqIncluded(id))
         {
@@ -912,7 +915,7 @@ public class RequirementAnalysis
 
     }
 
-    public void calcManMonth() throws Exception
+    public void calcManMonth() throws MissingCostEstimationException
     {
         if (myCostEstimation == null)
         {
@@ -922,7 +925,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remTransactionFPByID(String id) throws Exception
+    public void remTransactionFPByID(String id) throws MissingCostEstimationException, UnknownIDException
     {
         if (myCostEstimation == null)
         {
@@ -937,7 +940,7 @@ public class RequirementAnalysis
 
     }
 
-    public void remDataFPByID(String id) throws Exception
+    public void remDataFPByID(String id) throws MissingCostEstimationException, UnknownIDException
     {
         if (myCostEstimation == null)
         {
@@ -952,7 +955,8 @@ public class RequirementAnalysis
 
     }
 
-    public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr) throws Exception
+    public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+            throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
         if (myCostEstimation != null)
         {
@@ -967,7 +971,8 @@ public class RequirementAnalysis
 
     }
 
-    public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret) throws Exception
+    public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+            throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
         if (myCostEstimation != null)
         {
@@ -989,13 +994,13 @@ public class RequirementAnalysis
 
     }
 
-    public void editProdEnv(String description) throws Exception
+    public void editProdEnv(String description) throws ListOverflowException
     {
         myProductEnvironment.edit(description);
 
     }
 
-    public void calcFPCount() throws Exception
+    public void calcFPCount() throws MissingCostEstimationException
     {
         if (myCostEstimation == null)
         {
@@ -1017,21 +1022,21 @@ public class RequirementAnalysis
 
     }
 
-    public void setProductApplication(IProductApplication myProductApplication) throws Exception
+    public void setProductApplication(IProductApplication myProductApplication) throws ListOverflowException
     {
         this.myProductApplication = new ProductApplication();
         this.myProductApplication.edit(myProductApplication.getDescription());
 
     }
 
-    public void setProductEnvironment(IProductEnvironment myProductEnvironment) throws Exception
+    public void setProductEnvironment(IProductEnvironment myProductEnvironment) throws ListOverflowException
     {
         this.myProductEnvironment = new ProductEnvironment();
         this.myProductEnvironment.edit(myProductEnvironment.getDescription());
 
     }
 
-    public void setTargetDefinition(ITargetDefinition myTargetDefinition) throws Exception
+    public void setTargetDefinition(ITargetDefinition myTargetDefinition) throws ListOverflowException
     {
         this.myTargetDefinition = new TargetDefinition();
         this.myTargetDefinition.edit(myTargetDefinition.getDescription());
@@ -1041,7 +1046,6 @@ public class RequirementAnalysis
     public void setCostEstimation(ICostEstimation myCostEstimation,
                                   Map<IClassOfFP, ComplexityMatrix> complexityMatrices,
                                   ComplexityWeightMatrix complexityWeightMatrix)
-            throws Exception
     {
         this.myCostEstimation = new CostEstimation(complexityWeightMatrix, complexityMatrices, getWeightFactorList());
         this.myCostEstimation.setWeightFactors((WeightFactorList<IWeightFactor>)myCostEstimation.getWeightFactors());

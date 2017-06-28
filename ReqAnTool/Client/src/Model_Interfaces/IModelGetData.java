@@ -1,54 +1,57 @@
 package Model_Interfaces;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 public interface IModelGetData
 {
+
+    void addObserver(Observer o);
+
+    IRequirementAnalysis getReqAnalysis();
+
+    IFRequirement getFReqByID(String id);
     
-    public IRequirementAnalysis getReqAnalysis();
+    INFRequirement getNFReqByID(String id);
 
-    public IFRequirement getFReqByID(String id);
+    IProductData getProductDataByID(String id);
+
+    ICustomerData getCustomerData();
+
+    IProductApplication getProdApp();
+
+    IProductEnvironment getProdEnv();
+
+    IGlossaryEntry getGlossaryEntryByTerm(String term);
+
+    ICostEstimation getCostEstimation();
+
+    IAddition getAdditionByTitle(String title);
+
+    IQualityRequirement getQualReqByCriteria(String criteria);
+
+    ITargetDefinition getTargetDef();
+
+    IWeightFactor getOptWeightFactorByTitle(String title);
+
+    IWeightFactor getWeightFactorByTitle(String title);
+
+    ArrayList<IFRequirement> getAllFReq();
+
+    ArrayList<INFRequirement> getAllNFReq();
+
+    ArrayList<IProductData> getAllProdData();
+
+    ArrayList<IGlossaryEntry> getAllGlossEntries();
+
+    ArrayList<IQualityRequirement> getAllQualReq();
+
+    ArrayList<IAddition> getAllAddition();
+
+    ArrayList<IWeightFactor> getAllWeightFactor();
     
-    public INFRequirement getNFReqByID(String id);
-
-    public IProductData getProductDataByID(String id);
-
-    public ICustomerData getCustomerData();
-
-    public IProductApplication getProdApp();
-
-    public IProductEnvironment getProdEnv();
-
-    public IGlossaryEntry getGlossaryEntryByTerm(String term);
-
-    public ICostEstimation getCostEstimation();
-
-    public IAddition getAdditionByTitle(String title);
-
-    public IQualityRequirement getQualReqByCriteria(String criteria);
-
-    public ITargetDefinition getTargetDef();
-
-    public IWeightFactor getOptWeightFactorByTitle(String title);
-
-    public IWeightFactor getWeightFactorByTitle(String title);
-
-    public ArrayList<IFRequirement> getAllFReq();
-
-    public ArrayList<INFRequirement> getAllNFReq();
-
-    public ArrayList<IProductData> getAllProdData();
-
-    public ArrayList<IGlossaryEntry> getAllGlossEntries();
-
-    public ArrayList<IQualityRequirement> getAllQualReq();
-
-    public ArrayList<IAddition> getAllAddition();
-
-    public ArrayList<IWeightFactor> getAllWeightFactor();
+    ArrayList<IWeightFactor> getAllOptWeightFactor();
     
-    public ArrayList<IWeightFactor> getAllOptWeightFactor();
-    
-    public ArrayList<String> getAllReqIDs();
+    ArrayList<String> getAllReqIDs();
     
 }

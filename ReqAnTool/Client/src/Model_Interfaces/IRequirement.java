@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public interface IRequirement
 {
     
-    public String getID();
+    String getID();
     
-    public ArrayList<IRequirement> getReferences();
+    ArrayList<IRequirement> getReferences();
 
-    public ArrayList<String> getReferenceIDs();
+    ArrayList<String> getReferenceIDs();
 
 }
