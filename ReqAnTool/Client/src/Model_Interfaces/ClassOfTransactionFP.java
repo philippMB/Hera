@@ -1,6 +1,11 @@
 package Model_Interfaces;
 
-public enum ClassOfTransactionFP implements IClassOfFP
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType
+@XmlEnum
+public enum ClassOfTransactionFP
 {
     EI_INPUT,
     EO_OUTPUT,
