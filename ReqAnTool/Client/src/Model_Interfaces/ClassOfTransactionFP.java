@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  * @see ITransactionFP
  */
 public enum ClassOfTransactionFP
+    implements IClassOfFP
 {
     EI_INPUT,
     EO_OUTPUT,
