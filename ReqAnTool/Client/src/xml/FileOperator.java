@@ -10,7 +10,7 @@ import java.io.*;
  * requirement analysis to the filesystem.<br>
  * The {@link FileOperator#readFromFile(String, Class)} method is called from the {@link XMLImporter} to read a XML file
  * containing a requirement analysis. <br>
- * The <k>FileOperator</k> uses {@link JAXB} to perform the conversion from the requirement analysis to the XML file and
+ * The <i>FileOperator</i> uses {@link JAXB} to perform the conversion from the requirement analysis to the XML file and
  * back.
  *
  * @author 3852430

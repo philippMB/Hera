@@ -13,7 +13,7 @@ import java.util.Date;
  * @see <a href="www.omg.org/spec/ReqIF/">www.omg.org/spec/ReqIF/</a>
  */
 public class RequirementsInterchangeFormat
-  implements IXMLFormat
+        implements IXMLFormat
 {
     @Override
     public void createFragments(IRequirementAnalysis rawData)
@@ -22,111 +22,116 @@ public class RequirementsInterchangeFormat
 
     @Override
     public double getActualState() {
-    return 0;
-  }
+        return 0;
+    }
 
     @Override
     public Date getCreateDate() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public String getCustomerDescription() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ArrayList<IAddition> getAdditions() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ICostEstimation getCostEstimation() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ArrayList<IFRequirement> getFRequirements() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ArrayList<INFRequirement> getNFRequirements() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ArrayList<IGlossaryEntry> getGlossaryEntries() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ArrayList<IProductData> getProductData() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ArrayList<IQualityRequirement> getQualityRequirements() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ArrayList<IWeightFactor> getWeightFactors() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public String getTitle() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ITargetDefinition getTargetDefinition() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public IProductApplication getProductApplication() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public ICustomerData getCustomerData() {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public IGlossaryEntry getGlossaryEntriesByTerm(String term) {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public IQualityRequirement getQualityRequirementsByCriteria(String criteria) {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public IAddition getAdditionByTitle(String title) {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public IWeightFactor getWeightFactorByTitle(String title) {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public IFRequirement getFRequirementByID(String id) {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public INFRequirement getNFRequirementByID(String id) {
-    return null;
-  }
+        return null;
+    }
 
     @Override
     public IProductData getProductDataByID(String id) {
-    return null;
-  }
+        return null;
+    }
+
+    @Override
+    public IProductEnvironment getProductEnvironment() {
+        return null;
+    }
 }

@@ -1,55 +1,65 @@
 package Model_Interfaces;
 
-import java.util.ArrayList;
+import Exceptions.*;
+
+import java.io.FileNotFoundException;
+import java.util.Map;
 
 public interface IApplications
 {
-   public boolean existsID(String id);
 
-    public ErrorCodes saveReqAn(String path);
+    boolean existsID(String id);
 
-    public ErrorCodes deleteReqAn();
-    
-    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone);
+    void saveReqAn(String path) throws MissingReqAnException;
 
-    public boolean isReqAnUnsaved();
+    void exportToXML(String path, XMLFormatType type) throws MissingReqAnException, FileNotFoundException;
 
-    public boolean isReferenceOnID(String id);
+    void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, NumberOutOfBoundsException;
 
-    public boolean isIDUnique(String id);
+    void deleteReqAn() throws MissingReqAnException;
 
-    public boolean existsActualState();
+    boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
+                         String city, String companyStreet, String country, String zip, String cName,
+                         String cMail, String cPhone);
 
-    public boolean existsFPCount();
+    boolean isReqAnUnsaved();
 
-    public boolean existsManMonthCount();
+    boolean isFirstUseOfOpenedReqAn() throws MissingReqAnException;
 
-    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret);
+    boolean isReferenceOnID(String id);
 
-    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr);
+    boolean isIDUnique(String id);
 
-    public ErrorCodes rateWeightFactor(ArrayList<Integer> values);
+    boolean existsActualState();
 
-    public boolean calcManMonth();
+    boolean existsFPCount();
 
-    public ErrorCodes setActualState(double actStat);
+    boolean existsManMonthCount();
 
-    public boolean calcOptWeightFactor();
+    void setDataFP(ClassOfDataFP type, String id, int det, int ret) throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException, MissingCostEstimationException;
 
-    public boolean existsOptWeightFactor();
+    void setTransactionFP(ClassOfTransactionFP type, String ref, int det, int ftr) throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException, MissingCostEstimationException;
 
-    public boolean checkIDFormat(String id);
+    void editDataFPByID(ClassOfDataFP type, String id, int det, int ret) throws Exception;
 
-    public boolean checkMailFormat(String mail);
+    void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr) throws MissingReqAnException, UnknownIDException, MissingCostEstimationException, NumberOutOfBoundsException;
 
-    public boolean checkPhoneFormat(String phone);
+    void remTransactionFPByID(String id) throws MissingReqAnException, MissingCostEstimationException, UnknownIDException;
 
-    public boolean checkAddressFormat(String addr);
+    void remDataFPByID(String id) throws MissingReqAnException, MissingCostEstimationException, UnknownIDException;
 
-    public boolean checkCountry(String country);
+    void rateWeightFactor(Map<String, Integer> mapOfWeightFactors) throws MissingReqAnException, NumberOutOfBoundsException, MissingCostEstimationException, ListOverflowException;
 
-    public boolean checkZIP(int zip);
+    void calcFPCount() throws MissingReqAnException, MissingCostEstimationException;
 
-    public boolean checkDET_FTR_RET(int value);
+    void calcManMonth() throws MissingReqAnException, MissingCostEstimationException;
+
+    void setActualState(double actStat) throws MissingReqAnException, NumberOutOfBoundsException;
+
+    boolean existsOptWeightFactor();
+
+    void adjustWeightFactor() throws MissingReqAnException, MissingCostEstimationException, MissingFPException, NumberOutOfBoundsException;
+
+    void openReqAnFile(String path);
 
 }

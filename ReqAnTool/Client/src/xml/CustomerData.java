@@ -2,6 +2,8 @@ package xml;
 
 import Model_Interfaces.ICustomerData;
 
+
+
 /**
  * Class to hold the CustomerData of the requirement analysis.
  * This class provides JAXB support and can be accessed via the {@link ICustomerData} Interface.
@@ -25,7 +27,7 @@ public class CustomerData
   private String cEMail;
   private String companyName;
   private String companyStreet;
-  private int companyPLZ;
+  private String companyPLZ;
   private String companyCity;
   private String companyCountry;
 
@@ -44,6 +46,7 @@ public class CustomerData
     cNumber = origin.getCNumber();
     cEMail = origin.getCEMail();
     companyName = origin.getCompanyName();
+    companyStreet = origin.getCompanyStreet();
     companyPLZ = origin.getCompanyPLZ();
     companyCity = origin.getCompanyCity();
     companyCountry = origin.getCompanyCountry();
@@ -57,10 +60,13 @@ public class CustomerData
     {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getPMName()
-  {
-    return pMName;
-  }
+    {
+        return pMName;
+    }
 
     public String getPMPNumber()
   {
@@ -97,7 +103,7 @@ public class CustomerData
     return companyStreet;
   }
 
-    public int getCompanyPLZ()
+    public String getCompanyPLZ()
   {
     return companyPLZ;
   }
@@ -152,7 +158,7 @@ public class CustomerData
     this.companyStreet = CompanyStreet;
   }
 
-    public void setCompanyPLZ(int CompanyPLZ)
+    public void setCompanyPLZ(String CompanyPLZ)
   {
     this.companyPLZ = CompanyPLZ;
   }

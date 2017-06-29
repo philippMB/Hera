@@ -4,15 +4,48 @@ package Model_Interfaces;
 /**
  * Created by phlippe on 26.04.17.
  */
+
+/**
+ * Represents a DataFunctionPoint of the requirement analysis.
+ * Every requirement analysis can have multiple DataFunctionPoints, everyone consisting of a DET, RET, type and
+ * associated requirement.
+ * For more detailed information please refer to the ReqAn specification.
+ *
+ * @author
+ * @version 1.0
+ *
+ * @see IRequirementAnalysis
+ * @see IRequirement
+ */
 public interface IDataFP 
 {
 
-    public int getDET();
-    
-    public int getRET();
-    
+    /**
+     * Get the DET of the DataFunctionPoint.
+     * @return An Integer containing the DET.
+     */
+    public int getDet();
+
+    /**
+     * Get the RET of the DataFunctionPoint.
+     * @return An Integer containign the RET.
+     */
+    public int getRet();
+
+    /**
+     * Get the associated Requirement of the DataFunctionPoint.
+     * @return A Requirement object.
+     *
+     * @see IRequirement
+     */
     public IRequirement getRequirement();
-    
+
+    /**
+     * Get the type of the DataFunctionPoint.
+     * @return The type as ClassOfDataFP.
+     *
+     * @see ClassOfDataFP
+     */
     public ClassOfDataFP getType();
 
 }

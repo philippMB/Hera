@@ -23,93 +23,93 @@ import javax.xml.bind.annotation.XmlElement;
  * @see CustomXMLFormat
  */
 public class TransactionFP
-  implements ITransactionFP
+        implements ITransactionFP
 {
-  private int det;
-  private int ftr;
-  private ArrayList<String> referenceIDs;
-  @XmlElement(name="Transaction_Function_Point")
-  private ClassOfTransactionFP type;
-  private String reqID;
+    private int det;
+    private int ftr;
+    private ArrayList<String> referenceIDs;
+    @XmlElement(name="Transaction_Function_Point")
+    private ClassOfTransactionFP type;
+    private String reqID;
 
-  /**
-   * The constructor for the TransactionFP class.
-   * The data from the original TransactionFP instance is copied into this JAXB conform class.
-   * @param origin The TransactionFP instance from the original {@link Model_Interfaces.IRequirementAnalysis} which holds
-   *               all the data that has to be stored in the XML file.
-   */
-  public TransactionFP(ITransactionFP origin)
-  {
-    det = origin.getDet();
-    ftr = origin.getFtr();
-    referenceIDs = origin.getRequirement().getReferenceIDs();
-    referenceIDs = null;
-    type = origin.getType();
-    reqID = origin.getRequirement().getID();
-    reqID = null;
-  }
+    /**
+     * The constructor for the TransactionFP class.
+     * The data from the original TransactionFP instance is copied into this JAXB conform class.
+     * @param origin The TransactionFP instance from the original {@link Model_Interfaces.IRequirementAnalysis} which holds
+     *               all the data that has to be stored in the XML file.
+     */
+    public TransactionFP(ITransactionFP origin)
+    {
+        det = origin.getDet();
+        ftr = origin.getFtr();
+        referenceIDs = origin.getRequirement().getReferenceIDs();
+        referenceIDs = null;
+        type = origin.getType();
+        reqID = origin.getRequirement().getID();
+        reqID = null;
+    }
 
-  /**
-   * The default constructor for the WeightFactor class.
-   * Must be provided to be JAXB conform.
-   */
-  public TransactionFP()
-  {
-  }
+    /**
+     * The default constructor for the WeightFactor class.
+     * Must be provided to be JAXB conform.
+     */
+    public TransactionFP()
+    {
+    }
 
-  public int getDet()
-  {
-    return det;
-  }
+    public int getDet()
+    {
+        return det;
+    }
 
-  public int getFtr()
-  {
-    return ftr;
-  }
+    public int getFtr()
+    {
+        return ftr;
+    }
 
-  public ArrayList<String> getReferenceIDs() {
-    return referenceIDs;
-  }
+    public ArrayList<String> getReferenceIDs() {
+        return referenceIDs;
+    }
 
-  public ClassOfTransactionFP getType()
-  {
-    return type;
-  }
+    public ClassOfTransactionFP getType()
+    {
+        return type;
+    }
 
-  public String getReqID() {
-    return reqID;
-  }
+    public String getReqID() {
+        return reqID;
+    }
 
-  public void setDet(int det)
-  {
-    this.det = det;
-  }
+    public void setDet(int det)
+    {
+        this.det = det;
+    }
 
-  public void setFtr(int ftr)
-  {
-    this.ftr = ftr;
-  }
+    public void setFtr(int ftr)
+    {
+        this.ftr = ftr;
+    }
 
-  public void setReferenceIDs(ArrayList<String> referenceIDs) {
-    this.referenceIDs = referenceIDs;
-  }
+    public void setReferenceIDs(ArrayList<String> referenceIDs) {
+        this.referenceIDs = referenceIDs;
+    }
 
-  public void setType(ClassOfTransactionFP type)
-  {
-    this.type = type;
-  }
+    public void setType(ClassOfTransactionFP type)
+    {
+        this.type = type;
+    }
 
-  public void setReqID(String reqID) {
-    this.reqID = reqID;
-  }
+    public void setReqID(String reqID) {
+        this.reqID = reqID;
+    }
 
-  /**
-   * This method from the {@link ITransactionFP} interface is not implemented, because only the data should be available,
-   * no functionality should be provided.
-   * @return Always returns null.
-   */
-  @Override
-  public IRequirement getRequirement() {
-    return null;
-  }
+    /**
+     * This method from the {@link ITransactionFP} interface is not implemented, because only the data should be available,
+     * no functionality should be provided.
+     * @return Always returns null.
+     */
+    @Override
+    public IRequirement getRequirement() {
+        return null;
+    }
 }
