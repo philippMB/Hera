@@ -1,7 +1,5 @@
 package Model_Interfaces;
 
-import java.util.ArrayList;
-
 public interface IRequirementList<T>
 {
     
@@ -10,9 +8,5 @@ public interface IRequirementList<T>
     public boolean isIncluded(String id);
     
     public T getReqByID(String id);
-    
-    public ArrayList<T> toArrayList();
-    
-    public boolean remove(T myReq);
     
 }
