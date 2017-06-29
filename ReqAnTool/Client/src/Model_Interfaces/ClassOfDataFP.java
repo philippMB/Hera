@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType
 @XmlEnum
-public enum ClassOfDataFP
+public enum ClassOfDataFP implements IClassOfFP
 {
     ILF_INTERNAL_LOGICAL_FILE,
     EIF_EXTERNAL_INPUT_FILE

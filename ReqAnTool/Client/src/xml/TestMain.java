@@ -40,7 +40,7 @@ public class TestMain
     cd.setCompanyCity("jasl");
     cd.setCompanyCountry("kadfh");
     cd.setCompanyName("akdjhf");
-    cd.setCompanyPLZ(1243);
+    cd.setCompanyPLZ("1243");
     cd.setCompanyStreet("adföhjsdf");
     FRequirement fr0 = new FRequirement();
     fr0.setActor("akdöufh");

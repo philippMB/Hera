@@ -18,16 +18,10 @@ public class CustomerData
     private final Validator myValidator;
 
     CustomerData(String pmName, String pmMail, String pmPhone, String companyName, String city, String companyStreet,
-                 String country, String zip, String cName, String cMail, String cPhone)
+                 String country, String zip, String cName, String cMail, String cPhone) throws ArgumentPatternException
     {
-        this.projectManager = new PersonalData(pmName, pmMail, pmPhone);
-        this.companyName = companyName;
-        this.city = city;
-        this.companyStreet = companyStreet;
-        this.country = country;
-        this.zip = zip;
-        this.customer = new PersonalData(cName, cMail, cPhone);
         this.myValidator = new Validator();
+        edit(companyName, city, companyStreet, zip, country,  cName, cMail, cPhone, pmName, pmMail, pmPhone);
     }
 
     public void edit(String companyName, String companyCity, String companyStreet, String zip,

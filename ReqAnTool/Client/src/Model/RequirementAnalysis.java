@@ -47,6 +47,7 @@ public class RequirementAnalysis
 
     RequirementAnalysis(String title, String pmName, String pmMail, String pmPhone, String companyName, String city,
                         String companyStreet, String country, String zip, String cName, String cMail, String cPhone)
+            throws ArgumentPatternException
     {
         this.title = title;
         this.customerDescription = null;

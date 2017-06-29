@@ -129,4 +129,8 @@ public class RequirementsInterchangeFormat
     public IProductData getProductDataByID(String id) {
     return null;
   }
+
+    @Override
+    public IProductEnvironment getProductEnviroment() { return null; }
+
 }

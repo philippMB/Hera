@@ -743,6 +743,13 @@ public class CustomXMLFormat
     return null;
   }
 
+  @Override
+  public IProductEnvironment getProductEnviroment()
+  {
+    // TODO
+    return null;
+  }
+
   /**
    * Set the TargetDefinition of the CustomXMLFormat.
    * Required by JAXB.

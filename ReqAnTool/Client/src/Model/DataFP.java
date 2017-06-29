@@ -25,13 +25,13 @@ public class DataFP
     }
 
     @Override
-    public int getDET()
+    public int getDet()
     {
         return det;
     }
 
     @Override
-    public int getRET()
+    public int getRet()
     {
         return ret;
     }

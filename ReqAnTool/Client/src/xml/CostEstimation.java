@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.*;
 import javax.xml.bind.annotation.*;
 
+// TODO Matrizen in XML??
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CostEstimation
   implements  ICostEstimation

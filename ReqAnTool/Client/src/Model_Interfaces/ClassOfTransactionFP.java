@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType
 @XmlEnum
-public enum ClassOfTransactionFP
+public enum ClassOfTransactionFP implements IClassOfFP
 {
     EI_INPUT,
     EO_OUTPUT,

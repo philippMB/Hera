@@ -7,9 +7,9 @@ package Model_Interfaces;
 public interface ITransactionFP 
 {
     
-    int getDET();
+    int getDet();
     
-    int getFTR();
+    int getFtr();
     
     ClassOfTransactionFP getType();
     

@@ -25,7 +25,7 @@ public class CustomerData
   private String cEMail;
   private String companyName;
   private String companyStreet;
-  private int companyPLZ;
+  private String companyPLZ;
   private String companyCity;
   private String companyCountry;
 
@@ -97,7 +97,7 @@ public class CustomerData
     return companyStreet;
   }
 
-    public int getCompanyPLZ()
+    public String getCompanyPLZ()
   {
     return companyPLZ;
   }
@@ -152,7 +152,7 @@ public class CustomerData
     this.companyStreet = CompanyStreet;
   }
 
-    public void setCompanyPLZ(int CompanyPLZ)
+    public void setCompanyPLZ(String CompanyPLZ)
   {
     this.companyPLZ = CompanyPLZ;
   }
