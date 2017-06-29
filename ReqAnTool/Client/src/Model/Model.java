@@ -532,12 +532,12 @@ public class Model extends Observable
     }
 
     @Override
-    public boolean isFirstUseOfOpenedReqAn() throws MissingReqAnException
+    public boolean isFirstUseOfOpenedReqAn()
     {
         boolean firstUse = false;
         if (myReqAn == null)
         {
-            throw new MissingReqAnException();
+            firstUse = false;
         }
         if (this.path == "")
         {
