@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fdaba69f-c0bb-414b-b164-c26480e00f68" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -759,7 +757,14 @@
       <option name="project" value="LOCAL" />
       <updated>1498761665556</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="minor fixes">
+      <created>1498771317349</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1498771317349</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -810,7 +815,8 @@
     <MESSAGE value="Merge XML with Model" />
     <MESSAGE value="Exception for saving merged into DataAccessException" />
     <MESSAGE value="minor fixes + method for saving with out path" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor fixes + method for saving with out path" />
+    <MESSAGE value="minor fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
