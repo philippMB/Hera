@@ -744,7 +744,7 @@ public class CustomXMLFormat
   }
 
   @Override
-  public IProductEnvironment getProductEnviroment()
+  public IProductEnvironment getProductEnvironment()
   {
     // TODO
     return null;

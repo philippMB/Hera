@@ -989,7 +989,7 @@ public class RequirementAnalysis
     }
 
     @Override
-    public IProductEnvironment getProductEnviroment()
+    public IProductEnvironment getProductEnvironment()
     {
         return myProductEnvironment;
 

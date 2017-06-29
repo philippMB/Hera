@@ -131,6 +131,6 @@ public class RequirementsInterchangeFormat
   }
 
     @Override
-    public IProductEnvironment getProductEnviroment() { return null; }
+    public IProductEnvironment getProductEnvironment() { return null; }
 
 }

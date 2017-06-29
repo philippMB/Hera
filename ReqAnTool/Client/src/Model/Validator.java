@@ -12,7 +12,7 @@ class Validator
 
     public boolean isValidEmail(String mail)
     {
-        return Pattern.matches("[0-9a-zA-Z_.~-]+@[0-9a-zA-Z_.~-]\\.[a-zA-Z]" , mail);
+        return Pattern.matches("([0-9a-zA-Z_.~-]+@[0-9a-zA-Z_.~-]\\.[a-zA-Z])|" , mail);
 
     }
 
@@ -41,7 +41,7 @@ class Validator
 
     public boolean isValidZIP(String zip)
     {
-        return Pattern.matches("(0[1-9][0-9][0-9][0-9])|([1-9][0-9][0-9][0-9])", zip);
+        return Pattern.matches("([0-9][0-9][0-9][0-9][0-9])|([1-9][0-9][0-9][0-9])|", zip);
         // only validate European ZIPs
 
     }

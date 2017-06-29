@@ -53,6 +53,6 @@ public interface IRequirementAnalysis
     
     IProductData getProductDataByID(String id);
 
-    IProductEnvironment getProductEnviroment();
+    IProductEnvironment getProductEnvironment();
 
 }

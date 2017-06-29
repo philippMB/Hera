@@ -3,22 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="fdaba69f-c0bb-414b-b164-c26480e00f68" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Exceptions/DataAccessException.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Exceptions/DataAccessException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/CustomerData.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/CustomerData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/DataFP.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/DataFP.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/TransactionFP.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/TransactionFP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfDataFP.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfDataFP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfTransactionFP.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfTransactionFP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IDataFP.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IDataFP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ITransactionFP.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ITransactionFP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IXMLManager.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IXMLManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/XMLFormatType.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/XMLFormatType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Validator.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Validator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IRequirementAnalysis.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IRequirementAnalysis.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CustomXMLFormat.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CustomXMLFormat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CustomerData.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CustomerData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/RequirementsInterchangeFormat.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/RequirementsInterchangeFormat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/TestMain.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/TestMain.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,16 +22,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TransactionFP.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/TransactionFP.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="42" column="17" lean-forward="false" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="IXMLManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IXMLManager.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -63,11 +44,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CostEstimation.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CostEstimation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+            <state relative-caret-position="228">
+              <caret line="23" column="39" lean-forward="true" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IApplications.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="15" column="21" lean-forward="false" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassOfDataFP.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfDataFP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="7" column="47" lean-forward="false" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassOfTransactionFP.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfTransactionFP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -113,26 +124,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RequirementAnalysis.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39">
-              <caret line="47" column="14" lean-forward="false" selection-start-line="47" selection-start-column="14" selection-end-line="47" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CustomerData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/CustomerData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="19" column="14" lean-forward="false" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -148,6 +139,7 @@
       <find>setCu</find>
       <find>make</find>
       <find>ope</find>
+      <find>notifyA</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -204,6 +196,8 @@
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/CustomerData.java" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Exceptions/DataAccessException.java" />
+        <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Validator.java" />
+        <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" />
       </list>
     </option>
@@ -258,10 +252,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -274,6 +264,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Model_Interfaces" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -682,7 +676,14 @@
       <option name="project" value="LOCAL" />
       <updated>1498688230675</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Exception for saving merged into DataAccessException">
+      <created>1498760356324</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1498760356324</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -731,7 +732,8 @@
     <MESSAGE value="Marshalling and Unmarschalling working" />
     <MESSAGE value="Umbau der Struktur" />
     <MESSAGE value="Merge XML with Model" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge XML with Model" />
+    <MESSAGE value="Exception for saving merged into DataAccessException" />
+    <option name="LAST_COMMIT_MESSAGE" value="Exception for saving merged into DataAccessException" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -740,22 +742,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/QualityRequirement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="20" column="26" lean-forward="false" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/Supplement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/TargetDefinition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -953,22 +939,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfTransactionFP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="54" lean-forward="false" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfDataFP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="47" lean-forward="false" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/RequirementsInterchangeFormat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1496">
@@ -1115,14 +1085,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="988" column="12" lean-forward="false" selection-start-line="988" selection-start-column="12" selection-end-line="988" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/XMLMarschallingException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -1131,10 +1093,124 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Validator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        <state relative-caret-position="228">
+          <caret line="23" column="39" lean-forward="true" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="691" column="24" lean-forward="false" selection-start-line="691" selection-start-column="24" selection-end-line="691" selection-end-column="24" />
+          <folding>
+            <element signature="method#Model#0;class#Model#0" expanded="false" />
+            <element signature="method#addAddition#0;class#Model#0" expanded="false" />
+            <element signature="method#addCostEstimation#0;class#Model#0" expanded="false" />
+            <element signature="method#addFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#addGlossEntry#0;class#Model#0" expanded="false" />
+            <element signature="method#addNFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#addProdData#0;class#Model#0" expanded="false" />
+            <element signature="method#addQualReq#0;class#Model#0" expanded="false" />
+            <element signature="method#calcManMonth#0;class#Model#0" expanded="false" />
+            <element signature="method#isReferenceOnID#0;class#Model#0" expanded="false" />
+            <element signature="method#deleteReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#editAddition#0;class#Model#0" expanded="false" />
+            <element signature="method#editCustData#0;class#Model#0" expanded="false" />
+            <element signature="method#editFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#editGlossEntry#0;class#Model#0" expanded="false" />
+            <element signature="method#editNFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#editProdApp#0;class#Model#0" expanded="false" />
+            <element signature="method#editProdEnv#0;class#Model#0" expanded="false" />
+            <element signature="method#editProdData#0;class#Model#0" expanded="false" />
+            <element signature="method#editQualReq#0;class#Model#0" expanded="false" />
+            <element signature="method#editTargetDef#0;class#Model#0" expanded="false" />
+            <element signature="method#existsActualState#0;class#Model#0" expanded="false" />
+            <element signature="method#existsFPCount#0;class#Model#0" expanded="false" />
+            <element signature="method#existsID#0;class#Model#0" expanded="false" />
+            <element signature="method#existsManMonthCount#0;class#Model#0" expanded="false" />
+            <element signature="method#existsOptWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#openReqAnFile#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllAddition#0;class#Model#0" expanded="false" />
+            <element signature="method#getCostEstimation#0;class#Model#0" expanded="false" />
+            <element signature="method#getCustomerData#0;class#Model#0" expanded="false" />
+            <element signature="method#getGlossaryEntryByTerm#0;class#Model#0" expanded="false" />
+            <element signature="method#getProdApp#0;class#Model#0" expanded="false" />
+            <element signature="method#getProdEnv#0;class#Model#0" expanded="false" />
+            <element signature="method#getQualReqByCriteria#0;class#Model#0" expanded="false" />
+            <element signature="method#getTargetDef#0;class#Model#0" expanded="false" />
+            <element signature="method#isIDUnique#0;class#Model#0" expanded="false" />
+            <element signature="method#isFirstUseOfOpenedReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#rateWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#calcFPCount#0;class#Model#0" expanded="false" />
+            <element signature="method#remAdditionByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#remCostEstimation#0;class#Model#0" expanded="false" />
+            <element signature="method#remFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remGlossEntryByTerm#0;class#Model#0" expanded="false" />
+            <element signature="method#remNFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remProdDataByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remQualReqByCrit#0;class#Model#0" expanded="false" />
+            <element signature="method#saveReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#exportToXML#0;class#Model#0" expanded="false" />
+            <element signature="method#importFromXML#0;class#Model#0" expanded="false" />
+            <element signature="method#copyReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#setActualState#0;class#Model#0" expanded="false" />
+            <element signature="method#setDataFP#0;class#Model#0" expanded="false" />
+            <element signature="method#setTransactionFP#0;class#Model#0" expanded="false" />
+            <element signature="method#editDataFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#editTransactionFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remDataFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remTransactionFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#getAdditionByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllGlossEntries#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllNFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllProdData#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllQualReq#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#getWeightFactorByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllOptWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#getOptWeightFactorByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#getFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#getNFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#getProductDataByID#0;class#Model#0" expanded="false" />
+            <element signature="method#makeNewReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllReqIDs#0;class#Model#0" expanded="false" />
+            <element signature="method#getReqAnalysis#0;class#Model#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="15" column="21" lean-forward="false" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfDataFP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="47" lean-forward="false" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfTransactionFP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -33,7 +33,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void addAddition(String title, String description)
+    public synchronized void addAddition(String title, String description)
             throws MissingReqAnException, ListOverflowException, DuplicateIDException
     {
         if (myReqAn == null)
@@ -49,7 +49,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void addCostEstimation() throws MissingReqAnException
+    public synchronized void addCostEstimation() throws MissingReqAnException
     {
         if (myReqAn == null)
         {
@@ -64,7 +64,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void addFReq(String id, String title, String actor, String description, ArrayList<String> references)
+    public synchronized void addFReq(String id, String title, String actor, String description, ArrayList<String> references)
             throws MissingReqAnException, ListOverflowException, ArgumentPatternException, UnknownReferenceException,
                     DuplicateIDException
     {
@@ -82,7 +82,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
+    public synchronized void addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
                                  String label, ArrayList<String> crossRef)
             throws MissingReqAnException, ListOverflowException, DuplicateIDException, UnknownReferenceException
     {
@@ -100,7 +100,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void addNFReq(String id, String title, String actor, String description, ArrayList<String> references)
+    public synchronized void addNFReq(String id, String title, String actor, String description, ArrayList<String> references)
             throws MissingReqAnException, ListOverflowException, DuplicateIDException, UnknownReferenceException,
                     ArgumentPatternException
     {
@@ -118,7 +118,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void addProdData(String id, String content, String attribute, String maxCount,
+    public synchronized void addProdData(String id, String content, String attribute, String maxCount,
                                   ArrayList<String> references)
             throws MissingReqAnException, ListOverflowException, ArgumentPatternException, UnknownReferenceException,
                     DuplicateIDException
@@ -137,7 +137,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void addQualReq(String criteria, Score value)
+    public synchronized void addQualReq(String criteria, Score value)
             throws MissingReqAnException, ListOverflowException, DuplicateIDException
     {
         if (myReqAn == null)
@@ -154,7 +154,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void calcManMonth() throws MissingReqAnException, MissingCostEstimationException
+    public synchronized void calcManMonth() throws MissingReqAnException, MissingCostEstimationException
     {
         if (myReqAn == null)
         {
@@ -176,7 +176,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void deleteReqAn() throws MissingReqAnException
+    public synchronized void deleteReqAn() throws MissingReqAnException
     {
         if (myReqAn == null)
         {
@@ -188,7 +188,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editAddition(String oldTitle, String newTitle, String description)
+    public synchronized void editAddition(String oldTitle, String newTitle, String description)
             throws MissingReqAnException, DuplicateIDException, UnknownIDException
     {
         if (myReqAn == null)
@@ -201,7 +201,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editCustData(String companyName, String companyCity, String companyStreet, String zip,
+    public synchronized void editCustData(String companyName, String companyCity, String companyStreet, String zip,
                                 String companyCountry, String custName, String custMail, String custPhone,
                                 String pmName, String pmMail, String pmPhone)
             throws MissingReqAnException, ArgumentPatternException
@@ -217,7 +217,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editFReq(String oldID, String id, String title, String actor, String description,
+    public synchronized void editFReq(String oldID, String id, String title, String actor, String description,
                             ArrayList<String> references)
             throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException,
                     DuplicateIDException
@@ -232,7 +232,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+    public synchronized void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                   String obscurities, String label, ArrayList<String> crossRef)
             throws MissingReqAnException, UnknownIDException, DuplicateIDException, UnknownReferenceException
     {
@@ -246,7 +246,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editNFReq(String oldID, String id, String title, String actor, String description,
+    public synchronized void editNFReq(String oldID, String id, String title, String actor, String description,
                              ArrayList<String> references)
             throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException,
                     DuplicateIDException
@@ -261,7 +261,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editProdApp(String description) throws MissingReqAnException, ListOverflowException
+    public synchronized void editProdApp(String description) throws MissingReqAnException, ListOverflowException
     {
         if (myReqAn == null)
         {
@@ -273,7 +273,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editProdEnv(String description) throws MissingReqAnException, ListOverflowException
+    public synchronized void editProdEnv(String description) throws MissingReqAnException, ListOverflowException
     {
         if (myReqAn == null)
         {
@@ -285,7 +285,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editProdData(String oldID, String id, String content, String attribute, String maxCount,
+    public synchronized void editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                 ArrayList<String> references)
             throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException,
                     DuplicateIDException
@@ -300,7 +300,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editQualReq(String oldCriteria, String criteria, Score value)
+    public synchronized void editQualReq(String oldCriteria, String criteria, Score value)
             throws MissingReqAnException, DuplicateIDException, UnknownIDException
     {
         if (myReqAn == null)
@@ -313,7 +313,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editTargetDef(String description) throws MissingReqAnException, ListOverflowException
+    public synchronized void editTargetDef(String description) throws MissingReqAnException, ListOverflowException
     {
         if (myReqAn == null)
         {
@@ -385,7 +385,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void adjustWeightFactor() throws MissingReqAnException, MissingCostEstimationException,
+    public synchronized void adjustWeightFactor() throws MissingReqAnException, MissingCostEstimationException,
                                             MissingFPException, NumberOutOfBoundsException
     {
         if (myReqAn == null)
@@ -403,24 +403,18 @@ public class Model extends Observable
     }
 
     @Override
-    public void openReqAnFile(String path)
+    public void openReqAnFile(String path) throws DataAccessException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
-        if (unsaved)
+        try
         {
-            if (!path.equals(""))
-            {
-                try
-                {
-                    saveReqAn(path);
-                }
-                catch (Exception e)
-                {
-                    // Do nothing, if an error occours, then there is no ReqAn to save
-                }
-            }
+            myReqAn = copyReqAn(myXMLManager.importAnalysis(path, XMLFormatType.CUSTOM_XML_FORMAT));
         }
-        myReqAn = copyReqAn(myXMLManager.importAnalysis(path, XMLFormatType.CUSTOM_XML_FORMAT));
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
+
     }
 
     @Override
@@ -489,7 +483,7 @@ public class Model extends Observable
         IProductEnvironment myProdEnv = null;
         if (myReqAn != null)
         {
-            myProdEnv = myReqAn.getProductEnviroment();
+            myProdEnv = myReqAn.getProductEnvironment();
         }
         return myProdEnv;
 
@@ -553,7 +547,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void rateWeightFactor(Map<String, Integer> myWeightFactors)
+    public synchronized void rateWeightFactor(Map<String, Integer> myWeightFactors)
             throws MissingReqAnException, NumberOutOfBoundsException, MissingCostEstimationException,
                     ListOverflowException
     {
@@ -567,7 +561,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void calcFPCount() throws MissingReqAnException, MissingCostEstimationException
+    public synchronized void calcFPCount() throws MissingReqAnException, MissingCostEstimationException
     {
         if (myReqAn == null)
         {
@@ -579,7 +573,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remAdditionByTitle(String title) throws MissingReqAnException, UnknownIDException
+    public synchronized void remAdditionByTitle(String title) throws MissingReqAnException, UnknownIDException
     {
         if (myReqAn == null)
         {
@@ -591,7 +585,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remCostEstimation() throws MissingReqAnException, MissingCostEstimationException
+    public synchronized void remCostEstimation() throws MissingReqAnException, MissingCostEstimationException
     {
         if (myReqAn == null)
         {
@@ -603,7 +597,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remFReqByID(String id) throws MissingReqAnException, UnknownIDException
+    public synchronized void remFReqByID(String id) throws MissingReqAnException, UnknownIDException
     {
         if (myReqAn == null)
         {
@@ -615,7 +609,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remGlossEntryByTerm(String term) throws MissingReqAnException, UnknownIDException
+    public synchronized void remGlossEntryByTerm(String term) throws MissingReqAnException, UnknownIDException
     {
         if (myReqAn == null)
         {
@@ -627,7 +621,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remNFReqByID(String id) throws MissingReqAnException, UnknownIDException
+    public synchronized void remNFReqByID(String id) throws MissingReqAnException, UnknownIDException
     {
         if (myReqAn == null)
         {
@@ -639,7 +633,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remProdDataByID(String id) throws MissingReqAnException, UnknownIDException
+    public synchronized void remProdDataByID(String id) throws MissingReqAnException, UnknownIDException
     {
         if (myReqAn == null)
         {
@@ -651,7 +645,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remQualReqByCrit(String criteria) throws MissingReqAnException, UnknownIDException
+    public synchronized void remQualReqByCrit(String criteria) throws MissingReqAnException, UnknownIDException
     {
         if (myReqAn == null)
         {
@@ -663,7 +657,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void saveReqAn(String path) throws MissingReqAnException
+    public synchronized void saveReqAn(String path) throws MissingReqAnException, DataAccessException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
         if (myReqAn == null)
@@ -675,15 +669,42 @@ public class Model extends Observable
         {
             this.path = path;
         }
-        myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
+        try
+        {
+            myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
+        }
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
         notifyAll();
 
     }
 
     @Override
-    public void exportToXML(String path, XMLFormatType type) throws MissingReqAnException, XMLMarschallingException,
-            FileNotFoundException, XMLFormatException, SingletonRecreationException, SecurityException,
-            XMLProcessingException
+    public void saveReqAn() throws MissingReqAnException, DataAccessException
+    {
+        IXMLManager myXMLManager = IXMLManager.getInstance();
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        unsaved = false;
+        try
+        {
+            myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
+        }
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
+        notifyAll();
+    }
+
+    @Override
+    public void exportToXML(String path, XMLFormatType type) throws MissingReqAnException, xml.XMLMarschallingException,
+            FileNotFoundException, xml.XMLFormatException, xml.SingletonRecreationException, SecurityException,
+            xml.XMLProcessingException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
         if (myReqAn == null)
@@ -695,31 +716,18 @@ public class Model extends Observable
     }
 
     @Override
-    public void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, XMLUnmarschallException,
-            SecurityException, XMLProcessingException, XMLFormatException, SingletonRecreationException,
-            NumberOutOfBoundsException
+    public void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, xml.XMLUnmarschallException,
+            SecurityException, xml.XMLProcessingException, xml.XMLFormatException, xml.SingletonRecreationException,
+            NumberOutOfBoundsException, ArgumentPatternException, ListOverflowException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
-        if (myReqAn != null)
-        {
-            if (unsaved)
-            {
-                try
-                {
-                    saveReqAn(this.path);
-                }
-                catch (MissingReqAnException e)
-                {
-                    // Do nothing, if not saveable -> No ReqAn is available
-                }
-            }
-        }
         IRequirementAnalysis myIReqAn = myXMLManager.importAnalysis(path, type);
         myReqAn = copyReqAn(myIReqAn);
 
     }
 
-    private RequirementAnalysis copyReqAn(IRequirementAnalysis myIReqAn) throws NumberOutOfBoundsException
+    private RequirementAnalysis copyReqAn(IRequirementAnalysis myIReqAn)
+            throws NumberOutOfBoundsException, ArgumentPatternException, ListOverflowException
     {
         RequirementAnalysis tmpReqAn = new RequirementAnalysis(myIReqAn.getTitle(),
                 myIReqAn.getCustomerData().getPMName(), myIReqAn.getCustomerData().getPMEMail(),
@@ -735,7 +743,7 @@ public class Model extends Observable
         tmpReqAn.setCreateDate(myIReqAn.getCreateDate());
         tmpReqAn.setProductApplication(myIReqAn.getProductApplication());
         tmpReqAn.setProductData(myIReqAn.getProductData());
-        tmpReqAn.setProductEnvironment(myIReqAn.getProductEnviroment());
+        tmpReqAn.setProductEnvironment(myIReqAn.getProductEnvironment());
         tmpReqAn.setTargetDefinition(myIReqAn.getTargetDefinition());
         tmpReqAn.setFRequirements(myIReqAn.getFRequirements());
         tmpReqAn.setNFRequirements(myIReqAn.getNFRequirements());
@@ -746,7 +754,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void setActualState(double actStat) throws MissingReqAnException, NumberOutOfBoundsException
+    public synchronized void setActualState(double actStat) throws MissingReqAnException, NumberOutOfBoundsException
     {
         if (myReqAn == null)
         {
@@ -758,7 +766,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void setDataFP(ClassOfDataFP type, String id, int det, int ret)
+    public synchronized void setDataFP(ClassOfDataFP type, String id, int det, int ret)
             throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException,
             MissingCostEstimationException
     {
@@ -772,7 +780,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+    public synchronized void setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
             throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException,
             MissingCostEstimationException
     {
@@ -786,7 +794,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+    public synchronized void editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
             throws MissingReqAnException, UnknownIDException, MissingCostEstimationException, NumberOutOfBoundsException
     {
         if (myReqAn == null)
@@ -799,7 +807,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+    public synchronized void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
             throws MissingReqAnException, UnknownIDException, MissingCostEstimationException, NumberOutOfBoundsException
     {
         if (myReqAn == null)
@@ -812,7 +820,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remDataFPByID(String id)
+    public synchronized void remDataFPByID(String id)
             throws MissingReqAnException, MissingCostEstimationException, UnknownIDException
     {
         if (myReqAn == null)
@@ -825,7 +833,7 @@ public class Model extends Observable
     }
 
     @Override
-    public void remTransactionFPByID(String id)
+    public synchronized void remTransactionFPByID(String id)
             throws MissingReqAnException, MissingCostEstimationException, UnknownIDException
     {
         if (myReqAn == null)
@@ -994,9 +1002,10 @@ public class Model extends Observable
     }
 
     @Override
-    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
+    public synchronized boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
                                 String city, String companyStreet, String country, String zip, String cName,
                                 String cMail, String cPhone)
+            throws ArgumentPatternException
     {
         boolean success = false;
         if (myReqAn == null)
@@ -1008,6 +1017,17 @@ public class Model extends Observable
         notifyAll();
         return success;
 
+    }
+
+    @Override
+    public boolean closeReqAn() throws MissingReqAnException
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn = null;
+        return true;
     }
 
     @Override
