@@ -6,9 +6,8 @@ import xml.*;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-public interface IApplications
-{
-    
+public interface IApplications {
+
     boolean existsID(String id);
 
     void saveReqAn(String path) throws MissingReqAnException, DataAccessException;
@@ -20,7 +19,7 @@ public interface IApplications
     void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, NumberOutOfBoundsException, ArgumentPatternException, ListOverflowException, XMLUnmarschallException, XMLProcessingException, XMLFormatException, SingletonRecreationException;
 
     void deleteReqAn() throws MissingReqAnException;
-    
+
     boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
                          String city, String companyStreet, String country, String zip, String cName,
                          String cMail, String cPhone) throws ArgumentPatternException;
