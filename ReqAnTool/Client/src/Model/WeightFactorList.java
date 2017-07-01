@@ -43,14 +43,14 @@ public class WeightFactorList<IWeightFac extends IWeightFactor>
     @Override
     public boolean removeByTitle(String title)
     {
-        boolean success = false;
+        IWeightFac weightFacToRemove = null;
         for (IWeightFac myFac : this)
         {
             if (myFac.getTitle().equals(title))
             {
-                success = super.remove(myFac);
+                weightFacToRemove = myFac;
             }
         }
-        return success;
+        return this.remove(weightFacToRemove);
     }
 }

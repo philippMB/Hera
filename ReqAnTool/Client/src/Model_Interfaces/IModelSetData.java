@@ -57,7 +57,7 @@ public interface IModelSetData
 
     void remGlossEntryByTerm(String term) throws MissingReqAnException, UnknownIDException;
 
-    void addCostEstimation() throws MissingReqAnException;
+    void addCostEstimation() throws MissingReqAnException, DuplicateIDException;
 
     void remCostEstimation() throws MissingReqAnException, MissingCostEstimationException;
 

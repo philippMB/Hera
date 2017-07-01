@@ -42,15 +42,15 @@ public class RequirementList<T extends IRequirement>
     @Override
     public boolean removeReqByID(String id)
     {
-        boolean success = false;
+        T reqToRemove = null;
         for (T myReq : this)
         {
             if (myReq.getID().equals(id))
             {
-                success = super.remove(myReq);
+                reqToRemove = myReq;
             }
         }
-        return success;
+        return this.remove(reqToRemove);
 
     }
 }

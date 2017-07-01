@@ -1,9 +1,8 @@
 package xml;
 
-import Model_Interfaces.ICostEstimation;
-import Model_Interfaces.IDataFP;
-import Model_Interfaces.ITransactionFP;
-import Model_Interfaces.IWeightFactor;
+import Model.ComplexityMatrix;
+import Model.ComplexityWeightMatrix;
+import Model_Interfaces.*;
 
 import java.util.ArrayList;
 
@@ -150,6 +149,20 @@ public class CostEstimation
   @Override
   public ITransactionFP getTransactionFPByID(String id) {
     // TODO: javadoc, nicht implementiert
+    return null;
+  }
+
+  @Override
+  public Map<IClassOfFP, ComplexityMatrix> getComplexityMatrices()
+  {
+    // TODO
+    return null;
+  }
+
+  @Override
+  public ComplexityWeightMatrix getComplexityWeightMatrix()
+  {
+    // TODO
     return null;
   }
 

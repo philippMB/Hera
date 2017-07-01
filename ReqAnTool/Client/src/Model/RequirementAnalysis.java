@@ -595,9 +595,9 @@ public class RequirementAnalysis
         {
             throw new DuplicateIDException(newTitle);
         }
-        IAddition myIAdd = myAdditions.getAdditionByTitle(title);
+        IAddition myIAdd = myAdditions.getAdditionByTitle(oldTitle);
         Addition myAdd = (Addition) myIAdd;
-        myAdd.edit(title, description);
+        myAdd.edit(newTitle, description);
 
     }
 
@@ -620,9 +620,12 @@ public class RequirementAnalysis
             throw new UnknownIDException(oldID);
         }
         IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
-        if (!isIDunique(id))
+        if (!oldID.equals(id))
         {
-            throw new DuplicateIDException(id);
+            if (!isIDunique(id))
+            {
+                throw new DuplicateIDException(id);
+            }
         }
         solveReqReferences(references);
         if (myValidator.isInvalidID(id))
@@ -676,9 +679,12 @@ public class RequirementAnalysis
             throw new UnknownIDException(oldID);
         }
         INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
-        if (!isIDunique(id))
+        if (!oldID.equals(id))
         {
-            throw new DuplicateIDException(id);
+            if (!isIDunique(id))
+            {
+                throw new DuplicateIDException(id);
+            }
         }
         solveReqReferences(references);
         if (myValidator.isInvalidID(id))
@@ -714,9 +720,12 @@ public class RequirementAnalysis
             throw new UnknownIDException(oldID);
         }
         IProductData myIProdData = myProductData.getReqByID(oldID);
-        if (!isIDunique(id))
+        if (!oldID.equals(id))
         {
-            throw new DuplicateIDException(id);
+            if (!isIDunique(id))
+            {
+                throw new DuplicateIDException(id);
+            }
         }
         solveReqReferences(references);
         if (myValidator.isInvalidID(id))
@@ -764,7 +773,7 @@ public class RequirementAnalysis
             throws MissingCostEstimationException, ListOverflowException, NumberOutOfBoundsException
     {
         boolean success = true;
-        if (getCostEstimation() != null)
+        if (getCostEstimation() == null)
         {
             throw new MissingCostEstimationException();
         }
@@ -909,10 +918,14 @@ public class RequirementAnalysis
     }
 
     public void addCostEstimation(Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
-                                        ComplexityWeightMatrix myComplexityWeightMatrix)
+                                        ComplexityWeightMatrix myComplexityWeightMatrix,
+                                        WeightFactorList<IWeightFactor> myWeightFactors) throws DuplicateIDException
     {
-        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrices,
-                                                (WeightFactorList<IWeightFactor>) getWeightFactors());
+        if (myCostEstimation != null)
+        {
+            throw new DuplicateIDException("CostEstimation");
+        }
+        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrices, myWeightFactors);
 
     }
 
@@ -959,7 +972,7 @@ public class RequirementAnalysis
     public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
             throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
             throw new MissingCostEstimationException();
         }
@@ -975,7 +988,7 @@ public class RequirementAnalysis
     public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
             throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
             throw new MissingCostEstimationException();
         }

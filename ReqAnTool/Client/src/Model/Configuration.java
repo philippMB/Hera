@@ -22,15 +22,15 @@ public class Configuration
     /**
      * @associates <{Model.WeightFactor}>
      */
-    private WeightFactorList<IWeightFactor> optWeightFactor;
+    private WeightFactorList<IWeightFactor> optWeightFactors;
 
     public Configuration()
     {
-        workDir = System.getProperty("user.dir") + "\\ReqAnTool\\Client\\src\\Model\\";
+        workDir = System.getProperty("user.dir") + "\\src\\Model\\";
         System.out.println(workDir);
         myComplexityMatrices = readComplexityMatrixFromInit();
         myComplexityWeightMatrix = readComWeightMatrixFromInit();
-        optWeightFactor = readOptWeightFactorFromInit();
+        optWeightFactors = readOptWeightFactorFromInit();
     }
 
     private WeightFactorList<IWeightFactor> readOptWeightFactorFromInit()
@@ -150,13 +150,13 @@ public class Configuration
 
     public WeightFactorList<IWeightFactor> getOptWeightFactors()
     {
-        return optWeightFactor;
+        return optWeightFactors;
     }
     
     public IWeightFactor getOptWeightFactorsByTitle(String title)
     {
         IWeightFactor weightFactorToReturn = null;
-        for (IWeightFactor myWeightFactor : optWeightFactor)
+        for (IWeightFactor myWeightFactor : optWeightFactors)
         {
             if (myWeightFactor.getTitle().equals(title))
             {
@@ -178,15 +178,7 @@ public class Configuration
             double calcFP = myReqAn.getCostEstimation().getFunctionPoints();
             double sumWeightFac = calculator.sumOfWeightFactors(myReqAn.getCostEstimation());
             int countOfWeightFac = myWeightFactors.size();
-            boolean defaultFac = true;
-
-            for (IWeightFactor optFac : optWeightFactor)
-            {
-                if (optFac.getValue() != 0)
-                {
-                    defaultFac = false;
-                }
-            }
+            boolean defaultFac = !existsOptWeightFactors();
             double reqFP = Math.pow(actualState, 1/0.4);
             double optSumWeightFac = reqFP / calcFP * sumWeightFac;
             double sumOfChange = optSumWeightFac - sumWeightFac;
@@ -196,7 +188,7 @@ public class Configuration
             {
                 WeightFactor myFactor = (WeightFactor) myIFactor;
                 double newScore = myFactor.getExactValue() + changePerFactor;
-                WeightFactor matchingOptFac = (WeightFactor) optWeightFactor.getFactorByTitle(myFactor.getTitle());
+                WeightFactor matchingOptFac = (WeightFactor) optWeightFactors.getFactorByTitle(myFactor.getTitle());
                 if (!defaultFac)
                 {
                     myFactor.setValue(newScore * 0.3 + matchingOptFac.getExactValue() * 0.7);
@@ -209,8 +201,36 @@ public class Configuration
 
         }
         else throw new MissingFPException();
-        optWeightFactor = myWeightFactors;
+        optWeightFactors = myWeightFactors;
+        writeOptWeightFactorsToInit();
         return myWeightFactors;
 
+    }
+
+    private void writeOptWeightFactorsToInit()
+    {
+        ArrayList<String> lines = new ArrayList<String>();
+        for (IWeightFactor optFactor : optWeightFactors)
+        {
+            String line = "";
+            line = line + optFactor.getTitle();
+            line = line + optFactor.getValue();
+            line = line + optFactor.getMaxValue();
+            lines.add(line);
+        }
+        FileOperations.writeLinesToFile(workDir +"optWeightFactor.init", lines);
+    }
+
+    public boolean existsOptWeightFactors()
+    {
+        boolean exists = false;
+        for (IWeightFactor optFac : optWeightFactors)
+        {
+            if (optFac.getValue() != 0)
+            {
+                exists = true;
+            }
+        }
+        return exists;
     }
 }

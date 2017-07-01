@@ -49,16 +49,14 @@ public class Model extends Observable
     }
 
     @Override
-    public synchronized void addCostEstimation() throws MissingReqAnException
+    public synchronized void addCostEstimation() throws MissingReqAnException, DuplicateIDException
     {
         if (myReqAn == null)
         {
             throw new MissingReqAnException();
         }
-        if (myReqAn != null)
-        {
-            myReqAn.addCostEstimation(myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix());
-        }
+        myReqAn.addCostEstimation(myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix(),
+                    myConfig.getOptWeightFactors());
         notifyAll();
 
     }
@@ -330,7 +328,7 @@ public class Model extends Observable
         boolean exists = false;
         if (myReqAn != null)
         {
-            exists = myReqAn.getActualState() == -1.0;
+            exists = myReqAn.getActualState() != -1.0;
         }
         return exists;
 
@@ -342,7 +340,7 @@ public class Model extends Observable
         boolean exists = false;
         if (myReqAn.getCostEstimation() != null)
         {
-            exists = myReqAn.getCostEstimation().getFunctionPoints() == -1.0;
+            exists = myReqAn.getCostEstimation().getFunctionPoints() != -1.0;
         }
         return exists;
 
@@ -366,7 +364,7 @@ public class Model extends Observable
         boolean exists = false;
         if (myReqAn.getCostEstimation() != null)
         {
-            exists = myReqAn.getCostEstimation().getManMonth() == -1.0;
+            exists = myReqAn.getCostEstimation().getManMonth() != -1.0;
         }
         return exists;
 
@@ -378,7 +376,7 @@ public class Model extends Observable
         boolean exists = false;
         if (myConfig != null)
         {
-            exists = myConfig.getOptWeightFactors() != null;
+            exists = myConfig.existsOptWeightFactors();
         }
         return exists;
 

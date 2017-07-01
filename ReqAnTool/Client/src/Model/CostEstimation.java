@@ -179,7 +179,7 @@ public class CostEstimation
     public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors)
             throws ListOverflowException, NumberOutOfBoundsException
     {
-        if (mapOfWeightFactors.size() == getWeightFactors().size())
+        if (mapOfWeightFactors.size() != getWeightFactors().size())
         {
             throw new ListOverflowException(WeightFactorList.class, "given Weight Factor count");
         }

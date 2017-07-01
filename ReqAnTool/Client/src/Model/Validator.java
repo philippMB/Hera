@@ -12,7 +12,7 @@ class Validator
 
     public boolean isValidEmail(String mail)
     {
-        return Pattern.matches("([0-9a-zA-Z_.~-]+@[0-9a-zA-Z_.~-]\\.[a-zA-Z])|" , mail);
+        return Pattern.matches("([0-9a-zA-Z_.~-]+@[0-9a-zA-Z_.~-]+\\.[a-zA-Z]+)|" , mail);
 
     }
 
@@ -23,7 +23,7 @@ class Validator
         {
             isValid = true;
         }
-        else if (Pattern.matches("0[1-9][0-9][0-9][0-9] [1-9][0-9][0-9]+", phone))
+        else if (Pattern.matches("0[1-9][0-9][0-9][0-9]? [1-9][0-9][0-9]+", phone))
         {
             isValid = true;
         }
