@@ -3,23 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fdaba69f-c0bb-414b-b164-c26480e00f68" name="Default" comment="Bugfixes">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReqAnTool/Client/Tests/Model_Interfaces/ModelTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/Client.iml" afterPath="$PROJECT_DIR$/ReqAnTool/Client/Client.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/AdditionList.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/AdditionList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/CostEstimation.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/CostEstimation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/FileOperations.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/FileOperations.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/GlossaryList.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/GlossaryList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/QualityRequirementList.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/QualityRequirementList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementList.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Validator.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Validator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/WeightFactorList.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/WeightFactorList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelSetData.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelSetData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -973,7 +957,14 @@
       <option name="project" value="LOCAL" />
       <updated>1498773311794</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Bugfixes">
+      <created>1498912747526</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1498912747526</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
