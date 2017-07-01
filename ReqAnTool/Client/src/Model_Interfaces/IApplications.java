@@ -28,7 +28,7 @@ public interface IApplications {
 
     boolean isReqAnUnsaved();
 
-    boolean isFirstUseOfOpenedReqAn() throws MissingReqAnException;
+    boolean isFirstUseOfOpenedReqAn();
 
     boolean isReferenceOnID(String id);
 
