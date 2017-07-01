@@ -52,7 +52,7 @@ public class CalculateFP
         for (IDataFP myIDataFP : myCostEstimation.getDataFPs())
         {
             DataFP myDataFP = (DataFP)myIDataFP;
-            int myFPvalue = myDataFP.getFPvalue(myComplexityMatrices.get(myDataFP.getType()),
+            int myFPvalue = myDataFP.getFPvalue(myComplexityMatrices.get(myIDataFP.getType()),
                     myComplexityWeightMatrix);
             if (myFPvalue != -1) // check for error from getFPvalue (error = -1)
             {

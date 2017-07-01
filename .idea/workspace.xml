@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fdaba69f-c0bb-414b-b164-c26480e00f68" name="Default" comment="Bugfixes">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReqAnTool/Client/Tests/Model_Interfaces/ModelTest.java" />
+    <list default="true" id="fdaba69f-c0bb-414b-b164-c26480e00f68" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/Tests/Model_Interfaces/ModelTest.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/Tests/Model_Interfaces/ModelTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Calculations/CalculateFP.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Calculations/CalculateFP.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/FileOperations.java" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/FileOperations.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init" afterPath="$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,30 +20,17 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="IApplications.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IApplications.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ModelTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ModelTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/Tests/Model_Interfaces/ModelTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="1320" column="44" lean-forward="true" selection-start-line="1320" selection-start-column="44" selection-end-line="1320" selection-end-column="44" />
+            <state relative-caret-position="272">
+              <caret line="27" column="66" lean-forward="true" selection-start-line="27" selection-start-column="66" selection-end-line="27" selection-end-column="66" />
               <folding>
                 <element signature="method#makeNewReqAnWrongPattern#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#makeNewReqAnPass#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#putInRandomData#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#saveReqAnWithPath#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#saveReqAnWithOutPath#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#openReqAnFile#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#exportToCustom_XML_FormatWithData#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#importFromCustom_XML_Format#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#closeReqAn#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#closeNotExistingReqAn#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#deleteReqAn#0;class#ModelTest#0" expanded="false" />
@@ -47,19 +38,19 @@
                 <element signature="method#getSaveStatusForSavedReqAn#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#isFirstUseOfOpenedReqAn#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#addFReq#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#5897#5905#0" expanded="true" />
+                <element signature="e#5922#5930#0" expanded="true" />
                 <element signature="method#addFReqWrongRef#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#6908#6916#0" expanded="true" />
+                <element signature="e#8763#8771#0" expanded="true" />
                 <element signature="method#addNFReq#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#7666#7674#0" expanded="true" />
+                <element signature="e#9840#9848#0" expanded="true" />
                 <element signature="method#addProdData#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#8532#8540#0" expanded="true" />
+                <element signature="e#11546#11554#0" expanded="true" />
                 <element signature="method#addFReqReferenceToProdData#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#9394#9402#0" expanded="true" />
+                <element signature="e#13258#13266#0" expanded="true" />
                 <element signature="method#editFReqNewID#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#10122#10130#0" expanded="true" />
+                <element signature="e#14835#14843#0" expanded="true" />
                 <element signature="method#editFReqSameID#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#10879#10887#0" expanded="true" />
+                <element signature="e#16426#16434#0" expanded="true" />
                 <element signature="method#editFReqNotMatchingID#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#remFReqByID#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#editCustData#0;class#ModelTest#0" expanded="false" />
@@ -73,12 +64,10 @@
                 <element signature="method#addToManyAdditions#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#editAddition#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#remAdditionByTitle#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#addGlossEntry#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#17672#17680#0" expanded="true" />
+                <element signature="e#28693#28701#0" expanded="true" />
                 <element signature="method#editGlossEntry#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#18583#18591#0" expanded="true" />
+                <element signature="e#30844#30852#0" expanded="true" />
                 <element signature="method#remGlossEntryByTerm#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#addCostEstimation#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#addSecondCostEstimation#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#remCostEstimation#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#isReferenceOnID#0;class#ModelTest#0" expanded="false" />
@@ -86,45 +75,16 @@
                 <element signature="method#existsActualState#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#existsFPCount#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#existsManMonthCount#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#setDataFP#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#setTransactionFP#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#editDataFPByID#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#remTransactionFPByID#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#rateWeightFactor#0;class#ModelTest#0" expanded="false" />
-                <element signature="e#24706#24723#0" expanded="true" />
-                <element signature="method#calcFPCount#0;class#ModelTest#0" expanded="false" />
+                <element signature="e#40541#40558#0" expanded="true" />
                 <element signature="method#calcManMonth#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#setActualState#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#existsOptWeightFactor#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#adjustWeightFactor#0;class#ModelTest#0" expanded="false" />
                 <element signature="method#existsID#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#getFReqByID#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#getCustomerData#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#getProdApp#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#getProdEnv#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#getGlossaryEntryByTerm#0;class#ModelTest#0" expanded="false" />
-                <element signature="method#getAllFReq#0;class#ModelTest#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IModelGetData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelGetData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WeightFactor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/WeightFactor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -132,14 +92,13 @@
       <file leaf-file-name="Model.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="385" column="29" lean-forward="false" selection-start-line="385" selection-start-column="29" selection-end-line="385" selection-end-column="29" />
+            <state relative-caret-position="147">
+              <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
               <folding>
                 <element signature="method#Model#0;class#Model#0" expanded="false" />
                 <element signature="method#addAddition#0;class#Model#0" expanded="false" />
                 <element signature="method#addCostEstimation#0;class#Model#0" expanded="false" />
                 <element signature="method#addFReq#0;class#Model#0" expanded="false" />
-                <element signature="method#addGlossEntry#0;class#Model#0" expanded="false" />
                 <element signature="method#addNFReq#0;class#Model#0" expanded="false" />
                 <element signature="method#addProdData#0;class#Model#0" expanded="false" />
                 <element signature="method#addQualReq#0;class#Model#0" expanded="false" />
@@ -161,7 +120,6 @@
                 <element signature="method#existsID#0;class#Model#0" expanded="false" />
                 <element signature="method#existsManMonthCount#0;class#Model#0" expanded="false" />
                 <element signature="method#existsOptWeightFactor#0;class#Model#0" expanded="false" />
-                <element signature="method#adjustWeightFactor#0;class#Model#0" expanded="false" />
                 <element signature="method#openReqAnFile#0;class#Model#0" expanded="false" />
                 <element signature="method#getAllAddition#0;class#Model#0" expanded="false" />
                 <element signature="method#getCostEstimation#0;class#Model#0" expanded="false" />
@@ -174,7 +132,6 @@
                 <element signature="method#isIDUnique#0;class#Model#0" expanded="false" />
                 <element signature="method#isFirstUseOfOpenedReqAn#0;class#Model#0" expanded="false" />
                 <element signature="method#rateWeightFactor#0;class#Model#0" expanded="false" />
-                <element signature="method#calcFPCount#0;class#Model#0" expanded="false" />
                 <element signature="method#remAdditionByTitle#0;class#Model#0" expanded="false" />
                 <element signature="method#remCostEstimation#0;class#Model#0" expanded="false" />
                 <element signature="method#remFReqByID#0;class#Model#0" expanded="false" />
@@ -216,46 +173,163 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Configuration.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="210" column="4" lean-forward="false" selection-start-line="210" selection-start-column="4" selection-end-line="210" selection-end-column="4" />
-              <folding>
-                <element signature="method#Configuration#0;class#Configuration#0" expanded="false" />
-                <element signature="method#readOptWeightFactorFromInit#0;class#Configuration#0" expanded="false" />
-                <element signature="method#readComWeightMatrixFromInit#0;class#Configuration#0" expanded="false" />
-                <element signature="method#readComplexityMatrixFromInit#0;class#Configuration#0" expanded="false" />
-                <element signature="e#5026#5027#0" expanded="true" />
-                <element signature="e#5065#5066#0" expanded="true" />
-                <element signature="method#getOptWeightFactorsByTitle#0;class#Configuration#0" expanded="false" />
-                <element signature="method#adjustOptWeightFactors#0;class#Configuration#0" expanded="false" />
-                <element signature="method#writeOptWeightFactorsToInit#0;class#Configuration#0" expanded="false" />
-                <element signature="e#7370#7378#0" expanded="true" />
-                <element signature="method#existsOptWeightFactors#0;class#Configuration#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="optWeightFactor.init" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="34">
+              <caret line="2" column="11" lean-forward="false" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IModelSetData.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelSetData.java">
+      <file leaf-file-name="RequirementAnalysis.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="59" column="79" lean-forward="false" selection-start-line="59" selection-start-column="59" selection-end-line="59" selection-end-column="79" />
+            <state relative-caret-position="139">
+              <caret line="517" column="0" lean-forward="false" selection-start-line="517" selection-start-column="0" selection-end-line="517" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="docComment;field#myFRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="docComment;field#myProductData#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="docComment;field#myNFRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="docComment;field#myAdditions#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="docComment;field#myGlossaryEntries#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="docComment;field#myQualityRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#RequirementAnalysis#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#isReqIncluded#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#solveGlossaryTerms#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#solveReqReferences#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#isReferenceOnID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#refreshReferences#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#removeRequirementReferences#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#isReferenceOnTerm#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#removeGlossaryReferences#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getAnyReqByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getAllReqIDs#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#isIDunique#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getActualState#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getCreateDate#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getCustomerDescription#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getAdditions#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getFRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getNFRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getGlossaryEntries#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getProductData#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getQualityRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getWeightFactors#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getWeightFactorList#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getTitle#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getTargetDefinition#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getProductApplication#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getCustomerData#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getCostEstimation#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getGlossaryEntriesByTerm#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getQualityRequirementsByCriteria#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getAdditionByTitle#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getWeightFactorByTitle#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getFRequirementByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getNFRequirementByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getProductDataByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#addAddition#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#addFRequirement#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#addNFRequirement#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#addQualReq#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editAddition#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editCustData#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editFReq#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editGlossEntry#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editNFReq#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editProdData#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editQualReq#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editTargetDef#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remAdditionByTitle#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remCostEstimation#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remFReqByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remGlossEntryByTerm#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remNFReqByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remProdDataByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remQualReqByCrit#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setActualState#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setDataFP#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setTransactionFP#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#calcManMonth#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remTransactionFPByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#remDataFPByID#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#getProductEnvironment#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#editProdEnv#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setCustomerDescription#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setCreateDate#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setProductApplication#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setProductEnvironment#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setTargetDefinition#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setFRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setProductData#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setNFRequirements#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setAdditions#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setGlossaryEntries#0;class#RequirementAnalysis#0" expanded="false" />
+                <element signature="method#setQualityRequirements#0;class#RequirementAnalysis#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CostEstimation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/CostEstimation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="50" column="39" lean-forward="true" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
+              <folding>
+                <element signature="docComment;field#myTransactionFPs#0;class#CostEstimation#0" expanded="false" />
+                <element signature="docComment;field#myDataFPs#0;class#CostEstimation#0" expanded="false" />
+                <element signature="docComment;field#myWeightFactors#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#CostEstimation#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#calculateManMonth#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#getWeightFactorByTitle#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#hasIDDataFP#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#hasIDTransactionFP#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#getDataFPByID#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#getTransactionFPByID#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#rateWeightFactor#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#setDataFP#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#setTransactionFP#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#remTransactionFPByID#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#remDataFPByID#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#editTransactionFPByID#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#editDataFPByID#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#setWeightFactors#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#setDataFPs#0;class#CostEstimation#0" expanded="false" />
+                <element signature="method#setTransactionFPs#0;class#CostEstimation#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataFP.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/DataFP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="60" column="54" lean-forward="false" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ComplexityWeightMatrix.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/ComplexityWeightMatrix.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="56" column="15" lean-forward="false" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ComplexityMatrix.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/ComplexityMatrix.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="825">
+              <caret line="57" column="24" lean-forward="false" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -283,6 +357,7 @@
       <find>myCostEstimation</find>
       <find>exists</find>
       <find>existi</find>
+      <find>Title</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -341,8 +416,9 @@
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/CostEstimation.java" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java" />
-        <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init" />
+        <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Calculations/CalculateFP.java" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/FileOperations.java" />
+        <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java" />
         <option value="$PROJECT_DIR$/ReqAnTool/Client/Tests/Model_Interfaces/ModelTest.java" />
       </list>
@@ -491,8 +567,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ModelTest.getAllReqIDs">
-    <configuration default="false" name="ModelTest.getProdApp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ModelTest">
+    <configuration default="false" name="ModelTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="Model_Interfaces.*" />
@@ -504,7 +580,33 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="Model_Interfaces" />
       <option name="MAIN_CLASS_NAME" value="Model_Interfaces.ModelTest" />
-      <option name="METHOD_NAME" value="getProdApp" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="ModelTest.calcFPCount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="Model_Interfaces.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Client" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="Model_Interfaces" />
+      <option name="MAIN_CLASS_NAME" value="Model_Interfaces.ModelTest" />
+      <option name="METHOD_NAME" value="calcFPCount" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -518,7 +620,7 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="ModelTest.getProdEnv" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="ModelTest.existsOptWeightFactor" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="Model_Interfaces.*" />
@@ -530,7 +632,7 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="Model_Interfaces" />
       <option name="MAIN_CLASS_NAME" value="Model_Interfaces.ModelTest" />
-      <option name="METHOD_NAME" value="getProdEnv" />
+      <option name="METHOD_NAME" value="existsOptWeightFactor" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -544,7 +646,7 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="ModelTest.getGlossaryEntryByTerm" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="ModelTest.calcManMonth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="Model_Interfaces.*" />
@@ -556,7 +658,7 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="Model_Interfaces" />
       <option name="MAIN_CLASS_NAME" value="Model_Interfaces.ModelTest" />
-      <option name="METHOD_NAME" value="getGlossaryEntryByTerm" />
+      <option name="METHOD_NAME" value="calcManMonth" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -570,7 +672,7 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="ModelTest.getAllFReq" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="ModelTest.adjustWeightFactor" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="Model_Interfaces.*" />
@@ -582,33 +684,7 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="Model_Interfaces" />
       <option name="MAIN_CLASS_NAME" value="Model_Interfaces.ModelTest" />
-      <option name="METHOD_NAME" value="getAllFReq" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="ModelTest.getAllReqIDs" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="Model_Interfaces.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="Client" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="Model_Interfaces" />
-      <option name="MAIN_CLASS_NAME" value="Model_Interfaces.ModelTest" />
-      <option name="METHOD_NAME" value="getAllReqIDs" />
+      <option name="METHOD_NAME" value="adjustWeightFactor" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -884,19 +960,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.ModelTest.getProdApp" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.ModelTest.getProdEnv" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.ModelTest.getGlossaryEntryByTerm" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ModelTest.getAllFReq" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ModelTest.getAllReqIDs" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.ModelTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.ModelTest.calcFPCount" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.ModelTest.existsOptWeightFactor" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.ModelTest.calcManMonth" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.ModelTest.adjustWeightFactor" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ModelTest.getAllReqIDs" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ModelTest.getAllFReq" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ModelTest.getGlossaryEntryByTerm" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ModelTest.getProdEnv" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.ModelTest.getProdApp" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.ModelTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.ModelTest.existsOptWeightFactor" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ModelTest.adjustWeightFactor" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.ModelTest.calcManMonth" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.ModelTest.calcFPCount" />
       </list>
     </recent_temporary>
   </component>
@@ -964,39 +1040,46 @@
       <option name="project" value="LOCAL" />
       <updated>1498912747526</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="ModelTest">
+      <created>1498912773597</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1498912773597</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ModelTest_getAllFReq - 2017.07.01 at 14h 36m 15s.xml">
-      <configuration name="ModelTest.getAllFReq" configurationId="JUnit" />
+    <history-entry file="ModelTest - 2017.07.02 at 01h 20m 52s.xml">
+      <configuration name="ModelTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getAllReqIDs - 2017.07.01 at 14h 37m 28s.xml">
-      <configuration name="ModelTest.getAllReqIDs" configurationId="JUnit" />
+    <history-entry file="ModelTest - 2017.07.02 at 01h 23m 45s.xml">
+      <configuration name="ModelTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getCustomerData - 2017.07.01 at 14h 24m 00s.xml">
-      <configuration name="ModelTest.getCustomerData" configurationId="JUnit" />
+    <history-entry file="ModelTest - 2017.07.02 at 01h 24m 53s.xml">
+      <configuration name="ModelTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getCustomerData - 2017.07.01 at 14h 28m 53s.xml">
-      <configuration name="ModelTest.getCustomerData" configurationId="JUnit" />
+    <history-entry file="ModelTest - 2017.07.02 at 01h 24m 58s.xml">
+      <configuration name="ModelTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getFReqByID - 2017.07.01 at 14h 22m 36s.xml">
-      <configuration name="ModelTest.getFReqByID" configurationId="JUnit" />
+    <history-entry file="ModelTest - 2017.07.02 at 01h 25m 51s.xml">
+      <configuration name="ModelTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getFReqByID - 2017.07.01 at 14h 23m 22s.xml">
-      <configuration name="ModelTest.getFReqByID" configurationId="JUnit" />
+    <history-entry file="ModelTest - 2017.07.02 at 01h 27m 33s.xml">
+      <configuration name="ModelTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getGlossaryEntryByTerm - 2017.07.01 at 14h 33m 25s.xml">
-      <configuration name="ModelTest.getGlossaryEntryByTerm" configurationId="JUnit" />
+    <history-entry file="ModelTest_adjustWeightFactor - 2017.07.02 at 01h 22m 42s.xml">
+      <configuration name="ModelTest.adjustWeightFactor" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getGlossaryEntryByTerm - 2017.07.01 at 14h 33m 47s.xml">
-      <configuration name="ModelTest.getGlossaryEntryByTerm" configurationId="JUnit" />
+    <history-entry file="ModelTest_calcManMonth - 2017.07.02 at 01h 22m 06s.xml">
+      <configuration name="ModelTest.calcManMonth" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getProdApp - 2017.07.01 at 14h 29m 30s.xml">
-      <configuration name="ModelTest.getProdApp" configurationId="JUnit" />
+    <history-entry file="ModelTest_existsOptWeightFactor - 2017.07.02 at 01h 21m 46s.xml">
+      <configuration name="ModelTest.existsOptWeightFactor" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ModelTest_getProdEnv - 2017.07.01 at 14h 29m 56s.xml">
-      <configuration name="ModelTest.getProdEnv" configurationId="JUnit" />
+    <history-entry file="ModelTest_existsOptWeightFactor - 2017.07.02 at 01h 22m 48s.xml">
+      <configuration name="ModelTest.existsOptWeightFactor" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
@@ -1016,7 +1099,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1024,13 +1107,13 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4242902" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25709778" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296131" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24231333" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24231333" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1045,6 +1128,37 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39747635" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25709778" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296131" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24231333" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -1055,11 +1169,12 @@
     <MESSAGE value="Umbau der Struktur" />
     <MESSAGE value="minor fix" />
     <MESSAGE value="Bugfixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfixes" />
+    <MESSAGE value="ModelTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="ModelTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1068,67 +1183,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/ClassOfDataFP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="8" lean-forward="true" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IGlossaryList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IGlossaryEntry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IAdditionList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="6" lean-forward="false" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IRequirementAnalysis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/TransactionFP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IProductData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="16" lean-forward="false" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IDataFP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -1414,10 +1472,207 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="157" column="7" lean-forward="false" selection-start-line="157" selection-start-column="7" selection-end-line="157" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelSetData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="59" column="79" lean-forward="false" selection-start-line="59" selection-start-column="59" selection-end-line="59" selection-end-column="79" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelGetData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/WeightFactor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IDataFP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/ComplexityMatrix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="57" column="24" lean-forward="false" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/ComplexityWeightMatrix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="56" column="15" lean-forward="false" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/DataFP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="60" column="54" lean-forward="false" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/ComplexityMatrix.init">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/ComplexityWeightMatrix.init">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/FileOperations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="38" column="13" lean-forward="false" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="192" column="17" lean-forward="false" selection-start-line="192" selection-start-column="17" selection-end-line="192" selection-end-column="17" />
+          <folding>
+            <element signature="method#Configuration#0;class#Configuration#0" expanded="false" />
+            <element signature="method#readOptWeightFactorFromInit#0;class#Configuration#0" expanded="false" />
+            <element signature="method#readComWeightMatrixFromInit#0;class#Configuration#0" expanded="false" />
+            <element signature="method#readComplexityMatrixFromInit#0;class#Configuration#0" expanded="false" />
+            <element signature="method#getOptWeightFactorsByTitle#0;class#Configuration#0" expanded="false" />
+            <element signature="method#writeOptWeightFactorsToInit#0;class#Configuration#0" expanded="false" />
+            <element signature="e#7370#7378#0" expanded="true" />
+            <element signature="method#existsOptWeightFactors#0;class#Configuration#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="11" lean-forward="false" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding>
+            <element signature="method#Model#0;class#Model#0" expanded="false" />
+            <element signature="method#addAddition#0;class#Model#0" expanded="false" />
+            <element signature="method#addCostEstimation#0;class#Model#0" expanded="false" />
+            <element signature="method#addFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#addNFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#addProdData#0;class#Model#0" expanded="false" />
+            <element signature="method#addQualReq#0;class#Model#0" expanded="false" />
+            <element signature="method#calcManMonth#0;class#Model#0" expanded="false" />
+            <element signature="method#isReferenceOnID#0;class#Model#0" expanded="false" />
+            <element signature="method#deleteReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#editAddition#0;class#Model#0" expanded="false" />
+            <element signature="method#editCustData#0;class#Model#0" expanded="false" />
+            <element signature="method#editFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#editGlossEntry#0;class#Model#0" expanded="false" />
+            <element signature="method#editNFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#editProdApp#0;class#Model#0" expanded="false" />
+            <element signature="method#editProdEnv#0;class#Model#0" expanded="false" />
+            <element signature="method#editProdData#0;class#Model#0" expanded="false" />
+            <element signature="method#editQualReq#0;class#Model#0" expanded="false" />
+            <element signature="method#editTargetDef#0;class#Model#0" expanded="false" />
+            <element signature="method#existsActualState#0;class#Model#0" expanded="false" />
+            <element signature="method#existsFPCount#0;class#Model#0" expanded="false" />
+            <element signature="method#existsID#0;class#Model#0" expanded="false" />
+            <element signature="method#existsManMonthCount#0;class#Model#0" expanded="false" />
+            <element signature="method#existsOptWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#openReqAnFile#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllAddition#0;class#Model#0" expanded="false" />
+            <element signature="method#getCostEstimation#0;class#Model#0" expanded="false" />
+            <element signature="method#getCustomerData#0;class#Model#0" expanded="false" />
+            <element signature="method#getGlossaryEntryByTerm#0;class#Model#0" expanded="false" />
+            <element signature="method#getProdApp#0;class#Model#0" expanded="false" />
+            <element signature="method#getProdEnv#0;class#Model#0" expanded="false" />
+            <element signature="method#getQualReqByCriteria#0;class#Model#0" expanded="false" />
+            <element signature="method#getTargetDef#0;class#Model#0" expanded="false" />
+            <element signature="method#isIDUnique#0;class#Model#0" expanded="false" />
+            <element signature="method#isFirstUseOfOpenedReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#rateWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#remAdditionByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#remCostEstimation#0;class#Model#0" expanded="false" />
+            <element signature="method#remFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remGlossEntryByTerm#0;class#Model#0" expanded="false" />
+            <element signature="method#remNFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remProdDataByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remQualReqByCrit#0;class#Model#0" expanded="false" />
+            <element signature="method#saveReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#saveReqAn#1;class#Model#0" expanded="false" />
+            <element signature="method#exportToXML#0;class#Model#0" expanded="false" />
+            <element signature="method#importFromXML#0;class#Model#0" expanded="false" />
+            <element signature="method#copyReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#setActualState#0;class#Model#0" expanded="false" />
+            <element signature="method#setDataFP#0;class#Model#0" expanded="false" />
+            <element signature="method#setTransactionFP#0;class#Model#0" expanded="false" />
+            <element signature="method#editDataFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#editTransactionFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remDataFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#remTransactionFPByID#0;class#Model#0" expanded="false" />
+            <element signature="method#getAdditionByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllGlossEntries#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllNFReq#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllProdData#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllQualReq#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#getWeightFactorByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllOptWeightFactor#0;class#Model#0" expanded="false" />
+            <element signature="method#getOptWeightFactorByTitle#0;class#Model#0" expanded="false" />
+            <element signature="method#getFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#getNFReqByID#0;class#Model#0" expanded="false" />
+            <element signature="method#getProductDataByID#0;class#Model#0" expanded="false" />
+            <element signature="method#makeNewReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#closeReqAn#0;class#Model#0" expanded="false" />
+            <element signature="method#getAllReqIDs#0;class#Model#0" expanded="false" />
+            <element signature="method#getReqAnalysis#0;class#Model#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/RequirementAnalysis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="869" column="16" lean-forward="false" selection-start-line="869" selection-start-column="16" selection-end-line="869" selection-end-column="16" />
+        <state relative-caret-position="139">
+          <caret line="517" column="0" lean-forward="false" selection-start-line="517" selection-start-column="0" selection-end-line="517" selection-end-column="0" />
           <folding>
             <element signature="docComment;field#myFRequirements#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="docComment;field#myProductData#0;class#RequirementAnalysis#0" expanded="false" />
@@ -1462,7 +1717,6 @@
             <element signature="method#getProductDataByID#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#addAddition#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#addFRequirement#0;class#RequirementAnalysis#0" expanded="false" />
-            <element signature="method#addGlossaryEntry#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#addNFRequirement#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#addQualReq#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#editAddition#0;class#RequirementAnalysis#0" expanded="false" />
@@ -1488,7 +1742,6 @@
             <element signature="method#remDataFPByID#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#getProductEnvironment#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#editProdEnv#0;class#RequirementAnalysis#0" expanded="false" />
-            <element signature="method#calcFPCount#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#setCustomerDescription#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#setCreateDate#0;class#RequirementAnalysis#0" expanded="false" />
             <element signature="method#setProductApplication#0;class#RequirementAnalysis#0" expanded="false" />
@@ -1504,16 +1757,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Calculations/CalculateFP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="60" column="9" lean-forward="false" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/CostEstimation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="180" column="4" lean-forward="false" selection-start-line="180" selection-start-column="4" selection-end-line="180" selection-end-column="4" />
+        <state relative-caret-position="213">
+          <caret line="50" column="39" lean-forward="true" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
           <folding>
             <element signature="docComment;field#myTransactionFPs#0;class#CostEstimation#0" expanded="false" />
             <element signature="docComment;field#myDataFPs#0;class#CostEstimation#0" expanded="false" />
             <element signature="docComment;field#myWeightFactors#0;class#CostEstimation#0" expanded="false" />
             <element signature="method#CostEstimation#0;class#CostEstimation#0" expanded="false" />
-            <element signature="method#calculateFP#0;class#CostEstimation#0" expanded="false" />
             <element signature="method#calculateManMonth#0;class#CostEstimation#0" expanded="false" />
             <element signature="method#getWeightFactorByTitle#0;class#CostEstimation#0" expanded="false" />
             <element signature="method#hasIDDataFP#0;class#CostEstimation#0" expanded="false" />
@@ -1534,156 +1794,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/optWeightFactor.init">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/FileOperations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="37" column="31" lean-forward="false" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Configuration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="210" column="4" lean-forward="false" selection-start-line="210" selection-start-column="4" selection-end-line="210" selection-end-column="4" />
-          <folding>
-            <element signature="method#Configuration#0;class#Configuration#0" expanded="false" />
-            <element signature="method#readOptWeightFactorFromInit#0;class#Configuration#0" expanded="false" />
-            <element signature="method#readComWeightMatrixFromInit#0;class#Configuration#0" expanded="false" />
-            <element signature="method#readComplexityMatrixFromInit#0;class#Configuration#0" expanded="false" />
-            <element signature="e#5026#5027#0" expanded="true" />
-            <element signature="e#5065#5066#0" expanded="true" />
-            <element signature="method#getOptWeightFactorsByTitle#0;class#Configuration#0" expanded="false" />
-            <element signature="method#adjustOptWeightFactors#0;class#Configuration#0" expanded="false" />
-            <element signature="method#writeOptWeightFactorsToInit#0;class#Configuration#0" expanded="false" />
-            <element signature="e#7370#7378#0" expanded="true" />
-            <element signature="method#existsOptWeightFactors#0;class#Configuration#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/WeightFactor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model/Model.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="385" column="29" lean-forward="false" selection-start-line="385" selection-start-column="29" selection-end-line="385" selection-end-column="29" />
-          <folding>
-            <element signature="method#Model#0;class#Model#0" expanded="false" />
-            <element signature="method#addAddition#0;class#Model#0" expanded="false" />
-            <element signature="method#addCostEstimation#0;class#Model#0" expanded="false" />
-            <element signature="method#addFReq#0;class#Model#0" expanded="false" />
-            <element signature="method#addGlossEntry#0;class#Model#0" expanded="false" />
-            <element signature="method#addNFReq#0;class#Model#0" expanded="false" />
-            <element signature="method#addProdData#0;class#Model#0" expanded="false" />
-            <element signature="method#addQualReq#0;class#Model#0" expanded="false" />
-            <element signature="method#calcManMonth#0;class#Model#0" expanded="false" />
-            <element signature="method#isReferenceOnID#0;class#Model#0" expanded="false" />
-            <element signature="method#deleteReqAn#0;class#Model#0" expanded="false" />
-            <element signature="method#editAddition#0;class#Model#0" expanded="false" />
-            <element signature="method#editCustData#0;class#Model#0" expanded="false" />
-            <element signature="method#editFReq#0;class#Model#0" expanded="false" />
-            <element signature="method#editGlossEntry#0;class#Model#0" expanded="false" />
-            <element signature="method#editNFReq#0;class#Model#0" expanded="false" />
-            <element signature="method#editProdApp#0;class#Model#0" expanded="false" />
-            <element signature="method#editProdEnv#0;class#Model#0" expanded="false" />
-            <element signature="method#editProdData#0;class#Model#0" expanded="false" />
-            <element signature="method#editQualReq#0;class#Model#0" expanded="false" />
-            <element signature="method#editTargetDef#0;class#Model#0" expanded="false" />
-            <element signature="method#existsActualState#0;class#Model#0" expanded="false" />
-            <element signature="method#existsFPCount#0;class#Model#0" expanded="false" />
-            <element signature="method#existsID#0;class#Model#0" expanded="false" />
-            <element signature="method#existsManMonthCount#0;class#Model#0" expanded="false" />
-            <element signature="method#existsOptWeightFactor#0;class#Model#0" expanded="false" />
-            <element signature="method#adjustWeightFactor#0;class#Model#0" expanded="false" />
-            <element signature="method#openReqAnFile#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllAddition#0;class#Model#0" expanded="false" />
-            <element signature="method#getCostEstimation#0;class#Model#0" expanded="false" />
-            <element signature="method#getCustomerData#0;class#Model#0" expanded="false" />
-            <element signature="method#getGlossaryEntryByTerm#0;class#Model#0" expanded="false" />
-            <element signature="method#getProdApp#0;class#Model#0" expanded="false" />
-            <element signature="method#getProdEnv#0;class#Model#0" expanded="false" />
-            <element signature="method#getQualReqByCriteria#0;class#Model#0" expanded="false" />
-            <element signature="method#getTargetDef#0;class#Model#0" expanded="false" />
-            <element signature="method#isIDUnique#0;class#Model#0" expanded="false" />
-            <element signature="method#isFirstUseOfOpenedReqAn#0;class#Model#0" expanded="false" />
-            <element signature="method#rateWeightFactor#0;class#Model#0" expanded="false" />
-            <element signature="method#calcFPCount#0;class#Model#0" expanded="false" />
-            <element signature="method#remAdditionByTitle#0;class#Model#0" expanded="false" />
-            <element signature="method#remCostEstimation#0;class#Model#0" expanded="false" />
-            <element signature="method#remFReqByID#0;class#Model#0" expanded="false" />
-            <element signature="method#remGlossEntryByTerm#0;class#Model#0" expanded="false" />
-            <element signature="method#remNFReqByID#0;class#Model#0" expanded="false" />
-            <element signature="method#remProdDataByID#0;class#Model#0" expanded="false" />
-            <element signature="method#remQualReqByCrit#0;class#Model#0" expanded="false" />
-            <element signature="method#saveReqAn#0;class#Model#0" expanded="false" />
-            <element signature="method#saveReqAn#1;class#Model#0" expanded="false" />
-            <element signature="method#exportToXML#0;class#Model#0" expanded="false" />
-            <element signature="method#importFromXML#0;class#Model#0" expanded="false" />
-            <element signature="method#copyReqAn#0;class#Model#0" expanded="false" />
-            <element signature="method#setActualState#0;class#Model#0" expanded="false" />
-            <element signature="method#setDataFP#0;class#Model#0" expanded="false" />
-            <element signature="method#setTransactionFP#0;class#Model#0" expanded="false" />
-            <element signature="method#editDataFPByID#0;class#Model#0" expanded="false" />
-            <element signature="method#editTransactionFPByID#0;class#Model#0" expanded="false" />
-            <element signature="method#remDataFPByID#0;class#Model#0" expanded="false" />
-            <element signature="method#remTransactionFPByID#0;class#Model#0" expanded="false" />
-            <element signature="method#getAdditionByTitle#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllFReq#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllGlossEntries#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllNFReq#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllProdData#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllQualReq#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllWeightFactor#0;class#Model#0" expanded="false" />
-            <element signature="method#getWeightFactorByTitle#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllOptWeightFactor#0;class#Model#0" expanded="false" />
-            <element signature="method#getOptWeightFactorByTitle#0;class#Model#0" expanded="false" />
-            <element signature="method#getFReqByID#0;class#Model#0" expanded="false" />
-            <element signature="method#getNFReqByID#0;class#Model#0" expanded="false" />
-            <element signature="method#getProductDataByID#0;class#Model#0" expanded="false" />
-            <element signature="method#makeNewReqAn#0;class#Model#0" expanded="false" />
-            <element signature="method#closeReqAn#0;class#Model#0" expanded="false" />
-            <element signature="method#getAllReqIDs#0;class#Model#0" expanded="false" />
-            <element signature="method#getReqAnalysis#0;class#Model#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelGetData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/Tests/Model_Interfaces/ModelTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="1320" column="44" lean-forward="true" selection-start-line="1320" selection-start-column="44" selection-end-line="1320" selection-end-column="44" />
+        <state relative-caret-position="272">
+          <caret line="27" column="66" lean-forward="true" selection-start-line="27" selection-start-column="66" selection-end-line="27" selection-end-column="66" />
           <folding>
             <element signature="method#makeNewReqAnWrongPattern#0;class#ModelTest#0" expanded="false" />
             <element signature="method#makeNewReqAnPass#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#putInRandomData#0;class#ModelTest#0" expanded="false" />
             <element signature="method#saveReqAnWithPath#0;class#ModelTest#0" expanded="false" />
             <element signature="method#saveReqAnWithOutPath#0;class#ModelTest#0" expanded="false" />
             <element signature="method#openReqAnFile#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#exportToCustom_XML_FormatWithData#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#importFromCustom_XML_Format#0;class#ModelTest#0" expanded="false" />
             <element signature="method#closeReqAn#0;class#ModelTest#0" expanded="false" />
             <element signature="method#closeNotExistingReqAn#0;class#ModelTest#0" expanded="false" />
             <element signature="method#deleteReqAn#0;class#ModelTest#0" expanded="false" />
@@ -1691,19 +1811,19 @@
             <element signature="method#getSaveStatusForSavedReqAn#0;class#ModelTest#0" expanded="false" />
             <element signature="method#isFirstUseOfOpenedReqAn#0;class#ModelTest#0" expanded="false" />
             <element signature="method#addFReq#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#5897#5905#0" expanded="true" />
+            <element signature="e#5922#5930#0" expanded="true" />
             <element signature="method#addFReqWrongRef#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#6908#6916#0" expanded="true" />
+            <element signature="e#8763#8771#0" expanded="true" />
             <element signature="method#addNFReq#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#7666#7674#0" expanded="true" />
+            <element signature="e#9840#9848#0" expanded="true" />
             <element signature="method#addProdData#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#8532#8540#0" expanded="true" />
+            <element signature="e#11546#11554#0" expanded="true" />
             <element signature="method#addFReqReferenceToProdData#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#9394#9402#0" expanded="true" />
+            <element signature="e#13258#13266#0" expanded="true" />
             <element signature="method#editFReqNewID#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#10122#10130#0" expanded="true" />
+            <element signature="e#14835#14843#0" expanded="true" />
             <element signature="method#editFReqSameID#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#10879#10887#0" expanded="true" />
+            <element signature="e#16426#16434#0" expanded="true" />
             <element signature="method#editFReqNotMatchingID#0;class#ModelTest#0" expanded="false" />
             <element signature="method#remFReqByID#0;class#ModelTest#0" expanded="false" />
             <element signature="method#editCustData#0;class#ModelTest#0" expanded="false" />
@@ -1717,12 +1837,10 @@
             <element signature="method#addToManyAdditions#0;class#ModelTest#0" expanded="false" />
             <element signature="method#editAddition#0;class#ModelTest#0" expanded="false" />
             <element signature="method#remAdditionByTitle#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#addGlossEntry#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#17672#17680#0" expanded="true" />
+            <element signature="e#28693#28701#0" expanded="true" />
             <element signature="method#editGlossEntry#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#18583#18591#0" expanded="true" />
+            <element signature="e#30844#30852#0" expanded="true" />
             <element signature="method#remGlossEntryByTerm#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#addCostEstimation#0;class#ModelTest#0" expanded="false" />
             <element signature="method#addSecondCostEstimation#0;class#ModelTest#0" expanded="false" />
             <element signature="method#remCostEstimation#0;class#ModelTest#0" expanded="false" />
             <element signature="method#isReferenceOnID#0;class#ModelTest#0" expanded="false" />
@@ -1730,42 +1848,15 @@
             <element signature="method#existsActualState#0;class#ModelTest#0" expanded="false" />
             <element signature="method#existsFPCount#0;class#ModelTest#0" expanded="false" />
             <element signature="method#existsManMonthCount#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#setDataFP#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#setTransactionFP#0;class#ModelTest#0" expanded="false" />
             <element signature="method#editDataFPByID#0;class#ModelTest#0" expanded="false" />
             <element signature="method#remTransactionFPByID#0;class#ModelTest#0" expanded="false" />
             <element signature="method#rateWeightFactor#0;class#ModelTest#0" expanded="false" />
-            <element signature="e#24706#24723#0" expanded="true" />
-            <element signature="method#calcFPCount#0;class#ModelTest#0" expanded="false" />
+            <element signature="e#40541#40558#0" expanded="true" />
             <element signature="method#calcManMonth#0;class#ModelTest#0" expanded="false" />
             <element signature="method#setActualState#0;class#ModelTest#0" expanded="false" />
             <element signature="method#existsOptWeightFactor#0;class#ModelTest#0" expanded="false" />
             <element signature="method#adjustWeightFactor#0;class#ModelTest#0" expanded="false" />
             <element signature="method#existsID#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#getFReqByID#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#getCustomerData#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#getProdApp#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#getProdEnv#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#getGlossaryEntryByTerm#0;class#ModelTest#0" expanded="false" />
-            <element signature="method#getAllFReq#0;class#ModelTest#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/xml/CostEstimation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="157" column="7" lean-forward="false" selection-start-line="157" selection-start-column="7" selection-end-line="157" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReqAnTool/Client/src/Model_Interfaces/IModelSetData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="59" column="79" lean-forward="false" selection-start-line="59" selection-start-column="59" selection-end-line="59" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

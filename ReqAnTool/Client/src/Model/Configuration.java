@@ -213,8 +213,8 @@ public class Configuration
         for (IWeightFactor optFactor : optWeightFactors)
         {
             String line = "";
-            line = line + optFactor.getTitle();
-            line = line + optFactor.getValue();
+            line = line + optFactor.getTitle() + "; ";
+            line = line + optFactor.getValue() + "; ";
             line = line + optFactor.getMaxValue();
             lines.add(line);
         }

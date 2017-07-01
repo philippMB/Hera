@@ -19,19 +19,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class ModelTest
 {
     private Model myModel;
-    private String pathXML, pathOthers;
+    private String pathForSaving;
 
     @BeforeEach
     void setUp()
     {
         myModel = new Model();
-        pathXML = "test.xml";
-        pathOthers = "test.reqan";
+        pathForSaving = "C:\\Users\\mbill\\Documents\\test.reqan";
     }
 
     @Test
     void makeNewReqAnWrongPattern()
     {
+        boolean wrongPattern = false;
         try
         {
             myModel.makeNewReqAn("Titel", "Karl", "karl@gmail.com", "1111115054",
@@ -41,7 +41,9 @@ class ModelTest
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            wrongPattern = true;
         }
+        assertTrue(wrongPattern);
     }
 
     @Test
@@ -56,7 +58,21 @@ class ModelTest
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument was not Part of this test");
         }
+        assertAll("Functional Requirements",
+                () -> assertEquals("Titel", myModel.getReqAnalysis().getTitle()),
+                () -> assertEquals("Karles", myModel.getCustomerData().getCompanyName()),
+                () -> assertEquals("Stuttgart", myModel.getCustomerData().getCompanyCity()),
+                () -> assertEquals("Karlsstrasse", myModel.getCustomerData().getCompanyStreet()),
+                () -> assertEquals("70546", myModel.getCustomerData().getCompanyPLZ()),
+                () -> assertEquals("Germany", myModel.getCustomerData().getCompanyCountry()),
+                () -> assertEquals("Otto", myModel.getCustomerData().getCName()),
+                () -> assertEquals("otto@gmx.de", myModel.getCustomerData().getCEMail()),
+                () -> assertEquals("0711 151484", myModel.getCustomerData().getCNumber()),
+                () -> assertEquals("Karl", myModel.getCustomerData().getPMName()),
+                () -> assertEquals("karl@gmail.com", myModel.getCustomerData().getPMEMail()),
+                () -> assertEquals("07833 15054", myModel.getCustomerData().getPMPNumber()));
     }
 
     @Test
@@ -72,6 +88,7 @@ class ModelTest
         editTargetDef();
         editProdEnv();
         editProdApp();
+        assertTrue(true);
     }
 
     @Test
@@ -81,16 +98,19 @@ class ModelTest
         putInRandomData();
         try
         {
-            myModel.saveReqAn(pathOthers);
+            myModel.saveReqAn(pathForSaving);
         }
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (DataAccessException e)
         {
             e.printStackTrace();
+            fail("Data Access failure was not part of this test");
         }
+        assertFalse(myModel.isReqAnUnsaved());
     }
 
     @Test
@@ -104,11 +124,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (DataAccessException e)
         {
             e.printStackTrace();
+            fail("Data Access failure was not part of this test");
         }
+        assertFalse(myModel.isReqAnUnsaved());
     }
 
     @Test
@@ -117,88 +140,12 @@ class ModelTest
         saveReqAnWithPath();
         try
         {
-            myModel.openReqAnFile(pathOthers);
+            myModel.openReqAnFile(pathForSaving);
         }
         catch (DataAccessException e)
         {
             e.printStackTrace();
-        }
-    }
-
-    @Test
-    void exportToCustom_XML_FormatWithData()
-    {
-        makeNewReqAnPass();
-        putInRandomData();
-        try
-        {
-            myModel.exportToXML(pathXML, XMLFormatType.CUSTOM_XML_FORMAT);
-        }
-        catch (MissingReqAnException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLMarschallingException e)
-        {
-            e.printStackTrace();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLFormatException e)
-        {
-            e.printStackTrace();
-        }
-        catch (SingletonRecreationException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLProcessingException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    void importFromCustom_XML_Format()
-    {
-        exportToCustom_XML_FormatWithData();
-        try
-        {
-            myModel.importFromXML(pathXML,XMLFormatType.CUSTOM_XML_FORMAT);
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLUnmarschallException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLProcessingException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLFormatException e)
-        {
-            e.printStackTrace();
-        }
-        catch (SingletonRecreationException e)
-        {
-            e.printStackTrace();
-        }
-        catch (NumberOutOfBoundsException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ArgumentPatternException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ListOverflowException e)
-        {
-            e.printStackTrace();
+            fail("Data Access failure was not part of this test");
         }
     }
 
@@ -213,12 +160,15 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
+        assertTrue(myModel.getReqAnalysis() == null);
     }
 
     @Test
     void closeNotExistingReqAn()
     {
+        boolean missedReqAn = false;
         try
         {
             myModel.closeReqAn();
@@ -226,7 +176,9 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            missedReqAn = true;
         }
+        assertTrue(missedReqAn);
     }
 
     @Test
@@ -240,17 +192,16 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
+        assertTrue(myModel.getReqAnalysis() == null);
     }
 
     @Test
     void getSaveStatusForUnsavedReqAn()
     {
         makeNewReqAnPass();
-        if(myModel.isReqAnUnsaved())
-            System.out.println("ReqAn is Unsaved");
-        else
-            System.out.println("ReqAn is Saved");
+        assertTrue(myModel.isReqAnUnsaved());
     }
 
     @Test
@@ -258,18 +209,14 @@ class ModelTest
     {
         makeNewReqAnPass();
         saveReqAnWithPath();
-        if(!myModel.isReqAnUnsaved())
-            System.out.println("ReqAn is Saved");
-        else
-            System.out.println("ReqAn is Unsaved");
+        assertFalse(myModel.isReqAnUnsaved());
     }
 
     @Test
     void isFirstUseOfOpenedReqAn()
     {
         makeNewReqAnPass();
-        if(myModel.isFirstUseOfOpenedReqAn())
-            System.out.println("First use of ReqAn");
+        assertTrue(myModel.isFirstUseOfOpenedReqAn());
     }
 
     @Test
@@ -288,28 +235,50 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Functional Requirements",
+                () -> assertEquals("/LF001/", myModel.getFReqByID("/LF001/").getID()),
+                () -> assertEquals("/LF002/", myModel.getFReqByID("/LF002/").getID()),
+                () -> assertEquals("/LF003/", myModel.getFReqByID("/LF003/").getID()),
+                () -> assertEquals("Öffnen", myModel.getFReqByID("/LF001/").getTitle()),
+                () -> assertEquals("Arbeiten", myModel.getFReqByID("/LF002/").getTitle()),
+                () -> assertEquals("Schließen", myModel.getFReqByID("/LF003/").getTitle()),
+                () -> assertEquals("Chef", myModel.getFReqByID("/LF001/").getActor()),
+                () -> assertEquals("Chef", myModel.getFReqByID("/LF002/").getActor()),
+                () -> assertEquals("Chef", myModel.getFReqByID("/LF003/").getActor()),
+                () -> assertEquals("Chef öffnet Programm", myModel.getFReqByID("/LF001/").getDescription()),
+                () -> assertEquals("Chef arbeitet damit", myModel.getFReqByID("/LF002/").getDescription()),
+                () -> assertEquals("Chef schließt Programm", myModel.getFReqByID("/LF003/").getDescription()),
+                () -> assertEquals("/LF001/", myModel.getFReqByID("/LF002/").getReferenceIDs().get(0)),
+                () -> assertEquals("/LF001/", myModel.getFReqByID("/LF003/").getReferenceIDs().get(0)),
+                () -> assertEquals("/LF002/", myModel.getFReqByID("/LF003/").getReferenceIDs().get(1)));
     }
 
-    @Test
+    @Test()
     void addFReqWrongRef()
     {
+        boolean unknownRef = false;
         makeNewReqAnPass();
         ArrayList<String> references = new ArrayList<String>();
         references.add("/LF001/");
@@ -320,28 +289,35 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            unknownRef = true;
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertTrue(unknownRef);
     }
 
     @Test
     void addNFReq()
-    {makeNewReqAnPass();
+    {
+        makeNewReqAnPass();
         ArrayList<String> references = new ArrayList<String>();
         try
         {
@@ -352,23 +328,34 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Nonfunctional Requirements",
+                () -> assertEquals("Robust", myModel.getNFReqByID("/LE001/").getTitle()),
+                () -> assertEquals("/LE002/", myModel.getNFReqByID("/LE002/").getID()),
+                () -> assertEquals("Chef", myModel.getNFReqByID("/LE001/").getActor()),
+                () -> assertEquals("schnelles Programm", myModel.getNFReqByID("/LE002/").getDescription()),
+                () -> assertEquals("/LE001/", myModel.getNFReqByID("/LE002/").getReferenceIDs().get(0)));
     }
 
     @Test
@@ -385,23 +372,35 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Product Data",
+                () -> assertEquals("Allg. Daten", myModel.getProductDataByID("/LD001/").getContent()),
+                () -> assertEquals("/LD002/", myModel.getProductDataByID("/LD002/").getID()),
+                () -> assertEquals("Data1", myModel.getProductDataByID("/LD001/").getAttribute()),
+                () -> assertEquals("42", myModel.getProductDataByID("/LD002/").getMaxCount()),
+                () -> assertEquals("/LD001/", myModel.getProductDataByID("/LD002/").getReferenceIDs().get(0)));
+
     }
 
     @Test
@@ -409,6 +408,7 @@ class ModelTest
     {
         addProdData();
         ArrayList<String> references = new ArrayList<String>();
+        references.add("/LD001/");
         try
         {
             myModel.addFReq("/LF001/", "Öffnen", "Chef", "Chef öffnet Programm", references);
@@ -416,23 +416,34 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Functional Requirements",
+            () -> assertEquals("/LF001/", myModel.getFReqByID("/LF001/").getID()),
+            () -> assertEquals("Öffnen", myModel.getFReqByID("/LF001/").getTitle()),
+            () -> assertEquals("Chef", myModel.getFReqByID("/LF001/").getActor()),
+            () -> assertEquals("Chef öffnet Programm", myModel.getFReqByID("/LF001/").getDescription()),
+            () -> assertEquals("/LD001/", myModel.getFReqByID("/LF001/").getReferenceIDs().get(0)));
     }
 
     @Test
@@ -442,29 +453,40 @@ class ModelTest
         ArrayList<String> references = new ArrayList<String>();
         try
         {
-            myModel.editFReq("/LF001/", "/LF010","Öffnen", "Chef",
+            myModel.editFReq("/LF001/", "/LF010/","Öffnen", "Chef",
                     "Chef öffnet Programm", references );
         }
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Functional Requirements",
+                () -> assertEquals("/LF010/", myModel.getFReqByID("/LF010/").getID()),
+                () -> assertEquals("Öffnen", myModel.getFReqByID("/LF010/").getTitle()),
+                () -> assertEquals("Chef", myModel.getFReqByID("/LF010/").getActor()),
+                () -> assertEquals("Chef öffnet Programm", myModel.getFReqByID("/LF010/").getDescription()),
+                () -> assertEquals(new ArrayList<>(), myModel.getFReqByID("/LF010/").getReferenceIDs()));
     }
 
     @Test
@@ -474,34 +496,46 @@ class ModelTest
         ArrayList<String> references = new ArrayList<String>();
         try
         {
-            myModel.editFReq("/LF001/", "/LF001","Öffnen", "Cheffe",
+            myModel.editFReq("/LF001/", "/LF001/","Öffnen", "Cheffe",
                     "Chef öffnet Programm", references );
         }
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Functional Requirements",
+                () -> assertEquals("/LF001/", myModel.getFReqByID("/LF001/").getID()),
+                () -> assertEquals("Öffnen", myModel.getFReqByID("/LF001/").getTitle()),
+                () -> assertEquals("Cheffe", myModel.getFReqByID("/LF001/").getActor()),
+                () -> assertEquals("Chef öffnet Programm", myModel.getFReqByID("/LF001/").getDescription()),
+                () -> assertEquals(new ArrayList<>(), myModel.getFReqByID("/LF001/").getReferenceIDs()));
     }
 
     @Test
     void editFReqNotMatchingID()
     {
+        boolean notMatching = false;
         addFReq();
         try
         {
@@ -511,23 +545,29 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            notMatching = true;
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertTrue(notMatching);
     }
 
     @Test
@@ -541,11 +581,13 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
         }
+        assertEquals(null, myModel.getFReqByID("/LF001/"));
     }
 
     @Test
@@ -561,11 +603,25 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ArgumentPatternException e)
         {
             e.printStackTrace();
+            fail("Wrong Argument Pattern was not part of this test");
         }
+        assertAll("Functional Requirements",
+                () -> assertEquals("HansWurst AG", myModel.getCustomerData().getCompanyName()),
+                () -> assertEquals("Stuttgart", myModel.getCustomerData().getCompanyCity()),
+                () -> assertEquals("", myModel.getCustomerData().getCompanyStreet()),
+                () -> assertEquals("70546", myModel.getCustomerData().getCompanyPLZ()),
+                () -> assertEquals("D", myModel.getCustomerData().getCompanyCountry()),
+                () -> assertEquals("Hans", myModel.getCustomerData().getCName()),
+                () -> assertEquals("hans@hanswurst.de", myModel.getCustomerData().getCEMail()),
+                () -> assertEquals("0711 123456", myModel.getCustomerData().getCNumber()),
+                () -> assertEquals("Wurst", myModel.getCustomerData().getPMName()),
+                () -> assertEquals("wurst@hanswurst.de", myModel.getCustomerData().getPMEMail()),
+                () -> assertEquals("0711 654321", myModel.getCustomerData().getPMPNumber()));
     }
 
     @Test
@@ -579,11 +635,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
+        assertEquals("Das ist die Zieldefinition!", myModel.getTargetDef().getDescription());
     }
 
     @Test
@@ -597,11 +656,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
+        assertEquals("Das ist die Produktumgebung!", myModel.getProdEnv().getDescription());
     }
 
     @Test
@@ -615,11 +677,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
+        assertEquals("Das ist die Produkt Applikation", myModel.getProdApp().getDescription());
     }
 
     @Test
@@ -635,15 +700,21 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Quality Requirements",
+                () -> assertEquals("Schnell", myModel.getQualReqByCriteria("Schnell").getCriteria()),
+                () -> assertEquals(Score.VERYIMPORTANT, myModel.getQualReqByCriteria("Robust").getValue()));
     }
 
     @Test
@@ -652,20 +723,26 @@ class ModelTest
         addQualReq();
         try
         {
-            myModel.editQualReq("Schnell", "Geschwindigkeit", Score.VERYIMPORTANT);
+            myModel.editQualReq("Schnell", "Geschwndgk.", Score.IMPORTANT);
         }
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
+        assertAll("Quality Requirements",
+                () -> assertEquals("Geschwndgk.", myModel.getQualReqByCriteria("Geschwndgk.").getCriteria()),
+                () -> assertEquals(Score.IMPORTANT, myModel.getQualReqByCriteria("Geschwndgk.").getValue()));
     }
 
     @Test
@@ -679,11 +756,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
+        assertEquals(null, myModel.getQualReqByCriteria("Schnell"));
     }
 
     @Test
@@ -699,20 +779,28 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertAll("Additions",
+                () -> assertEquals("Ergänzung1", myModel.getAdditionByTitle("Ergänzung1").getTitle()),
+                () -> assertEquals("Es handelt sich hierbei um Ergänzung 2",
+                        myModel.getAdditionByTitle("Ergänzung2").getDescription()));
     }
 
     @Test
     void addToManyAdditions()
     {
+        boolean toMany = false;
         makeNewReqAnPass();
         try
         {
@@ -724,15 +812,19 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            toMany = true;
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertTrue(toMany);
     }
 
     @Test
@@ -741,20 +833,27 @@ class ModelTest
         addAddition();
         try
         {
-            myModel.editAddition("Ergänzung1", "Ergänzung 1", "Halo i bims, Ergämzumg 1");
+            myModel.editAddition("Ergänzung1", "Ergänzung 1", "Halo i bims, 1 Ergämzumg");
         }
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
+        assertAll("Additions",
+                () -> assertEquals("Ergänzung 1", myModel.getAdditionByTitle("Ergänzung 1").getTitle()),
+                () -> assertEquals("Halo i bims, 1 Ergämzumg",
+                        myModel.getAdditionByTitle("Ergänzung 1").getDescription()));
     }
 
     @Test
@@ -768,11 +867,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
+        assertEquals(null, myModel.getAdditionByTitle("Ergänzung1"));
     }
 
     @Test
@@ -790,19 +892,38 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
+        assertAll("Glossary",
+                () -> assertEquals("Alles was kein Glossar ist.",
+                        myModel.getGlossaryEntryByTerm("Glossar").getBoundary()),
+                () -> assertEquals("Gibt's auch nicht2",
+                        myModel.getGlossaryEntryByTerm("Glossar2").getLabel()),
+                () -> assertEquals("Gibt's nicht.",
+                        myModel.getGlossaryEntryByTerm("Glossar").getObscurities()),
+                () -> assertEquals("Ist ein Glossar2.",
+                        myModel.getGlossaryEntryByTerm("Glossar2").getSense()),
+                () -> assertEquals("Glossar",
+                        myModel.getGlossaryEntryByTerm("Glossar").getTerm()),
+                () -> assertEquals("In dem Projekt2",
+                        myModel.getGlossaryEntryByTerm("Glossar2").getValidity()),
+                () -> assertEquals(new ArrayList<String>(),
+                        myModel.getGlossaryEntryByTerm("Glossar").getReferenceTerms()));
     }
 
     @Test
@@ -818,19 +939,31 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
         catch (UnknownReferenceException e)
         {
             e.printStackTrace();
+            fail("Unknown Reference was not part of this test");
         }
+        assertAll("Glossary",
+                () -> assertEquals("", myModel.getGlossaryEntryByTerm("").getBoundary()),
+                () -> assertEquals("", myModel.getGlossaryEntryByTerm("").getLabel()),
+                () -> assertEquals("", myModel.getGlossaryEntryByTerm("").getObscurities()),
+                () -> assertEquals("", myModel.getGlossaryEntryByTerm("").getSense()),
+                () -> assertEquals("", myModel.getGlossaryEntryByTerm("").getTerm()),
+                () -> assertEquals("", myModel.getGlossaryEntryByTerm("").getValidity()),
+                () -> assertEquals(new ArrayList<String>(), myModel.getGlossaryEntryByTerm("").getReferenceTerms()));
     }
 
     @Test
@@ -844,11 +977,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
+        assertEquals(null, myModel.getGlossaryEntryByTerm("Glossar2"));
     }
 
     @Test
@@ -862,16 +998,20 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
+        assertFalse(null == myModel.getCostEstimation());
     }
 
     @Test
     void addSecondCostEstimation()
     {
+        boolean secondEst = false;
         addCostEstimation();
         try
         {
@@ -880,11 +1020,14 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            secondEst = true;
         }
+        assertTrue(secondEst);
     }
 
     @Test
@@ -898,69 +1041,51 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
+        assertTrue(null == myModel.getCostEstimation());
     }
 
     @Test
     void isReferenceOnID()
     {
         addFReq();
-        if (myModel.isReferenceOnID("/LF001/"))
-            System.out.println("/LF001/ is referenced");
-        else
-            System.out.println("/LF001/ is not referenced");
-        if (myModel.isReferenceOnID("/LF010/"))
-            System.out.println("/LF010/ is referenced");
-        else
-            System.out.println("/LF010/ is not referenced");
+        assertTrue(myModel.isReferenceOnID("/LF001/"));
+        assertFalse(myModel.isReferenceOnID("/LF003/"));
     }
 
     @Test
     void isIDUnique()
     {
         addFReq();
-        if (myModel.isIDUnique("/LF001/"))
-            System.out.println("/LF001/ is unique");
-        else
-            System.out.println("/LF001/ is not unique");
-        if (myModel.isIDUnique("/LF010/"))
-            System.out.println("/LF010/ is unique");
-        else
-            System.out.println("/LF010/ is not unique");
+        assertFalse(myModel.isIDUnique("/LF001/"));
+        assertTrue(myModel.isIDUnique("/LF010/"));
     }
 
     @Test
     void existsActualState()
     {
         makeNewReqAnPass();
-        if (myModel.existsActualState())
-            System.out.println("Actual state is existing");
-        else
-            System.out.println("Actual state is not existing");
+        assertFalse(myModel.existsActualState());
     }
 
     @Test
     void existsFPCount()
     {
         addCostEstimation();
-        if (myModel.existsFPCount())
-            System.out.println("Function Point count is existing");
-        else
-            System.out.println("Function Point count is not existing");
+        assertFalse(myModel.existsFPCount());
     }
 
     @Test
     void existsManMonthCount()
     {
         addCostEstimation();
-        if (myModel.existsManMonthCount())
-            System.out.println("Man Month count is existing");
-        else
-            System.out.println("Man Month count is not existing");
+        assertFalse(myModel.existsManMonthCount());
     }
 
     @Test
@@ -969,34 +1094,46 @@ class ModelTest
         addCostEstimation();
         try
         {
-            myModel.setDataFP(ClassOfDataFP.EIF_EXTERNAL_INPUT_FILE, "/LD001/", 5, 7);
+            myModel.setDataFP(ClassOfDataFP.EIF_EXTERNAL_INPUT_FILE, "/LD001/", 2, 3);
         }
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
         catch (NumberOutOfBoundsException e)
         {
             e.printStackTrace();
+            fail("NumberOutOfBounds was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
+        assertAll("Data Function Point",
+                () -> assertEquals(ClassOfDataFP.EIF_EXTERNAL_INPUT_FILE,
+                        myModel.getCostEstimation().getDataFPByID("/LD001/").getType()),
+                () -> assertEquals("/LD001/",
+                        myModel.getCostEstimation().getDataFPByID("/LD001/").getRequirement().getID()),
+                () -> assertEquals(2, myModel.getCostEstimation().getDataFPByID("/LD001/").getDet()),
+                () -> assertEquals(3, myModel.getCostEstimation().getDataFPByID("/LD001/").getRet()));
     }
 
     @Test
     void setTransactionFP()
     {
-        addCostEstimation();
+        setDataFP();
         try
         {
             myModel.setTransactionFP(ClassOfTransactionFP.EI_INPUT, "/LF001/", 5,3);
@@ -1004,23 +1141,35 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
         catch (NumberOutOfBoundsException e)
         {
             e.printStackTrace();
+            fail("NumberOutOfBounds was not part of this test");
         }
         catch (DuplicateIDException e)
         {
             e.printStackTrace();
+            fail("Duplicate ID was not part of this test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
+        assertAll("Data Function Point",
+                () -> assertEquals(ClassOfTransactionFP.EI_INPUT,
+                        myModel.getCostEstimation().getTransactionFPByID("/LF001/").getType()),
+                () -> assertEquals("/LF001/",
+                        myModel.getCostEstimation().getTransactionFPByID("/LF001/").getRequirement().getID()),
+                () -> assertEquals(5, myModel.getCostEstimation().getTransactionFPByID("/LF001/").getDet()),
+                () -> assertEquals(3, myModel.getCostEstimation().getTransactionFPByID("/LF001/").getFtr()));
     }
 
     @Test
@@ -1034,19 +1183,30 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
         catch (NumberOutOfBoundsException e)
         {
             e.printStackTrace();
+            fail("NumberOutOfBounds was not part of this test");
         }
+        assertAll("Data Function Point",
+                () -> assertEquals(ClassOfDataFP.ILF_INTERNAL_LOGICAL_FILE,
+                        myModel.getCostEstimation().getDataFPByID("/LD001/").getType()),
+                () -> assertEquals("/LD001/",
+                        myModel.getCostEstimation().getDataFPByID("/LD001/").getRequirement().getID()),
+                () -> assertEquals(2, myModel.getCostEstimation().getDataFPByID("/LD001/").getDet()),
+                () -> assertEquals(3, myModel.getCostEstimation().getDataFPByID("/LD001/").getRet()));
     }
 
     @Test
@@ -1060,29 +1220,36 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
         catch (UnknownIDException e)
         {
             e.printStackTrace();
+            fail("Unknown ID was not part of this test");
         }
+        assertEquals(null, myModel.getCostEstimation().getTransactionFPByID("/LF001/"));
     }
 
     @Test
     void rateWeightFactor()
     {
-        addCostEstimation();
+        setTransactionFP();
         ArrayList<IWeightFactor> myFactors = myModel.getAllWeightFactor();
         HashMap<String, Integer> ratedFactors = new HashMap<String, Integer>();
         Random rn = new Random();
+        String titleToTest = null;
+        int valueToTest = 0;
         for (IWeightFactor myFactor : myFactors)
         {
-            String title = myFactor.getTitle();
-            int value = rn.nextInt(6);
-            ratedFactors.put(title, value);
+            titleToTest = myFactor.getTitle();
+            valueToTest = valueToTest + 1 % 11; // for test: expects that maxValue is 10
+                                                // (Configuration is defaultly set to 10)
+            ratedFactors.put(titleToTest, valueToTest);
         }
         try
         {
@@ -1091,27 +1258,31 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (NumberOutOfBoundsException e)
         {
             e.printStackTrace();
+            fail("NumberOutOfBounds was not part of this test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
         catch (ListOverflowException e)
         {
             e.printStackTrace();
+            fail("ListOverFlow was not part of this test");
         }
+        assertTrue(titleToTest.equals(myModel.getCostEstimation().getWeightFactorByTitle(titleToTest).getTitle()));
+        assertTrue(valueToTest == myModel.getCostEstimation().getWeightFactorByTitle(titleToTest).getValue());
     }
 
     @Test
     void calcFPCount()
     {
-        setDataFP();
-        setTransactionFP(); // Throws some DuplicateIDErrors because of second call of putInRandomData
-        rateWeightFactor();
+        rateWeightFactor(); // Otherwise the factors would be zero from Config
         try
         {
             myModel.calcFPCount();
@@ -1119,11 +1290,15 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
+        assertTrue((myModel.getCostEstimation().getFunctionPoints() > 6.99) &&
+                (myModel.getCostEstimation().getFunctionPoints() < 7.01));
     }
 
     @Test
@@ -1137,17 +1312,21 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
+        assertTrue((myModel.getCostEstimation().getManMonth() > 2.17) &&
+            (myModel.getCostEstimation().getManMonth() < 2.19));
     }
 
     @Test
     void setActualState()
     {
-        addCostEstimation();
+        calcManMonth();
         try
         {
             myModel.setActualState(2.0);
@@ -1155,28 +1334,27 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (NumberOutOfBoundsException e)
         {
             e.printStackTrace();
+            fail("NumberOutOfBounds was not part of this test");
         }
+        assertTrue(2.0 == myModel.getReqAnalysis().getActualState());
     }
 
     @Test
     void existsOptWeightFactor()
     {
-        if(myModel.existsOptWeightFactor())
-            System.out.println("Optimal Weight Factors are existing");
-        else
-            System.out.println("Optimal Weight Factors are not existing");
+        adjustWeightFactor();
+        assertTrue(myModel.existsOptWeightFactor());
     }
 
     @Test
     void adjustWeightFactor()
     {
-        rateWeightFactor();
-        calcManMonth(); // throws error because of many calls of putInRandomData
-        setActualState();
+        setActualState(); // set to 2.0
         try
         {
             myModel.adjustWeightFactor();
@@ -1184,141 +1362,42 @@ class ModelTest
         catch (MissingReqAnException e)
         {
             e.printStackTrace();
+            fail("MissingReq was not part of the test");
         }
         catch (MissingCostEstimationException e)
         {
             e.printStackTrace();
+            fail("Missing Cost Estimation was not part of the test");
         }
         catch (MissingFPException e)
         {
             e.printStackTrace();
+            fail("Missing Function Points was not part of this test");
         }
         catch (NumberOutOfBoundsException e)
         {
             e.printStackTrace();
+            fail("NumberOutOfBounds was not part of this test");
         }
+        // Due To the minimal change of the weight factors, the optimal will have the same value than the original ones.
+        // Therefore, it only tests for the same value.
+        boolean sameValues = true;
+        for (IWeightFactor fac : myModel.getAllWeightFactor())
+        {
+            if (fac.getValue() != myModel.getOptWeightFactorByTitle(fac.getTitle()).getValue())
+            {
+                sameValues = false;
+            }
+        }
+        assertTrue(sameValues);
     }
 
     @Test
     void existsID()
     {
         putInRandomData();
-        if(myModel.existsID("/LF001/"))
-            System.out.println("ID /LF001/ exists");
-        else
-            System.out.println("ID /LF001/ does not exists");
-        if(myModel.existsID("/LF00/"))
-            System.out.println("ID /LF00/ exists");
-        else
-            System.out.println("ID /LF00/ does not exists");
+        assertTrue(myModel.existsID("/LF001/"));
+        assertFalse(myModel.existsID("/LF00/"));
     }
 
-    @Test
-    void getFReqByID()
-    {
-        putInRandomData();
-        IFRequirement myReq = myModel.getFReqByID("/LF001/");
-        System.out.println("Titel: " + myReq.getTitle());
-        System.out.println("ID: " + myReq.getID());
-        System.out.println("Actor: " + myReq.getActor());
-        System.out.println("Description: " + myReq.getDescription());
-        System.out.println("Referenzen:");
-        int i = 0;
-        for (String ref : myReq.getReferenceIDs())
-        {
-            System.out.println("Referenz " + i + ": " + ref);
-        }
-        if (i == 0)
-        {
-            System.out.println("Keine Referenzen");
-        }
-    }
-
-    @Test
-    void getCustomerData()
-    {
-        putInRandomData();
-        System.out.println("Kundenname: " + myModel.getCustomerData().getCName());
-        System.out.println("Kundenmail: " + myModel.getCustomerData().getCEMail());
-        System.out.println("Kundentelnummer: " + myModel.getCustomerData().getCNumber());
-        System.out.println("Projektmanagername: " + myModel.getCustomerData().getPMName());
-        System.out.println("Projektmanagermail: " + myModel.getCustomerData().getPMEMail());
-        System.out.println("Projektmanagertelnummer: " + myModel.getCustomerData().getPMPNumber());
-        System.out.println("Firmenname: " + myModel.getCustomerData().getCompanyName());
-        System.out.println("Straße: " + myModel.getCustomerData().getCompanyStreet());
-        System.out.println("Postleitzahl: " + myModel.getCustomerData().getCompanyPLZ());
-        System.out.println("Stadt: " + myModel.getCustomerData().getCompanyCity());
-        System.out.println("Land: " + myModel.getCustomerData().getCompanyCountry());
-    }
-
-    @Test
-    void getProdApp()
-    {
-        putInRandomData();
-        System.out.println(myModel.getProdApp().getDescription());
-    }
-
-    @Test
-    void getProdEnv()
-    {
-        putInRandomData();
-        System.out.println(myModel.getProdEnv().getDescription());
-    }
-
-    @Test
-    void getGlossaryEntryByTerm()
-    {
-        putInRandomData();
-        IGlossaryEntry myEntry = myModel.getGlossaryEntryByTerm("Glossar2");
-        System.out.println("Begriff: " + myEntry.getTerm());
-        System.out.println("Bedeutung: " + myEntry.getSense());
-        System.out.println("Abgrenzung: " + myEntry.getBoundary());
-        System.out.println("Unklarheiten: " + myEntry.getObscurities());
-        System.out.println("Bezeichnung: " + myEntry.getLabel());
-        System.out.println("Gültigkeit: " + myEntry.getValidity());
-        System.out.println("Referenzen:");
-        int i = 0;
-        for (String ref : myEntry.getReferenceTerms())
-        {
-            System.out.println("Referenz " + i + ": " + ref);
-        }
-        if (i == 0)
-        {
-            System.out.println("Keine Referenzen");
-        }
-    }
-
-    @Test
-    void getAllFReq()
-    {
-        putInRandomData();
-        for (IFRequirement myFReq : myModel.getAllFReq())
-        {
-            System.out.println("Titel: " + myFReq.getTitle());
-            System.out.println("ID: " + myFReq.getID());
-            System.out.println("Actor: " + myFReq.getActor());
-            System.out.println("Description: " + myFReq.getDescription());
-            System.out.println("Referenzen:");
-            int i = 0;
-            for (String ref : myFReq.getReferenceIDs())
-            {
-                System.out.println("Referenz " + i + ": " + ref);
-            }
-            if (i == 0)
-            {
-                System.out.println("Keine Referenzen");
-            }
-            System.out.println();
-        }
-    }
-
-    @Test
-    void getAllReqIDs()
-    {
-        putInRandomData();
-        for(String id : myModel.getAllReqIDs())
-        {
-            System.out.println("ID: " + id);
-        }
-    }
 }

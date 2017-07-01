@@ -30,17 +30,41 @@ public class FileOperations
 
     public static void writeLinesToFile(String path, ArrayList<String> lines)
     {
+        BufferedWriter bw = null;
+        FileWriter fw = null;
         try
         {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+            bw = new BufferedWriter(fw = new FileWriter(path));
             for (String line : lines)
             {
                 bw.write(line);
+                bw.newLine();
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (bw != null)
+                bw.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                if (fw != null)
+                fw.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }
