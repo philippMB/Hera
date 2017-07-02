@@ -25,7 +25,7 @@ public class FRequirementEditController
 	}
 
 	@Override
-	protected void addRequirementToModel(ArrayList<String> referenceList)
+	protected void addRequirementToModel(ArrayList<String> referenceList) throws Exception
 	{
 		myModel.addFReq(
 				myView.getIDEntry(),
@@ -37,7 +37,7 @@ public class FRequirementEditController
 	}
 
 	@Override
-	protected void editRequirementFromModel(ArrayList<String> referenceList)
+	protected void editRequirementFromModel(ArrayList<String> referenceList) throws Exception
 	{
 		myModel.editFReq(
 				myReqID,

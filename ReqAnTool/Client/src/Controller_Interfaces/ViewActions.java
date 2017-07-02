@@ -42,7 +42,8 @@ public enum ViewActions
 	ADD_PROD("ADD_PRODUCT_DATA"),
 	ADD_QR("ADD_QUALITY_REQUIREMENT"),
 	ADD_GLOS("ADD_GLOSSARY_ENTRY"),
-	ADD_ADDIT("ADD_ADDITION");
+	ADD_ADDIT("ADD_ADDITION"),
+	CREATE_CE("CREATE_CE");
 
 	private final String propertyName;
 

@@ -1,5 +1,6 @@
 package View;
 
+import Controller_Interfaces.ITextController;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
@@ -145,5 +146,18 @@ public class FRequirementEditView
 	protected void setIDEntry(String ID)
 	{
 		fieldID.setText(ID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addTextController(ITextController textfieldController)
+	{
+		TextAreaListener textAreaListener = new TextAreaListener(textfieldController);
+		fieldID.getDocument().addDocumentListener(textAreaListener);
+		fieldDescription.getDocument().addDocumentListener(textAreaListener);
+		fieldTitle.getDocument().addDocumentListener(textAreaListener);
+		fieldActor.getDocument().addDocumentListener(textAreaListener);
 	}
 }

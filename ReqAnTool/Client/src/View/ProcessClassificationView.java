@@ -6,18 +6,13 @@ import Model_Interfaces.*;
 import View_Interfaces.IProcessClassificationView;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.View;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Observable;
 
 /**
  *
  */
-public abstract class ProcessClassificationView
+public abstract class ProcessClassificationView<RequirementType extends IRequirement>
 	extends FormWindow
 	implements IProcessClassificationView
 {
@@ -26,10 +21,17 @@ public abstract class ProcessClassificationView
 			ViewActions.SAVE,
 			ViewActions.CANCEL
 	};
+	private final String DFP_Text;
+	private final String TFP_Text;
+	private final String EIF_Text;
+	private final String ILF_Text;
+	private final String EI_Text;
+	private final String EO_Text;
+	private final String EQ_Text;
 
+	protected RequirementType myReq;
 	protected IModelGetData myModel;
 	private JTextField fieldID;
-	private JTable tableReferences;
 	private SingleColumnTableModel tableRefModel;
 	private JComboBox<String> comboBoxClass;
 	private JComboBox<String> comboBoxTyp_DFP;
@@ -48,8 +50,15 @@ public abstract class ProcessClassificationView
 		super();
 		myModel = model;
 		setButtonActions(BUTTON_ACTIONS);
+		DFP_Text = myTextBundle.getParameterText(TextNameConstants.PAR_DFP);
+		TFP_Text = myTextBundle.getParameterText(TextNameConstants.PAR_TFP);
+		EIF_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EIF);
+		ILF_Text = myTextBundle.getParameterText(TextNameConstants.PAR_ILF);
+		EI_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EI);
+		EO_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EO);
+		EQ_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EQ);
 
-		loadInternRequirement(ID);
+		myReq = getRequirementFromModel(ID);
 
 		init();
 	}
@@ -73,10 +82,10 @@ public abstract class ProcessClassificationView
 		myBuilder.addTitle(titleText);
 		fieldID = myBuilder.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_ID),
-				getMyRequirement().getID(),
+				myReq.getID(),
 				false
 		);
-		tableReferences = myBuilder.addTable(
+		JTable tableReferences = myBuilder.addTable(
 				myTextBundle.getParameterText(TextNameConstants.PAR_REFERENCES),
 				new String[0][0]
 		);
@@ -92,14 +101,17 @@ public abstract class ProcessClassificationView
 		myBuilder.addPanel(panelHolder);
 		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
 
+		setActionCommands();
+		createComboBoxListener();
 		getContentPane().add(myBuilder.getResult());
+		pack();
 
 		setUpForRequirement();
 	}
 
 	private String[] getReferencesAsArray()
 	{
-		String[] referencesID = getMyRequirement().getReferenceIDs().toArray(new String[0]);
+		String[] referencesID = myReq.getReferenceIDs().toArray(new String[0]);
 		return referencesID;
 	}
 
@@ -107,8 +119,7 @@ public abstract class ProcessClassificationView
 	{
 		panelDFP = new JPanel();
 		panelDFP.setLayout(new BorderLayout());
-		panelDFP.setSize(200,400);	//Formula-Size
-		PanelBuilder myDFPBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(panelDFP);
+		PanelBuilder myDFPBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
 
 		comboBoxTyp_DFP = myDFPBuilder.addNamedDropdownList(
 				myTextBundle.getParameterText(TextNameConstants.PAR_TYP),
@@ -122,16 +133,15 @@ public abstract class ProcessClassificationView
 				myTextBundle.getParameterText(TextNameConstants.PAR_RET),
 				""
 		);
-
 		panelDFP.add(myDFPBuilder.getResult(),BorderLayout.CENTER);
+
 	}
 
 	private void buildTFPSelection()
 	{
 		panelTFP = new JPanel();
 		panelTFP.setLayout(new BorderLayout());
-		panelTFP.setSize(200,400);	//Formula-Size
-		PanelBuilder myTFPBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(panelTFP);
+		PanelBuilder myTFPBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
 
 		comboBoxTyp_TFP = myTFPBuilder.addNamedDropdownList(
 				myTextBundle.getParameterText(TextNameConstants.PAR_TYP),
@@ -145,16 +155,42 @@ public abstract class ProcessClassificationView
 				myTextBundle.getParameterText(TextNameConstants.PAR_FTR),
 				""
 		);
+		panelTFP.add(myTFPBuilder.getResult(),BorderLayout.CENTER);
+	}
 
-		panelDFP.add(myTFPBuilder.getResult(),BorderLayout.CENTER);
+	private void createComboBoxListener()
+	{
+		comboBoxClass.addActionListener(
+				(actionEvent) -> performClassChange()
+		);
+	}
+
+	private void performClassChange()
+	{
+		String selectedItem = (String)comboBoxClass.getSelectedItem();
+		if(selectedItem.equals(TFP_Text))
+		{
+			showTransactionFP();
+		}
+		else
+		{
+			if(selectedItem.equals(DFP_Text))
+			{
+				showDataFP();
+			}
+			else
+			{
+				showDefault();
+			}
+		}
 	}
 
 	private String[] getSelectionClassNames()
 	{
 		String[] selectionClassNames = new String[]{
 				"---",
-				myTextBundle.getParameterText(TextNameConstants.PAR_TFP),
-				myTextBundle.getParameterText(TextNameConstants.PAR_DFP)
+				TFP_Text,
+				DFP_Text
 		};
 		return selectionClassNames;
 	}
@@ -172,15 +208,14 @@ public abstract class ProcessClassificationView
 	private String[] getSelectionDFPNames()
 	{
 		String[] selectionDFPNames = new String[]{
-				myTextBundle.getParameterText(TextNameConstants.PAR_ILF),
-				myTextBundle.getParameterText(TextNameConstants.PAR_EIF)
+				ILF_Text,
+				EIF_Text
 		};
 		return selectionDFPNames;
 	}
 
 	private void setUpForRequirement()
 	{
-		IRequirement myReq = getMyRequirement();
 		String reqID = myReq.getID();
 		ICostEstimation myCostEstimation = myModel.getCostEstimation();
 
@@ -189,6 +224,7 @@ public abstract class ProcessClassificationView
 			IDataFP myDataFP = myCostEstimation.getDataFPByID(reqID);
 			setFieldsOnDataFP(myDataFP);
 			setComboBoxOnDataFP(myDataFP);
+			comboBoxClass.setSelectedItem(DFP_Text);
 			showDataFP();
 		}
 		else
@@ -198,6 +234,7 @@ public abstract class ProcessClassificationView
 				ITransactionFP myTransactionFP = myCostEstimation.getTransactionFPByID(reqID);
 				setFieldsOnTransactionFP(myTransactionFP);
 				setComboBoxOnTransactionFP(myTransactionFP);
+				comboBoxClass.setSelectedItem(TFP_Text);
 				showTransactionFP();
 			}
 			else
@@ -254,8 +291,6 @@ public abstract class ProcessClassificationView
 		}
 	}
 
-	//TODO: Write internal controller who handles setting DataFP and TransactionFP
-
 	private void showDataFP()
 	{
 		panelTFP.setVisible(false);
@@ -274,26 +309,21 @@ public abstract class ProcessClassificationView
 		panelTFP.setVisible(false);
 	}
 
-
-	//TODO: Rewrite to enum instead of real class
 	@Override
-	public Class getSelectedClass()
+	public IClassOfFP getSelectedClass()
 	{
-		Class selectedClass;
+		IClassOfFP selectedClass;
 
 		String selectedItem = (String)comboBoxClass.getSelectedItem();
-		final String DFP_Text = myTextBundle.getParameterText(TextNameConstants.PAR_DFP);
-		final String TFP_Text = myTextBundle.getParameterText(TextNameConstants.PAR_TFP);
-
 		if(selectedItem.equals(DFP_Text))
 		{
-			selectedClass = IDataFP.class;
+			selectedClass = getSelectedClassOfDFP();
 		}
 		else
 		{
 			if(selectedItem.equals(TFP_Text))
 			{
-				selectedClass = ITransactionFP.class;
+				selectedClass = getSelectedClassOfTFP();
 			}
 			else
 			{
@@ -310,9 +340,6 @@ public abstract class ProcessClassificationView
 		ClassOfDataFP selectedClass;
 
 		String selectedItem = (String)comboBoxTyp_DFP.getSelectedItem();
-		final String EIF_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EIF);
-		final String ILF_Text = myTextBundle.getParameterText(TextNameConstants.PAR_ILF);
-
 		if(selectedItem.equals(EIF_Text))
 		{
 			selectedClass = ClassOfDataFP.EIF_EXTERNAL_INPUT_FILE;
@@ -338,10 +365,6 @@ public abstract class ProcessClassificationView
 		ClassOfTransactionFP selectedClass;
 
 		String selectedItem = (String)comboBoxTyp_TFP.getSelectedItem();
-		final String EI_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EI);
-		final String EO_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EO);
-		final String EQ_Text = myTextBundle.getParameterText(TextNameConstants.PAR_EQ);
-
 		if(selectedItem.equals(EI_Text))
 		{
 			selectedClass = ClassOfTransactionFP.EI_INPUT;
@@ -373,14 +396,14 @@ public abstract class ProcessClassificationView
 	{
 		String entryDET;
 
-		Class selectedClass = getSelectedClass();
-		if(selectedClass.equals(ITransactionFP.class))
+		IClassOfFP selectedClass = getSelectedClass();
+		if(selectedClass instanceof ClassOfTransactionFP)
 		{
 			entryDET = fieldDET_TFP.getText();
 		}
 		else
 		{
-			if(selectedClass.equals(IDataFP.class))
+			if(selectedClass instanceof ClassOfDataFP)
 			{
 				entryDET = fieldDET_DFP.getText();
 			}
@@ -412,6 +435,12 @@ public abstract class ProcessClassificationView
 	}
 
 	@Override
+	public String getReqID()
+	{
+		return myReq.getID();
+	}
+
+	@Override
 	public void update(Observable o, Object arg)
 	{
 		updateID();
@@ -419,10 +448,16 @@ public abstract class ProcessClassificationView
 		updateReqSpecificDescription();
 	}
 
+	@Override
+	public void destruct()
+	{
+		super.destruct();
+		myModel.deleteObserver(this);
+	}
+
 	private void updateID()
 	{
-		IRequirement myRequirement = getMyRequirement();
-		fieldID.setText(myRequirement.getID());
+		fieldID.setText(myReq.getID());
 	}
 
 	private void updateReferences()
@@ -430,12 +465,10 @@ public abstract class ProcessClassificationView
 		tableRefModel.setTableEntries(getReferencesAsArray());
 	}
 
-	protected abstract void loadInternRequirement(String ID);
+	protected abstract RequirementType getRequirementFromModel(String ID);
 
 	protected abstract void buildReqSpecificDescription();
 
 	protected abstract void updateReqSpecificDescription();
-
-	public abstract IRequirement getMyRequirement();
 
 }

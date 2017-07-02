@@ -1,6 +1,10 @@
 package Model_Interfaces;
 
+import Model.ComplexityMatrix;
+import Model.ComplexityWeightMatrix;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by phlippe on 26.04.17.
@@ -9,27 +13,31 @@ import java.util.ArrayList;
 public interface ICostEstimation 
 {
     
-    public void calculateFP();
+    void calculateFP();
     
-    public void calculateManMonth();
+    void calculateManMonth();
     
-    public double getFunctionPoints();
+    double getFunctionPoints();
     
-    public double getManMonth();
+    double getManMonth();
     
-    public ArrayList<IDataFP> getDataFPs();
+    ArrayList<IDataFP> getDataFPs();
     
-    public ArrayList<ITransactionFP> getTransactionFPs();
+    ArrayList<ITransactionFP> getTransactionFPs();
 
-    public ArrayList<IWeightFactor> getWeightFactors();
+    ArrayList<IWeightFactor> getWeightFactors();
 
-    public IWeightFactor getWeightFactorByTitle(String title);
+    IWeightFactor getWeightFactorByTitle(String title);
 
-    public boolean hasIDDataFP(String id);
+    boolean hasIDDataFP(String id);
 
-    public boolean hasIDTransactionFP(String id);
+    boolean hasIDTransactionFP(String id);
 
-    public IDataFP getDataFPByID(String id);
+    IDataFP getDataFPByID(String id);
 
-    public ITransactionFP getTransactionFPByID(String id);
+    ITransactionFP getTransactionFPByID(String id);
+
+    Map<IClassOfFP, ComplexityMatrix> getComplexityMatrices();
+
+    ComplexityWeightMatrix getComplexityWeightMatrix();
 }

@@ -2,6 +2,7 @@ package Controller;
 
 import Controller_Interfaces.ITextController;
 import View_Interfaces.ITextTab;
+import View_Interfaces.ITextView;
 
 /**
  * Created by phlippe on 25.06.17.
@@ -13,13 +14,13 @@ public class TextFieldController
 	private boolean hasTextChangedSinceSaving;
 
 
-	public TextFieldController(ITextTab myView)
+	public TextFieldController(ITextView myView)
 	{
 		setView(myView);
 		hasTextChangedSinceSaving = false;
 	}
 
-	public void setView(ITextTab myView)
+	public void setView(ITextView myView)
 	{
 		if(myView != null)
 		{

@@ -19,7 +19,7 @@ public class ProductApplicationTabController
 	}
 
 	@Override
-	protected void editDescriptionInModel(String newDescription)
+	protected void editDescriptionInModel(String newDescription) throws Exception
 	{
 		myModel.editProdApp(newDescription);
 	}

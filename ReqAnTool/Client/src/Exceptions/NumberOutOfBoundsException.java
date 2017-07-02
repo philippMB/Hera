@@ -11,7 +11,7 @@ package Exceptions;
  * @version 1.0
  */
 public class NumberOutOfBoundsException
-	extends Exception
+	extends LoggedException
 {
 
 	/**

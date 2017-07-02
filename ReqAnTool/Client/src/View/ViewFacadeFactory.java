@@ -400,27 +400,13 @@ public class ViewFacadeFactory
 		{
 			myView = new ProcessClassificationFReqView(myModel, ID);
 		}
-		if(myModel.getNFReqByID(ID) != null)
+		if(myView == null && myModel.getNFReqByID(ID) != null)
 		{
-			if(myView != null)
-			{
-				myView = new ProcessClassificationNFReqView(myModel, ID);
-			}
-			else
-			{
-				//TODO: LOGINFO, DUPLICATE ID
-			}
+			myView = new ProcessClassificationNFReqView(myModel, ID);
 		}
-		if(myModel.getProductDataByID(ID) != null)
+		if(myView == null && myModel.getProductDataByID(ID) != null)
 		{
-			if(myView != null)
-			{
-				myView = new ProcessClassificationProdDataView(myModel, ID);
-			}
-			else
-			{
-				//TODO: LOGINFO, DUPLICATE ID
-			}
+			myView = new ProcessClassificationProdDataView(myModel, ID);
 		}
 
 		return myView;
@@ -532,7 +518,6 @@ public class ViewFacadeFactory
 	public IWarningDialog createWarningDialog(@Nullable IView parentView, @NotNull String dialogPropertyName,
 											  @Nullable String[] placeholderInText)
 	{
-		//TODO: Put TextBundle access in warning dialog
 		IWarningDialog newWarningDialog = new WarningDialog(
 				getFrameOfView(parentView),
 				dialogPropertyName,
@@ -621,20 +606,16 @@ public class ViewFacadeFactory
 		return myView;
 	}
 
-	private ErrorCodes addTabToTabView(IProjectView tabView, ITab tab)
+	private void addTabToTabView(@NotNull IProjectView tabView,@NotNull ITab tab)
 	{
-		ErrorCodes myErrorCode = ErrorCodes.NO_ERROR;
-
 		if(tabView != null)
 		{
 			tabView.addTab(tab);
 		}
 		else
 		{
-			myErrorCode = ErrorCodes.NULL_POINTER; //TODO: LOGINFO GIVEN TABVIEW NULL
+			myLogger.warning("TabView to which a tab should be added is null - Tab: "+tab.toString());
 		}
-
-		return myErrorCode;
 	}
 
 	private @Nullable JFrame getFrameOfView(IView view)

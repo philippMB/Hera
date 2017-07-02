@@ -1,6 +1,7 @@
 package Controller;
 
 
+import Exceptions.NoItemSelectedException;
 import LanguageAndText.DialogConstants;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModel;
@@ -37,7 +38,7 @@ public class FRequirementTabController
 		}
 		else
 		{
-			//TODO: ERROR-DIALOG - Nothing selected
+			handleException(new NoItemSelectedException(getClass().getName()));
 		}
 	}
 
@@ -51,34 +52,53 @@ public class FRequirementTabController
 		}
 		else
 		{
-			//TODO: ERROR-DIALOG - Nothing selected
+			handleException(new NoItemSelectedException(getClass().getName()));
 		}
 	}
 
 	@Override
 	protected void executeDeleteAction()
 	{
-		controllerManager.createControlledWarningDialog(
-				parentView,
-				DialogConstants.DIALOG_DELETE_WARNING,
-				new String[]{
-						myTextBundle.getParameterText(TextNameConstants.PAR_FREQ) + " " + getSelectedIdentifier()
-				},
-				new DeleteWarningController(myModel, null)
-				{
-					@Override
-					protected void deleteObject()
+		if(getSelectedIdentifier() != null)
+		{
+			controllerManager.createControlledWarningDialog(
+					parentView,
+					DialogConstants.DIALOG_DELETE_WARNING,
+					new String[]{
+							myTextBundle.getParameterText(TextNameConstants.PAR_FREQ) + " " + getSelectedIdentifier()
+					},
+					new DeleteWarningController(myModel, null)
 					{
-						closeView();
-						myModel.remFReqByID(getSelectedIdentifier());
-					}
+						@Override
+						protected void deleteObject()
+						{
+							closeView();
+							tryToDeleteSelFReq();
+						}
 
-					@Override
-					protected void cancelDeletion()
-					{
-						closeView();
+						@Override
+						protected void cancelDeletion()
+						{
+							closeView();
+						}
 					}
-				}
-		);
+			);
+		}
+		else
+		{
+			handleException(new NoItemSelectedException(getClass().getName()));
+		}
+	}
+
+	private void tryToDeleteSelFReq()
+	{
+		try
+		{
+			myModel.remFReqByID(getSelectedIdentifier());
+		}
+		catch(Exception ex)
+		{
+			handleException(ex);
+		}
 	}
 }

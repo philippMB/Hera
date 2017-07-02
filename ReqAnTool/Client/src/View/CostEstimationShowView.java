@@ -7,6 +7,7 @@ import View_Interfaces.ICostEstimationShowView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -37,6 +38,7 @@ public class CostEstimationShowView
 	{
 		super();
 		myModel = model;
+		myModel.addObserver(this);
 		setButtonActions(BUTTON_ACTIONS);
 
 		init();
@@ -47,46 +49,64 @@ public class CostEstimationShowView
 	{
 		String titleText = myTextBundle.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION);
 		setTitle(titleText);
-		myBuilder.addTitle(titleText);
+		myBuilder.addPanel(buildEPTables());
+		myBuilder.addNewSection();
+		myBuilder.addPanel(buildCalcViewPart());
 
-		tableDataFP = myBuilder.addTable(
-				myTextBundle.getParameterText(TextNameConstants.PAR_DFP),
+		setActionCommands();
+		setLayout(new BorderLayout());
+		getContentPane().add(myBuilder.getResult(), BorderLayout.CENTER);
+		pack();
+		setResizable(false);
+	}
+
+	private JPanel buildEPTables()
+	{
+		PanelBuilder builderForEP = PanelBuilderFactory.getInstance().createPanelBuilder(this);
+		builderForEP.addTitle(myTextBundle.getParameterText(TextNameConstants.PAR_DFP));
+		tableDataFP = builderForEP.addTable(
+				null,
 				new String[0][0],
 				new String[0]
 		);
 		tableDataFPModel = new StandardTableModel(calcTableEntriesDFP(), getColumnNamesDFP());
 		tableDataFP.setModel(tableDataFPModel);
 
-		tableTransactionFP = myBuilder.addTable(
-				myTextBundle.getParameterText(TextNameConstants.PAR_TFP),
+		builderForEP.addTitle(myTextBundle.getParameterText(TextNameConstants.PAR_TFP));
+		tableTransactionFP = builderForEP.addTable(
+				null,
 				new String[0][0],
 				new String[0]
 		);
 		tableTransactionFPModel = new StandardTableModel(calcTableEntriesTFP(), getColumnNamesTFP());
 		tableTransactionFP.setModel(tableTransactionFPModel);
+		return builderForEP.getResult();
+	}
 
-
-		tableWeightFactors = myBuilder.addTable(
-				myTextBundle.getParameterText(TextNameConstants.PAR_WEIGHT_FACTORS),
+	private JPanel buildCalcViewPart()
+	{
+		PanelBuilder builderForCalc = PanelBuilderFactory.getInstance().createPanelBuilder(this);
+		builderForCalc.addTitle(myTextBundle.getParameterText(TextNameConstants.PAR_WEIGHT_FACTORS));
+		tableWeightFactors = builderForCalc.addTable(
+				null,
 				new String[0][0],
 				new String[0]
 		);
 		tableWeightFactorsModel = new StandardTableModel(calcTableEntriesWF(), getColumnNamesWF());
 		tableWeightFactors.setModel(tableWeightFactorsModel);
 
-		fieldFunctionPoint = myBuilder.addNamedTextField(
+		fieldFunctionPoint = builderForCalc.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_FP),
 				"",
 				false
 		);
-		fieldManMonth = myBuilder.addNamedTextField(
+		fieldManMonth = builderForCalc.addNamedTextField(
 				myTextBundle.getParameterText(TextNameConstants.PAR_MM),
 				"",
 				false
 		);
-		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
-
-		getContentPane().add(myBuilder.getResult());
+		myButtons = builderForCalc.addButtonBar(BUTTON_ACTIONS);
+		return builderForCalc.getResult();
 	}
 
 	private String[][] calcTableEntriesWF()
@@ -276,6 +296,13 @@ public class CostEstimationShowView
 
 		fieldFunctionPoint.setText(textFP);
 		fieldManMonth.setText(textMM);
+	}
+
+	@Override
+	public void destruct()
+	{
+		super.destruct();
+		myModel.deleteObserver(this);
 	}
 
 }

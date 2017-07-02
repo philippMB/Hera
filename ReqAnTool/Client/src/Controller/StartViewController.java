@@ -1,6 +1,7 @@
 package Controller;
 
 import Model_Interfaces.IModel;
+import Model_Interfaces.XMLFormatType;
 import View_Interfaces.FileAccessType;
 import View_Interfaces.IFileChooser;
 import View_Interfaces.IStartView;
@@ -30,6 +31,7 @@ public class StartViewController
 		accessFile(
 				(absolutePath) ->
 				{
+					//TODO: Open ReqAn
 					//myModel.openReqAn(absolutePath);
 					controllerManager.createControlledProjectView();
 					closeView();
@@ -45,13 +47,34 @@ public class StartViewController
 		accessFile(
 				(absolutePath) ->
 				{
-					//myModel.importReqAn(absolutePath);
-					controllerManager.createControlledProjectView();
-					closeView();
+					//TODO: Import with XMLFormatType
+					boolean isImported = tryToImportXMLFromAddress(absolutePath);
+					if(isImported)
+					{
+						controllerManager.forceQuitAllViews();
+						controllerManager.createControlledProjectView();
+						closeView();
+					}
 				},
 				FileAccessType.IMPORT,
 				null
 		);
+	}
+
+	private boolean tryToImportXMLFromAddress(String address)
+	{
+		boolean isExported;
+		try
+		{
+			myModel.importFromXML(address, XMLFormatType.CUSTOM_XML_FORMAT);	//TODO: Nach Format fragen
+			isExported = true;
+		}
+		catch(Exception ex)
+		{
+			isExported = false;
+			handleException(ex);
+		}
+		return isExported;
 	}
 
 	@Override

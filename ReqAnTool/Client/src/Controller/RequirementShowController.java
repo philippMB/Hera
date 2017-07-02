@@ -30,7 +30,7 @@ public abstract class RequirementShowController<ReqShowViewType extends IRequire
 					protected void deleteObject()
 					{
 						closeView();
-						deleteRequirement(getReqID());
+						tryToDeleteRequirement();
 					}
 
 					@Override
@@ -45,8 +45,20 @@ public abstract class RequirementShowController<ReqShowViewType extends IRequire
 	@Override
 	protected void executeEditAction()
 	{
-		System.out.println("Edit Action");
-		editRequirement(getReqID());
+		startEditReqView(getReqID());
+		closeView();
+	}
+
+	private void tryToDeleteRequirement()
+	{
+		try{
+			deleteRequirement(getReqID());
+			closeView();
+		}
+		catch(Exception ex)
+		{
+			handleException(ex);
+		}
 	}
 
 	protected String getReqID()
@@ -69,9 +81,10 @@ public abstract class RequirementShowController<ReqShowViewType extends IRequire
 		myView.bringToFront();
 	}
 
-	protected abstract void deleteRequirement(String reqID);
+	//TODO: Write exact exceptions here
+	protected abstract void deleteRequirement(String reqID) throws Exception;
 
-	protected abstract void editRequirement(String reqID);
+	protected abstract void startEditReqView(String reqID);
 
 	protected abstract String[] createDeletePlaceholderArray();
 }

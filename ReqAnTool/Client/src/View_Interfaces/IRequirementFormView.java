@@ -18,14 +18,15 @@ package View_Interfaces;
  *     <li>{@link Controller_Interfaces.ViewActions#TABLE_SELECTION_DELETE} - deletes reference which is selected</li>
  * </ul>
  * A controller for this view has to observe these view actions and, especially for the references, controls these actions
- * by calling the functions of this interface.
+ * by calling the functions of this interface. In addition this interface extends {@link ITextView} so that the text
+ * fields could be controlled on change.
  *
  * @author 9045534
  * @version 1.0
- * @see IView
+ * @see ITextView
  */
 public interface IRequirementFormView
-	extends IView
+	extends IView, ITextView
 {
 
 	/**

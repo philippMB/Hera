@@ -24,8 +24,8 @@ public class CostEstimationEditView
 	private final ViewActions[] BUTTON_ACTIONS = {
 			ViewActions.EDIT_EP,
 			ViewActions.RATE_WF,
-			ViewActions.SAVE,
-			ViewActions.CANCEL
+			ViewActions.SHOW,
+			ViewActions.CLOSE
 	};
 
 	private IModelGetData myModel;
@@ -37,6 +37,7 @@ public class CostEstimationEditView
 	{
 		super();
 		myModel = model;
+		myModel.addObserver(this);
 		setButtonActions(BUTTON_ACTIONS);
 
 		init();
@@ -81,7 +82,7 @@ public class CostEstimationEditView
 	{
 		int selectedRow = tableProcesses.getSelectedRow();
 		String selectedID;
-		if(selectedRow > 0)
+		if(selectedRow >= 0)
 		{
 			selectedID = (String) tableProcesses.getValueAt(selectedRow, 0);
 		}
@@ -95,8 +96,8 @@ public class CostEstimationEditView
 	@Override
 	public void destruct()
 	{
-		setVisible(false);
-		dispose();
+		super.destruct();
+		myModel.deleteObserver(this);
 	}
 
 	@Override

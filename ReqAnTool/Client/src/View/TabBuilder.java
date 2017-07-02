@@ -241,6 +241,8 @@ public class TabBuilder
 		globalColumnNumber++;
 
 		GridBagConstraints layoutConstraints = getDefaultConstraints();
+		layoutConstraints.fill = GridBagConstraints.NONE;
+		layoutConstraints.anchor = GridBagConstraints.LINE_START;
 		ImageLabel myImage = new ImageLabel(imagePath,75,75, isGIF);
 		myPanel.add(myImage,layoutConstraints);
 		globalRowNumber--;

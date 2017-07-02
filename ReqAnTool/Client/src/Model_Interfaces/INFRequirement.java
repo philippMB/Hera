@@ -1,3 +1,4 @@
+
 package Model_Interfaces;
 
 /**
@@ -7,10 +8,10 @@ public interface INFRequirement
     extends IRequirement
 {
 
-    public String getTitle();
+    String getTitle();
 
-    public String getActor();
+    String getActor();
 
-    public String getDescription();
+    String getDescription();
 
 }

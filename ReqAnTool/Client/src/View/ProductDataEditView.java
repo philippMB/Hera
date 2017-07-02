@@ -1,5 +1,6 @@
 package View;
 
+import Controller_Interfaces.ITextController;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.IProductData;
@@ -146,6 +147,19 @@ public class ProductDataEditView
 			fieldMaxCount.setText(myReq.getMaxCount());
 			fieldAttributes.setText(myReq.getAttribute());
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addTextController(ITextController textfieldController)
+	{
+		TextAreaListener textAreaListener = new TextAreaListener(textfieldController);
+		fieldID.getDocument().addDocumentListener(textAreaListener);
+		fieldContent.getDocument().addDocumentListener(textAreaListener);
+		fieldMaxCount.getDocument().addDocumentListener(textAreaListener);
+		fieldAttributes.getDocument().addDocumentListener(textAreaListener);
 	}
 
 }

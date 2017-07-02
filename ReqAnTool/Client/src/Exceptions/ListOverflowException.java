@@ -11,7 +11,7 @@ package Exceptions;
  * @version 1.0
  */
 public class ListOverflowException
-	extends Exception
+	extends LoggedException
 {
 
 	/**

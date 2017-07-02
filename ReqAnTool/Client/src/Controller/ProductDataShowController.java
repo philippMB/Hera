@@ -17,16 +17,16 @@ public class ProductDataShowController
 		super(model, viewToBeControlled);
 	}
 
-	protected void deleteRequirement(String reqID)
+	@Override
+	protected void deleteRequirement(String reqID) throws Exception
 	{
 		myModel.remProdDataByID(reqID);
-		closeView();
 	}
 
-	protected void editRequirement(String reqID)
+	@Override
+	protected void startEditReqView(String reqID)
 	{
 		controllerManager.createControlledProductDataEditView(reqID);
-		closeView();
 	}
 
 	@Override

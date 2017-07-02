@@ -29,6 +29,7 @@ public abstract class TabPanel
 	public TabPanel(IModelGetData model, String titleConstant)
 	{
 		myModel = model;
+		myModel.addObserver(this);
 		myTextBundle = ITextFacade.getInstance();
 		this.tabName = myTextBundle.getTitleText(titleConstant);
 
@@ -92,6 +93,7 @@ public abstract class TabPanel
 	{
 		setVisible(false);
 		getParent().remove(this);
+		myModel.deleteObserver(this);
 	}
 
 	@Override

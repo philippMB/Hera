@@ -12,10 +12,9 @@ import javax.swing.*;
  * Created by phlippe on 03.05.17.
  */
 public class ProcessClassificationNFReqView
-	extends ProcessClassificationView
+	extends ProcessClassificationView<INFRequirement>
 {
 
-	private INFRequirement myReq;
 	private JTextField fieldTitle;
 	private JTextField fieldActor;
 	private JTextArea fieldDescription;
@@ -26,9 +25,9 @@ public class ProcessClassificationNFReqView
 	}
 
 	@Override
-	protected void loadInternRequirement(String ID)
+	protected INFRequirement getRequirementFromModel(String ID)
 	{
-		myReq = myModel.getNFReqByID(ID);
+		return myModel.getNFReqByID(ID);
 	}
 
 	@Override
@@ -59,12 +58,6 @@ public class ProcessClassificationNFReqView
 		fieldTitle.setText(myReq.getTitle());
 		fieldActor.setText(myReq.getActor());
 		fieldDescription.setText(myReq.getDescription());
-	}
-
-	@Override
-	public IRequirement getMyRequirement()
-	{
-		return myReq;
 	}
 
 }

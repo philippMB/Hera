@@ -17,16 +17,14 @@ public class FRequirementShowController
 		super(model, viewToBeControlled);
 	}
 
-	protected void deleteRequirement(String reqID)
+	protected void deleteRequirement(String reqID) throws Exception
 	{
 		myModel.remFReqByID(reqID);
-		closeView();
 	}
 
-	protected void editRequirement(String reqID)
+	protected void startEditReqView(String reqID)
 	{
 		controllerManager.createControlledFRequirementEditView(reqID);
-		closeView();
 	}
 
 	@Override

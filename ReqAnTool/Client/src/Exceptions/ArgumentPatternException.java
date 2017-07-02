@@ -21,7 +21,7 @@ package Exceptions;
  * @see PatternType
  */
 public class ArgumentPatternException
-	extends Exception
+	extends LoggedException
 {
 
 	private PatternType myPatternType;

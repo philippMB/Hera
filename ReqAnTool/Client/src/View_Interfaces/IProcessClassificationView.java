@@ -2,6 +2,7 @@ package View_Interfaces;
 
 import Model_Interfaces.ClassOfDataFP;
 import Model_Interfaces.ClassOfTransactionFP;
+import Model_Interfaces.IClassOfFP;
 
 /**
  * In this view the user can set the class and edit the data and/or transaction function point parameters of a
@@ -18,7 +19,6 @@ import Model_Interfaces.ClassOfTransactionFP;
  *
  * @author 9045534
  * @version 1.0
- *
  */
 public interface IProcessClassificationView
 	extends IView
@@ -28,7 +28,7 @@ public interface IProcessClassificationView
 	 * Returns the selected class of the elementary process
 	 * @return Selected class of the elementary process
 	 */
-	public Class getSelectedClass();
+	public IClassOfFP getSelectedClass();
 
 	/**
 	 * Returns the selected subclass for data function point. Only use if
@@ -62,4 +62,5 @@ public interface IProcessClassificationView
 	 */
 	public String getFTR();
 
+	String getReqID();
 }

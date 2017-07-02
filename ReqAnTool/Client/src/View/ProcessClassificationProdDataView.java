@@ -12,10 +12,9 @@ import javax.swing.*;
  * Created by phlippe on 03.05.17.
  */
 public class ProcessClassificationProdDataView
-	extends ProcessClassificationView
+	extends ProcessClassificationView<IProductData>
 {
 
-	private IProductData myReq;
 	private JTextField fieldContent;
 	private JTextField fieldMaxCount;
 	private JTextArea fieldAttributes;
@@ -26,9 +25,9 @@ public class ProcessClassificationProdDataView
 	}
 
 	@Override
-	protected void loadInternRequirement(String ID)
+	protected IProductData getRequirementFromModel(String ID)
 	{
-		myReq = myModel.getProductDataByID(ID);
+		return myModel.getProductDataByID(ID);
 	}
 
 	@Override
@@ -59,12 +58,6 @@ public class ProcessClassificationProdDataView
 		fieldContent.setText(myReq.getContent());
 		fieldMaxCount.setText(myReq.getMaxCount());
 		fieldAttributes.setText(myReq.getAttribute());
-	}
-
-	@Override
-	public IRequirement getMyRequirement()
-	{
-		return myReq;
 	}
 
 }

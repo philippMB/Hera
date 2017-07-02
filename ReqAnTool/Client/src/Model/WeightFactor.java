@@ -1,43 +1,56 @@
 package Model;
 
-import Model_Interfaces.ErrorCodes;
+import Exceptions.NumberOutOfBoundsException;
 import Model_Interfaces.IWeightFactor;
 
 public class WeightFactor
     implements IWeightFactor
 {
-    private int score;
+    private double score;
     private int maxValue;
     private String title;
+
+    public WeightFactor(String title, int score, int maxValue)
+    {
+        this.title = title;
+        this.maxValue = maxValue;
+        this.score = score;
+    }
 
     @Override
     public String getTitle()
     {
         return title;
+
     }
 
     @Override
     public int getValue()
     {
+        return (int) Math.round(score);
+    }
+
+
+    public double getExactValue()
+    {
         return score;
+
     }
 
     @Override
     public int getMaxValue()
     {
         return maxValue;
+
     }
 
-    public ErrorCodes setValue(Integer value)
+    public void setValue(double value) throws NumberOutOfBoundsException
     {
-        if (value >= 0 && value <= maxValue)
+        if (!(value >= 0 && value <= maxValue))
         {
-            this.score = value;
-            return ErrorCodes.NO_ERROR;
+            throw new NumberOutOfBoundsException(value, 0, maxValue);
         }
-        else
-        {
-            return ErrorCodes.INVALID_ARGUMENT;
-        }
+        this.score = value;
+
     }
 }

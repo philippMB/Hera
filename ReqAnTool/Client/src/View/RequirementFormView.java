@@ -37,9 +37,8 @@ public abstract class RequirementFormView<RequirementType extends IRequirement>
 	public RequirementFormView(@NotNull IModelGetData model, @Nullable String ID, boolean isEditable)
 	{
 		super();
-		Objects.requireNonNull(model);
-
 		myModel = model;
+		myModel.addObserver(this);
 		this.isEditable = isEditable;
 		if(ID != null)
 		{

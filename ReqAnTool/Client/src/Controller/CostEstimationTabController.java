@@ -5,6 +5,7 @@ import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.ICostEstimationTab;
+import View_Interfaces.ILoadingDialog;
 import View_Interfaces.IView;
 
 /**
@@ -22,26 +23,42 @@ public class CostEstimationTabController
 	@Override
 	protected void executeShowCEAction()
 	{
-		//TODO: Implement this method
 		controllerManager.createControlledCostEstShowView();
 	}
 
 	@Override
 	protected void executeCalcFPAction()
 	{
-		//TODO: Implement this method
+		boolean isFPCalculated;
+		LoadingController loadingController = controllerManager.createControlledLoadingDialog(parentView);
+		loadingController.startLoadingDialog();
+		try
+		{
+			myModel.calcFPCount();
+			isFPCalculated = true;
+		}
+		catch (Exception ex)
+		{
+			loadingController.stopLoadingDialog();
+			isFPCalculated = false;
+			handleException(ex);
+		}
+		if(isFPCalculated)
+		{
+			loadingController.stopLoadingDialog();
+			controllerManager.createControlledCostEstShowView();
+		}
 	}
 
 	@Override
 	protected void executeEditCEAction()
 	{
-		//TODO: Implement this method
+		controllerManager.createControlledCostEstEditView();
 	}
 
 	@Override
 	protected void executeOptimizeWFAction()
 	{
-
 		controllerManager.createControlledWarningDialog(
 				parentView,
 				DialogConstants.DIALOG_WFOPT_WARNING,
@@ -67,7 +84,7 @@ public class CostEstimationTabController
 	{
 		try
 		{
-			myModel.calcOptWeightFactor();
+			myModel.adjustWeightFactor();	//TODO: Namen ändern
 		}
 		catch(Exception optimizeError)
 		{
@@ -104,7 +121,22 @@ public class CostEstimationTabController
 
 	private void deleteCostEstimation()
 	{
-		//TODO:Implement this method
+		boolean isRemoved;
+		try
+		{
+			controllerManager.removeCostEstimationViews();
+			myModel.remCostEstimation();
+			isRemoved = true;
+		}
+		catch(Exception ex)
+		{
+			isRemoved = false;
+			handleException(ex);
+		}
+		if(!isRemoved)
+		{
+			controllerManager.createControlledCostEstimationTab(null);
+		}
 	}
 
 	@Override

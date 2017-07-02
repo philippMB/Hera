@@ -90,6 +90,7 @@ public class DialogBuilder
 
 		JTextArea myText = new JTextArea(textContent);
 		myText.setColumns(18);
+		myText.setRows(3);
 		myText.setEditable(false);
 		myText.setLineWrap(true);
 		myText.setWrapStyleWord(true);

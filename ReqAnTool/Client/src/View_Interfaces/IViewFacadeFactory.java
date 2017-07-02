@@ -112,7 +112,9 @@ public interface IViewFacadeFactory
 	 * exception which caused this dialog.
 	 * @param parentView View from which this dialog should be created. Could be null.
 	 * @param thrownException Exception which was thrown and should be displayed
-	 * //TODO: Try to avoid placeholder by shifting them to LanguageAndText in ExceptionToTextConverter
+	 * @param placeholderInText Strings with which the placeholder in the message should be replaced. Mostly exception
+	 *                          have predefined placeholder depending on their parameters. Please have a look at
+	 *                          {@link LanguageAndText.DialogConstants#getViewActionsByPropertyName(String)} for it.
 	 * @return The new created view of type {@link IErrorDialog}
 	 */
 	public IErrorDialog createErrorDialog(@Nullable IView parentView, @NotNull Exception thrownException,

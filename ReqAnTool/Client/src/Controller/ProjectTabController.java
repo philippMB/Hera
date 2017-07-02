@@ -23,7 +23,18 @@ public class ProjectTabController
 	@Override
 	protected void executeSaveAction()
 	{
-		//TODO: Check if model has path. If not make save as
+		if (myModel.isFirstUseOfOpenedReqAn())
+		{
+			accessFile(
+					(absoluteFilePath) -> myModel.saveReqAn(absoluteFilePath),
+					FileAccessType.SAVE,
+					DialogConstants.DIALOG_INFO_SAVING_FILE
+			);
+		}
+		else
+		{
+			tryToSaveReqAn();
+		}
 	}
 
 	@Override

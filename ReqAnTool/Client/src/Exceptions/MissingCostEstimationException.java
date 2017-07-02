@@ -12,7 +12,7 @@ package Exceptions;
  * @version 1.0
  */
 public class MissingCostEstimationException
-		extends Exception
+		extends LoggedException
 {
 
 	/**

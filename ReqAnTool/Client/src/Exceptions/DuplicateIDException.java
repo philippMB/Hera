@@ -13,7 +13,7 @@ package Exceptions;
  *
  */
 public class DuplicateIDException
-	extends Exception
+	extends LoggedException
 {
 
 	private String duplicateID;

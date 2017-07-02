@@ -25,12 +25,14 @@ public abstract class Requirement
     public String getID()
     {
         return id;
+
     }
 
     @Override
     public RequirementList<IRequirement> getReferences()
     {
         return references;
+
     }
     
     @Override
@@ -42,22 +44,26 @@ public abstract class Requirement
             ids.add(req.getID());
         }
         return ids;
+
     }
 
     public void edit(String id, RequirementList<IRequirement> references)
     {
         this.id = id;
         this.references = references;
+
     }
 
     public void remReference(String id)
     {
         references.removeReqByID(id);
+
     }
 
     public void refreshReference(String oldID, IRequirement newReq)
     {
         references.removeReqByID(oldID);
         references.add(newReq);
+
     }
 }

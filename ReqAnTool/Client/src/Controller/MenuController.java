@@ -1,7 +1,9 @@
 package Controller;
 
 import Controller_Interfaces.IMenuController;
+import Exceptions.MissingCostEstimationException;
 import LanguageAndText.DialogConstants;
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.FileAccessType;
@@ -23,13 +25,13 @@ public class MenuController
 	@Override
 	protected void executeSaveAction()
 	{
-		try
+		if(myModel.isFirstUseOfOpenedReqAn())
 		{
-			myModel.saveReqAn(null);
+			executeSaveAsAction();
 		}
-		catch(Exception saveException)
+		else
 		{
-			handleException(saveException);
+			tryToSaveReqAn();
 		}
 	}
 
@@ -37,7 +39,7 @@ public class MenuController
 	protected void executeSaveAsAction()
 	{
 		accessFile(
-				(absoluteFile) -> myModel.saveReqAn(absoluteFile),
+				(absoluteFilePath) -> myModel.saveReqAn(absoluteFilePath),
 				FileAccessType.SAVE,
 				DialogConstants.DIALOG_INFO_SAVING_FILE
 		);
@@ -103,45 +105,185 @@ public class MenuController
 	}
 
 	@Override
+	protected void executeCreateCEAction()
+	{
+		boolean creationSuccessful = tryToCreateCE();
+		if(creationSuccessful)
+		{
+			controllerManager.createControlledCostEstimationTab(null);
+		}
+	}
+
+	private boolean tryToCreateCE()
+	{
+		boolean costEstimationCreated = false;
+		if(myModel.getCostEstimation() == null)
+		{
+			try
+			{
+				myModel.addCostEstimation();
+				costEstimationCreated = true;
+			}
+			catch (Exception ex)
+			{
+				handleException(ex);
+			}
+		}
+		return costEstimationCreated;
+	}
+
+	@Override
 	protected void executeRateWFAction()
 	{
-		super.executeRateWFAction();
+		if(myModel.getCostEstimation() != null)
+		{
+			controllerManager.createControlledWFEditView();
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
 	}
 
 	@Override
 	protected void executeShowCEAction()
 	{
-		super.executeShowCEAction();
+		if(myModel.getCostEstimation() != null)
+		{
+			controllerManager.createControlledCostEstShowView();
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
 	}
 
 	@Override
 	protected void executeEditCEAction()
 	{
-		super.executeEditCEAction();
+		if(myModel.getCostEstimation() != null)
+		{
+			controllerManager.createControlledCostEstEditView();
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
 	}
 
 	@Override
 	protected void executeDeleteCEAction()
 	{
-		super.executeDeleteCEAction();
+		if(myModel.getCostEstimation() != null)
+		{
+			controllerManager.createControlledWarningDialog(
+					null,
+					DialogConstants.DIALOG_DELETE_WARNING,
+					new String[]{
+							myTextBundle.getParameterText(TextNameConstants.PAR_COST_EST)
+					},
+					new WarningController(myModel, null)
+					{
+						@Override
+						protected void executeDeleteAction()
+						{
+							try
+							{
+								controllerManager.removeCostEstimationViews();
+								myModel.remCostEstimation();
+							}
+							catch (Exception ex)
+							{
+								handleException(ex);
+							}
+							closeView();
+						}
+
+						@Override
+						protected void executeCancelAction()
+						{
+							closeView();
+						}
+					}
+			);
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
 	}
 
 	@Override
 	protected void executeCalcFPAction()
 	{
-		super.executeCalcFPAction();
+		if(myModel.getCostEstimation() != null)
+		{
+			try
+			{
+				myModel.calcFPCount();
+				myModel.calcManMonth();
+				controllerManager.createControlledCostEstShowView();
+			}
+			catch (Exception ex)
+			{
+				handleException(ex);
+			}
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
 	}
 
 	@Override
 	protected void executeOptimizeWFAction()
 	{
-		super.executeOptimizeWFAction();
+		if(myModel.getCostEstimation() != null)
+		{
+			controllerManager.createControlledWarningDialog(
+					null,
+					DialogConstants.DIALOG_WFOPT_WARNING,
+					new WarningController(myModel, null)
+					{
+						@Override
+						protected void executeOptimizeWFAction()
+						{
+							try
+							{
+								myModel.adjustWeightFactor();
+							}
+							catch (Exception ex)
+							{
+								handleException(ex);
+							}
+							closeView();
+						}
+
+						@Override
+						protected void executeCancelAction()
+						{
+							closeView();
+						}
+					}
+			);
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
 	}
 
 	@Override
 	protected void executeEnterASAction()
 	{
-		super.executeEnterASAction();
+		if(myModel.getCostEstimation() != null)
+		{
+			controllerManager.createControlledActualStateEditView(null);
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
 	}
 
 	@Override

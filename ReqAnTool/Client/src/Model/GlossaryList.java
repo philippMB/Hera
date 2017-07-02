@@ -1,6 +1,5 @@
 package Model;
 
-import Model_Interfaces.IGlossaryList;
 import Model_Interfaces.IGlossaryEntry;
 
 import java.util.ArrayList;
@@ -13,14 +12,15 @@ public class GlossaryList<IGloss extends IGlossaryEntry>
     @Override
     public IGloss getEntryByTerm(String term)
     {
+        IGloss entryToReturn = null;
         for (IGloss myEntry : this)
         {
             if (myEntry.getTerm().equals(term))
             {
-                return myEntry;
+                entryToReturn = myEntry;
             }
         }
-        return null;
+        return entryToReturn;
     }
 
     @Override
@@ -40,15 +40,15 @@ public class GlossaryList<IGloss extends IGlossaryEntry>
     @Override
     public boolean removeEntryByTerm(String term)
     {
+        boolean success = false;
         for (IGloss myEntry : this)
         {
             if (myEntry.getTerm().equals(term))
             {
-                return super.remove(myEntry);
+                success = super.remove(myEntry);
             }
         }
-        return false;
+        return success;
     }
-
-
+    
 }

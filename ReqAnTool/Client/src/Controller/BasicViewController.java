@@ -33,7 +33,6 @@ public abstract class BasicViewController<ViewType extends IView>
 
 	public void setView(ViewType viewToBeControlled, boolean showViewAfterwards)
 	{
-		//TODO: Controller muss sich von View abmelden
 		myView = viewToBeControlled;
 
 		if(myView != null)

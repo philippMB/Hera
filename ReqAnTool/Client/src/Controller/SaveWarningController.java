@@ -1,5 +1,6 @@
 package Controller;
 
+import LanguageAndText.DialogConstants;
 import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.FileAccessType;
@@ -21,55 +22,28 @@ public class SaveWarningController
 	@Override
 	protected void executeSaveAction()
 	{
-		boolean isSaved;
-
-		try
+		if(myModel.isFirstUseOfOpenedReqAn())
 		{
-			myModel.saveReqAn(null);
-			isSaved = true;
+			executeSaveAsAction();
 		}
-		catch(Exception saveException)
+		else
 		{
-			isSaved = false;
-			handleException(saveException);
-		}
-
-		if(isSaved)
-		{
-			closeProgram();
+			if(tryToSaveReqAn())
+			{
+				closeProgram();
+			}
 		}
 	}
 
 	@Override
 	protected void executeSaveAsAction()
 	{
-		IFileChooser myFileChooser = controllerManager.createFileChooser(FileAccessType.SAVE);
-		myFileChooser.showView();
-		String filePath = myFileChooser.getChosenFilePath();
-
-		if(filePath != null)
-		{
-			boolean isSaved;
-			try
-			{
-				myModel.saveReqAn(filePath);
-				isSaved = true;
-			}
-			catch(Exception saveException)
-			{
-				isSaved = false;
-				handleException(saveException);
-			}
-
-			if(isSaved)
-			{
-				closeProgram();
-			}
-		}
-		else
-		{
-			closeView();
-		}
+		closeView();
+		accessFile(
+				absoluteFilePath -> {myModel.saveReqAn(absoluteFilePath); closeProgram();},
+				FileAccessType.SAVE,
+				DialogConstants.DIALOG_INFO_SAVING_FILE
+		);
 	}
 
 	@Override

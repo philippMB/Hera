@@ -32,6 +32,7 @@ public class ActualStateEditDialog
 	{
 		super(parentView, TextNameConstants.TITLE_ACTUAL_STATE_EDIT);
 		myModel = model;
+		myModel.addObserver(this);
 		setButtonActions(BUTTON_ACTIONS);
 
 		init();
@@ -99,4 +100,10 @@ public class ActualStateEditDialog
 		return fieldActualState.getText();
 	}
 
+	@Override
+	public void destruct()
+	{
+		super.destruct();
+		myModel.deleteObserver(this);
+	}
 }

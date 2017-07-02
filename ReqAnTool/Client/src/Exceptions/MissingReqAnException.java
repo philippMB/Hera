@@ -10,7 +10,7 @@ package Exceptions;
  * @version 1.0
  */
 public class MissingReqAnException
-	extends Exception
+	extends LoggedException
 {
 
 	/**

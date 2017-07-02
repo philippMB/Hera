@@ -9,14 +9,18 @@ package View_Interfaces;
  *     <li>{@link Controller_Interfaces.ViewActions#EDIT_CE} - resets all text fields to the saved information
  *     (use {@link ICustomerTab#resetData()}</li>
  * </ul>
+ * Besides being a tab views of this interface could also be controlled on changes in text fields. This is done by
+ * extending {@link ITextView} that allow {@link Controller_Interfaces.ITextController} to observe these fields and
+ * being notified whenever there is a change.
  *
  *
  * @author 9045534
  * @version 1.0
  * @see ITab
+ * @see ITextView
  */
 public interface ICustomerTab
-	extends ITab
+	extends ITab, ITextView
 {
 
 	/**

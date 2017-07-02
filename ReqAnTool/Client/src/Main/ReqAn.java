@@ -45,11 +45,19 @@ public class ReqAn
 		*/
     	ILogger myLogger = ILoggerFactory.getInstance().createLogger();
     	Model newModel = new Model();
-		newModel.makeNewReqAn("Anforderungsanalysentool","Ich","ll@sd.com","049");
-		newModel.addFReq("/222/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
-		newModel.addNFReq("/223/","Das ist ein Titel","Ich","Und das ist eine lange beschreibung",new ArrayList<String>());
-		newModel.addProdData("/224/","Das ist ein Titel","Ich","100",new ArrayList<String>());
+    	try
+		{
+			/*
+			newModel.makeNewReqAn("Anforderungsanalysentool", "Ich", "ll@sd.com", "049", "", "", "", "", "", "", "", "");
+			newModel.addFReq("/222/", "Das ist ein Titel", "Ich", "Und das ist eine lange beschreibung", new ArrayList<String>());
+			newModel.addNFReq("/223/", "Das ist ein Titel", "Ich", "Und das ist eine lange beschreibung", new ArrayList<String>());
+			newModel.addProdData("/224/", "Das ist ein Titel", "Ich", "100", new ArrayList<String>());
+			*/
+		}
+		catch(Exception ex)
+		{
 
+		}
 		ControllerManager controllerManager = ControllerManager.getInstance(newModel);
 		controllerManager.createControlledStartView();
 		controllerManager.createControlledErrorDialog(null, new MissingReqAnException());

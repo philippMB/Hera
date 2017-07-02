@@ -19,10 +19,9 @@ public class ProductEnvironmentTabController
 	}
 
 	@Override
-	protected void editDescriptionInModel(String newDescription)
+	protected void editDescriptionInModel(String newDescription) throws Exception
 	{
-		//TODO: Uncomment this
-		//myModel.editProdEnv(newDescription);
+		myModel.editProdEnv(newDescription);
 	}
 
 	@Override

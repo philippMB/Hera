@@ -1,11 +1,11 @@
 package Model;
 
-// TODO check Map for WeightFactors
-
+import Exceptions.*;
 import Model_Interfaces.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class RequirementAnalysis
     implements IRequirementAnalysis
@@ -15,55 +15,82 @@ public class RequirementAnalysis
     private String customerDescription;
     private double actualState;    
     private ProductApplication myProductApplication;
+    private ProductEnvironment myProductEnvironment;
     private TargetDefinition myTargetDefinition;
     private CostEstimation myCostEstimation;
     private CustomerData myCustomerData;
     private Validator myValidator;
     /**
-     * @associates <{Model.FRequirement}>
+     * @associates <{Model_Interfaces.IFRequirement}>
      */
     private RequirementList<IFRequirement> myFRequirements;
     /**
-     * @associates <{Model.ProductData}>
+     * @associates <{Model_Interfaces.IProductData}>
      */
     private RequirementList<IProductData> myProductData;
     /**
-     * @associates <{Model.NFRequirement}>
+     * @associates <{Model_Interfaces.INFRequirement}>
      */
     private RequirementList<INFRequirement> myNFRequirements;
     /**
-     * @associates <{Model.Addition}>
+     * @associates <{Model_Interfaces.IAddition}>
      */
     private AdditionList<IAddition> myAdditions;
     /**
-     * @associates <{Model.GlossaryEntry}>
+     * @associates <{Model_Interfaces.IGlossaryEntry}>
      */
     private GlossaryList<IGlossaryEntry> myGlossaryEntries;
     /**
-     * @associates <{Model.QualityRequirement}>
+     * @associates <{Model_Interfaces.IQualityRequirement}>
      */
     private QualityRequirementList<IQualityRequirement> myQualityRequirements;
 
-    RequirementAnalysis(String title, String pmName, String pmMail, String pmPhone)
+    RequirementAnalysis(String title, String pmName, String pmMail, String pmPhone, String companyName, String city,
+                        String companyStreet, String country, String zip, String cName, String cMail, String cPhone)
+            throws MissingEntryException, ArgumentPatternException
     {
         this.title = title;
         this.customerDescription = null;
-        this.myCustomerData = new CustomerData(pmName, pmMail, pmPhone);
+        this.myCustomerData = new CustomerData(pmName, pmMail, pmPhone, companyName, city, companyStreet, country,  zip,
+                                               cName, cMail, cPhone);
         this.myAdditions = new AdditionList<IAddition>();
         this.myCostEstimation = null;
         this.myFRequirements = new RequirementList<IFRequirement>();
         this.myGlossaryEntries = new GlossaryList<IGlossaryEntry>();
         this.myNFRequirements = new RequirementList<INFRequirement>();
         this.myProductApplication = new ProductApplication();
+        this.myProductEnvironment = new ProductEnvironment();
         this.myProductData = new RequirementList<IProductData>();
         this.myQualityRequirements = new QualityRequirementList<IQualityRequirement>();
         this.myTargetDefinition = new TargetDefinition();
         this.createDate = new Date();
         this.actualState = -1.0;
         this.myValidator = new Validator();
+        verifyCompletenessOfParameters();
     }
 
-    protected boolean isReqIncluded(String id)
+    private void verifyCompletenessOfParameters()
+        throws MissingEntryException
+    {
+        if(title == null || title.equals(""))
+        {
+            throw new MissingEntryException(MissingParameter.PROJECT_TITLE);
+        }
+        if(myCustomerData.getPMName() == null || myCustomerData.getPMName().equals(""))
+        {
+            throw new MissingEntryException(MissingParameter.PM_NAME);
+        }
+        if(myCustomerData.getPMEMail() == null || myCustomerData.getPMEMail().equals(""))
+        {
+            throw new MissingEntryException(MissingParameter.PM_EMAIL);
+        }
+        if(myCustomerData.getPMPNumber() == null || myCustomerData.getPMPNumber().equals(""))
+        {
+            throw new MissingEntryException(MissingParameter.PM_PHONE_NUMBER);
+        }
+    }
+
+    public boolean isReqIncluded(String id)
     {
         boolean isIncluded = false;
         if (myFRequirements.isIncluded(id))
@@ -79,39 +106,36 @@ public class RequirementAnalysis
             isIncluded = true;
         }
         return isIncluded;
+
     }
 
-    protected boolean solveGlossaryTerms(ArrayList<String> terms)
+    private void solveGlossaryTerms(ArrayList<String> terms) throws UnknownReferenceException
     {
-        int flag = 0;
         for (String term : terms)
         {
-            for (IGlossaryEntry entry : myGlossaryEntries)
+            if (!myGlossaryEntries.isIncluded(term))
             {
-                if (term.equals(entry.getTerm()))
-                {
-                    flag++;
-                }
+                throw new UnknownReferenceException(term);
             }
         }
-        return flag == terms.size();
+
     }
     
-    protected boolean solveReqReferences(ArrayList<String> references)
+    private void solveReqReferences(ArrayList<String> references) throws UnknownReferenceException
     {
-        int flag = 0;
         for (String ref : references)
         {
-            if (isReqIncluded(ref))
+            if (!isReqIncluded(ref))
             {
-                flag++;
+                throw new UnknownReferenceException(ref);
             }
         }
-        return flag == references.size();
+
     }
 
     public boolean isReferenceOnID(String id)
     {
+        boolean referenced = false;
         for (IFRequirement myIFReq : myFRequirements)
         {
             FRequirement myFReq = (FRequirement)myIFReq;
@@ -119,18 +143,18 @@ public class RequirementAnalysis
             {
                 if (refID.equals(id))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
         for (INFRequirement myINFReq : myNFRequirements)
         {
-            NFRequirement myNFReq = (NFRequirement)myINFReq;
+            FRequirement myNFReq = (FRequirement)myINFReq;
             for (String refID : myNFReq.getReferenceIDs())
             {
                 if (refID.equals(id))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
@@ -141,11 +165,12 @@ public class RequirementAnalysis
             {
                 if (refID.equals(id))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
-        return false;
+        return referenced;
+
     }
 
     private void refreshReferences(String oldID, String id)
@@ -184,6 +209,7 @@ public class RequirementAnalysis
                 }
             }
         }
+
     }
 
     private void removeRequirementReferences(String id)
@@ -221,10 +247,12 @@ public class RequirementAnalysis
                 }
             }
         }
+
     }
 
     private boolean isReferenceOnTerm(String term)
     {
+        boolean referenced = false;
         for (IGlossaryEntry myIEntry : myGlossaryEntries)
         {
             GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
@@ -232,11 +260,12 @@ public class RequirementAnalysis
             {
                 if (ref.equals(term))
                 {
-                    return true;
+                    referenced = true;
                 }
             }
         }
-        return false;
+        return referenced;
+
     }
 
     private void removeGlossaryReferences(String term)
@@ -252,9 +281,10 @@ public class RequirementAnalysis
                 }
             }
         }
+
     }
     
-    protected IRequirement getAnyReqByID(String id)
+    private IRequirement getAnyReqByID(String id)
     {
         IRequirement myReq = null;
         if (myFRequirements.isIncluded(id))
@@ -270,9 +300,10 @@ public class RequirementAnalysis
             myReq = myProductData.getReqByID(id);
         }
         return myReq;
+
     }
     
-    protected ArrayList<String> getAllReqIDs()
+    public ArrayList<String> getAllReqIDs()
     {
         ArrayList<String> myIDs = new ArrayList<String>();
         for (IRequirement req : myFRequirements)
@@ -288,803 +319,800 @@ public class RequirementAnalysis
             myIDs.add(req.getID());
         }
         return myIDs;
+
     }
 
     public boolean isIDunique(String id)
     {
+        boolean unique = false;
         if (getAnyReqByID(id) == null)
         {
-            return true;
+            unique = true;
         }
-        else
-        {
-            return false;
-        }
+        return unique;
+
     }
 
     @Override
     public double getActualState()
     {
         return actualState;
+
     }
 
     @Override
     public Date getCreateDate()
     {
         return createDate;
+
     }
 
     @Override
     public String getCustomerDescription()
     {
         return customerDescription;
+
     }
 
     @Override
     public ArrayList<IAddition> getAdditions()
     {
         return myAdditions;
+
     }
 
     @Override
     public ArrayList<IFRequirement> getFRequirements()
     {
         return myFRequirements;
+
     }
 
     @Override
     public ArrayList<INFRequirement> getNFRequirements()
     {
         return myNFRequirements;
+
     }
 
     @Override
     public ArrayList<IGlossaryEntry> getGlossaryEntries()
     {
         return myGlossaryEntries;
+
     }
 
     @Override
     public ArrayList<IProductData> getProductData()
     {
         return myProductData;
+
     }
 
     @Override
     public ArrayList<IQualityRequirement> getQualityRequirements()
     {
         return myQualityRequirements;
+
     }
 
     @Override
     public ArrayList<IWeightFactor> getWeightFactors()
     {
         return myCostEstimation.getWeightFactors();
+
+    }
+
+    public WeightFactorList<IWeightFactor> getWeightFactorList()
+    {
+        return myCostEstimation.getWeightFactorList();
+
     }
 
     @Override
     public String getTitle()
     {
         return title;
+
     }
 
     @Override
     public ITargetDefinition getTargetDefinition()
     {
         return myTargetDefinition;
+
     }
 
     @Override
     public IProductApplication getProductApplication()
     {
         return myProductApplication;
+
     }
 
     @Override
     public ICustomerData getCustomerData()
     {
         return myCustomerData;
+
     }
 
     @Override
     public ICostEstimation getCostEstimation()
     {
         return myCostEstimation;
+
     }
 
     @Override
     public IGlossaryEntry getGlossaryEntriesByTerm(String term)
     {
         return myGlossaryEntries.getEntryByTerm(term);
+
     }
 
     @Override
     public IQualityRequirement getQualityRequirementsByCriteria(String criteria)
     {
         return myQualityRequirements.getQualReqByCriteria(criteria);
+
     }
 
     @Override
     public IAddition getAdditionByTitle(String title)
     {
         return myAdditions.getAdditionByTitle(title);
+
     }
 
     @Override
     public IWeightFactor getWeightFactorByTitle(String title)
     {
         return myCostEstimation.getWeightFactorByTitle(title);
+
     }
 
     @Override
     public IFRequirement getFRequirementByID(String id)
     {
         return myFRequirements.getReqByID(id);
+
     }
 
     @Override
     public INFRequirement getNFRequirementByID(String id)
     {
         return myNFRequirements.getReqByID(id);
+
     }
 
     @Override
     public IProductData getProductDataByID(String id)
     {
         return myProductData.getReqByID(id);
+
     }
 
-    ErrorCodes addAddition(String title, String description)
+    public void addAddition(String title, String description) throws DuplicateIDException
     {
-        Addition myAdd = new Addition(title, description);
-        myAdditions.add(myAdd);
-        return ErrorCodes.NO_ERROR;
-    }
-
-    ErrorCodes addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
-    {
-        if (!solveReqReferences(references))
+        if (myAdditions.isIncluded(title))
         {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
+            throw new DuplicateIDException(title);
         }
         else
         {
-            if (myValidator.isValidID(id))
-            {
-                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                for (String ref : references)
-                {
-                    myReferences.add(getAnyReqByID(ref));
-                }
-                FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
-                myFRequirements.add(myReq);
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                return ErrorCodes.INVALID_ID;
-            }
+            Addition myAdd = new Addition(title, description);
+            myAdditions.add(myAdd);
         }
+
+    }
+
+    public void addFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+            throws ArgumentPatternException, DuplicateIDException, UnknownReferenceException
+    {
+        solveReqReferences(references);
+        if (myValidator.isInvalidID(id))
+        {
+            throw new ArgumentPatternException(PatternType.ID, id, "/LFxxx/");
+        }
+        if (!isIDunique(id))
+        {
+            throw new DuplicateIDException(id);
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        FRequirement myReq = new FRequirement(id, title, actor, description, myReferences);
+        myFRequirements.add(myReq);
+
     }
     
 
-    protected ErrorCodes addGlossaryEntry(String term, String sense, String boundary, String validity,
+    public void addGlossaryEntry(String term, String sense, String boundary, String validity,
                                           String obscurities, String label, ArrayList<String> crossRef)
+            throws DuplicateIDException, UnknownReferenceException
     {
-        ErrorCodes retValue = null;
+        if (myGlossaryEntries.isIncluded(term))
+        {
+            throw new DuplicateIDException(term);
+        }
+        solveGlossaryTerms(crossRef);
+        GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
+        for (String ref : crossRef)
+        {
+            myCrossRef.add(getGlossaryEntriesByTerm(ref));
+        }
+        GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
+        myGlossaryEntries.add(myEntry);
 
-        if (!solveGlossaryTerms(crossRef))
-        {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
-        }
-        else
-        {
-            GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
-            for (String ref : crossRef)
-            {
-                myCrossRef.add(getGlossaryEntriesByTerm(ref));
-            }
-            GlossaryEntry myEntry = new GlossaryEntry(term, sense, boundary, validity, obscurities, label, myCrossRef);
-            myGlossaryEntries.add(myEntry);
-            return ErrorCodes.NO_ERROR;
-        }
     }
 
-    ErrorCodes addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+    public void addNFRequirement(String id, String title, String actor, String description, ArrayList<String> references)
+            throws ArgumentPatternException, DuplicateIDException, UnknownReferenceException
     {
-        if (!solveReqReferences(references))
+        solveReqReferences(references);
+        if (myValidator.isInvalidID(id))
         {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
+            throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
         }
-        else
+        if (!isIDunique(id))
         {
-            if (myValidator.isValidID(id))
-            {
-                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                for (String ref : references)
-                {
-                    myReferences.add(getAnyReqByID(ref));
-                }
-                NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
-                myNFRequirements.add(myReq);
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                return ErrorCodes.INVALID_ID;
-            }
+            throw new DuplicateIDException(id);
         }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        NFRequirement myReq = new NFRequirement(id, title, actor, description, myReferences);
+        myNFRequirements.add(myReq);
+
     }
 
-    ErrorCodes addProductData(String id, String content, String attribute, String maxCount,
+    public void addProductData(String id, String content, String attribute, String maxCount,
                               ArrayList<String> references)
+            throws UnknownReferenceException, ArgumentPatternException, DuplicateIDException
     {
-        if (!solveReqReferences(references))
+        solveReqReferences(references);
+        if (myValidator.isInvalidID(id))
         {
-            return ErrorCodes.REFERENCES_NOT_SOLVED;
+            throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
         }
-        else
+        if (!isIDunique(id))
         {
-            if (myValidator.isValidID(id))
-            {
-                RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                for (String ref : references)
-                {
-                    myReferences.add(getAnyReqByID(ref));
-                }
-                ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
-                myProductData.add(myReq);
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                return ErrorCodes.INVALID_ID;
-            }
+            throw new DuplicateIDException(id);
         }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        ProductData myReq = new ProductData(id, content, attribute, maxCount, myReferences);
+        myProductData.add(myReq);
+
     }
 
-    protected ErrorCodes addQualReq(String criteria, Score value)
+    public void addQualReq(String criteria, Score value) throws DuplicateIDException
     {
+        if (myQualityRequirements.isIncluded(criteria))
+        {
+            throw new DuplicateIDException(criteria);
+        }
         IQualityRequirement myQualReq = new QualityRequirement(criteria, value);
         myQualityRequirements.add(myQualReq);
-        return ErrorCodes.NO_ERROR;
+
     }
 
-    protected ErrorCodes editAddition(String title, String description)
+    public void editAddition(String oldTitle, String newTitle, String description)
+            throws UnknownIDException, DuplicateIDException
     {
+        if (!myAdditions.isIncluded(oldTitle))
+        {
+            throw new UnknownIDException(oldTitle);
+        }
+        if (myAdditions.isIncluded(newTitle))
+        {
+            throw new DuplicateIDException(newTitle);
+        }
         IAddition myIAdd = myAdditions.getAdditionByTitle(title);
-        Addition myAdd = (Addition)myIAdd;
+        Addition myAdd = (Addition) myIAdd;
         myAdd.edit(title, description);
-        return ErrorCodes.NO_ERROR;
+
     }
 
-    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip,
+    public void editCustData(String companyName, String companyCity, String companyStreet, String zip,
                                               String companyCountry, String custName, String custMail, String custPhone,
                                               String pmName, String pmMail, String pmPhone)
+            throws ArgumentPatternException
     {
-        return myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
+        myCustomerData.edit(companyName, companyCity, companyStreet, zip, companyCountry, custName,
                                     custMail, custPhone, pmName, pmMail, pmPhone);
+
     }
 
-    ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
+    public void editFReq(String oldID, String id, String title, String actor, String description,
                         ArrayList<String> references)
+            throws UnknownIDException, DuplicateIDException, ArgumentPatternException, UnknownReferenceException
     {
-        if (myFRequirements.isIncluded(oldID))
+        if (!myFRequirements.isIncluded(oldID))
         {
-            IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
-            if (isIDunique(id))
-            {
-                if (solveReqReferences(references))
-                {
-                    if (myValidator.isValidID(id))
-                    {
-                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                        FRequirement myFReq = (FRequirement) myIFReq;
+            throw new UnknownIDException(oldID);
+        }
+        IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
+        if (!isIDunique(id))
+        {
+            throw new DuplicateIDException(id);
+        }
+        solveReqReferences(references);
+        if (myValidator.isInvalidID(id))
+        {
+            throw new ArgumentPatternException(PatternType.ID, id, "");
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        FRequirement myFReq = (FRequirement) myIFReq;
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        myFReq.edit(id, title, actor, description, myReferences);
+        if (isReferenceOnID(oldID))
+        {
+            refreshReferences(oldID, id);
+        }
 
-                        for (String ref : references)
-                        {
-                            myReferences.add(getAnyReqByID(ref));
-                        }
-                        ErrorCodes retValue = myFReq.edit(id, title, actor, description, myReferences);
-                        if (isReferenceOnID(oldID))
-                        {
-                            refreshReferences(oldID, id);
-                        }
-                        return retValue;
-                    }
-                    else
-                    {
-                        return ErrorCodes.INVALID_ID;
-                    }
-                }
-                else
-                {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                return ErrorCodes.DUPLICATE;
-            }
-        }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
     }
 
-    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+    public void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                      String obscurities, String label, ArrayList<String> crossRef)
+            throws UnknownIDException, DuplicateIDException, UnknownReferenceException
     {
-        if (myGlossaryEntries.isIncluded(oldTerm))
+        if (!myGlossaryEntries.isIncluded(oldTerm))
         {
-            IGlossaryEntry myIEntry = myGlossaryEntries.getEntryByTerm(oldTerm);
-            if (!myGlossaryEntries.isIncluded(term)) // Test for duplicate Term in GlossaryEntries
-            {
-                if (solveGlossaryTerms(crossRef))
-                {
-                    GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
-                    GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
-                    for (String ref : crossRef)
-                    {
-                        myCrossRef.add(myGlossaryEntries.getEntryByTerm(ref));
-                    }
-                    return myEntry.edit(term, sense, boundary, validity, obscurities, label, myCrossRef);
-                }
-                else
-                {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                return ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldTerm);
         }
-        else
+        IGlossaryEntry myIEntry = myGlossaryEntries.getEntryByTerm(oldTerm);
+        if (myGlossaryEntries.isIncluded(term)) // Test for duplicate Term in GlossaryEntries
         {
-            return ErrorCodes.NOT_EXISTENT;
+            throw new DuplicateIDException(term);
         }
+        solveGlossaryTerms(crossRef);
+        GlossaryList<IGlossaryEntry> myCrossRef = new GlossaryList<IGlossaryEntry>();
+        GlossaryEntry myEntry = (GlossaryEntry)myIEntry;
+        for (String ref : crossRef)
+        {
+            myCrossRef.add(myGlossaryEntries.getEntryByTerm(ref));
+        }
+        myEntry.edit(term, sense, boundary, validity, obscurities, label, myCrossRef);
+
     }
 
-    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description,
+    public void editNFReq(String oldID, String id, String title, String actor, String description,
                                 ArrayList<String> references)
+            throws UnknownIDException, DuplicateIDException, UnknownReferenceException, ArgumentPatternException
     {
-        if (myNFRequirements.isIncluded(oldID))
+        if (!myNFRequirements.isIncluded(oldID))
         {
-            INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
-            if (isIDunique(id))
-            {
-                if (solveReqReferences(references))
-                {
-                    if (myValidator.isValidID(id))
-                    {
-                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                        NFRequirement myNFReq = (NFRequirement) myINFReq;
-                        for (String ref : references)
-                        {
-                            myReferences.add(getAnyReqByID(ref));
-                        }
-                        ErrorCodes retValue = myNFReq.edit(id, title, actor, description, myReferences);
-                        if (isReferenceOnID(oldID))
-                        {
-                            refreshReferences(oldID, id);
-                        }
-                        return retValue;
-                    }
-                    else
-                    {
-                        return ErrorCodes.INVALID_ID;
-                    }
-                }
-                else
-                {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                return ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldID);
         }
-        else
+        INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
+        if (!isIDunique(id))
         {
-            return ErrorCodes.NOT_EXISTENT;
+            throw new DuplicateIDException(id);
         }
+        solveReqReferences(references);
+        if (myValidator.isInvalidID(id))
+        {
+            throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        NFRequirement myNFReq = (NFRequirement) myINFReq;
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        myNFReq.edit(id, title, actor, description, myReferences);
+        if (isReferenceOnID(oldID))
+        {
+            refreshReferences(oldID, id);
+        }
+
     }
 
-    public ErrorCodes editProdApp(String description)
+    public void editProdApp(String description) throws ListOverflowException
     {
-        return myProductApplication.edit(description);
+        myProductApplication.edit(description);
+
     }
 
-    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
+    public void editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                    ArrayList<String> references)
+            throws UnknownIDException, DuplicateIDException, UnknownReferenceException, ArgumentPatternException
     {
-        if (myProductData.isIncluded(oldID))
+        if (!myProductData.isIncluded(oldID))
         {
-            IProductData myIProdData = myProductData.getReqByID(oldID);
-            if (isIDunique(id))
-            {
-                if (solveReqReferences(references))
-                {
-                    if (myValidator.isValidID(id))
-                    {
-                        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
-                        ProductData myProdData = (ProductData) myIProdData;
-                        for (String ref : references)
-                        {
-                            myReferences.add(getAnyReqByID(ref));
-                        }
-                        ErrorCodes retValue = myProdData.edit(id, content, attribute, maxCount, myReferences);
-                        if (isReferenceOnID(oldID))
-                        {
-                            refreshReferences(oldID, id);
-                        }
-                        return retValue;
-                    }
-                    else
-                    {
-                        return ErrorCodes.INVALID_ID;
-                    }
-                }
-                else
-                {
-                    return ErrorCodes.REFERENCES_NOT_SOLVED;
-                }
-            }
-            else
-            {
-                return ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldID);
         }
-        else
+        IProductData myIProdData = myProductData.getReqByID(oldID);
+        if (!isIDunique(id))
         {
-            return ErrorCodes.NOT_EXISTENT;
+            throw new DuplicateIDException(id);
         }
+        solveReqReferences(references);
+        if (myValidator.isInvalidID(id))
+        {
+            throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
+        }
+        RequirementList<IRequirement> myReferences = new RequirementList<IRequirement>();
+        ProductData myProdData = (ProductData) myIProdData;
+        for (String ref : references)
+        {
+            myReferences.add(getAnyReqByID(ref));
+        }
+        myProdData.edit(id, content, attribute, maxCount, myReferences);
+        if (isReferenceOnID(oldID))
+        {
+            refreshReferences(oldID, id);
+        }
+
     }
 
-    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value)
+    public void editQualReq(String oldCriteria, String criteria, Score value)
+            throws UnknownIDException, DuplicateIDException
     {
-        if (myQualityRequirements.isIncluded(oldCriteria))
+        if (!myQualityRequirements.isIncluded(oldCriteria))
         {
-            IQualityRequirement myIQualReq = myQualityRequirements.getQualReqByCriteria(oldCriteria);
-            if (!myQualityRequirements.isIncluded(criteria)) // Test for duplicate criteria
-            {
-                QualityRequirement myQualReq = (QualityRequirement) myIQualReq;
-                return myQualReq.edit(criteria, value);
-            }
-            else
-            {
-                return ErrorCodes.DUPLICATE;
-            }
+            throw new UnknownIDException(oldCriteria);
         }
-        else
+        IQualityRequirement myIQualReq = myQualityRequirements.getQualReqByCriteria(oldCriteria);
+        if (myQualityRequirements.isIncluded(criteria)) // Test for duplicate criteria
         {
-            return ErrorCodes.NOT_EXISTENT;
+            throw new DuplicateIDException(criteria);
         }
+        QualityRequirement myQualReq = (QualityRequirement) myIQualReq;
+        myQualReq.edit(criteria, value);
+
     }
 
-    public ErrorCodes editTargetDef(String description)
+    public void editTargetDef(String description) throws ListOverflowException
     {
-        return myTargetDefinition.edit(description);
+        myTargetDefinition.edit(description);
+
     }
 
-    public ErrorCodes rateWeightFactor(ArrayList<Integer> values)
+    public void rateWeightFactor(Map<String, Integer> myWeightFactors)
+            throws MissingCostEstimationException, ListOverflowException, NumberOutOfBoundsException
     {
         boolean success = true;
         if (getCostEstimation() != null)
         {
-            ArrayList<ErrorCodes> errors = myCostEstimation.rateWeightFactor(values);
-            for (ErrorCodes error : errors)
-            {
-                if (!(error == ErrorCodes.NO_ERROR))
-                {
-                    success = false;
-                }
-            }
-            if (success)
-            {
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                return ErrorCodes.INVALID_ARGUMENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        myCostEstimation.rateWeightFactor(myWeightFactors);
+
     }
 
-    public ErrorCodes remAdditionByTitle(String title)
+    public void remAdditionByTitle(String title) throws UnknownIDException
     {
-        if (myAdditions.isIncluded(title))
+        if (!myAdditions.isIncluded(title))
         {
-            myAdditions.removeByTitle(title);
-            return ErrorCodes.NO_ERROR;
+            throw new UnknownIDException(title);
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        myAdditions.removeByTitle(title);
+
     }
 
-    public ErrorCodes remCostEstimation()
+    public void remCostEstimation() throws MissingCostEstimationException
     {
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
-            myCostEstimation = null;
-            return ErrorCodes.NO_ERROR;
+            throw new MissingCostEstimationException();
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        myCostEstimation = null;
+
     }
 
-    public ErrorCodes remFReqByID(String id)
+    public void remFReqByID(String id) throws UnknownIDException
     {
-        if (myFRequirements.isIncluded(title))
+        if (!myFRequirements.isIncluded(id))
         {
-            myFRequirements.removeReqByID(id);
-            if(isReferenceOnID(id))
-            {
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeRequirementReferences(id);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            throw new UnknownIDException(id);
         }
-        else
+        myFRequirements.removeReqByID(id);
+        if(isReferenceOnID(id))
         {
-            return ErrorCodes.NOT_EXISTENT;
+            removeRequirementReferences(id);
         }
+
     }
 
-    public ErrorCodes remGlossEntryByTerm(String term)
+    public void remGlossEntryByTerm(String term) throws UnknownIDException
     {
-        if (myGlossaryEntries.isIncluded(term))
+        if (!myGlossaryEntries.isIncluded(term))
         {
-            myGlossaryEntries.removeEntryByTerm(term);
-            if(!isReferenceOnTerm(term))
-            {
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeGlossaryReferences(term);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            throw new UnknownIDException(term);
         }
-        else
+        myGlossaryEntries.removeEntryByTerm(term);
+        if(isReferenceOnTerm(term))
         {
-            return ErrorCodes.NOT_EXISTENT;
+            removeGlossaryReferences(term);
         }
+
     }
 
-    public ErrorCodes remNFReqByID(String id)
+    public void remNFReqByID(String id) throws UnknownIDException
     {
-        if (myNFRequirements.isIncluded(id))
+        if (!myNFRequirements.isIncluded(id))
         {
-            myNFRequirements.removeReqByID(id);
-            if (isReferenceOnID(id))
-            {
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeRequirementReferences(id);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            throw new UnknownIDException(id);
         }
-        else
+        myNFRequirements.removeReqByID(id);
+        if (isReferenceOnID(id))
         {
-            return ErrorCodes.NOT_EXISTENT;
+            removeRequirementReferences(id);
         }
+
     }
 
-    public ErrorCodes remProdDataByID(String id)
+    public void remProdDataByID(String id) throws UnknownIDException
     {
         if (myProductData.isIncluded(id))
         {
-            myProductData.removeReqByID(id);
-            if (!isReferenceOnID(id))
-            {
-                return ErrorCodes.NO_ERROR;
-            }
-            else
-            {
-                removeRequirementReferences(id);
-                return ErrorCodes.REFERENCES_ON_ITEM_DELETED;
-            }
+            throw new UnknownIDException(id);
         }
-        else
+        myProductData.removeReqByID(id);
+        if (isReferenceOnID(id))
         {
-            return ErrorCodes.NOT_EXISTENT;
+            removeRequirementReferences(id);
         }
+
     }
 
-    public ErrorCodes remQualReqByCrit(String criteria)
+    public void remQualReqByCrit(String criteria) throws UnknownIDException
     {
-        if (myQualityRequirements.isIncluded(criteria))
+        if (!myQualityRequirements.isIncluded(criteria))
         {
-            myQualityRequirements.removeQualReqByCriteria(criteria);
-            return ErrorCodes.NO_ERROR;
+            throw new UnknownIDException(criteria);
         }
-        else
-        {
-            return ErrorCodes.NOT_EXISTENT;
-        }
+        myQualityRequirements.removeQualReqByCriteria(criteria);
+
     }
 
-    public ErrorCodes setActualState(double actualState)
+    public void setActualState(double actualState) throws NumberOutOfBoundsException
     {
-        if(actualState > 0)
+        if (!(actualState > 0))
         {
-            this.actualState = actualState;
-            return ErrorCodes.NO_ERROR;
+            throw new NumberOutOfBoundsException(actualState, 0, Double.POSITIVE_INFINITY);
         }
-        else
-        {
-            return ErrorCodes.INVALID_ARGUMENT;
-        }
+        this.actualState = actualState;
+
     }
 
-    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret)
+    public void setDataFP(ClassOfDataFP type, String id, int det, int ret)
+            throws UnknownIDException, MissingCostEstimationException, DuplicateIDException, NumberOutOfBoundsException
     {
-        if (isReqIncluded(id))
+        if (!isReqIncluded(id))
         {
-            if (myCostEstimation != null)
-            {
-                if (myCostEstimation.getDataFPByID(id) == null) // Test for duplicate initialising
-                {
-                    IRequirement reference = getAnyReqByID(id);
-                    return myCostEstimation.setDataFP(type, reference, det, ret);
-                }
-                else
-                {
-                    return ErrorCodes.DUPLICATE;
-                }
-            }
-            else
-            {
-                return ErrorCodes.NO_COST_ESTIMATION;
-            }
+            throw new UnknownIDException(id);
         }
-        else
+        if (myCostEstimation == null)
         {
-            return ErrorCodes.NOT_EXISTENT;
+            throw new MissingCostEstimationException();
         }
+        if (myCostEstimation.getDataFPByID(id) != null) // Test for duplicate initialising
+        {
+            throw new DuplicateIDException(id);
+        }
+        IRequirement reference = getAnyReqByID(id);
+        myCostEstimation.setDataFP(type, reference, det, ret);
+
     }
 
-    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+    public void setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+            throws UnknownIDException, MissingCostEstimationException, DuplicateIDException, NumberOutOfBoundsException
     {
-        if (isReqIncluded(id))
+        if (!isReqIncluded(id))
         {
-            if (myCostEstimation != null)
-            {
-                if (myCostEstimation.getTransactionFPByID(id) == null)
-                {
-                    IRequirement reference = getAnyReqByID(id);
-                    return myCostEstimation.setTransactionFP(type, reference, det, ftr);
-                }
-                else
-                {
-                    return ErrorCodes.DUPLICATE;
-                }
-            }
-            else
-            {
-                return ErrorCodes.NO_COST_ESTIMATION;
-            }
+            throw new UnknownIDException(id);
         }
-        else
+        if (myCostEstimation == null)
         {
-            return ErrorCodes.NOT_EXISTENT;
+            throw new MissingCostEstimationException();
         }
+        if (myCostEstimation.getTransactionFPByID(id) != null)
+        {
+            throw new DuplicateIDException(id);
+        }
+        IRequirement reference = getAnyReqByID(id);
+        myCostEstimation.setTransactionFP(type, reference, det, ftr);
+
     }
 
-    public ErrorCodes addCostEstimation(ComplexityMatrix myComplexityMatrix,
+    public void addCostEstimation(Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
                                         ComplexityWeightMatrix myComplexityWeightMatrix)
     {
-        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrix);
-        return ErrorCodes.NO_ERROR;
+        Configuration myConfig = new Configuration();
+        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrices,
+                                                myConfig.getOptWeightFactors());
+
     }
 
-    public ErrorCodes calcManMonth()
+    public void calcManMonth() throws MissingCostEstimationException
+    {
+        if (myCostEstimation == null)
+        {
+            throw new MissingCostEstimationException();
+        }
+        myCostEstimation.calculateManMonth();
+
+    }
+
+    public void remTransactionFPByID(String id) throws MissingCostEstimationException, UnknownIDException
+    {
+        if (myCostEstimation == null)
+        {
+            throw new MissingCostEstimationException();
+        }
+        if (!isReqIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.remTransactionFPByID(ReferenceToRequirement);
+
+    }
+
+    public void remDataFPByID(String id) throws MissingCostEstimationException, UnknownIDException
+    {
+        if (myCostEstimation == null)
+        {
+            throw new MissingCostEstimationException();
+        }
+        if (!isReqIncluded(id))
+        {
+            throw new UnknownIDException(id);
+        }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.remDataFPByID(ReferenceToRequirement);
+
+    }
+
+    public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+            throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
         if (myCostEstimation != null)
         {
-            myCostEstimation.calculateManMonth();
-            return ErrorCodes.NO_ERROR;
+            throw new MissingCostEstimationException();
         }
-        else
+        if (!isReqIncluded(id))
         {
-            return ErrorCodes.NO_COST_ESTIMATION;
+            throw new UnknownIDException(id);
         }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.editTransactionFPByID(type, ReferenceToRequirement, det, ftr);
+
     }
 
-    public ErrorCodes remTransactionFPByID(String id)
+    public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+            throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
         if (myCostEstimation != null)
         {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.remTransactionFPByID(ReferenceToRequirement);
-            }
-            else
-            {
-                return ErrorCodes.NOT_EXISTENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        else
+        if (!isReqIncluded(id))
         {
-            return ErrorCodes.NO_COST_ESTIMATION;
+            throw new UnknownIDException(id);
         }
+        IRequirement ReferenceToRequirement = getAnyReqByID(id);
+        myCostEstimation.editDataFPByID(type, ReferenceToRequirement, det, ret);
+
     }
 
-    public ErrorCodes remDataFPByID(String id)
+    @Override
+    public IProductEnvironment getProductEnviroment()
     {
-        if (myCostEstimation != null)
-        {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.remDataFPByID(ReferenceToRequirement);
-            }
-            else
-            {
-                return ErrorCodes.NOT_EXISTENT;
-            }
-        }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        return myProductEnvironment;
+
     }
 
-    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+    public void editProdEnv(String description) throws ListOverflowException
     {
-        if (myCostEstimation != null)
-        {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.editTransactionFPByID(type, ReferenceToRequirement, det, ftr);
-            }
-            else
-            {
-                return ErrorCodes.NOT_EXISTENT;
-            }
-        }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        myProductEnvironment.edit(description);
+
     }
 
-    public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+    public void calcFPCount() throws MissingCostEstimationException
     {
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
-            if (isReqIncluded(id))
-            {
-                IRequirement ReferenceToRequirement = getAnyReqByID(id);
-                return myCostEstimation.editDataFPByID(type, ReferenceToRequirement, det, ret);
-            }
-            else
-            {
-                return ErrorCodes.NOT_EXISTENT;
-            }
+            throw new MissingCostEstimationException();
         }
-        else
-        {
-            return ErrorCodes.NO_COST_ESTIMATION;
-        }
+        myCostEstimation.calculateFP();
+
     }
+
+    public void setCustomerDescription(String customerDescription)
+    {
+        this.customerDescription = customerDescription;
+
+    }
+
+    public void setCreateDate(Date createDate)
+    {
+        this.createDate = createDate;
+
+    }
+
+    public void setProductApplication(IProductApplication myProductApplication) throws ListOverflowException
+    {
+        this.myProductApplication = new ProductApplication();
+        this.myProductApplication.edit(myProductApplication.getDescription());
+
+    }
+
+    public void setProductEnvironment(IProductEnvironment myProductEnvironment) throws ListOverflowException
+    {
+        this.myProductEnvironment = new ProductEnvironment();
+        this.myProductEnvironment.edit(myProductEnvironment.getDescription());
+
+    }
+
+    public void setTargetDefinition(ITargetDefinition myTargetDefinition) throws ListOverflowException
+    {
+        this.myTargetDefinition = new TargetDefinition();
+        this.myTargetDefinition.edit(myTargetDefinition.getDescription());
+
+    }
+
+    public void setCostEstimation(ICostEstimation myCostEstimation,
+                                  Map<IClassOfFP, ComplexityMatrix> complexityMatrices,
+                                  ComplexityWeightMatrix complexityWeightMatrix)
+    {
+        this.myCostEstimation = new CostEstimation(complexityWeightMatrix, complexityMatrices, getWeightFactorList());
+        this.myCostEstimation.setWeightFactors((WeightFactorList<IWeightFactor>)myCostEstimation.getWeightFactors());
+        this.myCostEstimation.setDataFPs(myCostEstimation.getDataFPs());
+        this.myCostEstimation.setTransactionFPs(myCostEstimation.getTransactionFPs());
+        this.myCostEstimation.calculateFP();
+        this.myCostEstimation.calculateManMonth();
+
+    }
+
+    public void setFRequirements(ArrayList<IFRequirement> myFRequirements)
+    {
+        this.myFRequirements = (RequirementList<IFRequirement>) myFRequirements;
+
+    }
+
+    public void setProductData(ArrayList<IProductData> myProductData)
+    {
+        this.myProductData = (RequirementList<IProductData>) myProductData;
+
+    }
+
+    public void setNFRequirements(ArrayList<INFRequirement> myNFRequirements)
+    {
+        this.myNFRequirements = (RequirementList<INFRequirement>) myNFRequirements;
+
+    }
+
+    public void setAdditions(ArrayList<IAddition> myAdditions)
+    {
+        this.myAdditions = (AdditionList<IAddition>) myAdditions;
+
+    }
+
+    public void setGlossaryEntries(ArrayList<IGlossaryEntry> myGlossaryEntries)
+    {
+        this.myGlossaryEntries = (GlossaryList<IGlossaryEntry>) myGlossaryEntries;
+
+    }
+
+    public void setQualityRequirements(ArrayList<IQualityRequirement> myQualityRequirements)
+    {
+        this.myQualityRequirements = (QualityRequirementList<IQualityRequirement>) myQualityRequirements;
+
+    }
+
 }

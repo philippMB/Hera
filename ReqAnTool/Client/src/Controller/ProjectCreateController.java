@@ -25,24 +25,48 @@ public class ProjectCreateController
 	@Override
 	protected void executeCreateAction()
 	{
-		//TODO: Test values, give user feedback and create new ReqAn
 		loadingController = controllerManager.createControlledLoadingDialog(myView);
 		loadingController.startLoadingDialog();
-		new Thread(
-				() -> {
-					try
-					{
-						sleep(2000);
-					}
-					catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-					loadingController.stopLoadingDialog();
-					controllerManager.createControlledProjectView();
-					closeView();
-				}
-		).start();
+		tryToCreateNewReqAn();
+		loadingController.stopLoadingDialog();
+	}
+
+	private void tryToCreateNewReqAn()
+	{
+		boolean creationSuccessful;
+		try
+		{
+			createNewReqAn();
+			creationSuccessful = true;
+		}
+		catch(Exception ex)
+		{
+			creationSuccessful = false;
+			handleException(ex);
+		}
+		if(creationSuccessful)
+		{
+			controllerManager.createControlledProjectView();
+			closeView();
+		}
+	}
+
+	private void createNewReqAn() throws Exception
+	{
+		myModel.makeNewReqAn(
+				myView.getProjectTitle(),
+				myView.getSuppName(),
+				myView.getSuppEMail(),
+				myView.getSuppPhoneNumber(),
+				myView.getCompName(),
+				myView.getCompCity(),
+				myView.getCompStreet(),
+				myView.getCompCountry(),
+				myView.getCompPLZ(),
+				myView.getCustName(),
+				myView.getCustEMail(),
+				myView.getCustPhoneNumber()
+		);
 	}
 
 	@Override
@@ -56,5 +80,15 @@ public class ProjectCreateController
 	public void windowClosing(WindowEvent e)
 	{
 		executeCancelAction();
+	}
+
+	@Override
+	protected void handleExByDialog(Exception thrownException)
+	{
+		if(loadingController != null)
+		{
+			loadingController.stopLoadingDialog();
+		}
+		super.handleExByDialog(thrownException);
 	}
 }

@@ -17,16 +17,16 @@ public class NFRequirementShowController
 		super(model, viewToBeControlled);
 	}
 
-	protected void deleteRequirement(String reqID)
+	@Override
+	protected void deleteRequirement(String reqID) throws Exception
 	{
 		myModel.remNFReqByID(reqID);
-		closeView();
 	}
 
-	protected void editRequirement(String reqID)
+	@Override
+	protected void startEditReqView(String reqID)
 	{
 		controllerManager.createControlledNFRequirementEditView(reqID);
-		closeView();
 	}
 
 	@Override

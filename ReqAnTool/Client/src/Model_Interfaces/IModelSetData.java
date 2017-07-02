@@ -1,59 +1,64 @@
 package Model_Interfaces;
 
+import Exceptions.*;
+
 import java.util.ArrayList;
 
 public interface IModelSetData
 {
 
-    public ErrorCodes addFReq(String id, String title, String actor, String description, ArrayList<String> references);
+    void addFReq(String id, String title, String actor, String description, ArrayList<String> references) throws MissingReqAnException, ListOverflowException, ArgumentPatternException, UnknownReferenceException, DuplicateIDException;
 
-    public ErrorCodes addNFReq(String id, String title, String actor, String description, ArrayList<String> references);
+    void addNFReq(String id, String title, String actor, String description, ArrayList<String> references) throws MissingReqAnException, ListOverflowException, DuplicateIDException, UnknownReferenceException, ArgumentPatternException;
 
-    public ErrorCodes addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references);
+    void addProdData(String id, String content, String attribute, String maxCount, ArrayList<String> references) throws MissingReqAnException, ListOverflowException, ArgumentPatternException, UnknownReferenceException, DuplicateIDException;
 
-    public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references);
+    void editFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references) throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException, DuplicateIDException;
 
-    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references);
+    void editNFReq(String oldID, String id, String title, String actor, String description, ArrayList<String> references) throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException, DuplicateIDException;
 
-    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
-                         ArrayList<String> references);
+    void editProdData(String oldID, String id, String content, String attribute, String maxCount,
+                      ArrayList<String> references) throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException, DuplicateIDException;
 
-    public ErrorCodes remFReqByID(String id);
+    void remFReqByID(String id) throws MissingReqAnException, UnknownIDException;
 
-    public ErrorCodes remNFReqByID(String id);
+    void remNFReqByID(String id) throws MissingReqAnException, UnknownIDException;
 
-    public ErrorCodes remProdDataByID(String id);
+    void remProdDataByID(String id) throws MissingReqAnException, UnknownIDException;
 
-    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
-                         String custName, String custMail, String custPhone, String pmName, String pmMail,
-                         String pmPhone);
+    void editCustData(String companyName, String companyCity, String companyStreet, String zip, String companyCountry,
+                      String custName, String custMail, String custPhone, String pmName, String pmMail,
+                      String pmPhone) throws MissingReqAnException, ArgumentPatternException;
 
-    public ErrorCodes editTargetDef(String description);
+    void editTargetDef(String description) throws MissingReqAnException, ListOverflowException;
 
-    public ErrorCodes editProdApp(String description);
+    void editProdApp(String description) throws MissingReqAnException, ListOverflowException;
 
-    public ErrorCodes addQualReq(String criteria, Score value);
+    void editProdEnv(String description) throws Exception;
 
-    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value);
+    void addQualReq(String criteria, Score value) throws MissingReqAnException, ListOverflowException, DuplicateIDException;
 
-    public ErrorCodes remQualReqByCrit(String criteria);
+    void editQualReq(String oldCriteria, String criteria, Score value) throws MissingReqAnException, DuplicateIDException, UnknownIDException;
 
-    public ErrorCodes addAddition(String title, String description);
+    void remQualReqByCrit(String criteria) throws MissingReqAnException, UnknownIDException;
 
-    public ErrorCodes editAddition(String title, String description);
+    void addAddition(String title, String description)
+            throws MissingReqAnException, ListOverflowException, DuplicateIDException;
 
-    public ErrorCodes remAdditionByTitle(String title);
+    void editAddition(String oldTitle, String newTitle, String description) throws MissingReqAnException, DuplicateIDException, UnknownIDException;
 
-    public ErrorCodes addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
-                          String label, ArrayList<String> references);
+    void remAdditionByTitle(String title) throws MissingReqAnException, UnknownIDException;
 
-    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
-                           String obscurities, String label, ArrayList<String> references);
+    void addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
+                       String label, ArrayList<String> references) throws MissingReqAnException, ListOverflowException, DuplicateIDException, UnknownReferenceException;
 
-    public ErrorCodes remGlossEntryByTerm(String term);
+    void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+                        String obscurities, String label, ArrayList<String> references) throws MissingReqAnException, UnknownIDException, DuplicateIDException, UnknownReferenceException;
 
-    public ErrorCodes addCostEstimation();
+    void remGlossEntryByTerm(String term) throws MissingReqAnException, UnknownIDException;
 
-    public ErrorCodes remCostEstimation();
+    void addCostEstimation() throws MissingReqAnException;
+
+    void remCostEstimation() throws MissingReqAnException, MissingCostEstimationException;
 
 }

@@ -34,6 +34,7 @@ public class WeightFactorEditView
 	{
 		super();
 		myModel = model;
+		myModel.addObserver(this);
 		setButtonActions(BUTTON_ACTIONS);
 
 		init();
@@ -66,6 +67,7 @@ public class WeightFactorEditView
 
 		myButtons = myBuilder.addButtonBar(myButtonActions);
 
+		setActionCommands();
 		getContentPane().add(myBuilder.getResult());
 
 		pack();
@@ -77,9 +79,35 @@ public class WeightFactorEditView
 	@Override
 	public int getValueByTitle(String title)
 	{
+		int value;
 		SliderPanel sliderPanel = myScrollBarPanels.get(title);
-		return sliderPanel.getSliderValue();
+		if(sliderPanel == null)
+		{
+			value = -1;
+		}
+		else
+		{
+			value = sliderPanel.getSliderValue();
+		}
+		return value;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Integer> getAllWeightFactorValues()
+	{
+		Map<String, Integer> weightFactorToValueMap = new HashMap<>();
+
+		for(String weightFactorTitle: myScrollBarPanels.keySet())
+		{
+			weightFactorToValueMap.put(weightFactorTitle, getValueByTitle(weightFactorTitle));
+		}
+		return weightFactorToValueMap;
+	}
+
+
 
 	/**
 	 * {@inheritDoc}
@@ -90,4 +118,10 @@ public class WeightFactorEditView
 		//Nothing to be updated
 	}
 
+	@Override
+	public void destruct()
+	{
+		super.destruct();
+		myModel.deleteObserver(this);
+	}
 }

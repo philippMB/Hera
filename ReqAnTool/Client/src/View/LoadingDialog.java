@@ -60,7 +60,9 @@ public class LoadingDialog
 		return Paths.get(ImagePathConstants.LOADING_GIF_PATH_STRING);
 	}
 
-	//TODO: Get comments on init
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void init()
 	{

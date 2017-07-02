@@ -13,7 +13,7 @@ package Exceptions;
  *
  */
 public class UnknownEPException
-	extends Exception
+	extends LoggedException
 {
 
 	private String givenRequirementID;

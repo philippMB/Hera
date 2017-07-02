@@ -4,7 +4,11 @@ import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
 
 import javax.swing.*;
+
+import Model_Interfaces.IModel;
 import com.apple.eawt.*;
+
+import java.util.Observable;
 
 /**
  * Created by phlippe on 18.06.17.
@@ -62,6 +66,7 @@ public class StandardMenuBar
 		JMenu costEstMenu = new JMenu(myTextFacade.getTitleText(TextNameConstants.TITLE_COST_ESTIMATION));
 		allMenus.add(costEstMenu);
 
+		costEstMenu.add(createMenuItem(ViewActions.CREATE_CE, true));
 		costEstMenu.add(createMenuItem(ViewActions.SHOW_CE, true));
 		costEstMenu.add(createMenuItem(ViewActions.EDIT_CE, true));
 		costEstMenu.add(createMenuItem(ViewActions.DELETE_CE, true));

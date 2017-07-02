@@ -1,5 +1,6 @@
 package Controller;
 
+import Exceptions.NoItemSelectedException;
 import LanguageAndText.DialogConstants;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModel;
@@ -36,7 +37,7 @@ public class ProductDataTabController
 		}
 		else
 		{
-			//TODO: ERROR-DIALOG - Nothing selected
+			handleException(new NoItemSelectedException(getClass().getName()));
 		}
 	}
 
@@ -50,34 +51,53 @@ public class ProductDataTabController
 		}
 		else
 		{
-			//TODO: ERROR-DIALOG - Nothing selected
+			handleException(new NoItemSelectedException(getClass().getName()));
 		}
 	}
 
 	@Override
 	protected void executeDeleteAction()
 	{
-		controllerManager.createControlledWarningDialog(
-				parentView,
-				DialogConstants.DIALOG_DELETE_WARNING,
-				new String[]{
-						myTextBundle.getParameterText(TextNameConstants.PAR_PRODUCTDATA) + " " + getSelectedIdentifier()
-				},
-				new DeleteWarningController(myModel, null)
-				{
-					@Override
-					protected void deleteObject()
+		if(getSelectedIdentifier() != null)
+		{
+			controllerManager.createControlledWarningDialog(
+					parentView,
+					DialogConstants.DIALOG_DELETE_WARNING,
+					new String[]{
+							myTextBundle.getParameterText(TextNameConstants.PAR_PRODUCTDATA) + " " + getSelectedIdentifier()
+					},
+					new DeleteWarningController(myModel, null)
 					{
-						closeView();
-						myModel.remProdDataByID(getSelectedIdentifier());
-					}
+						@Override
+						protected void deleteObject()
+						{
+							closeView();
+							tryToDeleteSelProdData();
+						}
 
-					@Override
-					protected void cancelDeletion()
-					{
-						closeView();
+						@Override
+						protected void cancelDeletion()
+						{
+							closeView();
+						}
 					}
-				}
-		);
+			);
+		}
+		else
+		{
+			handleException(new NoItemSelectedException(getClass().getName()));
+		}
+	}
+
+	private void tryToDeleteSelProdData()
+	{
+		try
+		{
+			myModel.remProdDataByID(getSelectedIdentifier());
+		}
+		catch(Exception ex)
+		{
+			handleException(ex);
+		}
 	}
 }

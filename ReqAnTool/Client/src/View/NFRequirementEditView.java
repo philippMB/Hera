@@ -1,5 +1,6 @@
 package View;
 
+import Controller_Interfaces.ITextController;
 import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
@@ -134,4 +135,15 @@ public class NFRequirementEditView
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addTextController(ITextController textfieldController)
+	{
+		TextAreaListener textAreaListener = new TextAreaListener(textfieldController);
+		fieldID.getDocument().addDocumentListener(textAreaListener);
+		fieldDescription.getDocument().addDocumentListener(textAreaListener);
+		fieldTitle.getDocument().addDocumentListener(textAreaListener);
+	}
 }

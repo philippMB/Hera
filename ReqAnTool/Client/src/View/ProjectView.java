@@ -30,6 +30,7 @@ public class ProjectView
 	{
 		super();
 		myModel = model;
+		myModel.addObserver(this);
 		myMenuBar = new StandardMenuBar(true);
 		setJMenuBar(myMenuBar);
 		myAnalysis = myModel.getReqAnalysis();

@@ -3,29 +3,30 @@ package Model_Interfaces;
 /**
  * Created by phlippe on 26.04.17.
  */
+
 public interface ICustomerData 
 {
 
-    public String getPMName();
+    String getPMName();
 
-    public String getPMPNumber();
+    String getPMPNumber();
 
-    public String getPMEMail();
+    String getPMEMail();
 
-    public String getCName();
+    String getCName();
 
-    public String getCNumber();
+    String getCNumber();
 
-    public String getCEMail();
+    String getCEMail();
 
-    public String getCompanyName();
+    String getCompanyName();
 
-    public String getCompanyStreet();
+    String getCompanyStreet();
 
-    public String getCompanyPLZ();
+    String getCompanyPLZ();
 
-    public String getCompanyCity();
+    String getCompanyCity();
 
-    public String getCompanyCountry();
+    String getCompanyCountry();
 
 }

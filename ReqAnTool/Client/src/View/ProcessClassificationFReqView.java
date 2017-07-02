@@ -11,10 +11,9 @@ import javax.swing.*;
  * Created by phlippe on 03.05.17.
  */
 public class ProcessClassificationFReqView
-	extends ProcessClassificationView
+	extends ProcessClassificationView<IFRequirement>
 {
 
-	private IFRequirement myReq;
 	private JTextField fieldTitle;
 	private JTextField fieldActor;
 	private JTextArea fieldDescription;
@@ -25,9 +24,9 @@ public class ProcessClassificationFReqView
 	}
 
 	@Override
-	protected void loadInternRequirement(String ID)
+	protected IFRequirement getRequirementFromModel(String ID)
 	{
-		myReq = myModel.getFReqByID(ID);
+		return myModel.getFReqByID(ID);
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class ProcessClassificationFReqView
 				false
 		);
 		fieldDescription = myBuilder.addNamedTextArea(
-				myTextBundle.getParameterText(TextNameConstants.PAR_TITLE),
+				myTextBundle.getParameterText(TextNameConstants.PAR_DESC),
 				"",
 				false
 		);
@@ -58,12 +57,6 @@ public class ProcessClassificationFReqView
 		fieldTitle.setText(myReq.getTitle());
 		fieldActor.setText(myReq.getActor());
 		fieldDescription.setText(myReq.getDescription());
-	}
-
-	@Override
-	public IRequirement getMyRequirement()
-	{
-		return myReq;
 	}
 
 }

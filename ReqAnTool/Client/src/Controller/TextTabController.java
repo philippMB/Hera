@@ -12,14 +12,14 @@ public abstract class TextTabController<TextTabType extends ITextTab>
 	extends TabController<TextTabType>
 {
 
-	private TextFieldController textFieldController;
+	private TextFieldController textController;
 	private boolean canBeClosed;
 
 
 	public TextTabController(IModel model, IView parentView, TextTabType viewToBeControlled)
 	{
 		super(model, parentView, viewToBeControlled);
-		textFieldController = new TextFieldController(viewToBeControlled);
+		textController = new TextFieldController(viewToBeControlled);
 		canBeClosed = true;
 	}
 
@@ -27,16 +27,16 @@ public abstract class TextTabController<TextTabType extends ITextTab>
 	public void setView(TextTabType viewToBeControlled, boolean showViewAfterwards)
 	{
 		super.setView(viewToBeControlled, showViewAfterwards);
-		if(textFieldController != null)
+		if(textController != null)
 		{
-			textFieldController.setView(viewToBeControlled);
+			textController.setView(viewToBeControlled);
 		}
 	}
 
 	@Override
 	protected boolean canViewBeClosed()
 	{
-		if(textFieldController.hasTextChangedSinceSaving())
+		if(textController.hasTextChangedSinceSaving())
 		{
 			myView.bringToFront();
 			controllerManager.createControlledWarningDialog(
@@ -99,7 +99,7 @@ public abstract class TextTabController<TextTabType extends ITextTab>
 		try
 		{
 			editDescriptionInModel(newDescription);
-			textFieldController.setSaved();
+			textController.setSaved();
 		}
 		catch(Exception ex)
 		{
@@ -139,10 +139,11 @@ public abstract class TextTabController<TextTabType extends ITextTab>
 	private void resetProdApp()
 	{
 		myView.resetDescription();
-		textFieldController.setSaved();
+		textController.setSaved();
 	}
 
-	protected abstract void editDescriptionInModel(String newDescription);
+	//TODO: Write exact exception here
+	protected abstract void editDescriptionInModel(String newDescription) throws Exception;
 
 	protected abstract String getParameterPropertyName();
 }

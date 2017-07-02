@@ -41,6 +41,7 @@ public class ProjectCreateView
 	{
 		super();
 		myModel = model;
+		myModel.addObserver(this);
 
 		setButtonActions(BUTTON_ACTIONS);
 		init();
@@ -118,7 +119,7 @@ public class ProjectCreateView
 				true
 		);
 		fieldCompName = myBuilder.addNamedTextField(
-				myTextBundle.getParameterText(TextNameConstants.PAR_NAME),
+				myTextBundle.getParameterText(TextNameConstants.PAR_COMPANY),
 				"",
 				true
 		);

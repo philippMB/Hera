@@ -129,6 +129,9 @@ public class BasicController
 				case RATE_WF:
 					executeRateWFAction();
 					break;
+				case CREATE_CE:
+					executeCreateCEAction();
+					break;
 				case SHOW_CE:
 					executeShowCEAction();
 					break;
@@ -302,6 +305,11 @@ public class BasicController
 		logMissingActionExecution(ViewActions.RATE_WF);
 	}
 
+	protected void executeCreateCEAction()
+	{
+		logMissingActionExecution(ViewActions.CREATE_CE);
+	}
+
 	protected void executeShowCEAction()
 	{
 		logMissingActionExecution(ViewActions.SHOW_CE);
@@ -413,15 +421,16 @@ public class BasicController
 
 	protected void logException(Exception thrownException, int errorID)
 	{
-		String warningMsg = "ErrorCode "+thrownException+" (errorID = "+errorID+")"
+		String warningMsg = "Exception "+thrownException+" (errorID = "+errorID+")"
 				+" occurred with default execution of BasicController.\n";
 		warningMsg += "Controller:"+this.getClass().toString()+"\n";
-		myLogger.warning( warningMsg );
+		myLogger.warning(warningMsg, thrownException);
 	}
 
-	protected void accessFile(FileHandler handlerForChosenFile, FileAccessType fileAccessType,
+	protected boolean accessFile(FileHandler handlerForChosenFile, FileAccessType fileAccessType,
 							  @Nullable String successInfoDialog)
 	{
+		boolean isFileChosen = false;
 		IFileChooser fileChooser = controllerManager.createFileChooser(fileAccessType);
 		fileChooser.showView();
 		String filePath = fileChooser.getChosenFilePath();
@@ -434,15 +443,16 @@ public class BasicController
 			{
 				handlerForChosenFile.handleFile(filePath);
 			}
-			catch(Exception exportException)
+			catch(Exception fileException)
 			{
 				exceptionThrown = true;
 				loadingController.stopLoadingDialog();
-				handleException(exportException);
+				handleException(fileException);
 			}
 
 			if(!exceptionThrown)
 			{
+				isFileChosen = true;
 				loadingController.stopLoadingDialog();
 				if(successInfoDialog != null)
 				{
@@ -456,6 +466,23 @@ public class BasicController
 				}
 			}
 		}
+		return isFileChosen;
+	}
+
+	protected boolean tryToSaveReqAn()
+	{
+		boolean isSaved;
+		try
+		{
+			myModel.saveReqAn();
+			isSaved = true;
+		}
+		catch(Exception saveException)
+		{
+			isSaved = false;
+			handleException(saveException);
+		}
+		return isSaved;
 	}
 
 }

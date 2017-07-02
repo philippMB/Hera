@@ -32,6 +32,7 @@ public class OptimizedWeightFactorsView
 	{
 		super();
 		myModel = model;
+		myModel.addObserver(this);
 		setButtonActions(BUTTON_ACTIONS);
 
 		init();

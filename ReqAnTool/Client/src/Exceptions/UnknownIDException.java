@@ -14,7 +14,7 @@ package Exceptions;
  *
  */
 public class UnknownIDException
-		extends Exception
+	extends LoggedException
 {
 
 	/**

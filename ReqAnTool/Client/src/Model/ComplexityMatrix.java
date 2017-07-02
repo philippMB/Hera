@@ -2,25 +2,35 @@ package Model;
 
 public class ComplexityMatrix
 {
-    private Complexities[][] detFtrMat;
-    private Complexities[][] detRetMat;
-    private int[] detIndexes;
-    private int[] ftrIndexes;
-    private int[] retIndexes;
+    /*
+    Format of Matrices:
+    detFtrMatrix:
+                <= x1 DET    <= x2 DET    > x2 DET
+    <= y1 FTR    EASY         EASY         MEDIUM
+    <= y2 FTR    EASY         MEDIUM       COMPLEX
+    >  y2 FTR    MEDIUM       COMPLEX      COMPLEX
+    (equals for detRetMatrix but 'ftr' replaced with 'ret'
+     */
 
-    public ComplexityMatrix(Complexities[][] detFtrMat, Complexities[][] detRetMat, int[] detIndexes,
-                            int[] ftrIndexes, int[] retIndexes)
+    private final Complexities[][] Matrix;
+    private final int[] detIndexes;
+    private final int[] ftrIndexes;
+    private final int[] retIndexes;
+
+    public ComplexityMatrix(int[] detIndexes, int[] ftrIndexes, int[] retIndexes)
     {
         this.detIndexes = detIndexes;
         this.ftrIndexes = ftrIndexes;
         this.retIndexes = retIndexes;
-        this.detFtrMat = detFtrMat;
-        this.detRetMat = detRetMat;
+        this.Matrix = new Complexities[][] {{Complexities.EASY, Complexities.EASY, Complexities.MEDIUM},
+                                            {Complexities.EASY, Complexities.MEDIUM, Complexities.COMPLEX},
+                                            {Complexities.MEDIUM, Complexities.COMPLEX, Complexities.COMPLEX}};
     }
 
     public Complexities getDetFtrValue(int det, int ftr)
     {
         int x = 0, y = 0;
+        Complexities retValue = Complexities.ERROR;
         for (int i = 0; i < ftrIndexes.length; i++)
         {
             if (ftrIndexes[i] >= ftr)
@@ -37,14 +47,19 @@ public class ComplexityMatrix
                 break;
             }
         }
-        return detFtrMat[x][y];
+        if (!(x == -1 || y == -1))
+        {
+            retValue = Matrix[x][y];
+        }
+        return retValue;
 
     }
 
     public Complexities getDetRetValue(int det, int ret)
     {
         int x = -1, y = -1;
-        for (int i = 1; i < detRetMat[0].length; i++)
+        Complexities retValue = Complexities.ERROR;
+        for (int i = 1; i < Matrix[0].length; i++)
         {
             if (detIndexes[i] >= det)
             {
@@ -60,15 +75,10 @@ public class ComplexityMatrix
                 break;
             }
         }
-        if (x == -1 || y == -1)
+        if (!(x == -1 || y == -1))
         {
-            return Complexities.ERROR;
+            retValue = Matrix[x][y];
         }
-        else
-        {
-            return detRetMat[x][y];
-        }
-
+        return retValue;
     }
-
 }

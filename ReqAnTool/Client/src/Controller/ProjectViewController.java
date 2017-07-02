@@ -13,7 +13,7 @@ public class ProjectViewController
 		extends BasicViewController<IProjectView>
 {
 
-	boolean couldBeClosed;
+	private boolean couldBeClosed;
 
 
 	public ProjectViewController(IModel model, IProjectView projectView)
@@ -33,21 +33,27 @@ public class ProjectViewController
 		controllerManager.closeProgram();
 	}
 
-	private boolean tryToSaveReqAn()
+	private boolean saveReqAn()
 	{
-		//TODO: Implement this method
-		return true;
-	}
-
-	private void saveAnalysisAtPath()
-	{
-
+		boolean isSaved;
+		if(myModel.isFirstUseOfOpenedReqAn())
+		{
+			isSaved = accessFile(
+					absoluteFilePath -> myModel.saveReqAn(absoluteFilePath),
+					FileAccessType.SAVE,
+					DialogConstants.DIALOG_INFO_SAVING_FILE);
+		}
+		else
+		{
+			isSaved = tryToSaveReqAn();
+		}
+		return isSaved;
 	}
 
 	@Override
 	protected boolean canViewBeClosed()
 	{
-		couldBeClosed = false && !myModel.isReqAnUnsaved();
+		couldBeClosed = !myModel.isReqAnUnsaved();
 		if(!couldBeClosed)
 		{
 			controllerManager.createControlledWarningDialog(
@@ -59,7 +65,7 @@ public class ProjectViewController
 						protected void executeSaveAction()
 						{
 							closeView();
-							couldBeClosed = tryToSaveReqAn();
+							couldBeClosed = saveReqAn();
 						}
 
 						@Override

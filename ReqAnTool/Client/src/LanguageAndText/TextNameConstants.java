@@ -143,5 +143,9 @@ public abstract class TextNameConstants
 	public static final String PAR_PRODUCT_APPLICATION = "PRODUCT_APPLICATION";
 	public static final String PAR_PRODUCT_ENVIRONMENT = "PRODUCT_ENVIRONMENT";
 	public static final String PAR_TARGET_DEFINITION = "TARGET_DEFINITION";
+	public static final String PAR_COMPANY = "COMPANY";
+	public static final String PAR_PM_NAME = "PM_NAME";
+	public static final String PAR_PM_EMAIL = "PM_EMAIL";
+	public static final String PAR_PM_PHONE_NUMBER = "PM_PHONE_NUMBER";
 
 }

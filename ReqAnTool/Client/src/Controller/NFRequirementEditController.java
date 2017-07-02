@@ -22,7 +22,7 @@ public class NFRequirementEditController
 	}
 
 	@Override
-	protected void addRequirementToModel(ArrayList<String> referenceList)
+	protected void addRequirementToModel(ArrayList<String> referenceList) throws Exception
 	{
 		myModel.addNFReq(
 				myView.getIDEntry(),
@@ -34,7 +34,7 @@ public class NFRequirementEditController
 	}
 
 	@Override
-	protected void editRequirementFromModel(ArrayList<String> referenceList)
+	protected void editRequirementFromModel(ArrayList<String> referenceList) throws Exception
 	{
 		myModel.editNFReq(
 				myReqID,

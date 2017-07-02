@@ -22,7 +22,7 @@ import Controller_Interfaces.ITextController;
  *     <b>Text field</b><br>
  *         In addition to the view actions the view provides a big text field in which the user can enter his text. To
  *         observe the text changes a {@link ITextController} could be added via
- *         {@link ITextTab#addTextController(ITextController)}. It will be notified whenever the text is changed by the
+ *         {@link ITextView#addTextController(ITextController)}. It will be notified whenever the text is changed by the
  *         user in this view.
  * </p>
  * <p>
@@ -32,9 +32,10 @@ import Controller_Interfaces.ITextController;
  * @author 9045534
  * @version 1.0
  * @see ITab
+ * @see ITextTab
  */
 public interface ITextTab
-	extends ITab
+	extends ITab, ITextView
 {
 
 	/**
@@ -47,12 +48,5 @@ public interface ITextTab
 	 * Sets the content of the text area to the saved description and deletes changes which the user could have done.
 	 */
 	public void resetDescription();
-
-	/**
-	 * Adds a {@link ITextController} to the text field to observe the changes of text. It will be notified whenever
-	 * the text is changed by the user in this view.
-	 * @param textfieldController Controller which should be notified
-	 */
-	public void addTextController(ITextController textfieldController);
 
 }

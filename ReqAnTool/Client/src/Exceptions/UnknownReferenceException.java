@@ -14,7 +14,7 @@ package Exceptions;
  *
  */
 public class UnknownReferenceException
-	extends Exception
+	extends LoggedException
 {
 
 	/**

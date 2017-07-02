@@ -54,7 +54,7 @@ public abstract class PanelBuilder
 
     public JTable addTable(String name, String[][] elements)
     {
-        return addTable(name,elements,null);
+        return addTable(name,elements,new String[0]);
     }
 
     public abstract JTable addTable(String name, String[][] elements, String[] columnNames);

@@ -1,7 +1,9 @@
 package Controller;
 
+import Exceptions.ListOverflowException;
+import Exceptions.MissingReqAnException;
+import Exceptions.NoItemSelectedException;
 import LanguageAndText.DialogConstants;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IRequirementFormView;
 
@@ -13,10 +15,10 @@ import java.util.Arrays;
  * Created by phlippe on 04.06.17.
  */
 public abstract class RequirementEditController<ViewType extends IRequirementFormView>
-	extends BasicViewController<ViewType>
+	extends BasicViewWithTextController<ViewType>
 {
 
-	private boolean readyForBeClosed;
+	private boolean readyToBeClosed;
 	protected String myReqID;
 
 
@@ -50,7 +52,7 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 
 		if( refToDelete == null )
 		{
-			//TODO: ErrorDialog, that no Link is selected in the table
+			handleException(new NoItemSelectedException(getClass().getName()));
 		}
 		else
 		{
@@ -71,36 +73,39 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 	@Override
 	protected boolean canViewBeClosed()
 	{
-		readyForBeClosed = isReqEqualsViewEntries();
-		controllerManager.createControlledWarningDialog(
-				myView,
-				DialogConstants.DIALOG_SAVE_DATA_WARNING,
-				createSaveDataWarningPlaceholder(),
-				new SaveWarningController(myModel, null)
-				{
-					@Override
-					protected void executeSaveAction()
+		readyToBeClosed = !textController.hasTextChangedSinceSaving();
+		if(!readyToBeClosed)
+		{
+			controllerManager.createControlledWarningDialog(
+					myView,
+					DialogConstants.DIALOG_SAVE_DATA_WARNING,
+					createSaveDataWarningPlaceholder(),
+					new SaveWarningController(myModel, null)
 					{
-						closeView();
-						readyForBeClosed = tryToSaveReq();
-					}
+						@Override
+						protected void executeSaveAction()
+						{
+							closeView();
+							readyToBeClosed = tryToSaveReq();
+						}
 
-					@Override
-					protected void executeDontSaveAction()
-					{
-						closeView();
-						readyForBeClosed = true;
-					}
+						@Override
+						protected void executeDontSaveAction()
+						{
+							closeView();
+							readyToBeClosed = true;
+						}
 
-					@Override
-					protected void executeCancelAction()
-					{
-						closeView();
-						readyForBeClosed = false;
+						@Override
+						protected void executeCancelAction()
+						{
+							closeView();
+							readyToBeClosed = false;
+						}
 					}
-				}
-		);
-		return readyForBeClosed;
+			);
+		}
+		return readyToBeClosed;
 	}
 
 	@Override
@@ -119,12 +124,6 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 		closeView();
 	}
 
-	private boolean isReqEqualsViewEntries()
-	{
-		//TODO: Compare given Requirement to the entries in view (if req null, everytime false)
-		return false;
-	}
-
 	protected boolean tryToSaveReq()
 	{
 		boolean reqIsSaved = true;
@@ -140,6 +139,7 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 			{
 				editRequirementFromModel(referenceList);
 			}
+			textController.setSaved();
 		}
 		catch (Exception saveException)
 		{
@@ -150,9 +150,11 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 		return reqIsSaved;
 	}
 
-	protected abstract void addRequirementToModel(ArrayList<String> referenceList);
+	//TODO: Change to "MissingReqAnException, ListOverflowException"
+	protected abstract void addRequirementToModel(ArrayList<String> referenceList) throws Exception;
 
-	protected abstract void editRequirementFromModel(ArrayList<String> referenceList);
+	//TODO: Look for specific Exceptions!
+	protected abstract void editRequirementFromModel(ArrayList<String> referenceList) throws Exception;
 
 	protected abstract String[] createSaveDataWarningPlaceholder();
 

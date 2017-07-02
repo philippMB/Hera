@@ -5,23 +5,32 @@ import Model_Interfaces.ClassOfTransactionFP;
 
 public class ComplexityWeightMatrix
 {
-    private ClassOfTransactionFP[] myTransactionTypeIndexes;
-    private ClassOfDataFP[] myDataTypeIndexes;
-    private Complexities[] myComplexityIndexes;
-    private int[][] myFPMatrix;
+    /*
+    Format of Matrix:
+            EI  EO  EQ  ILF EIF
+    EASY    x   x   x   x   x
+    MEDIUM  x   x   x   x   x
+    COMPLEX x   x   x   x   x
+     */
+    private final ClassOfTransactionFP[] myTransactionTypeIndexes;
+    private final ClassOfDataFP[] myDataTypeIndexes;
+    private final Complexities[] myComplexityIndexes;
+    private final int[][] myFPMatrix;
 
-    public ComplexityWeightMatrix(ClassOfTransactionFP[] myTransactionTypeIndexes, ClassOfDataFP[] myDataTypeIndexes,
-                                  Complexities[] myComplexityIndexes, int[][] myFPMatrix)
+    public ComplexityWeightMatrix(int[][] myFPMatrix)
     {
-        this.myTransactionTypeIndexes = myTransactionTypeIndexes;
-        this.myDataTypeIndexes = myDataTypeIndexes;
+        this.myTransactionTypeIndexes = new ClassOfTransactionFP[] {ClassOfTransactionFP.EI_INPUT,
+                                                                    ClassOfTransactionFP.EO_OUTPUT,
+                                                                    ClassOfTransactionFP.EQ_QUERY};
+        this.myDataTypeIndexes = new ClassOfDataFP[] {ClassOfDataFP.ILF_INTERNAL_LOGICAL_FILE,
+                                                      ClassOfDataFP.EIF_EXTERNAL_INPUT_FILE};
+        this.myComplexityIndexes = new Complexities[] {Complexities.EASY, Complexities.MEDIUM, Complexities.COMPLEX};
         this.myFPMatrix = myFPMatrix;
-        this.myComplexityIndexes = myComplexityIndexes;
     }
 
     public int getFPvalue(Complexities myComplexity, ClassOfTransactionFP type)
     {
-        int x = -1, y = -1;
+        int x = -1, y = -1, fPValue = -1;
         for (int i = 0; i < myComplexityIndexes.length; i++)
         {
             if (myComplexityIndexes[i] == myComplexity)
@@ -38,19 +47,16 @@ public class ComplexityWeightMatrix
                 break;
             }
         }
-        if (x == -1 || y == -1)
+        if (!(x == -1 || y == -1))
         {
-            return -1;
+            fPValue = myFPMatrix[x][y];
         }
-        else
-        {
-            return myFPMatrix[x][y];
-        }
+        return fPValue;
     }
 
     public int getFPvalue(Complexities myComplexity, ClassOfDataFP type)
     {
-        int x = -1, y = -1;
+        int x = -1, y = -1, fPValue = -1;
         for (int i = 0; i < myComplexityIndexes.length; i++)
         {
             if (myComplexityIndexes[i] == myComplexity)
@@ -63,17 +69,14 @@ public class ComplexityWeightMatrix
         {
             if (myDataTypeIndexes[j].equals(type))
             {
-                y = j;
+                y = j + 3; // +3 for right Index (see Matrix format in class description)
                 break;
             }
         }
-        if (x == -1 || y == -1)
+        if (!(x == -1 || y == -1))
         {
-            return -1;
+            fPValue = myFPMatrix[x][y];
         }
-        else
-        {
-            return myFPMatrix[x][y];
-        }
+        return fPValue;
     }
 }

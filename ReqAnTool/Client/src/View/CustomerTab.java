@@ -1,7 +1,10 @@
 package View;
 
+import Controller_Interfaces.ITextController;
 import Controller_Interfaces.ViewActions;
 import LanguageAndText.TextNameConstants;
+import Logging.ILogger;
+import Logging.ILoggerFactory;
 import Model_Interfaces.ICustomerData;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.ICustomerTab;
@@ -31,6 +34,7 @@ public class CustomerTab
 	private JTextField fieldCompPLZ;
 	private JTextField fieldCompCity;
 	private JTextField fieldCompCountry;
+	private ILogger myLogger;
 
 
 	public CustomerTab(IModelGetData model)
@@ -41,6 +45,7 @@ public class CustomerTab
 	@Override
 	protected void init()
 	{
+		myLogger = ILoggerFactory.getInstance().createLogger();
 		setButtonActions(BUTTON_ACTIONS);
 
 		buildCustomerSection();
@@ -49,7 +54,7 @@ public class CustomerTab
 		myBuilder.addNewSection();
 		myButtons = myBuilder.addButtonBar(BUTTON_ACTIONS);
 
-		//setValuesFromModel();
+		setValuesFromModel();
 
 		add(myBuilder.getResult(), BorderLayout.CENTER);
 		setActionCommands();
@@ -112,15 +117,21 @@ public class CustomerTab
 	private void setValuesFromModel()
 	{
 		ICustomerData myCustomerData = myModel.getCustomerData();
-
-		fieldCustName.setText(myCustomerData.getCName());
-		fieldCustPhoneNumber.setText(myCustomerData.getCNumber());
-		fieldCustEMail.setText(myCustomerData.getCEMail());
-		fieldCompName.setText(myCustomerData.getCompanyName());
-		fieldCompStreet.setText(myCustomerData.getCompanyStreet());
-		fieldCompPLZ.setText(myCustomerData.getCompanyPLZ());
-		fieldCompCity.setText(myCustomerData.getCompanyCity());
-		fieldCompCountry.setText(myCustomerData.getCompanyCountry());
+		if(myCustomerData != null)
+		{
+			fieldCustName.setText(myCustomerData.getCName());
+			fieldCustPhoneNumber.setText(myCustomerData.getCNumber());
+			fieldCustEMail.setText(myCustomerData.getCEMail());
+			fieldCompName.setText(myCustomerData.getCompanyName());
+			fieldCompStreet.setText(myCustomerData.getCompanyStreet());
+			fieldCompPLZ.setText(myCustomerData.getCompanyPLZ());
+			fieldCompCity.setText(myCustomerData.getCompanyCity());
+			fieldCompCountry.setText(myCustomerData.getCompanyCountry());
+		}
+		else
+		{
+			myLogger.warning("CustomerData are null in CustomerTab");
+		}
 	}
 
 	@Override
@@ -183,4 +194,20 @@ public class CustomerTab
 		setValuesFromModel();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addTextController(ITextController textfieldController)
+	{
+		TextAreaListener textAreaListener = new TextAreaListener(textfieldController);
+		fieldCustName.getDocument().addDocumentListener(textAreaListener);
+		fieldCustPhoneNumber.getDocument().addDocumentListener(textAreaListener);
+		fieldCustEMail.getDocument().addDocumentListener(textAreaListener);
+		fieldCompName.getDocument().addDocumentListener(textAreaListener);
+		fieldCompStreet.getDocument().addDocumentListener(textAreaListener);
+		fieldCompPLZ.getDocument().addDocumentListener(textAreaListener);
+		fieldCompCity.getDocument().addDocumentListener(textAreaListener);
+		fieldCompCountry.getDocument().addDocumentListener(textAreaListener);
+	}
 }

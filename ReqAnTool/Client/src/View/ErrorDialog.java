@@ -1,6 +1,7 @@
 package View;
 
 import Controller_Interfaces.ViewActions;
+import LanguageAndText.DialogConstants;
 import LanguageAndText.ExceptionToTextConverter;
 import LanguageAndText.TextNameConstants;
 import View_Interfaces.IErrorDialog;

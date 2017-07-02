@@ -1,7 +1,6 @@
 package Model;
 
 import Model_Interfaces.IAddition;
-import Model_Interfaces.IAdditionList;
 
 import java.util.ArrayList;
 
@@ -14,41 +13,44 @@ public class AdditionList<IAdd extends IAddition>
 {
 
     @Override
-    public boolean isIncluded(String term)
+    public boolean isIncluded(String title)
     {
+        boolean included = false;
         for (IAdd myAdd : this)
         {
-            if (myAdd.getTitle().equals(term))
+            if (myAdd.getTitle().equals(title))
             {
-                return true;
+                included = true;
             }
         }
-        return false;
+        return included;
     }
 
     @Override
-    public IAdd getAdditionByTitle(String term)
+    public IAdd getAdditionByTitle(String title)
     {
+        IAdd addToReturn = null;
         for (IAdd myAdd : this)
         {
-            if (myAdd.getTitle().equals(term))
+            if (myAdd.getTitle().equals(title))
             {
-                return myAdd;
+                addToReturn = myAdd;
             }
         }
-        return null;
+        return addToReturn;
     }
 
     @Override
     public boolean removeByTitle(String title)
     {
+        boolean success = false;
         for (IAdd myAdd : this)
         {
             if (myAdd.getTitle().equals(title))
             {
-                return super.remove(myAdd);
+                success = super.remove(myAdd);
             }
         }
-        return false;
+        return success;
     }
 }

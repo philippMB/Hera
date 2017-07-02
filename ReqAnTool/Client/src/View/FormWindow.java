@@ -29,6 +29,7 @@ public abstract class FormWindow
         myTextBundle = ITextFacade.getInstance();
         myLogger = ILoggerFactory.getInstance().createLogger();
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setLocationRelativeTo(null);
     }
 
     protected void setButtonActions(ViewActions[] buttonActions)

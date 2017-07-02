@@ -7,8 +7,8 @@ package Model_Interfaces;
 public interface IQualityRequirement 
 {
     
-    public String getCriteria();
+    String getCriteria();
 
-    public Score getValue();
+    Score getValue();
 
 }

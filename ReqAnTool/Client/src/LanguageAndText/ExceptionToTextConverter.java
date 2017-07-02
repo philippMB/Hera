@@ -1,8 +1,6 @@
 package LanguageAndText;
 
 import Exceptions.*;
-import Model_Interfaces.IAddition;
-import Model_Interfaces.IFRequirement;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,6 +14,7 @@ import java.util.Map;
 public class ExceptionToTextConverter
 {
 
+	private static final String DIALOG_ERROR_DEFAULT = "DEFAULT_ERROR";
 	private static final Map<Class, String> exceptionToPropertyMap =
 			Collections.unmodifiableMap(
 					new HashMap<Class, String>()
@@ -23,7 +22,8 @@ public class ExceptionToTextConverter
 						put(ArgumentPatternException.class,"EX_WRONG_PATTERN");
 						put(DuplicateIDException.class,"EX_DUPLICATE");
 						put(MissingCostEstimationException.class,"EX_NO_COST_ESTIMATION");
-						put(MissingFPException.class,"EX_NO_FP");
+						put(MissingEntryException.class,"EX_MISSING_ENTRY");
+						put(MissingParameterException.class,"EX_MISSING_PARAMETER");
 						put(MissingReqAnException.class,"EX_NO_REQAN");
 						put(ListOverflowException.class,"EX_LIST_OVERFLOW");
 						put(NumberOutOfBoundsException.class,"EX_NUMBER_OOB");
@@ -31,6 +31,7 @@ public class ExceptionToTextConverter
 						put(UnknownIDException.class,"EX_UNKNOWN_ID");
 						put(UnknownReferenceException.class,"EX_UNKNOWN_REF");
 						put(StringNoNumberException.class,"EX_STRING_NO_NUMBER");
+						put(NoItemSelectedException.class,"EX_NO_ITEM_SELECTED");
 					}}
 			);
 
@@ -46,7 +47,14 @@ public class ExceptionToTextConverter
 								((DuplicateIDException)ex).getDuplicateID()
 						});
 						put(MissingCostEstimationException.class, (textFacade, ex) -> new String[0]);
-						put(MissingFPException.class, (textFacade, ex) -> new String[0]);
+						put(MissingParameterException.class, (textFacade, ex) -> new String[]{
+								convertParameterTypeToString(textFacade,
+										((MissingParameterException)ex).getMissingParameter())
+						});
+						put(MissingEntryException.class, (textFacade, ex) -> new String[]{
+								convertParameterTypeToString(textFacade,
+										((MissingEntryException)ex).getMissingEntry())
+						});
 						put(MissingReqAnException.class, (textFacade, ex) -> new String[0]);
 						put(ListOverflowException.class, (textFacade, ex) -> new String[0]);
 						put(NumberOutOfBoundsException.class, (textFacade, ex) -> new String[]{
@@ -67,6 +75,7 @@ public class ExceptionToTextConverter
 								((StringNoNumberException)ex).getGivenString(),
 								convertNumberTypeToString(textFacade,((StringNoNumberException)ex).getNeededNumberType())
 						});
+						put(NoItemSelectedException.class,((textFacade, ex) -> new String[0]));
 					}}
 			);
 	private static ExceptionToTextConverter singleton;
@@ -95,7 +104,7 @@ public class ExceptionToTextConverter
 		}
 		else
 		{
-			propertyName = null;
+			propertyName = DIALOG_ERROR_DEFAULT;
 		}
 		return propertyName;
 	}
@@ -109,7 +118,7 @@ public class ExceptionToTextConverter
 		}
 		else
 		{
-			propertyName = null;
+			propertyName = DIALOG_ERROR_DEFAULT;
 		}
 		return propertyName;
 	}
@@ -124,9 +133,16 @@ public class ExceptionToTextConverter
 		}
 		else
 		{
-			placeholder = null;
+			placeholder = createPlaceholderForDefaultError(ex);
 		}
 		return placeholder;
+	}
+
+	private String[] createPlaceholderForDefaultError(Exception thrownException)
+	{
+		return new String[]{
+				thrownException.toString()
+		};
 	}
 
 	private static String convertPatternTypeToString(ITextFacade textFacade, PatternType patternType)
@@ -169,6 +185,39 @@ public class ExceptionToTextConverter
 				break;
 		}
 		return convertedNumberType;
+	}
+
+	private static String convertParameterTypeToString(ITextFacade textFacade, MissingParameter missingParameter)
+	{
+		String convertedParameter;
+		switch(missingParameter)
+		{
+			case MAN_MONTH:
+				convertedParameter = textFacade.getParameterText(TextNameConstants.PAR_MM);
+				break;
+			case ACTUAL_STATE:
+				convertedParameter = textFacade.getParameterText(TextNameConstants.PAR_ACTUAL_STATE);
+				break;
+			case FUNCTION_POINTS:
+				convertedParameter = textFacade.getParameterText(TextNameConstants.PAR_FP);
+				break;
+			case PROJECT_TITLE:
+				convertedParameter = textFacade.getParameterText(TextNameConstants.PAR_TITLE);
+				break;
+			case PM_NAME:
+				convertedParameter = textFacade.getParameterText(TextNameConstants.PAR_PM_NAME);
+				break;
+			case PM_EMAIL:
+				convertedParameter = textFacade.getParameterText(TextNameConstants.PAR_PM_EMAIL);
+				break;
+			case PM_PHONE_NUMBER:
+				convertedParameter = textFacade.getParameterText(TextNameConstants.PAR_PM_PHONE_NUMBER);
+				break;
+			default:
+				convertedParameter = null;
+				break;
+		}
+		return convertedParameter;
 	}
 
 

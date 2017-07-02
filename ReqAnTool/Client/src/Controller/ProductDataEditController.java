@@ -25,7 +25,7 @@ public class ProductDataEditController
 	}
 
 	@Override
-	protected void addRequirementToModel(ArrayList<String> referenceList)
+	protected void addRequirementToModel(ArrayList<String> referenceList) throws Exception
 	{
 		myModel.addProdData(
 				myView.getIDEntry(),
@@ -37,9 +37,9 @@ public class ProductDataEditController
 	}
 
 	@Override
-	protected void editRequirementFromModel(ArrayList<String> referenceList)
+	protected void editRequirementFromModel(ArrayList<String> referenceList) throws Exception
 	{
-		myModel.editNFReq(
+		myModel.editProdData(
 				myReqID,
 				myView.getIDEntry(),
 				myView.getContentEntry(),

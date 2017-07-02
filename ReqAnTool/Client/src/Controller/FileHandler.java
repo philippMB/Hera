@@ -6,6 +6,6 @@ package Controller;
 public interface FileHandler
 {
 
-	public void handleFile(String absoluteFilePath);
+	public void handleFile(String absoluteFilePath) throws Exception;
 
 }

@@ -135,7 +135,9 @@ public class TraceLogger
 		String exceptionMessage;
 		if(exceptionToText != null)
 		{
-			exceptionMessage = "Exception: "+exceptionToText.getClass().getName();
+			exceptionMessage = "Exception: "+exceptionToText.getClass().getName() + "\n";
+			StackTraceElement[] exceptionStackTrace = exceptionToText.getStackTrace();
+			exceptionMessage += convertStackStraceToString(exceptionStackTrace, 0);
 		}
 		else
 		{
@@ -159,24 +161,28 @@ public class TraceLogger
 	 */
 	private String makeFunctionTreePreamble()
 	{
-		final int DEPTH_OFFSET = 3;
-
 		StackTraceElement[] activeFunctionTree = Thread.currentThread().getStackTrace();
+		String preamble = convertStackStraceToString(activeFunctionTree, 3);
+
+		return preamble;
+	}
+
+	private String convertStackStraceToString(StackTraceElement[] stackTrace, int offsetDepth)
+	{
 		String preamble = "\n";
 
-		int startDepth = activeFunctionTree.length-1;
-		startDepth = Math.min(startDepth, MAX_TRACE_DEPTH+DEPTH_OFFSET);
+		int startDepth = stackTrace.length-1;
+		startDepth = Math.min(startDepth, MAX_TRACE_DEPTH+offsetDepth);
 
-		for(int i=startDepth;i>=DEPTH_OFFSET;i--)
+		for(int i=startDepth;i>=offsetDepth;i--)
 		{
-			preamble += duplicateString("+ ",i-DEPTH_OFFSET+1);
-			preamble += activeFunctionTree[i];
-			if(i>1)
+			preamble += duplicateString("+ ",i-offsetDepth+1);
+			preamble += stackTrace[i];
+			if(i>0)
 			{
 				preamble += "\n";
 			}
 		}
-
 		return preamble;
 	}
 
