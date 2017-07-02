@@ -5,7 +5,17 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType
 @XmlEnum
-public enum ClassOfTransactionFP implements IClassOfFP
+/**
+ * Describes the type of the TransactionFunctionPoint.
+ * Type is input, output or query.
+ * For more detailed information please refer to the ReqAn specification.
+ *
+ * @author 7532274
+ * @version 1.0
+ *
+ * @see ITransactionFP
+ */
+public enum ClassOfTransactionFP
 {
     EI_INPUT,
     EO_OUTPUT,

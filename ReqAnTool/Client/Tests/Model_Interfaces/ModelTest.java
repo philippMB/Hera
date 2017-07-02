@@ -21,11 +21,23 @@ class ModelTest
     private Model myModel;
     private String pathForSaving;
 
+    ModelTest()
+    {
+        myModel = new Model();
+    }
     @BeforeEach
     void setUp()
     {
-        myModel = new Model();
         pathForSaving = "C:\\Users\\mbill\\Documents\\test.reqan";
+    }
+
+    /**
+     * For easy handling between testpackages, the model from this Package can be accessable.
+     * Especially important for Calculation tests.
+     */
+    public Model getModel()
+    {
+        return myModel;
     }
 
     @Test

@@ -34,7 +34,7 @@ public class CalculateFP
         return (sumOfFactors / 100 + 0.7);
     }
 
-    private int getSumOfDataAndTransactionFPs(ICostEstimation myCostEstimation)
+    public int getSumOfDataAndTransactionFPs(ICostEstimation myCostEstimation)
     {
         Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices = myCostEstimation.getComplexityMatrices();
         ComplexityWeightMatrix myComplexityWeightMatrix = myCostEstimation.getComplexityWeightMatrix();
