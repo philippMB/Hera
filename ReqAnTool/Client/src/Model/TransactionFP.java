@@ -25,14 +25,14 @@ public class TransactionFP
     }
 
     @Override
-    public int getDET()
+    public int getDet()
     {
         return det;
 
     }
 
     @Override
-    public int getFTR()
+    public int getFtr()
     {
         return ftr;
 

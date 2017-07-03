@@ -1,20 +1,44 @@
 package Model;
 
-import Model.Addition;
 import Model_Interfaces.IAddition;
 
-import java.util.ArrayList;
-
 /**
- * Created by mbill on 04.05.2017.
+ * The AdditionList is made for easy handling with more than one Addition. It extends the class ArrayList for the method
+ * isIncluded(String), getAdditionByTitle(title) and removeByTitle(title).
+ * Therefore it allows to search for Strings in a List of Additions.
+ *
+ * @param <IAdd> IAddition (or extended classes) defines the List as a List from the type IAddition.
+ *
+ * @author 7532274
+ * @version 1.0
+ *
+ * @see IAddition
  */
-public interface IAdditionList<IAdd extends IAddition>
+interface IAdditionList<IAdd extends IAddition>
 {
+    //TODO
 
-    public boolean isIncluded(String title);
+    /**
+     *
+     * @param title
+     * @return
+     */
+    boolean isIncluded(String title);
+    //TODO
 
-    public IAdd getAdditionByTitle(String title);
+    /**
+     *
+     * @param title
+     * @return
+     */
+    IAdd getAdditionByTitle(String title);
+    //TODO
 
-    public boolean removeByTitle(String title);
+    /**
+     *
+     * @param title
+     * @return
+     */
+    boolean removeByTitle(String title);
 
 }

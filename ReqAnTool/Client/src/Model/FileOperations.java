@@ -1,8 +1,6 @@
 package Model;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -24,10 +22,49 @@ public class FileOperations
         }
         catch (IOException e)
         {
-            // TODO
             e.printStackTrace();
         }
         return lines;
 
+    }
+
+    public static void writeLinesToFile(String path, ArrayList<String> lines)
+    {
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+        try
+        {
+            bw = new BufferedWriter(fw = new FileWriter(path));
+            for (String line : lines)
+            {
+                bw.write(line);
+                bw.newLine();
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (bw != null)
+                bw.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                if (fw != null)
+                fw.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,150 +1,164 @@
 package Model;
 
+import Exceptions.*;
 import Model_Interfaces.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Model
+public class Model extends Observable
     implements IModelGetData, IModelSetData, IApplications
 {
 
     private RequirementAnalysis myReqAn;
     private Configuration myConfig;
     private boolean unsaved;
+    private String path;
 
     public Model()
     {
         myConfig = new Configuration();
         unsaved = true;
         myReqAn = null;
+        path = "";
     }
 
     @Override
-    public ErrorCodes addAddition(String title, String description)
+    public synchronized void addObserver(Observer o)
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
-        {
-            retValue = ErrorCodes.LIST_OVERFLOW;
-            if (myReqAn.getAdditions().size() <= 100)
-            {
-                retValue = myReqAn.addAddition(title, description);
-            }
-        }
-        return retValue;
+        super.addObserver(o);
     }
 
     @Override
-    public ErrorCodes addCostEstimation()
+    public synchronized void addAddition(String title, String description)
+            throws MissingReqAnException, ListOverflowException, DuplicateIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.addCostEstimation(myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix());
+            throw new MissingReqAnException();
         }
-        return retValue;
+        if (myReqAn.getAdditions().size() >= 100)
+        {
+            throw new ListOverflowException(Addition.class, "Additions");
+        }
+        myReqAn.addAddition(title, description);
+        notifyAll();
     }
 
     @Override
-    public ErrorCodes addFReq(String id, String title, String actor, String description, ArrayList<String> references)
+    public synchronized void addCostEstimation() throws MissingReqAnException, DuplicateIDException {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn.addCostEstimation(myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix(),
+                    myConfig.getOptWeightFactors());
+        notifyAll();
+
+    }
+
+    @Override
+    public synchronized void addFReq(String id, String title, String actor, String description, ArrayList<String> references)
+            throws MissingReqAnException, ListOverflowException, ArgumentPatternException, UnknownReferenceException,
+                    DuplicateIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = ErrorCodes.LIST_OVERFLOW;
-            if (myReqAn.getFRequirements().size() <= 2000)
-            {
-                retValue = myReqAn.addFRequirement(id, title, actor, description, references);
-            }
+            throw new MissingReqAnException();
         }
-        return retValue;
+        if (myReqAn.getFRequirements().size() >= 2000)
+        {
+            throw new ListOverflowException(FRequirement.class, "FRequirements");
+        }
+        myReqAn.addFRequirement(id, title, actor, description, references);
+        notifyAll();
+
     }
 
     @Override
-    public ErrorCodes addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
+    public synchronized void addGlossEntry(String term, String sense, String boundary, String validity, String obscurities,
                                  String label, ArrayList<String> crossRef)
+            throws MissingReqAnException, ListOverflowException, DuplicateIDException, UnknownReferenceException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = ErrorCodes.LIST_OVERFLOW;
-            if (myReqAn.getGlossaryEntries().size() <= 3000)
-            {
-                retValue = myReqAn.addGlossaryEntry(term, sense, boundary, validity, obscurities, label, crossRef);
-            }
+            throw new MissingReqAnException();
         }
-        return retValue;
+        if (myReqAn.getGlossaryEntries().size() >= 3000)
+        {
+            throw new ListOverflowException(GlossaryEntry.class, "GlossaryEntries");
+        }
+        myReqAn.addGlossaryEntry(term, sense, boundary, validity, obscurities, label, crossRef);
+        notifyAll();
+
     }
 
     @Override
-    public ErrorCodes addNFReq(String id, String title, String actor, String description, ArrayList<String> references)
+    public synchronized void addNFReq(String id, String title, String actor, String description, ArrayList<String> references)
+            throws MissingReqAnException, ListOverflowException, DuplicateIDException, UnknownReferenceException,
+                    ArgumentPatternException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = ErrorCodes.LIST_OVERFLOW;
-            if (myReqAn.getFRequirements().size() <= 2000)
-            {
-                retValue = myReqAn.addNFRequirement(id, title, actor, description, references);
-            }
+            throw new MissingReqAnException();
         }
-        return retValue;
+        if (myReqAn.getFRequirements().size() >= 2000)
+        {
+            throw new ListOverflowException(NFRequirement.class, "NFRequirements");
+        }
+        myReqAn.addNFRequirement(id, title, actor, description, references);
+        notifyAll();
+
     }
 
     @Override
-    public ErrorCodes addProdData(String id, String content, String attribute, String maxCount,
+    public synchronized void addProdData(String id, String content, String attribute, String maxCount,
                                   ArrayList<String> references)
+            throws MissingReqAnException, ListOverflowException, ArgumentPatternException, UnknownReferenceException,
+                    DuplicateIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = ErrorCodes.LIST_OVERFLOW;
-            if (myReqAn.getFRequirements().size() <= 300)
-            {
-                retValue = myReqAn.addProductData(id, content, attribute, maxCount, references);
-            }
+            throw new MissingReqAnException();
         }
-        return retValue;
-    }
-
-    @Override
-    public ErrorCodes addQualReq(String criteria, Score value)
-    {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn.getFRequirements().size() >= 300)
         {
-            retValue = ErrorCodes.LIST_OVERFLOW;
-            if (myReqAn.getFRequirements().size() <= 30)
-            {
-                retValue = myReqAn.addQualReq(criteria, value);
-            }
+            throw new ListOverflowException(ProductData.class, "ProductData");
         }
-        return retValue;
+        myReqAn.addProductData(id, content, attribute, maxCount, references);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes calcManMonth()
+    public synchronized void addQualReq(String criteria, Score value)
+            throws MissingReqAnException, ListOverflowException, DuplicateIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.calcManMonth();
+            throw new MissingReqAnException();
         }
-        return retValue;
+        if (myReqAn.getFRequirements().size() >= 30)
+        {
+            throw new ListOverflowException(QualityRequirement.class, "QualityRequirements");
+        }
+        myReqAn.addQualReq(criteria, value);
+        notifyAll();
+
     }
 
     @Override
-    public ErrorCodes calcOptWeightFactor()
+    public synchronized void calcManMonth() throws MissingReqAnException, MissingCostEstimationException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = ErrorCodes.NO_ERROR;
+            throw new MissingReqAnException();
         }
-        return retValue;
-        // TODO Implement this method
+        myReqAn.calcManMonth();
+        notifyAll();
     }
 
     @Override
@@ -159,140 +173,151 @@ public class Model
     }
 
     @Override
-    public ErrorCodes deleteReqAn()
+    public synchronized void deleteReqAn() throws MissingReqAnException
     {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
         this.myReqAn = null;
         this.myConfig = null;
-        return ErrorCodes.NO_ERROR;
+        notifyAll();
     }
 
     @Override
-    public ErrorCodes editAddition(String oldTitle, String newTitle, String description)
+    public synchronized void editAddition(String oldTitle, String newTitle, String description)
+            throws MissingReqAnException, DuplicateIDException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editAddition(oldTitle, newTitle, description);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editAddition(oldTitle, newTitle, description);
+        notifyAll();
 
     }
 
     @Override
-    public ArrayList<ErrorCodes> editCustData(String companyName, String companyCity, String companyStreet, String zip,
+    public synchronized void editCustData(String companyName, String companyCity, String companyStreet, String zip,
                                 String companyCountry, String custName, String custMail, String custPhone,
                                 String pmName, String pmMail, String pmPhone)
+            throws MissingReqAnException, ArgumentPatternException
     {
-        ArrayList<ErrorCodes> retValue = new ArrayList<ErrorCodes>();
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editCustData(companyName, companyCity, companyStreet, zip, companyCountry, custName,
-                    custMail, custPhone, pmName, pmMail, pmPhone);
+            throw new MissingReqAnException();
         }
-        else
-        {
-            retValue.add(ErrorCodes.NO_REQAN);
-        }
-        return retValue;
+        myReqAn.editCustData(companyName, companyCity, companyStreet, zip, companyCountry, custName, custMail,
+                custPhone, pmName, pmMail, pmPhone);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editFReq(String oldID, String id, String title, String actor, String description,
+    public synchronized void editFReq(String oldID, String id, String title, String actor, String description,
                             ArrayList<String> references)
+            throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException,
+                    DuplicateIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editFReq(oldID, id, title, actor, description, references);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editFReq(oldID, id, title, actor, description, references);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
+    public synchronized void editGlossEntry(String oldTerm, String term, String sense, String boundary, String validity,
                                   String obscurities, String label, ArrayList<String> crossRef)
+            throws MissingReqAnException, UnknownIDException, DuplicateIDException, UnknownReferenceException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editGlossEntry(oldTerm, term, sense, boundary, validity, obscurities, label, crossRef);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editGlossEntry(oldTerm, term, sense, boundary, validity, obscurities, label, crossRef);
+        notifyAll();
+
     }
 
     @Override
-    public ErrorCodes editNFReq(String oldID, String id, String title, String actor, String description,
+    public synchronized void editNFReq(String oldID, String id, String title, String actor, String description,
                              ArrayList<String> references)
+            throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException,
+                    DuplicateIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editNFReq(oldID, id, title, actor, description, references);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editNFReq(oldID, id, title, actor, description, references);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editProdApp(String description)
+    public synchronized void editProdApp(String description) throws MissingReqAnException, ListOverflowException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editProdApp(description);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editProdApp(description);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editProdEnv(String description)
+    public synchronized void editProdEnv(String description) throws MissingReqAnException, ListOverflowException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editProdEnv(description);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editProdEnv(description);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editProdData(String oldID, String id, String content, String attribute, String maxCount,
+    public synchronized void editProdData(String oldID, String id, String content, String attribute, String maxCount,
                                 ArrayList<String> references)
+            throws MissingReqAnException, UnknownIDException, UnknownReferenceException, ArgumentPatternException,
+                    DuplicateIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editProdData(oldID, id, content, attribute, maxCount, references);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editProdData(oldID, id, content, attribute, maxCount, references);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editQualReq(String oldCriteria, String criteria, Score value)
+    public synchronized void editQualReq(String oldCriteria, String criteria, Score value)
+            throws MissingReqAnException, DuplicateIDException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editQualReq(oldCriteria, criteria, value);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editQualReq(oldCriteria, criteria, value);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editTargetDef(String description)
+    public synchronized void editTargetDef(String description) throws MissingReqAnException, ListOverflowException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editTargetDef(description);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editTargetDef(description);
+        notifyAll();
 
     }
 
@@ -302,7 +327,7 @@ public class Model
         boolean exists = false;
         if (myReqAn != null)
         {
-            exists = myReqAn.getActualState() == -1.0;
+            exists = myReqAn.getActualState() != -1.0;
         }
         return exists;
 
@@ -314,7 +339,7 @@ public class Model
         boolean exists = false;
         if (myReqAn.getCostEstimation() != null)
         {
-            exists = myReqAn.getCostEstimation().getFunctionPoints() == -1.0;
+            exists = myReqAn.getCostEstimation().getFunctionPoints() != -1.0;
         }
         return exists;
 
@@ -338,7 +363,7 @@ public class Model
         boolean exists = false;
         if (myReqAn.getCostEstimation() != null)
         {
-            exists = myReqAn.getCostEstimation().getManMonth() == -1.0;
+            exists = myReqAn.getCostEstimation().getManMonth() != -1.0;
         }
         return exists;
 
@@ -350,18 +375,43 @@ public class Model
         boolean exists = false;
         if (myConfig != null)
         {
-            exists = myConfig.getOptWeightFactors() != null;
+            exists = myConfig.existsOptWeightFactors();
         }
         return exists;
 
     }
 
     @Override
-    public void adjustWeightFactor() throws Exception
+    public synchronized void adjustWeightFactor() throws MissingReqAnException, MissingCostEstimationException,
+                                            MissingFPException, NumberOutOfBoundsException
     {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        if (myReqAn.getCostEstimation() == null)
+        {
+            throw new MissingCostEstimationException();
+        }
         WeightFactorList<IWeightFactor> adjWeightFac = myConfig.adjustOptWeightFactors(myReqAn);
         CostEstimation myCostEstimation = (CostEstimation) myReqAn.getCostEstimation();
         myCostEstimation.setWeightFactors(adjWeightFac);
+        notifyAll();
+    }
+
+    @Override
+    public void openReqAnFile(String path) throws DataAccessException
+    {
+        IXMLManager myXMLManager = IXMLManager.getInstance();
+        try
+        {
+            myReqAn = copyReqAn(myXMLManager.importAnalysis(path, XMLFormatType.CUSTOM_XML_FORMAT));
+        }
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
+
     }
 
     @Override
@@ -430,7 +480,7 @@ public class Model
         IProductEnvironment myProdEnv = null;
         if (myReqAn != null)
         {
-            myProdEnv = myReqAn.getProductEnviroment();
+            myProdEnv = myReqAn.getProductEnvironment();
         }
         return myProdEnv;
 
@@ -479,206 +529,316 @@ public class Model
     }
 
     @Override
-    public ErrorCodes rateWeightFactor(Map<String, Integer> myWeightFactors)
+    public boolean isFirstUseOfOpenedReqAn()
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        boolean firstUse = false;
+        if (myReqAn == null)
         {
-            retValue = myReqAn.rateWeightFactor(myWeightFactors);
+            firstUse = false;
         }
-        return retValue;
+        if (this.path == "")
+        {
+            firstUse = true;
+        }
+        return firstUse;
+    }
+
+    @Override
+    public synchronized void rateWeightFactor(Map<String, Integer> myWeightFactors)
+            throws MissingReqAnException, NumberOutOfBoundsException, MissingCostEstimationException,
+                    ListOverflowException
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn.rateWeightFactor(myWeightFactors);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes calcFPCount()
+    public synchronized void calcFPCount() throws MissingReqAnException, MissingCostEstimationException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.calcFPCount();
+            throw new MissingReqAnException();
         }
-        return retValue;
-    }
-
-    @Override
-    public ErrorCodes remAdditionByTitle(String title)
-    {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
-        {
-            retValue = myReqAn.remAdditionByTitle(title);
-        }
-        return retValue;
+        myReqAn.calcFPCount();
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes remCostEstimation()
+    public synchronized void remAdditionByTitle(String title) throws MissingReqAnException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.remCostEstimation();
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.remAdditionByTitle(title);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes remFReqByID(String id)
+    public synchronized void remCostEstimation() throws MissingReqAnException, MissingCostEstimationException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.remFReqByID(id);
+            throw new MissingReqAnException();
         }
-        return retValue;
-    }
-
-    @Override
-    public ErrorCodes remGlossEntryByTerm(String term)
-    {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
-        {
-            retValue = myReqAn.remGlossEntryByTerm(term);
-        }
-        return retValue;
+        myReqAn.remCostEstimation();
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes remNFReqByID(String id)
+    public synchronized void remFReqByID(String id) throws MissingReqAnException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.remNFReqByID(id);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.remFReqByID(id);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes remProdDataByID(String id)
+    public synchronized void remGlossEntryByTerm(String term) throws MissingReqAnException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.remProdDataByID(id);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.remGlossEntryByTerm(term);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes remQualReqByCrit(String criteria)
+    public synchronized void remNFReqByID(String id) throws MissingReqAnException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.remQualReqByCrit(criteria);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.remNFReqByID(id);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes saveReqAn(String path)
+    public synchronized void remProdDataByID(String id) throws MissingReqAnException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            unsaved = false;
-            // TODO
-            retValue = ErrorCodes.NO_ERROR;
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.remProdDataByID(id);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes setActualState(double actStat)
+    public synchronized void remQualReqByCrit(String criteria) throws MissingReqAnException, UnknownIDException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.setActualState(actStat);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.remQualReqByCrit(criteria);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes setDataFP(ClassOfDataFP type, String id, int det, int ret)
+    public synchronized void saveReqAn(String path) throws MissingReqAnException, DataAccessException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        IXMLManager myXMLManager = IXMLManager.getInstance();
+        if (myReqAn == null)
         {
-            retValue = myReqAn.setDataFP(type, id, det, ret);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        unsaved = false;
+        if (!this.path.equals(path))
+        {
+            this.path = path;
+        }
+        try
+        {
+            myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
+        }
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+    public void saveReqAn() throws MissingReqAnException, DataAccessException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        IXMLManager myXMLManager = IXMLManager.getInstance();
+        if (myReqAn == null)
         {
-            retValue = myReqAn.setTransactionFP(type, id, det, ftr);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        unsaved = false;
+        try
+        {
+            myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
+        }
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
+        notifyAll();
+    }
+
+    @Override
+    public void exportToXML(String path, XMLFormatType type) throws MissingReqAnException, xml.XMLMarschallingException,
+            FileNotFoundException, xml.XMLFormatException, xml.SingletonRecreationException, SecurityException,
+            xml.XMLProcessingException
+    {
+        IXMLManager myXMLManager = IXMLManager.getInstance();
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myXMLManager.exportAnalysis(myReqAn, path, type);
 
     }
 
     @Override
-    public ErrorCodes editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+    public void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, xml.XMLUnmarschallException,
+            SecurityException, xml.XMLProcessingException, xml.XMLFormatException, xml.SingletonRecreationException,
+            NumberOutOfBoundsException, ArgumentPatternException, ListOverflowException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        IXMLManager myXMLManager = IXMLManager.getInstance();
+        IRequirementAnalysis myIReqAn = myXMLManager.importAnalysis(path, type);
+        myReqAn = copyReqAn(myIReqAn);
+
+    }
+
+    private RequirementAnalysis copyReqAn(IRequirementAnalysis myIReqAn)
+            throws NumberOutOfBoundsException, ArgumentPatternException, ListOverflowException
+    {
+        RequirementAnalysis tmpReqAn = new RequirementAnalysis(myIReqAn.getTitle(),
+                myIReqAn.getCustomerData().getPMName(), myIReqAn.getCustomerData().getPMEMail(),
+                myIReqAn.getCustomerData().getPMPNumber(), myIReqAn.getCustomerData().getCompanyName(),
+                myIReqAn.getCustomerData().getCompanyCity(), myIReqAn.getCustomerData().getCompanyStreet(),
+                myIReqAn.getCustomerData().getCompanyCountry(), myIReqAn.getCustomerData().getCompanyPLZ(),
+                myIReqAn.getCustomerData().getCName(), myIReqAn.getCustomerData().getCEMail(),
+                myIReqAn.getCustomerData().getCNumber());
+        tmpReqAn.setCustomerDescription(myIReqAn.getCustomerDescription());
+        tmpReqAn.setAdditions(myIReqAn.getAdditions());
+        tmpReqAn.setCostEstimation(myIReqAn.getCostEstimation(), myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix());
+        tmpReqAn.setActualState(myIReqAn.getActualState());
+        tmpReqAn.setCreateDate(myIReqAn.getCreateDate());
+        tmpReqAn.setProductApplication(myIReqAn.getProductApplication());
+        tmpReqAn.setProductData(myIReqAn.getProductData());
+        tmpReqAn.setProductEnvironment(myIReqAn.getProductEnvironment());
+        tmpReqAn.setTargetDefinition(myIReqAn.getTargetDefinition());
+        tmpReqAn.setFRequirements(myIReqAn.getFRequirements());
+        tmpReqAn.setNFRequirements(myIReqAn.getNFRequirements());
+        tmpReqAn.setGlossaryEntries(myIReqAn.getGlossaryEntries());
+        tmpReqAn.setQualityRequirements(myIReqAn.getQualityRequirements());
+
+        return tmpReqAn;
+    }
+
+    @Override
+    public synchronized void setActualState(double actStat) throws MissingReqAnException, NumberOutOfBoundsException
+    {
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editDataFPByID(type, id, det, ret);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.setActualState(actStat);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+    public synchronized void setDataFP(ClassOfDataFP type, String id, int det, int ret)
+            throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException,
+            MissingCostEstimationException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.editTransactionFPByID(type, id, det, ftr);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.setDataFP(type, id, det, ret);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes remDataFPByID(String id)
+    public synchronized void setTransactionFP(ClassOfTransactionFP type, String id, int det, int ftr)
+            throws MissingReqAnException, UnknownIDException, NumberOutOfBoundsException, DuplicateIDException,
+            MissingCostEstimationException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.remDataFPByID(id);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.setTransactionFP(type, id, det, ftr);
+        notifyAll();
 
     }
 
     @Override
-    public ErrorCodes remTransactionFPByID(String id)
+    public synchronized void editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
+            throws MissingReqAnException, UnknownIDException, MissingCostEstimationException, NumberOutOfBoundsException
     {
-        ErrorCodes retValue = ErrorCodes.NO_REQAN;
-        if (myReqAn != null)
+        if (myReqAn == null)
         {
-            retValue = myReqAn.remTransactionFPByID(id);
+            throw new MissingReqAnException();
         }
-        return retValue;
+        myReqAn.editDataFPByID(type, id, det, ret);
+        notifyAll();
+
+    }
+
+    @Override
+    public synchronized void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
+            throws MissingReqAnException, UnknownIDException, MissingCostEstimationException, NumberOutOfBoundsException
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn.editTransactionFPByID(type, id, det, ftr);
+        notifyAll();
+
+    }
+
+    @Override
+    public synchronized void remDataFPByID(String id)
+            throws MissingReqAnException, MissingCostEstimationException, UnknownIDException
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn.remDataFPByID(id);
+        notifyAll();
+
+    }
+
+    @Override
+    public synchronized void remTransactionFPByID(String id)
+            throws MissingReqAnException, MissingCostEstimationException, UnknownIDException
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn.remTransactionFPByID(id);
+        notifyAll();
 
     }
 
@@ -839,9 +999,10 @@ public class Model
     }
 
     @Override
-    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
+    public synchronized boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
                                 String city, String companyStreet, String country, String zip, String cName,
                                 String cMail, String cPhone)
+            throws ArgumentPatternException
     {
         boolean success = false;
         if (myReqAn == null)
@@ -850,8 +1011,20 @@ public class Model
                                                    country, zip, cName, cMail, cPhone );
             success = true;
         }
+        notifyAll();
         return success;
 
+    }
+
+    @Override
+    public boolean closeReqAn() throws MissingReqAnException
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn = null;
+        return true;
     }
 
     @Override

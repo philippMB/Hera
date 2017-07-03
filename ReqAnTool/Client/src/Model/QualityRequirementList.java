@@ -45,15 +45,15 @@ public class QualityRequirementList<IQualReq extends IQualityRequirement>
     @Override
     public boolean removeQualReqByCriteria(String criteria)
     {
-        boolean success = false;
+        IQualReq qualReqToRemove = null;
         for (IQualReq myQualReq : this)
         {
             if (myQualReq.getCriteria().equals(criteria))
             {
-                success = super.remove(myQualReq);
+                qualReqToRemove = myQualReq;
             }
         }
-        return success;
+        return this.remove(qualReqToRemove);
 
     }
 

@@ -1,6 +1,5 @@
 package Model;
 
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IAddition;
 
 public class Addition 
@@ -27,10 +26,10 @@ public class Addition
         return title;
     }
 
-    public ErrorCodes edit(String title, String description)
+    public void edit(String title, String description)
     {
         this.title = title;
         this.description = description;
-        return ErrorCodes.NO_ERROR;
+
     }
 }

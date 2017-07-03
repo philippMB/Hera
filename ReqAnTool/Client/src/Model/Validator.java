@@ -1,16 +1,18 @@
 package Model;
 
+import Exceptions.NumberOutOfBoundsException;
+
 import java.util.regex.Pattern;
 
 /**
  * Created by mbill on 04.05.2017.
  */
-public class Validator
+class Validator
 {
 
     public boolean isValidEmail(String mail)
     {
-        return Pattern.matches("[0-9a-zA-Z_.~-]+@[0-9a-zA-Z_.~-]\\.[a-zA-Z]" , mail);
+        return Pattern.matches("([0-9a-zA-Z_.~-]+@[0-9a-zA-Z_.~-]+\\.[a-zA-Z]+)|" , mail);
 
     }
 
@@ -21,7 +23,7 @@ public class Validator
         {
             isValid = true;
         }
-        else if (Pattern.matches("0[1-9][0-9][0-9][0-9] [1-9][0-9][0-9]+", phone))
+        else if (Pattern.matches("0[1-9][0-9][0-9][0-9]? [1-9][0-9][0-9]+", phone))
         {
             isValid = true;
         }
@@ -39,14 +41,14 @@ public class Validator
 
     public boolean isValidZIP(String zip)
     {
-        return Pattern.matches("(0[1-9][0-9][0-9][0-9])|([1-9][0-9][0-9][0-9])", zip);
+        return Pattern.matches("([0-9][0-9][0-9][0-9][0-9])|([1-9][0-9][0-9][0-9])|", zip);
         // only validate European ZIPs
 
     }
 
-    public boolean isValidID(String id)
+    public boolean isInvalidID(String id)
     {
-        return true;
+        return false;
         // suggestion for id Format: return Pattern.matches("/[A-Z][A-Z][1-9]+/", id);
 
     }
@@ -72,36 +74,30 @@ public class Validator
 
     }
 
-    public boolean isValidDET(int det)
+    public void validateDET(int det) throws NumberOutOfBoundsException
     {
-        boolean isValid = false;
-        if (det >= 0)
+        if (det < 0)
         {
-            isValid = true;
+            throw new NumberOutOfBoundsException(det, 0, Double.POSITIVE_INFINITY);
         }
-        return isValid;
 
     }
 
-    public boolean isValidRET(int ret)
+    public void validateRET(int ret) throws NumberOutOfBoundsException
     {
-        boolean isValid = false;
-        if (ret >= 0)
+        if (ret < 0)
         {
-            isValid = true;
+            throw new NumberOutOfBoundsException(ret, 0, Double.POSITIVE_INFINITY);
         }
-        return isValid;
 
     }
 
-    public boolean isValidFTR(int ftr)
+    public void validateFTR(int ftr) throws NumberOutOfBoundsException
     {
-        boolean isValid = false;
-        if (ftr >= 0)
+        if (ftr < 0)
         {
-            isValid = true;
+            throw new NumberOutOfBoundsException(ftr, 0, Double.POSITIVE_INFINITY);
         }
-        return isValid;
 
     }
 

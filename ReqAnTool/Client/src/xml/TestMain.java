@@ -1,3 +1,4 @@
+
 package xml;
 
 import Model_Interfaces.*;
@@ -17,11 +18,13 @@ public class TestMain
     XMLFormatType formatType = XMLFormatType.CUSTOM_XML_FORMAT;
 
     IRequirementAnalysis newReqAn = null;
-    /*try {
+
+/*try {
       newReqAn = manager.importAnalysis("xmlTest.xml", formatType);
     } catch (Exception e) {
       e.printStackTrace();
     }*/
+
 
     FileOperator fp = new FileOperator();
     CustomXMLFormat format = new CustomXMLFormat();
@@ -40,14 +43,15 @@ public class TestMain
     cd.setCompanyCity("jasl");
     cd.setCompanyCountry("kadfh");
     cd.setCompanyName("akdjhf");
-    cd.setCompanyPLZ(1243);
+    cd.setCompanyPLZ("1243");
     cd.setCompanyStreet("adföhjsdf");
     FRequirement fr0 = new FRequirement();
     fr0.setActor("akdöufh");
     fr0.setDescription("fghjklsadhghbdnmecjxykjldm");
     fr0.setTitle("asdfkjhadf");
     fr0.setId("1");
-    fr0.setReferenceIDs(refItems);
+    ArrayList<String> refI = new ArrayList<>();
+    fr0.setReferenceIDs(refI);
     FRequirement fr1 = new FRequirement();
     fr1.setTitle("adfsgfsh");
     fr1.setDescription("asdgasfuhöef-j ajfae faljfhcal");
@@ -95,11 +99,11 @@ public class TestMain
     df4.setReferenceIDs(refItems);
     df4.setReqID(fr1.getID());
     ArrayList<DataFP> dfList = new ArrayList<DataFP>();
-    dfList.add(df0);
+    /*dfList.add(df0);
     dfList.add(df1);
     dfList.add(df2);
     dfList.add(df3);
-    dfList.add(df4);
+    dfList.add(df4);*/
     GlossaryEntry g0 = new GlossaryEntry();
     g0.setBoundary("adfdsljf");
     g0.setLabel("adfjhdf");
@@ -209,9 +213,9 @@ public class TestMain
     tfp0.setType(ClassOfTransactionFP.EQ_QUERY);
     tfp0.setReqID(fr1.getID());
     ArrayList<TransactionFP> tfpList = new ArrayList<TransactionFP>();
-    tfpList.add(tfp0);
+    /*tfpList.add(tfp0);
     tfpList.add(tfp1);
-    tfpList.add(tfp2);
+    tfpList.add(tfp2);*/
     WeightFactor wf0 = new WeightFactor();
     wf0.setMaxValue(312);
     wf0.setTitle("asfsg");
@@ -229,6 +233,8 @@ public class TestMain
     ce.setManMonth(42.2);
     ce.setTransactionFPList(tfpList);
     ce.setWeightFactorList(wfList);
+    ProductEnvironment prodEnv = new ProductEnvironment();
+    prodEnv.setDescription("Blash Basl");
 
     format.setCostEstimation(ce);
     format.setCustData(cd);
@@ -239,24 +245,32 @@ public class TestMain
     format.setProductDataList(pdList);
     format.setQualityRequirementList(qrList);
     format.setTargetDef(td);
+    format.setProductEnvironment(prodEnv);
 
 
     try {
-      manager.exportAnalysis(format,"xmlTest.xml", XMLFormatType.CUSTOM_XML_FORMAT);
+      manager.exportAnalysis(format,"xmlTest1.xml", XMLFormatType.CUSTOM_XML_FORMAT);
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    /*fp.writeToFile("test", format);
-    System.out.println("Ich war hier");*/
+
+fp.writeToFile("test", format);
+    System.out.println("Ich war hier");
+
     
-    /*CustomXMLFormat ncf = new CustomXMLFormat();
+CustomXMLFormat ncf = new CustomXMLFormat();
     //ncf = fp.readFromFile("bums");
-    System.out.println("Ich war nochmal hier");*/
+    System.out.println("Ich war nochmal hier");
+
     try {
-      newReqAn = manager.importAnalysis("xmlTest.xml", formatType);
+      newReqAn = manager.importAnalysis("xmlTest1.xml", formatType);
     } catch (Exception e) {
       e.printStackTrace();
     }
+
+    newReqAn.getFRequirements().get(0).getReferenceIDs();
+    newReqAn.getProductData().get(0).getID();
   }
 }
+

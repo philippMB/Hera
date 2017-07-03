@@ -73,11 +73,15 @@ public class XMLImporter
         /**
          * The {@link SecurityManager} is used to check the permission regarding the given address
          */
-        SecurityManager securityManager = new SecurityManager();
-        /**
-         * A {@link SecurityException} is thrown, if there is no permission to read the file.
-         */
-        securityManager.checkPermission(new FilePermission(address, "read"));
+        SecurityManager securityManager = System.getSecurityManager();
+        if(securityManager != null)
+        {
+            /**
+             * A {@link SecurityException} is thrown, if there is no permission to read the file.
+             */
+            securityManager.checkPermission(new FilePermission(address, "read"));
+        }
+
 
         FileOperator fileOperator = new FileOperator();
         IXMLFormat customData;

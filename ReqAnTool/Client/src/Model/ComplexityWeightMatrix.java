@@ -12,10 +12,10 @@ public class ComplexityWeightMatrix
     MEDIUM  x   x   x   x   x
     COMPLEX x   x   x   x   x
      */
-    private ClassOfTransactionFP[] myTransactionTypeIndexes;
-    private ClassOfDataFP[] myDataTypeIndexes;
-    private Complexities[] myComplexityIndexes;
-    private int[][] myFPMatrix;
+    private final ClassOfTransactionFP[] myTransactionTypeIndexes;
+    private final ClassOfDataFP[] myDataTypeIndexes;
+    private final Complexities[] myComplexityIndexes;
+    private final int[][] myFPMatrix;
 
     public ComplexityWeightMatrix(int[][] myFPMatrix)
     {

@@ -1,6 +1,6 @@
 package Model;
 
-import Model_Interfaces.ErrorCodes;
+import Exceptions.ListOverflowException;
 import Model_Interfaces.ITargetDefinition;
 
 public class TargetDefinition
@@ -22,10 +22,13 @@ public class TargetDefinition
 
     }
 
-    public ErrorCodes edit(String description)
+    public void edit(String description) throws ListOverflowException
     {
+        if (description.length() > 20000)
+        {
+            throw new ListOverflowException(String.class, "Target Definition");
+        }
         this.description = description;
-        return ErrorCodes.NO_ERROR;
 
     }
 }

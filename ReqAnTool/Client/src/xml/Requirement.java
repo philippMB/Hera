@@ -6,10 +6,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 
-/**
- * Created by Philipp on 13.06.17.
- */
-
 @XmlTransient
 
 /**
@@ -56,6 +52,10 @@ public class Requirement
     }
 
     public ArrayList<String> getReferenceIDs() {
+        if(referenceIDs == null)
+        {
+            referenceIDs = new ArrayList<>();
+        }
         return referenceIDs;
     }
 

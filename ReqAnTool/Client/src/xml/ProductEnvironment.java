@@ -2,6 +2,11 @@ package xml;
 
 import Model_Interfaces.IProductEnvironment;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+
 /**
  * Created by Philipp on 29.06.17.
  */

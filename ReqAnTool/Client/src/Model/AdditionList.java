@@ -43,14 +43,14 @@ public class AdditionList<IAdd extends IAddition>
     @Override
     public boolean removeByTitle(String title)
     {
-        boolean success = false;
+        IAdd addToRemove = null;
         for (IAdd myAdd : this)
         {
             if (myAdd.getTitle().equals(title))
             {
-                success = super.remove(myAdd);
+                addToRemove = myAdd;
             }
         }
-        return success;
+        return this.remove(addToRemove);
     }
 }

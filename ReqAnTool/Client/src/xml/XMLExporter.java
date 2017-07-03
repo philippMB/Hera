@@ -6,6 +6,8 @@ import Model_Interfaces.XMLFormatType;
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import java.io.FilePermission;
+import java.security.AccessControlContext;
+import java.security.AccessController;
 
 /**
  * Exports requirement analysis to given address in given format.
@@ -114,12 +116,15 @@ public class XMLExporter
         /**
          * The {@link SecurityManager} is used to check the permission regarding the given address
          */
-        SecurityManager securityManager = new SecurityManager();
-        /**
-         * A {@link SecurityException} is thrown when there is no read and write permission for the
-         * given file.
-         */
-        securityManager.checkPermission(new FilePermission(address, "read, write"));
+        SecurityManager securityManager = System.getSecurityManager();
+        if(securityManager != null)
+        {
+            /**
+             * A {@link SecurityException} is thrown when there is no read and write permission for the
+             * given file.
+             */
+            securityManager.checkPermission(new FilePermission(address, "read, write"));
+        }
 
         FileOperator fileOperator;
 

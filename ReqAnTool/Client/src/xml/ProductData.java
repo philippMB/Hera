@@ -30,6 +30,7 @@ public class ProductData
      */
     public ProductData(IProductData origin)
     {
+        super(origin);
         attribute = origin.getAttribute();
         content = origin.getContent();
         maxCount = origin.getMaxCount();

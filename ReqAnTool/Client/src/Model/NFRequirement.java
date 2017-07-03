@@ -1,12 +1,8 @@
 package Model;
 
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.INFRequirement;
 
 import Model_Interfaces.IRequirement;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class NFRequirement
     extends Requirement
@@ -48,14 +44,13 @@ public class NFRequirement
 
     }
 
-    public ErrorCodes edit(String id, String title, String actor, String description,
+    public void edit(String id, String title, String actor, String description,
                            RequirementList<IRequirement> myReferences)
     {
         super.edit(id, myReferences);
         this.title = title;
         this.actor = actor;
         this.description = description;
-        return ErrorCodes.NO_ERROR;
 
     }
 }
