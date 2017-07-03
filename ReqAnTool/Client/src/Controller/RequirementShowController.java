@@ -81,7 +81,6 @@ public abstract class RequirementShowController<ReqShowViewType extends IRequire
 		myView.bringToFront();
 	}
 
-	//TODO: Write exact exceptions here
 	protected abstract void deleteRequirement(String reqID) throws Exception;
 
 	protected abstract void startEditReqView(String reqID);

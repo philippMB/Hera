@@ -20,6 +20,7 @@ package View_Interfaces;
  * @author 9045534
  * @version 1.0
  * @see IProcessClassificationView
+ * @see ICostEstimationEditView
  */
 public interface ICostEstimationEditView
 	extends IView

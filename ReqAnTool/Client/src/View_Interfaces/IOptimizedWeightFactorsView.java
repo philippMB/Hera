@@ -1,13 +1,11 @@
 package View_Interfaces;
 
 /**
- * Views implementing this interface show the user the new calculated weight factors and give him the opportunity to
- * cancel the optimization. For this it has two view actions:
+ * Views implementing this interface show the user the new calculated weight factors. For this it has one view action:
  * <ul>
- *     <li>{@link Controller_Interfaces.ViewActions#SAVE} - save the new optimized weight factors</li>
- *     <li>{@link Controller_Interfaces.ViewActions#CANCEL} - cancel the calculation and old weight factors are hold</li>
+ *     <li>{@link Controller_Interfaces.ViewActions#CLOSE} - closes this view</li>
  * </ul>
- * The controller has to observe these two actions and react on them.
+ * The controller has to observe these actions and react on them.
  *
  * @author 9045534
  * @version 1.0

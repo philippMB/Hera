@@ -1,7 +1,9 @@
 package xml;
 
-import Model.ComplexityMatrix;
-import Model.ComplexityWeightMatrix;
+import Calculations.ComplexityMatrix;
+import Calculations.ComplexityWeightMatrix;
+import Calculations_Interfaces.IFPCalculator;
+import Calculations_Interfaces.IMMCalculator;
 import Model_Interfaces.*;
 
 import java.util.ArrayList;
@@ -151,24 +153,12 @@ public class CostEstimation
   }
 
   @Override
-  public Map<IClassOfFP, ComplexityMatrix> getComplexityMatrices()
-  {
-    return null;
-  }
-
-  @Override
-  public ComplexityWeightMatrix getComplexityWeightMatrix()
-  {
-    return null;
-  }
-
-  @Override
-  public void calculateFP() {
+  public void calculateFP(IFPCalculator calculator) {
     // TODO: javadoc, nicht implementiert
   }
 
   @Override
-  public void calculateManMonth() {
+  public void calculateManMonth(IMMCalculator calculator) {
     // TODO: javadoc, nicht implementiert
   }
 }

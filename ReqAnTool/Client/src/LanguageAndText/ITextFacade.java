@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * This interface represents a facade of the LanguageAndText package for accessing the property values.
  * <p>
- * TODO: further comments
+ *
  *
  * @author 9045534
  * @version 1.0

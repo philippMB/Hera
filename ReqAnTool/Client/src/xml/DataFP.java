@@ -38,8 +38,8 @@ public class DataFP
      */
     public DataFP(IDataFP origin)
     {
-      det = origin.getDET();
-      ret = origin.getRET();
+      det = origin.getDet();
+      ret = origin.getRet();
       referenceIDs = origin.getRequirement().getReferenceIDs();
       type = origin.getType();
       reqID = origin.getRequirement().getID();
@@ -99,19 +99,6 @@ public class DataFP
 
     public void setReqID(String reqID) {
         this.reqID = reqID;
-    }
-
-
-    @Override
-    public int getDET()
-    {
-        return det;
-    }
-
-    @Override
-    public int getRET()
-    {
-        return ret;
     }
 
     /**

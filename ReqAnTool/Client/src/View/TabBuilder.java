@@ -30,7 +30,7 @@ public class TabBuilder
 		globalColumnNumber = 0;
 		section = 0;
 		splitNextUp = false;
-		textStyler = new TabTextStyle();
+		textStyler = new MainWindowTextStyler();
 		myLogger = ILoggerFactory.getInstance().createLogger();
 	}
 

@@ -31,8 +31,7 @@ public class StartViewController
 		accessFile(
 				(absolutePath) ->
 				{
-					//TODO: Open ReqAn
-					//myModel.openReqAn(absolutePath);
+					myModel.openReqAnFile(absolutePath);
 					controllerManager.createControlledProjectView();
 					closeView();
 				},
@@ -47,7 +46,6 @@ public class StartViewController
 		accessFile(
 				(absolutePath) ->
 				{
-					//TODO: Import with XMLFormatType
 					boolean isImported = tryToImportXMLFromAddress(absolutePath);
 					if(isImported)
 					{
@@ -66,7 +64,7 @@ public class StartViewController
 		boolean isExported;
 		try
 		{
-			myModel.importFromXML(address, XMLFormatType.CUSTOM_XML_FORMAT);	//TODO: Nach Format fragen
+			myModel.importFromXML(address, XMLFormatType.CUSTOM_XML_FORMAT); //Till now only one XML format is supported
 			isExported = true;
 		}
 		catch(Exception ex)

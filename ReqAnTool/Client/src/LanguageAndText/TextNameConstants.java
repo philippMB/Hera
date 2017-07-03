@@ -1,7 +1,7 @@
 package LanguageAndText;
 
 /**
- * This class contains solely constants for property names in the properties files "title" and "properties". In these
+ * This class contains solely constants for property names in the properties files "title" and "parameter". In these
  * properties files the value of the string is used for the property name. For example is in the title-properties file
  * a property saved for "ADDITION" - Constant TITLE_ADDITION. So this file represents a standard for names used
  * in the property files.

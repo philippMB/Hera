@@ -1,7 +1,11 @@
 package Exceptions;
 
 /**
- * Created by phlippe on 01.07.17.
+ * Enum which lists all different missing parameter which could be requested for {@link MissingParameterException} and
+ * {@link MissingEntryException}.
+ *
+ * @author 9045534
+ * @version 1.0
  */
 public enum MissingParameter
 {

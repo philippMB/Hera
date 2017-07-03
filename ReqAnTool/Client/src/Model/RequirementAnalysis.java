@@ -1,5 +1,9 @@
 package Model;
 
+import Calculations.ComplexityMatrix;
+import Calculations.ComplexityWeightMatrix;
+import Calculations_Interfaces.IFPCalculator;
+import Calculations_Interfaces.IMMCalculator;
 import Exceptions.*;
 import Model_Interfaces.*;
 
@@ -70,7 +74,7 @@ public class RequirementAnalysis
     }
 
     private void verifyCompletenessOfParameters()
-        throws MissingEntryException
+            throws MissingEntryException
     {
         if(title == null || title.equals(""))
         {
@@ -149,7 +153,7 @@ public class RequirementAnalysis
         }
         for (INFRequirement myINFReq : myNFRequirements)
         {
-            FRequirement myNFReq = (FRequirement)myINFReq;
+            NFRequirement myNFReq = (NFRequirement)myINFReq;
             for (String refID : myNFReq.getReferenceIDs())
             {
                 if (refID.equals(id))
@@ -511,9 +515,9 @@ public class RequirementAnalysis
             throws ArgumentPatternException, DuplicateIDException, UnknownReferenceException
     {
         solveReqReferences(references);
-        if (myValidator.isInvalidID(id))
+        if (myValidator.isInvalidID(IFRequirement.class, id))
         {
-            throw new ArgumentPatternException(PatternType.ID, id, "/LFxxx/");
+            throw new ArgumentPatternException(PatternType.ID, id, "/LF.../");
         }
         if (!isIDunique(id))
         {
@@ -553,9 +557,9 @@ public class RequirementAnalysis
             throws ArgumentPatternException, DuplicateIDException, UnknownReferenceException
     {
         solveReqReferences(references);
-        if (myValidator.isInvalidID(id))
+        if (myValidator.isInvalidID(INFRequirement.class, id))
         {
-            throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
+            throw new ArgumentPatternException(PatternType.ID, id, "/LE.../");
         }
         if (!isIDunique(id))
         {
@@ -576,9 +580,9 @@ public class RequirementAnalysis
             throws UnknownReferenceException, ArgumentPatternException, DuplicateIDException
     {
         solveReqReferences(references);
-        if (myValidator.isInvalidID(id))
+        if (myValidator.isInvalidID(IProductData.class, id))
         {
-            throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
+            throw new ArgumentPatternException(PatternType.ID, id, "/LD.../");
         }
         if (!isIDunique(id))
         {
@@ -616,9 +620,9 @@ public class RequirementAnalysis
         {
             throw new DuplicateIDException(newTitle);
         }
-        IAddition myIAdd = myAdditions.getAdditionByTitle(title);
+        IAddition myIAdd = myAdditions.getAdditionByTitle(oldTitle);
         Addition myAdd = (Addition) myIAdd;
-        myAdd.edit(title, description);
+        myAdd.edit(newTitle, description);
 
     }
 
@@ -641,12 +645,15 @@ public class RequirementAnalysis
             throw new UnknownIDException(oldID);
         }
         IFRequirement myIFReq = myFRequirements.getReqByID(oldID);
-        if (!isIDunique(id))
+        if (!oldID.equals(id))
         {
-            throw new DuplicateIDException(id);
+            if (!isIDunique(id))
+            {
+                throw new DuplicateIDException(id);
+            }
         }
         solveReqReferences(references);
-        if (myValidator.isInvalidID(id))
+        if (myValidator.isInvalidID(IFRequirement.class, id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "");
         }
@@ -697,12 +704,15 @@ public class RequirementAnalysis
             throw new UnknownIDException(oldID);
         }
         INFRequirement myINFReq = myNFRequirements.getReqByID(oldID);
-        if (!isIDunique(id))
+        if (!oldID.equals(id))
         {
-            throw new DuplicateIDException(id);
+            if (!isIDunique(id))
+            {
+                throw new DuplicateIDException(id);
+            }
         }
         solveReqReferences(references);
-        if (myValidator.isInvalidID(id))
+        if (myValidator.isInvalidID(INFRequirement.class, id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "/LExxx/");
         }
@@ -735,12 +745,15 @@ public class RequirementAnalysis
             throw new UnknownIDException(oldID);
         }
         IProductData myIProdData = myProductData.getReqByID(oldID);
-        if (!isIDunique(id))
+        if (!oldID.equals(id))
         {
-            throw new DuplicateIDException(id);
+            if (!isIDunique(id))
+            {
+                throw new DuplicateIDException(id);
+            }
         }
         solveReqReferences(references);
-        if (myValidator.isInvalidID(id))
+        if (myValidator.isInvalidID(IProductData.class, id))
         {
             throw new ArgumentPatternException(PatternType.ID, id, "/LDxxx/");
         }
@@ -785,7 +798,7 @@ public class RequirementAnalysis
             throws MissingCostEstimationException, ListOverflowException, NumberOutOfBoundsException
     {
         boolean success = true;
-        if (getCostEstimation() != null)
+        if (getCostEstimation() == null)
         {
             throw new MissingCostEstimationException();
         }
@@ -929,22 +942,23 @@ public class RequirementAnalysis
 
     }
 
-    public void addCostEstimation(Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
-                                        ComplexityWeightMatrix myComplexityWeightMatrix)
+    public void addCostEstimation(ArrayList<IWeightFactor> myWeightFactors) throws DuplicateIDException
     {
-        Configuration myConfig = new Configuration();
-        myCostEstimation = new CostEstimation(myComplexityWeightMatrix, myComplexityMatrices,
-                                                myConfig.getOptWeightFactors());
+        if (myCostEstimation != null)
+        {
+            throw new DuplicateIDException("CostEstimation");
+        }
+        myCostEstimation = new CostEstimation(myWeightFactors);
 
     }
 
-    public void calcManMonth() throws MissingCostEstimationException
+    public void calcManMonth(IMMCalculator calculator) throws MissingCostEstimationException, MissingParameterException
     {
         if (myCostEstimation == null)
         {
             throw new MissingCostEstimationException();
         }
-        myCostEstimation.calculateManMonth();
+        myCostEstimation.calculateManMonth(calculator);
 
     }
 
@@ -981,7 +995,7 @@ public class RequirementAnalysis
     public void editTransactionFPByID(ClassOfTransactionFP type, String id, int det, int ftr)
             throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
             throw new MissingCostEstimationException();
         }
@@ -997,7 +1011,7 @@ public class RequirementAnalysis
     public void editDataFPByID(ClassOfDataFP type, String id, int det, int ret)
             throws MissingCostEstimationException, UnknownIDException, NumberOutOfBoundsException
     {
-        if (myCostEstimation != null)
+        if (myCostEstimation == null)
         {
             throw new MissingCostEstimationException();
         }
@@ -1011,7 +1025,7 @@ public class RequirementAnalysis
     }
 
     @Override
-    public IProductEnvironment getProductEnviroment()
+    public IProductEnvironment getProductEnvironment()
     {
         return myProductEnvironment;
 
@@ -1023,13 +1037,13 @@ public class RequirementAnalysis
 
     }
 
-    public void calcFPCount() throws MissingCostEstimationException
+    public void calcFPCount(IFPCalculator calculator) throws MissingCostEstimationException, MissingParameterException
     {
         if (myCostEstimation == null)
         {
             throw new MissingCostEstimationException();
         }
-        myCostEstimation.calculateFP();
+        myCostEstimation.calculateFP(calculator);
 
     }
 
@@ -1066,17 +1080,14 @@ public class RequirementAnalysis
 
     }
 
-    public void setCostEstimation(ICostEstimation myCostEstimation,
-                                  Map<IClassOfFP, ComplexityMatrix> complexityMatrices,
-                                  ComplexityWeightMatrix complexityWeightMatrix)
+    public void setCostEstimation(ICostEstimation myCostEstimation)
     {
-        this.myCostEstimation = new CostEstimation(complexityWeightMatrix, complexityMatrices, getWeightFactorList());
+        this.myCostEstimation = new CostEstimation(getWeightFactorList());
         this.myCostEstimation.setWeightFactors((WeightFactorList<IWeightFactor>)myCostEstimation.getWeightFactors());
         this.myCostEstimation.setDataFPs(myCostEstimation.getDataFPs());
         this.myCostEstimation.setTransactionFPs(myCostEstimation.getTransactionFPs());
-        this.myCostEstimation.calculateFP();
-        this.myCostEstimation.calculateManMonth();
-
+        this.myCostEstimation.setFunctionPoints(myCostEstimation.getFunctionPoints());
+        this.myCostEstimation.setManMonths(myCostEstimation.getManMonth());
     }
 
     public void setFRequirements(ArrayList<IFRequirement> myFRequirements)

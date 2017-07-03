@@ -3,7 +3,7 @@
  * <p>
  *     This package contains several classes which provides a simple interface for logging events. The class
  *     structure is shown in the following image:<br>
- * <img src="doc-files/LoggingStructure.png" alt="LoggingStructure"><br>
+ * <img src="doc-files/LoggingStructure.png" width="100%" height="auto"  alt="LoggingStructure"><br>
  * <p>
  *     The interfaces {@link Logging.ILogger} and {@link Logging.ILoggerFactory} represent the facade for classes
  *     from other packages who wants to use the provided services for logging of this package. <br>

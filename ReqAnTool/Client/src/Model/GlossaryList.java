@@ -40,15 +40,15 @@ public class GlossaryList<IGloss extends IGlossaryEntry>
     @Override
     public boolean removeEntryByTerm(String term)
     {
-        boolean success = false;
+        IGloss entryToRemove = null;
         for (IGloss myEntry : this)
         {
             if (myEntry.getTerm().equals(term))
             {
-                success = super.remove(myEntry);
+                entryToRemove = myEntry;
             }
         }
-        return success;
+        return this.remove(entryToRemove);
     }
     
 }

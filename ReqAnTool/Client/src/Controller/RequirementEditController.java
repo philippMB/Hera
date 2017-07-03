@@ -37,7 +37,7 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 
 		if( Arrays.asList(existingLinks).contains(refToAdd) )
 		{
-			//TODO: ErrorDialog, that Link is already included
+			//Do nothing, link is already in the list
 		}
 		else
 		{
@@ -150,10 +150,8 @@ public abstract class RequirementEditController<ViewType extends IRequirementFor
 		return reqIsSaved;
 	}
 
-	//TODO: Change to "MissingReqAnException, ListOverflowException"
 	protected abstract void addRequirementToModel(ArrayList<String> referenceList) throws Exception;
 
-	//TODO: Look for specific Exceptions!
 	protected abstract void editRequirementFromModel(ArrayList<String> referenceList) throws Exception;
 
 	protected abstract String[] createSaveDataWarningPlaceholder();

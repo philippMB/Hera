@@ -147,6 +147,8 @@ public class BasicController
 				case OPTIMIZE_WF:
 					executeOptimizeWFAction();
 					break;
+				case SHOW_OPT_WF:
+					executeShowOptWFAction();
 				case ENTER_AS:
 					executeEnterASAction();
 					break;
@@ -338,6 +340,11 @@ public class BasicController
 	protected void executeEnterASAction()
 	{
 		logMissingActionExecution(ViewActions.ENTER_AS);
+	}
+
+	protected void executeShowOptWFAction()
+	{
+		logMissingActionExecution(ViewActions.SHOW_OPT_WF);
 	}
 
 	protected void executeEditEPAction()

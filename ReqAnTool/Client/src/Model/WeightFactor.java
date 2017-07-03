@@ -30,7 +30,7 @@ public class WeightFactor
         return (int) Math.round(score);
     }
 
-
+    @Override
     public double getExactValue()
     {
         return score;
@@ -44,6 +44,7 @@ public class WeightFactor
 
     }
 
+    @Override
     public void setValue(double value) throws NumberOutOfBoundsException
     {
         if (!(value >= 0 && value <= maxValue))
@@ -52,5 +53,16 @@ public class WeightFactor
         }
         this.score = value;
 
+    }
+
+    /**
+     * Copies the values of the weight factor into a new one which is returned.
+     *
+     * @return New weight factor with the same values
+     */
+    @Override
+    public IWeightFactor copy()
+    {
+        return new WeightFactor(title, getValue(), maxValue);
     }
 }

@@ -2,12 +2,9 @@ package Controller;
 
 import LanguageAndText.DialogConstants;
 import LanguageAndText.TextNameConstants;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.ICustomerTab;
 import View_Interfaces.IView;
-
-import java.util.ArrayList;
 
 /**
  * Created by phlippe on 16.06.17.
@@ -54,6 +51,7 @@ public class CustomerTabController
 	protected void executeResetAction()
 	{
 		myView.resetData();
+		textController.setSaved();
 	}
 
 	@Override

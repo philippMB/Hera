@@ -1,12 +1,16 @@
 package View;
 
-import Logging.ILogger;
-import Logging.ILoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Path;
 
+/**
+ * This class is based on {@link PanelBuilder} and adjusted to form views. Its {@link JPanel} layout is based on
+ * {@link GridBagLayout}.
+ *
+ * @author 9045534
+ * @version 1.0
+ */
 public class FormulaBuilder
 	extends PanelBuilder
 {
@@ -14,7 +18,6 @@ public class FormulaBuilder
     private static final int GRID_WIDTH = 2;
 
 	private int globalRowNumber;
-	private ILogger myLogger;
 	private boolean hasTitle;
 	private boolean addedPanel;
 	private int columnSection;
@@ -26,14 +29,16 @@ public class FormulaBuilder
 		myPanel.setSize(200,500);
 		myPanel.setLayout(new GridBagLayout());
 		globalRowNumber = -1;
-		textStyler = new DialogTextStyle();
-		myLogger = ILoggerFactory.getInstance().createLogger();
+		textStyler = new SubWindowTextStyler();
 		hasTitle = false;
 		addedPanel = false;
 		columnSection = 0;
 	}
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     public JTextField addNamedTextField(String name, String content, boolean isEditable)
 	{
         globalRowNumber++;
@@ -52,6 +57,9 @@ public class FormulaBuilder
         return myTextField;
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
     public JTextArea addNamedTextArea(String name, String content, boolean isEditable)
 	{
@@ -82,6 +90,9 @@ public class FormulaBuilder
         return myTextArea;
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public void addTitle(String title)
 	{
@@ -104,6 +115,9 @@ public class FormulaBuilder
         myPanel.add(titleLabel,layoutConstraints);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public JButton[] addButtonBar(String[] buttonNames)
 	{
@@ -139,6 +153,9 @@ public class FormulaBuilder
         return myButtons;
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public JTextArea addText(String textContent)
 	{
@@ -163,6 +180,9 @@ public class FormulaBuilder
         return myText;
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public JTable addTable(String name, String[][] elements, String[] columnNames)
 	{
@@ -190,6 +210,9 @@ public class FormulaBuilder
         return myTable;
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public TableSelectionPanel addTableSelection(String name, String[] selectionList, String[] defaultEntries)
 	{
@@ -211,6 +234,9 @@ public class FormulaBuilder
         return myTableSelection;
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addImage(Path imagePath, boolean isGIF)
 	{
@@ -226,6 +252,9 @@ public class FormulaBuilder
 		myPanel.add(myImage,layoutConstraints);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue)
 	{
@@ -244,6 +273,11 @@ public class FormulaBuilder
 		return mySliderPanel;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * If more than 6 rows are already added or a panel was added before the section will start in the next column.
+	 * Otherwise it will stay in the same column.<br>For separation a {@link JSeparator} is used.
+	 */
 	@Override
 	public void addNewSection()
 	{
@@ -273,6 +307,9 @@ public class FormulaBuilder
 		myPanel.add(mySeparator,layoutConstraints);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public JComboBox<String> addNamedDropdownList(String name, String[] options)
 	{
@@ -292,6 +329,9 @@ public class FormulaBuilder
 		return myDropdownList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addPanel(JPanel newPanel)
 	{
@@ -302,6 +342,13 @@ public class FormulaBuilder
 		addedPanel = true;
 	}
 
+	/**
+	 * Adds a name tag for e.g. text fields. It is placed left to it. <br>
+	 * Even this function is implemented by most classes of {@link PanelBuilder} it is not usable to put it in there
+	 * because it is not constraint where the name tag has to be. In addition it is based on {@link GridBagLayout} which
+	 * is not determined by the superclass.
+	 * @param name Text which should be displayed next to the component
+	 */
 	private void addLeftNameTag(String name)
 	{
 		GridBagConstraints layoutConstraints = getDefaultConstraints();
@@ -312,6 +359,9 @@ public class FormulaBuilder
 		myPanel.add(nameLabel,layoutConstraints);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public JPanel getResult()
 	{
@@ -319,6 +369,13 @@ public class FormulaBuilder
 		return super.getResult();
 	}
 
+	/**
+	 * Creates the most likely constraints in this builder. <br>
+	 * Even this function is implemented by most classes of {@link PanelBuilder} it is not usable to put it in there
+	 * because it is not constraint where the name tag has to be. In addition it is based on {@link GridBagLayout} which
+	 * is not determined by the superclass.
+	 * @return Most likely constraints in this builder
+	 */
 	private GridBagConstraints getDefaultConstraints()
 	{
 		GridBagConstraints layoutConstraints = new GridBagConstraints();

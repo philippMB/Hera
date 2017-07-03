@@ -6,9 +6,18 @@ import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.IFRequirementEditView;
 import View_Interfaces.IFRequirementShowView;
+import View_Interfaces.IRequirementFormView;
 
 import javax.swing.*;
 
+/**
+ * This class implements {@link IFRequirementEditView} and {@link IFRequirementShowView} to add, edit or show a
+ * {@link IFRequirement}. It is based on {@link RequirementFormView}.
+ *
+ * @author 9045534
+ * @version 1.0
+ * @see RequirementFormView
+ */
 public class FRequirementEditView
     extends RequirementFormView<IFRequirement>
 	implements IFRequirementEditView, IFRequirementShowView
@@ -30,7 +39,10 @@ public class FRequirementEditView
         super(model,ID,isEditable);
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     protected void init()
     {
         setResizable(false);
@@ -92,36 +104,54 @@ public class FRequirementEditView
 		return titleText;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public String getIDEntry()
     {
         return fieldID.getText();
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected IFRequirement getReqFromModel(String ID)
 	{
 		return myModel.getFReqByID(ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
     public String getTitleEntry()
 	{
 		return fieldTitle.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getActorEntry()
 	{
 		return fieldActor.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getDescriptionEntry()
 	{
 		return fieldDescription.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void updateFields()
 	{
@@ -142,6 +172,9 @@ public class FRequirementEditView
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void setIDEntry(String ID)
 	{

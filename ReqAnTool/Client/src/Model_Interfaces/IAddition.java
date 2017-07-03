@@ -1,14 +1,29 @@
-
 package Model_Interfaces;
 
 /**
- * Created by phlippe on 26.04.17.
+ * An addition to the requirement analysis.
+ * An user can add multiple addition to its requirement analysis, every addition consisting of a description and a
+ * title.
+ * For more detailed information please refer to the ReqAn specification.
+ *
+ * @author 7532274
+ * @version 1.0
+ *
+ * @see IRequirementAnalysis
  */
-public interface IAddition 
+public interface IAddition
 {
-    
-    public String getDescription();
-    
-    public String getTitle();
-    
+    /**
+     * Get the description of the addition.
+     * @return A String containing the description.
+     */
+    String getDescription();
+
+    /**
+     * Get the title of the addition.
+     * @return A String containing the title.
+     */
+    String getTitle();
+
 }
+

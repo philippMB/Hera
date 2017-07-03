@@ -10,6 +10,17 @@ import View_Interfaces.IView;
 
 import javax.swing.*;
 
+/**
+ * This class is a standard for all form views in this package. It is based on {@link JFrame} and {@link IView} while
+ * providing basic functionality for form windows. Subclasses of this class should specialize to a needed view.
+ * <br>
+ *     This class also manages {@link ViewActions} of its buttons. This is done to simplify the connection to the
+ *     controller.
+ *
+ * @author 9045534
+ * @version 1.0
+ * @see IView
+ */
 public abstract class FormWindow
     extends JFrame
 	implements IView
@@ -22,9 +33,13 @@ public abstract class FormWindow
     protected ILogger myLogger;
 
 
-    public FormWindow()
+	/**
+	 * Basic default constructor. Sets up all parameters. Please notice that the form window itself does not hold
+	 * an instance of {@link Model_Interfaces.IModelGetData}. This is done to generalize it as much as possible.
+	 */
+	public FormWindow()
     {
-        setSize(250,500);   //Ungefähre Größe, damit Factory richtigen Builder erzeugen kann
+        setSize(250,500);
         myBuilder = PanelBuilderFactory.getInstance().createPanelBuilder(this);
         myTextBundle = ITextFacade.getInstance();
         myLogger = ILoggerFactory.getInstance().createLogger();
@@ -32,12 +47,19 @@ public abstract class FormWindow
 		setLocationRelativeTo(null);
     }
 
-    protected void setButtonActions(ViewActions[] buttonActions)
+	/**
+	 * Sets the button actions to manage.
+	 * @param buttonActions Actions of buttons
+	 */
+	protected void setButtonActions(ViewActions[] buttonActions)
 	{
 		myButtonActions = buttonActions;
 		myButtons = new JButton[myButtonActions.length];
 	}
 
+	/**
+	 * Sets the action commands of all buttons to their belonging {@link ViewActions#toString()}.
+	 */
 	protected void setActionCommands()
 	{
 		for(int i=0;i<myButtonActions.length;i++)
@@ -46,18 +68,9 @@ public abstract class FormWindow
 		}
 	}
 
-	protected String[] getButtonNames()
-	{
-		String[] buttonNames = new String[myButtonActions.length];
-
-		for(int i=0;i<buttonNames.length;i++)
-		{
-			buttonNames[i] = myTextBundle.getButtonText(myButtonActions[i]);
-		}
-
-		return buttonNames;
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addController(IViewController newController)
 	{
@@ -68,14 +81,20 @@ public abstract class FormWindow
 		addWindowListener(newController);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void showView()
 	{
 		SwingUtilities.invokeLater(
-				() -> setVisible(true)
+				() -> setVisible(true)	//Lamda expression of Runnable. By calling run the view is set visible
 		);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void destruct()
 	{
@@ -83,6 +102,9 @@ public abstract class FormWindow
 		dispose();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void bringToFront()
 	{
@@ -100,6 +122,10 @@ public abstract class FormWindow
 		return null;
 	}
 
+	/**
+	 * Function which should build up the dialog. Although it is not called in this class it gives the subclasses a
+	 * standard structure.
+	 */
 	protected abstract void init();
 
 }

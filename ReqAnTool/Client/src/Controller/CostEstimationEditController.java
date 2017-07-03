@@ -1,5 +1,7 @@
 package Controller;
 
+import Exceptions.NoItemSelectedException;
+import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModel;
 import View_Interfaces.ICostEstimationEditView;
 
@@ -21,8 +23,7 @@ public class CostEstimationEditController
 		String reqID = myView.getSelectedID();
 		if(reqID == null)
 		{
-			System.out.println("No ID selected");
-			//TODO: Error - no item selected
+			handleException(new NoItemSelectedException(TextNameConstants.PAR_ELEMENTARY_PROCESSES));
 		}
 		else
 		{

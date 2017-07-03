@@ -40,6 +40,7 @@ public class WeightFactor
      */
     public WeightFactor()
     {
+
     }
 
     public String getTitle()
@@ -67,8 +68,23 @@ public class WeightFactor
     this.value = value;
   }
 
+  	public void setValue(double value)
+	{
+		this.value = (int)Math.round(value);
+	}
+
+	public double getExactValue()
+	{
+		return value;
+	}
+
     public void setMaxValue(int maxValue)
   {
     this.maxValue = maxValue;
   }
+
+	  public IWeightFactor copy()
+	  {
+		return null;
+	  }
 }

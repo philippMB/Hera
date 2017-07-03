@@ -2,10 +2,8 @@ package Controller;
 
 import LanguageAndText.DialogConstants;
 import LanguageAndText.TextNameConstants;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.ICostEstimationTab;
-import View_Interfaces.ILoadingDialog;
 import View_Interfaces.IView;
 
 /**
@@ -35,6 +33,7 @@ public class CostEstimationTabController
 		try
 		{
 			myModel.calcFPCount();
+			myModel.calcManMonth();
 			isFPCalculated = true;
 		}
 		catch (Exception ex)
@@ -84,7 +83,8 @@ public class CostEstimationTabController
 	{
 		try
 		{
-			myModel.adjustWeightFactor();	//TODO: Namen ändern
+			myModel.optimizeWeightFactors();
+			controllerManager.createControlledOptWFShowView();
 		}
 		catch(Exception optimizeError)
 		{

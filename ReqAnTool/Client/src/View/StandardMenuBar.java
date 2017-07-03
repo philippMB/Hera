@@ -75,6 +75,7 @@ public class StandardMenuBar
 		costEstMenu.add(createMenuItem(ViewActions.CALC_FP, true));
 		costEstMenu.add(createMenuItem(ViewActions.ENTER_AS, true));
 		costEstMenu.add(createMenuItem(ViewActions.OPTIMIZE_WF, true));
+		costEstMenu.add(createMenuItem(ViewActions.SHOW_OPT_WF, true));
 	}
 
 	private void addAllMenus()

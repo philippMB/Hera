@@ -8,13 +8,31 @@ import Logging.ILoggerFactory;
 import Model_Interfaces.ICustomerData;
 import Model_Interfaces.IModelGetData;
 import View_Interfaces.ICustomerTab;
+import View_Interfaces.ITab;
+import View_Interfaces.ITextView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
 
 /**
- * Created by phlippe on 03.05.17.
+ * This tab provides functionality to edit the saved information about the customer.
+ * The tab has multiple text fields in which the user can enter information about the customer of this project. In
+ * addition this view has two view actions which the user can take:
+ * <ul>
+ *     <li>{@link Controller_Interfaces.ViewActions#SAVE} - saves the new information in the requirement analysis</li>
+ *     <li>{@link Controller_Interfaces.ViewActions#EDIT_CE} - resets all text fields to the saved information
+ *     (use {@link ICustomerTab#resetData()}</li>
+ * </ul>
+ * Besides being a tab views of this interface could also be controlled on changes in text fields. This is done by
+ * extending {@link ITextView} that allow {@link Controller_Interfaces.ITextController} to observe these fields and
+ * being notified whenever there is a change.
+ *
+ *
+ * @author 9045534
+ * @version 1.0
+ * @see TabPanel
+ * @see ITextView
  */
 public class CustomerTab
 	extends TabPanel
@@ -42,6 +60,9 @@ public class CustomerTab
 		super(model, TextNameConstants.TITLE_CUSTOMER_DATA);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void init()
 	{
@@ -60,6 +81,9 @@ public class CustomerTab
 		setActionCommands();
 	}
 
+	/**
+	 * Builds up the section for customer text fields
+	 */
 	private void buildCustomerSection()
 	{
 		myBuilder.addTitle(
@@ -82,6 +106,9 @@ public class CustomerTab
 		);
 	}
 
+	/**
+	 * Builds up the section for company text fields
+	 */
 	private void buildCompanySection()
 	{
 		myBuilder.addTitle(
@@ -114,6 +141,10 @@ public class CustomerTab
 		);
 	}
 
+	/**
+	 * Sets the text fields with the values of the model. Has to prove if {@link IModelGetData#getCustomerData()}
+	 * is not null.
+	 */
 	private void setValuesFromModel()
 	{
 		ICustomerData myCustomerData = myModel.getCustomerData();
@@ -134,60 +165,90 @@ public class CustomerTab
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCustName()
 	{
 		return fieldCustName.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCustPhoneNumber()
 	{
 		return fieldCustPhoneNumber.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCustEMail()
 	{
 		return fieldCustEMail.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCompName()
 	{
 		return fieldCompName.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCompStreet()
 	{
 		return fieldCompStreet.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCompPLZ()
 	{
 		return fieldCompPLZ.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCompCity()
 	{
 		return fieldCompCity.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCompCountry()
 	{
 		return fieldCompCountry.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void resetData()
 	{

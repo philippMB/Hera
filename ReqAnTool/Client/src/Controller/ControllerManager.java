@@ -406,6 +406,14 @@ public class ControllerManager
 		addControllerToSystem(controller);
 	}
 
+	public void createControlledOptWFShowView()
+	{
+		managerLogger.info("Creating OptimizedWeightFactorsView");
+		IOptimizedWeightFactorsView optimizedWeightFactorsView = myViewFacadeFactory.createOptimizedWeightFactorsView();
+		OptimizedWeightFactorsController controller = new OptimizedWeightFactorsController(myModel, optimizedWeightFactorsView);
+		addControllerToSystem(controller);
+	}
+
 	public void createControlledWarningDialog(@Nullable IView parentView, String dialogPropertyName)
 	{
 		managerLogger.info("Creating warning "+dialogPropertyName);

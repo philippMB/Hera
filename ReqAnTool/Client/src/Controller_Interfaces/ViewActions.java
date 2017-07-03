@@ -43,7 +43,8 @@ public enum ViewActions
 	ADD_QR("ADD_QUALITY_REQUIREMENT"),
 	ADD_GLOS("ADD_GLOSSARY_ENTRY"),
 	ADD_ADDIT("ADD_ADDITION"),
-	CREATE_CE("CREATE_CE");
+	CREATE_CE("CREATE_CE"),
+	SHOW_OPT_WF("SHOW_OPT_WF");
 
 	private final String propertyName;
 

@@ -12,16 +12,22 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * Created by phlippe on 03.05.17.
+ * Views of this class show the user the new calculated weight factors. For this it has two view actions:
+ * <ul>
+ *     <li>{@link Controller_Interfaces.ViewActions#CLOSE} - closes this view</li>
+ * </ul>
+ * The controller has to observe these actions and react on them.
+ *
+ * @author 9045534
+ * @version 1.0
  */
 public class OptimizedWeightFactorsView
 	extends FormWindow
 	implements IOptimizedWeightFactorsView
 {
 
-	private static ViewActions[] BUTTON_ACTIONS = {
-					ViewActions.SAVE,
-					ViewActions.CANCEL
+	private final ViewActions[] BUTTON_ACTIONS = {
+					ViewActions.CLOSE
 			};
 
 	private IModelGetData myModel;
@@ -38,6 +44,9 @@ public class OptimizedWeightFactorsView
 		init();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void init()
 	{
@@ -49,7 +58,7 @@ public class OptimizedWeightFactorsView
 				calcTableEntries(),
 				getColumnNames()
 		);
-		myBuilder.addButtonBar(myButtonActions);
+		myButtons = myBuilder.addButtonBar(myButtonActions);
 		setActionCommands();
 
 		getContentPane().add(myBuilder.getResult());
@@ -61,8 +70,8 @@ public class OptimizedWeightFactorsView
 		String[] columnNames;
 		columnNames = new String[]{
 				myTextBundle.getParameterText(TextNameConstants.PAR_TITLE),
-				myTextBundle.getParameterText(TextNameConstants.PAR_OPTIMIZED),
-				myTextBundle.getParameterText(TextNameConstants.PAR_CURRENT)
+				myTextBundle.getParameterText(TextNameConstants.PAR_CURRENT),
+				myTextBundle.getParameterText(TextNameConstants.PAR_OPTIMIZED)
 		};
 
 		return columnNames;
@@ -92,6 +101,9 @@ public class OptimizedWeightFactorsView
 		return tableEntries;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{

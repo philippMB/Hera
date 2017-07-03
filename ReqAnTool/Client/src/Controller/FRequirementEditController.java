@@ -1,12 +1,10 @@
 package Controller;
 
 import LanguageAndText.TextNameConstants;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.IFRequirementEditView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by phlippe on 04.06.17.

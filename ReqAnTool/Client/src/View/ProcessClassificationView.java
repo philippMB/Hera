@@ -11,6 +11,7 @@ import java.util.Observable;
 
 /**
  *
+ *         <img src="doc-files/ProcessClassification.png" alt="Class diagram"><br>
  */
 public abstract class ProcessClassificationView<RequirementType extends IRequirement>
 	extends FormWindow
@@ -246,16 +247,16 @@ public abstract class ProcessClassificationView<RequirementType extends IRequire
 
 	private void setFieldsOnTransactionFP(ITransactionFP transactionFP)
 	{
-		int DET = transactionFP.getDET();
-		int FTR = transactionFP.getFTR();
+		int DET = transactionFP.getDet();
+		int FTR = transactionFP.getFtr();
 		fieldDET_TFP.setText(Integer.toString(DET));
 		fieldFTR_TFP.setText(Integer.toString(FTR));
 	}
 
 	private void setFieldsOnDataFP(IDataFP dataFP)
 	{
-		int DET = dataFP.getDET();
-		int RET = dataFP.getRET();
+		int DET = dataFP.getDet();
+		int RET = dataFP.getRet();
 		fieldDET_DFP.setText(Integer.toString(DET));
 		fieldRET_DFP.setText(Integer.toString(RET));
 	}

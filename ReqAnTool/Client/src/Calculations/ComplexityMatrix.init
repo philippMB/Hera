@@ -1,0 +1,20 @@
+EI ;
+4 ; 15 ; DET_Indexes
+3 ; 5  ; FTR_Indexes
+%
+EO ;
+4 ; 15 ; DET_Indexes
+2 ; 4  ; FTR_Indexes
+%
+EQ ;
+5 ; 17 ; DET_Indexes
+2 ; 3  ; FTR_Indexes
+%
+ILF ;
+6 ; 12 ; DET_Indexes
+2 ; 4  ; RET_Indexes
+%
+EIF ;
+6 ; 12 ; DET_Indexes
+2 ; 4  ; RET_Indexes
+%

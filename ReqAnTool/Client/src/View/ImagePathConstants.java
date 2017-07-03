@@ -1,7 +1,10 @@
 package View;
 
 /**
- * Created by phlippe on 25.06.17.
+ * This class contains solely string constants for image paths in this application.
+ *
+ * @author 9045534
+ * @version 1.0
  */
 public abstract class ImagePathConstants
 {

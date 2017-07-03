@@ -12,10 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
- * Created by phlippe on 17.05.17.
+ * Button which contains image with text besides it. Is used for {@link StartView}.
+ *
+ * @author 9045534
+ * @version 1.0
  */
 public class ImageTextButton
 	extends JPanel
@@ -35,6 +37,12 @@ public class ImageTextButton
 	private ILogger myLogger;
 
 
+	/**
+	 * Constructor for setting up the image and text
+	 * @param imagePath Path to image
+	 * @param textNextToImage Text which should be displayed next to the image
+	 * @param viewActionOnClick ViewActions which should be done by this button
+	 */
 	public ImageTextButton(Path imagePath, String textNextToImage, ViewActions viewActionOnClick)
 	{
 		super();
@@ -56,7 +64,7 @@ public class ImageTextButton
 		imageLabel.setScaledImage(imagePath, 50, 50);
 		innerPanel.add(BorderLayout.WEST,imageLabel);
 
-		TabTextStyle textStyler = new TabTextStyle();
+		MainWindowTextStyler textStyler = new MainWindowTextStyler();
 		JLabel myTextLabel = new JLabel("   "+labelText);
 		textStyler.styleAsSubtitle(myTextLabel);
 		innerPanel.add(BorderLayout.EAST,myTextLabel);
@@ -74,15 +82,26 @@ public class ImageTextButton
 
 	}
 
+	/**
+	 * Adds controller to button.
+	 * @param controller Controller which should be added
+	 */
 	public void addController(IViewController controller)
 	{
 		myController = controller;
 	}
 
 
+	/**
+	 * {@link MouseListener} which controls the border around the {@link ImageTextButton}.
+	 *
+	 * @author 9045534
+	 * @version 1.0
+	 */
 	public class ImageTextMouseListener
 		implements MouseListener
 	{
+
 		private boolean isMouseOn;
 
 
@@ -91,6 +110,9 @@ public class ImageTextButton
 			isMouseOn = false;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
@@ -106,12 +128,18 @@ public class ImageTextButton
 			}
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mousePressed(MouseEvent e)
 		{
 			setBorder(BORDER_CLICKED);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e)
 		{
@@ -125,6 +153,9 @@ public class ImageTextButton
 			}
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mouseEntered(MouseEvent e)
 		{
@@ -132,6 +163,9 @@ public class ImageTextButton
 			isMouseOn = true;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mouseExited(MouseEvent e)
 		{

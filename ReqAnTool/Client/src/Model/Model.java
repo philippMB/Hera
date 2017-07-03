@@ -1,10 +1,12 @@
 package Model;
 
+import Calculations.OptimizedWFFileManager;
+import Calculations_Interfaces.IWFOptimizer;
 import Exceptions.*;
 import Model_Interfaces.*;
-import xml.*;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Observable;
@@ -21,7 +23,7 @@ public class Model extends Observable
 
     public Model()
     {
-        myConfig = new Configuration();
+        myConfig = Configuration.getInstance();
         unsaved = true;
         myReqAn = null;
         path = "";
@@ -30,16 +32,14 @@ public class Model extends Observable
     @Override
     public synchronized void addObserver(Observer o)
     {
-        System.out.println("New observer "+o.getClass().getName());
         super.addObserver(o);
-        System.out.println("Got "+super.countObservers()+" Observers");
     }
 
-	@Override
-	public synchronized void deleteObserver(Observer o)
-	{
-		super.deleteObserver(o);
-	}
+    @Override
+    public synchronized void deleteObserver(Observer o)
+    {
+        super.deleteObserver(o);
+    }
 
     @Override
     public synchronized void addAddition(String title, String description)
@@ -58,16 +58,13 @@ public class Model extends Observable
     }
 
     @Override
-    public synchronized void addCostEstimation() throws MissingReqAnException
+    public synchronized void addCostEstimation() throws MissingReqAnException, DuplicateIDException
     {
         if (myReqAn == null)
         {
             throw new MissingReqAnException();
         }
-        if (myReqAn != null)
-        {
-            myReqAn.addCostEstimation(myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix());
-        }
+        myReqAn.addCostEstimation(myConfig.getWFOptimizer().getOptimizedWF());
         notifyAllObservers();
 
     }
@@ -163,13 +160,14 @@ public class Model extends Observable
     }
 
     @Override
-    public synchronized void calcManMonth() throws MissingReqAnException, MissingCostEstimationException
+    public synchronized void calcManMonth() throws MissingReqAnException, MissingCostEstimationException,
+            MissingParameterException
     {
         if (myReqAn == null)
         {
             throw new MissingReqAnException();
         }
-        myReqAn.calcManMonth();
+        myReqAn.calcManMonth(myConfig.getMMCalculator());
         notifyAllObservers();
     }
 
@@ -339,7 +337,7 @@ public class Model extends Observable
         boolean exists = false;
         if (myReqAn != null)
         {
-            exists = myReqAn.getActualState() == -1.0;
+            exists = myReqAn.getActualState() != -1.0;
         }
         return exists;
 
@@ -351,7 +349,7 @@ public class Model extends Observable
         boolean exists = false;
         if (myReqAn.getCostEstimation() != null)
         {
-            exists = myReqAn.getCostEstimation().getFunctionPoints() == -1.0;
+            exists = myReqAn.getCostEstimation().getFunctionPoints() != -1.0;
         }
         return exists;
 
@@ -375,27 +373,15 @@ public class Model extends Observable
         boolean exists = false;
         if (myReqAn.getCostEstimation() != null)
         {
-            exists = myReqAn.getCostEstimation().getManMonth() == -1.0;
+            exists = myReqAn.getCostEstimation().getManMonth() != -1.0;
         }
         return exists;
 
     }
 
     @Override
-    public boolean existsOptWeightFactor()
-    {
-        boolean exists = false;
-        if (myConfig != null)
-        {
-            exists = myConfig.getOptWeightFactors() != null;
-        }
-        return exists;
-
-    }
-
-    @Override
-    public synchronized void adjustWeightFactor() throws MissingReqAnException, MissingCostEstimationException,
-			MissingParameterException, NumberOutOfBoundsException
+    public synchronized void optimizeWeightFactors() throws MissingReqAnException, MissingCostEstimationException,
+                                            MissingParameterException, NumberOutOfBoundsException
     {
         if (myReqAn == null)
         {
@@ -405,39 +391,25 @@ public class Model extends Observable
         {
             throw new MissingCostEstimationException();
         }
-        WeightFactorList<IWeightFactor> adjWeightFac = myConfig.adjustOptWeightFactors(myReqAn);
-        CostEstimation myCostEstimation = (CostEstimation) myReqAn.getCostEstimation();
-        myCostEstimation.setWeightFactors(adjWeightFac);
+        IWFOptimizer optimizer = myConfig.getWFOptimizer();
+        optimizer.optimizeWF(myReqAn.getCostEstimation(), myReqAn.getActualState());
+        ArrayList<IWeightFactor> adjWeightFac = optimizer.getOptimizedWF();
         notifyAllObservers();
     }
 
     @Override
-    public synchronized void openReqAnFile(String path)
+    public void openReqAnFile(String path) throws DataAccessException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
-        if (unsaved)
-        {
-            if (!path.equals(""))
-            {
-                try
-                {
-                    saveReqAn(path);
-                }
-                catch (Exception e)
-                {
-                    // Do nothing, if an error occours, then there is no ReqAn to save
-                }
-            }
-        }
         try
-		{
-			IRequirementAnalysis importedAnalysis = myXMLManager.importAnalysis(path, XMLFormatType.CUSTOM_XML_FORMAT);
-			myReqAn = copyReqAn(importedAnalysis);
-		}
-		catch(Exception ex)
-		{
+        {
+            myReqAn = copyReqAn(myXMLManager.importAnalysis(path, XMLFormatType.CUSTOM_XML_FORMAT));
+        }
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
 
-		}
     }
 
     @Override
@@ -506,7 +478,7 @@ public class Model extends Observable
         IProductEnvironment myProdEnv = null;
         if (myReqAn != null)
         {
-            myProdEnv = myReqAn.getProductEnviroment();
+            myProdEnv = myReqAn.getProductEnvironment();
         }
         return myProdEnv;
 
@@ -558,6 +530,10 @@ public class Model extends Observable
     public boolean isFirstUseOfOpenedReqAn()
     {
         boolean firstUse = false;
+        if (myReqAn == null)
+        {
+            firstUse = false;
+        }
         if (this.path == "")
         {
             firstUse = true;
@@ -580,13 +556,14 @@ public class Model extends Observable
     }
 
     @Override
-    public synchronized void calcFPCount() throws MissingReqAnException, MissingCostEstimationException
+    public synchronized void calcFPCount() throws MissingReqAnException, MissingCostEstimationException,
+            MissingParameterException
     {
         if (myReqAn == null)
         {
             throw new MissingReqAnException();
         }
-        myReqAn.calcFPCount();
+        myReqAn.calcFPCount(myConfig.getFPCalculator());
         notifyAllObservers();
 
     }
@@ -676,13 +653,7 @@ public class Model extends Observable
     }
 
     @Override
-	public synchronized void saveReqAn() throws MissingReqAnException
-	{
-		saveReqAn(this.path);
-	}
-
-    @Override
-    public synchronized void saveReqAn(String path) throws MissingReqAnException
+    public synchronized void saveReqAn(String path) throws MissingReqAnException, DataAccessException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
         if (myReqAn == null)
@@ -698,18 +669,38 @@ public class Model extends Observable
         {
             myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
         }
-        catch(Exception ex)
+        catch (Exception e)
         {
-
+            throw new DataAccessException(path);
         }
         notifyAllObservers();
 
     }
 
     @Override
-    public synchronized void exportToXML(String path, XMLFormatType type) throws MissingReqAnException, XMLMarschallingException,
-            FileNotFoundException, XMLFormatException, SingletonRecreationException, SecurityException,
-            XMLProcessingException
+    public void saveReqAn() throws MissingReqAnException, DataAccessException
+    {
+        IXMLManager myXMLManager = IXMLManager.getInstance();
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        unsaved = false;
+        try
+        {
+            myXMLManager.exportAnalysis(myReqAn, path, XMLFormatType.CUSTOM_XML_FORMAT);
+        }
+        catch (Exception e)
+        {
+            throw new DataAccessException(path);
+        }
+        notifyAllObservers();
+    }
+
+    @Override
+    public void exportToXML(String path, XMLFormatType type) throws MissingReqAnException, xml.XMLMarschallingException,
+            FileNotFoundException, xml.XMLFormatException, xml.SingletonRecreationException, SecurityException,
+            xml.XMLProcessingException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
         if (myReqAn == null)
@@ -721,32 +712,18 @@ public class Model extends Observable
     }
 
     @Override
-    public synchronized void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, XMLUnmarschallException,
-            SecurityException, XMLProcessingException, XMLFormatException, SingletonRecreationException,
-            NumberOutOfBoundsException, ListOverflowException, MissingEntryException, ArgumentPatternException
+    public void importFromXML(String path, XMLFormatType type) throws FileNotFoundException, xml.XMLUnmarschallException,
+            SecurityException, xml.XMLProcessingException, xml.XMLFormatException, xml.SingletonRecreationException,
+            NumberOutOfBoundsException, ArgumentPatternException, ListOverflowException, MissingEntryException
     {
         IXMLManager myXMLManager = IXMLManager.getInstance();
-        if (myReqAn != null)
-        {
-            if (unsaved)
-            {
-                try
-                {
-                    saveReqAn(this.path);
-                }
-                catch (MissingReqAnException e)
-                {
-                    // Do nothing, if not saveable -> No ReqAn is available
-                }
-            }
-        }
         IRequirementAnalysis myIReqAn = myXMLManager.importAnalysis(path, type);
         myReqAn = copyReqAn(myIReqAn);
 
     }
 
-    private RequirementAnalysis copyReqAn(IRequirementAnalysis myIReqAn) throws NumberOutOfBoundsException,
-			ListOverflowException, MissingEntryException, ArgumentPatternException
+    private RequirementAnalysis copyReqAn(IRequirementAnalysis myIReqAn)
+            throws NumberOutOfBoundsException, ArgumentPatternException, ListOverflowException, MissingEntryException
     {
         RequirementAnalysis tmpReqAn = new RequirementAnalysis(myIReqAn.getTitle(),
                 myIReqAn.getCustomerData().getPMName(), myIReqAn.getCustomerData().getPMEMail(),
@@ -757,12 +734,12 @@ public class Model extends Observable
                 myIReqAn.getCustomerData().getCNumber());
         tmpReqAn.setCustomerDescription(myIReqAn.getCustomerDescription());
         tmpReqAn.setAdditions(myIReqAn.getAdditions());
-        tmpReqAn.setCostEstimation(myIReqAn.getCostEstimation(), myConfig.getComplexityMatrices(), myConfig.getComplexityWeightMatrix());
+        tmpReqAn.setCostEstimation(myIReqAn.getCostEstimation());
         tmpReqAn.setActualState(myIReqAn.getActualState());
         tmpReqAn.setCreateDate(myIReqAn.getCreateDate());
         tmpReqAn.setProductApplication(myIReqAn.getProductApplication());
         tmpReqAn.setProductData(myIReqAn.getProductData());
-        tmpReqAn.setProductEnvironment(myIReqAn.getProductEnviroment());
+        tmpReqAn.setProductEnvironment(myIReqAn.getProductEnvironment());
         tmpReqAn.setTargetDefinition(myIReqAn.getTargetDefinition());
         tmpReqAn.setFRequirements(myIReqAn.getFRequirements());
         tmpReqAn.setNFRequirements(myIReqAn.getNFRequirements());
@@ -966,7 +943,7 @@ public class Model extends Observable
         ArrayList<IWeightFactor> myOptWeightFactors = null;
         if (myConfig != null)
         {
-            myOptWeightFactors = myConfig.getOptWeightFactors();
+            myOptWeightFactors = myConfig.getWFOptimizer().getOptimizedWF();
         }
         return myOptWeightFactors;
 
@@ -978,7 +955,14 @@ public class Model extends Observable
         IWeightFactor myOptWeightFactor = null;
         if (myConfig != null)
         {
-            myOptWeightFactor = myConfig.getOptWeightFactorsByTitle(title);
+            ArrayList<IWeightFactor> optWeightFactors = getAllOptWeightFactor();
+            for(IWeightFactor weightFactor: optWeightFactors)
+            {
+                if(weightFactor.getTitle().equals(title))
+                {
+                    myOptWeightFactor = weightFactor;
+                }
+            }
         }
         return myOptWeightFactor;
 
@@ -1021,9 +1005,10 @@ public class Model extends Observable
     }
 
     @Override
-    public boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
+    public synchronized boolean makeNewReqAn(String title, String pmName, String pmMail, String pmPhone, String companyName,
                                 String city, String companyStreet, String country, String zip, String cName,
-                                String cMail, String cPhone) throws MissingEntryException, ArgumentPatternException
+                                String cMail, String cPhone)
+            throws ArgumentPatternException, MissingEntryException
     {
         boolean success = false;
         if (myReqAn == null)
@@ -1032,9 +1017,20 @@ public class Model extends Observable
                                                    country, zip, cName, cMail, cPhone );
             success = true;
         }
-        //notifyAllObservers();
+        notifyAllObservers();
         return success;
 
+    }
+
+    @Override
+    public boolean closeReqAn() throws MissingReqAnException
+    {
+        if (myReqAn == null)
+        {
+            throw new MissingReqAnException();
+        }
+        myReqAn = null;
+        return true;
     }
 
     @Override
@@ -1053,12 +1049,13 @@ public class Model extends Observable
     public IRequirementAnalysis getReqAnalysis()
     {
         return myReqAn;
+
     }
-    
-	public void notifyAllObservers()
-	{
-		super.setChanged();
-		super.notifyObservers();
-	}
+
+    public void notifyAllObservers()
+    {
+        super.setChanged();
+        super.notifyObservers();
+    }
 
 }

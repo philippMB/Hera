@@ -1,11 +1,8 @@
 package Model;
 
-import Calculations.CalculateFP;
-import Calculations.CalculateManMonth;
-import Exceptions.DuplicateIDException;
-import Exceptions.ListOverflowException;
-import Exceptions.NumberOutOfBoundsException;
-import Exceptions.UnknownIDException;
+import Calculations_Interfaces.IFPCalculator;
+import Calculations_Interfaces.IMMCalculator;
+import Exceptions.*;
 import Model_Interfaces.*;
 
 import java.util.ArrayList;
@@ -16,8 +13,6 @@ public class CostEstimation
 {
     private double fPCount;
     private double manMonthCount;
-    private final ComplexityWeightMatrix myComplexityWeightMatrix;
-    private final Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices;
     /**
      * @associates <{Model.TransactionFP}>
      */
@@ -32,42 +27,38 @@ public class CostEstimation
      */
     private WeightFactorList<IWeightFactor> myWeightFactors;
 
-    public CostEstimation(ComplexityWeightMatrix myWeightMatrix, Map<IClassOfFP, ComplexityMatrix> myComplexityMatrices,
-                          WeightFactorList<IWeightFactor> myWeightFactors)
+
+    public CostEstimation(ArrayList<IWeightFactor> myWeightFactors)
     {
         this.fPCount = -1.0;
         this.manMonthCount = -1.0;
-        myDataFPs = new ArrayList<IDataFP>();
-        myTransactionFPs = new ArrayList<ITransactionFP>();
-        this.myWeightFactors = myWeightFactors;
-        this.myComplexityWeightMatrix = myWeightMatrix;
-        this.myComplexityMatrices = myComplexityMatrices;
+        myDataFPs = new ArrayList<>();
+        myTransactionFPs = new ArrayList<>();
+        this.myWeightFactors = copyWeightFactors(myWeightFactors);
+    }
+
+    private WeightFactorList<IWeightFactor> copyWeightFactors(ArrayList<IWeightFactor> listToCopy)
+	{
+		WeightFactorList<IWeightFactor> copiedList = new WeightFactorList<IWeightFactor>();
+		for(IWeightFactor listElement: listToCopy)
+		{
+			IWeightFactor newWeightFactor = new WeightFactor(listElement.getTitle(), listElement.getValue(),
+					listElement.getMaxValue());
+			copiedList.add(newWeightFactor);
+		}
+		return copiedList;
+	}
+
+    @Override
+    public void calculateFP(IFPCalculator calculator) throws MissingParameterException
+    {
+        this.fPCount = calculator.calcFP(this);
     }
 
     @Override
-    public void calculateFP()
+    public void calculateManMonth(IMMCalculator calculator) throws MissingParameterException
     {
-        Calculations.CalculateFP myCalculateFP = new CalculateFP();
-        this.fPCount = myCalculateFP.ibmMethod(this);
-    }
-
-    @Override
-    public Map<IClassOfFP, ComplexityMatrix> getComplexityMatrices()
-    {
-        return myComplexityMatrices;
-    }
-
-    @Override
-    public ComplexityWeightMatrix getComplexityWeightMatrix()
-    {
-        return myComplexityWeightMatrix;
-    }
-
-    @Override
-    public void calculateManMonth()
-    {
-        Calculations.CalculateManMonth myCalculateManMonth = new CalculateManMonth();
-        this.manMonthCount = myCalculateManMonth.jonesEstimation(this.fPCount);
+        this.manMonthCount = calculator.calcMM(this);
     }
 
     @Override
@@ -179,7 +170,7 @@ public class CostEstimation
     public void rateWeightFactor(Map<String, Integer> mapOfWeightFactors)
             throws ListOverflowException, NumberOutOfBoundsException
     {
-        if (mapOfWeightFactors.size() == getWeightFactors().size())
+        if (mapOfWeightFactors.size() != getWeightFactors().size())
         {
             throw new ListOverflowException(WeightFactorList.class, "given Weight Factor count");
         }
@@ -337,6 +328,16 @@ public class CostEstimation
     public void setTransactionFPs(ArrayList<ITransactionFP> transactionFPs)
     {
         this.myTransactionFPs = transactionFPs;
-
     }
+
+    public void setFunctionPoints(double functionPoints)
+	{
+		this.fPCount = functionPoints;
+	}
+
+	public void setManMonths(double manMonths)
+	{
+		this.manMonthCount = manMonths;
+	}
+
 }

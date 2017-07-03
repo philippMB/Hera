@@ -17,7 +17,11 @@ import Logging.ILogger;
 import com.sun.istack.internal.Nullable;
 
 /**
- * Created by phlippe on 28.04.17.
+ * This class provides a component for simply adding images or GIFs to a view. It is based on {@link JLabel} and
+ * supports Retina displays.
+ *
+ * @author 9045534
+ * @version 1.0
  */
 public class ImageLabel
 	extends JLabel
@@ -26,21 +30,41 @@ public class ImageLabel
 	private ILogger myLogger;
 
 
+	/**
+	 * Default constructor which initialize the {@link JLabel} without image.
+	 */
 	public ImageLabel()
 	{
 		this(null);
 	}
 
+	/**
+	 * Constructor with initializing image without scaling.
+	 * @param imagePath Path to image
+	 */
 	public ImageLabel(@Nullable Path imagePath)
 	{
 		this(imagePath,0,0);
 	}
 
+	/**
+	 * Constructor with initializing image with scaling to specified size.
+	 * @param imagePath Path to image
+	 * @param imageWidth Width to which the image should be scaled.
+	 * @param imageHeight Height to which the image should be scaled.
+	 */
 	public ImageLabel(@Nullable Path imagePath, int imageWidth, int imageHeight)
 	{
 		this(imagePath, imageWidth, imageHeight, false);
 	}
 
+	/**
+	 * Constructor with initializing image with scaling to specified size and specifying whether it the image is a GIF or not.
+	 * @param imagePath Path to image
+	 * @param imageWidth Width to which the image should be scaled.
+	 * @param imageHeight Height to which the image should be scaled.
+	 * @param isGIF Specifies if image is GIF or not
+	 */
 	public ImageLabel(@Nullable Path imagePath, int imageWidth, int imageHeight, boolean isGIF)
 	{
 		super();
@@ -58,20 +82,34 @@ public class ImageLabel
 		}
 	}
 
+	/**
+	 * Sets image to given image path and scales it to the given width and height.
+	 * @param imagePath Path to image
+	 * @param imageWidth Width to which it should be scaled. If its <= 0 the image will be taken by full resolution.
+	 * @param imageHeight Height to which it should be scaled. If its <= 0 the image will be taken by full resolution.
+	 */
 	public void setScaledImage(Path imagePath, int imageWidth, int imageHeight)
 	{
 		try
 		{
-			Image image = ImageIO.read(new File(String.valueOf(imagePath)));
-			if(imageWidth > 0 && imageHeight > 0)
+			if(!isRetina())
 			{
-				image = image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_AREA_AVERAGING);
+				Image image = ImageIO.read(new File(String.valueOf(imagePath)));
+				if (imageWidth > 0 && imageHeight > 0)
+				{
+					image = image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_AREA_AVERAGING);
+				}
+				ImageIcon icon = new ImageIcon(image);
+				setIcon(icon);
 			}
-			ImageIcon icon = getIcon(imagePath);//new ImageIcon(image);
-			setIcon(icon);
-			setMinimumSize(new Dimension(imageWidth,imageHeight));
-			setPreferredSize(new Dimension(imageWidth,imageHeight));
-			setMaximumSize(new Dimension(imageWidth,imageHeight));
+			else
+			{
+				ImageIcon icon = getIcon(imagePath);
+				setIcon(icon);
+				setMinimumSize(new Dimension(imageWidth, imageHeight));
+				setPreferredSize(new Dimension(imageWidth, imageHeight));
+				setMaximumSize(new Dimension(imageWidth, imageHeight));
+			}
 		}
 		catch (Exception ex)
 		{
@@ -80,11 +118,15 @@ public class ImageLabel
 		}
 	}
 
+	/**
+	 * Sets image as GIF to given image path.
+	 * @param imagePath Path to GIF
+	 */
 	public void setGIF(Path imagePath)
 	{
 		try
 		{
-			ImageIcon icon = getIcon(imagePath);//new ImageIcon(imagePath.toString());
+			ImageIcon icon = getIcon(imagePath);
 			setIcon(icon);
 			icon.getImage().flush();
 		}
@@ -93,11 +135,6 @@ public class ImageLabel
 			printLogInfo(imagePath, ex);
 			setText("Kein Bild gefunden");
 		}
-	}
-
-	public void setImage(Path imagePath)
-	{
-		setScaledImage(imagePath,-1,-1);
 	}
 
 	private void printLogInfo(Path imagePath, Exception exception)
@@ -110,8 +147,14 @@ public class ImageLabel
 		myLogger.warning(logMessage, exception);
 	}
 
+	/**
+	 * Creates an {@link ImageIcon} object out of the image specified by filePath. Used for retina images.
+	 * @param filePath Path to image
+	 * @return {@link ImageIcon} of specified image
+	 */
 	public static ImageIcon getIcon(Path filePath) {
 		URL url = null;
+		ImageIcon createdIcon;
 		try
 		{
 			url = filePath.toUri().toURL();
@@ -121,13 +164,20 @@ public class ImageLabel
 
 		}
 		if (url != null) {
-			//url = add2xAtTheEndOfPath(url);
-			return new RetinaIcon(Toolkit.getDefaultToolkit().createImage(url));
+			createdIcon = new RetinaIcon(Toolkit.getDefaultToolkit().createImage(url));
 		}
-
-		return new ImageIcon(Toolkit.getDefaultToolkit().createImage(url));
+		else
+		{
+			createdIcon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(url));
+		}
+		return createdIcon;
 	}
 
+	/**
+	 * Inner class for construction retina supporting {@link ImageIcon}s
+	 * @author 9045534
+	 * @version 1.0
+	 */
 	private static final class RetinaIcon extends ImageIcon {
 
 		public RetinaIcon(final Image image) {
@@ -151,6 +201,12 @@ public class ImageLabel
 			g2d.scale(1, 1);
 			g2d.dispose();
 		}
+	}
+
+	//TODO: Get function to specify if it is retina or not
+	private static boolean isRetina()
+	{
+		return true;
 	}
 /*
 	private static boolean isRetina() {

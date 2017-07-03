@@ -4,13 +4,21 @@ import LanguageAndText.TextNameConstants;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
 import View_Interfaces.INFRequirementTab;
+import View_Interfaces.ITableTab;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * Created by phlippe on 29.04.17.
+ * This tab provides functionality to edit, create and delete nonfunctional requirements of a requirement analysis.
+ * It is based on {@link TableTab} and shows all {@link Model_Interfaces.INFRequirement} of the current
+ * {@link Model_Interfaces.IRequirementAnalysis}. The possible view actions are the same as described in
+ * {@link TableTab}.
+ *
+ * @author 9045534
+ * @version 1.0
+ * @see ITableTab
  */
 public class NFRequirementTab
 	extends TableTab
@@ -22,6 +30,9 @@ public class NFRequirementTab
 		super(model, TextNameConstants.TITLE_NFREQ);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void init()
 	{
@@ -31,6 +42,9 @@ public class NFRequirementTab
 		add(myBuilder.getResult(), BorderLayout.CENTER);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected String[][] createTableEntries()
 	{
@@ -51,6 +65,9 @@ public class NFRequirementTab
 		return tableEntries;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected String[] createColumnNames()
 	{
@@ -62,6 +79,9 @@ public class NFRequirementTab
 		};
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{

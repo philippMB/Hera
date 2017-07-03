@@ -123,7 +123,7 @@ public abstract class TextTabController<TextTabType extends ITextTab>
 					@Override
 					protected void executeResetAction()
 					{
-						resetProdApp();
+						resetDescription();
 						closeView();
 					}
 
@@ -136,13 +136,12 @@ public abstract class TextTabController<TextTabType extends ITextTab>
 		);
 	}
 
-	private void resetProdApp()
+	private void resetDescription()
 	{
 		myView.resetDescription();
 		textController.setSaved();
 	}
 
-	//TODO: Write exact exception here
 	protected abstract void editDescriptionInModel(String newDescription) throws Exception;
 
 	protected abstract String getParameterPropertyName();

@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * This class represents a standard structure to convert exceptions to property names and filling in the correct
+ * placeholders to the dialog message.
+ * <p>
+ *     Due to an {@link View_Interfaces.IErrorDialog} displays exceptions it has to convert a thrown exception to the
+ *     correct message. This is realized with this class while using <b>Singleton pattern</b>.
+ *
  * @author 9045534
  * @version 1.0
  * @see ITextFacade
@@ -14,13 +20,20 @@ import java.util.Map;
 public class ExceptionToTextConverter
 {
 
+	/**
+	 * Property name of default exception
+	 */
 	private static final String DIALOG_ERROR_DEFAULT = "DEFAULT_ERROR";
+	/**
+	 * Map of exception class to its belonging property name in title and dialog resource file
+	 */
 	private static final Map<Class, String> exceptionToPropertyMap =
 			Collections.unmodifiableMap(
 					new HashMap<Class, String>()
 					{{
 						put(ArgumentPatternException.class,"EX_WRONG_PATTERN");
 						put(DuplicateIDException.class,"EX_DUPLICATE");
+						put(DataAccessException.class,"EX_DATA_ACCESS");
 						put(MissingCostEstimationException.class,"EX_NO_COST_ESTIMATION");
 						put(MissingEntryException.class,"EX_MISSING_ENTRY");
 						put(MissingParameterException.class,"EX_MISSING_PARAMETER");
@@ -35,6 +48,9 @@ public class ExceptionToTextConverter
 					}}
 			);
 
+	/**
+	 * Map of exception class to its belonging placeholders which are extracted out of the exception message
+	 */
 	private static final Map<Class, ExToPlaceholderConverter> exceptionToPlaceholderConverterMap =
 			Collections.unmodifiableMap(
 					new HashMap<Class, ExToPlaceholderConverter>()
@@ -42,6 +58,9 @@ public class ExceptionToTextConverter
 						put(ArgumentPatternException.class, (textFacade, ex) -> new String[]{
 								convertPatternTypeToString(textFacade, ((ArgumentPatternException)ex).getPatternType()),
 								((ArgumentPatternException)ex).getPattern()
+						});
+						put(DataAccessException.class, (textFacade, ex) -> new String[]{
+								((DataAccessException)ex).getPath()
 						});
 						put(DuplicateIDException.class, (textFacade, ex) -> new String[]{
 								((DuplicateIDException)ex).getDuplicateID()
@@ -78,14 +97,24 @@ public class ExceptionToTextConverter
 						put(NoItemSelectedException.class,((textFacade, ex) -> new String[0]));
 					}}
 			);
+	/**
+	 * Singleton object
+	 */
 	private static ExceptionToTextConverter singleton;
 
 
+	/**
+	 * private constructor for singleton
+	 */
 	private ExceptionToTextConverter()
 	{
 
 	}
 
+	/**
+	 * Returns singleton object of this class
+	 * @return singleton object of this class
+	 */
 	public static ExceptionToTextConverter getInstance()
 	{
 		if(singleton == null)
@@ -95,6 +124,11 @@ public class ExceptionToTextConverter
 		return singleton;
 	}
 
+	/**
+	 * Determines the belonging title property to the given exception
+	 * @param ex Exception for which the title property should be determined
+	 * @return Property name which was found for the given exception
+	 */
 	public String getExTitleProperty(Exception ex)
 	{
 		String propertyName;
@@ -109,6 +143,11 @@ public class ExceptionToTextConverter
 		return propertyName;
 	}
 
+	/**
+	 * Determines the belonging dialog property to the given exception
+	 * @param ex Exception for which the dialog property should be determined
+	 * @return Property name which was found for the given exception
+	 */
 	public String getExMessageProperty(Exception ex)
 	{
 		String propertyName;
@@ -123,6 +162,11 @@ public class ExceptionToTextConverter
 		return propertyName;
 	}
 
+	/**
+	 * Determines the belonging placeholders for the dialog message of the given exception
+	 * @param ex Exception for which the placeholders should be calculated
+	 * @return Placeholders which were found for the given exception
+	 */
 	public String[] getExPlaceholders(ITextFacade textFacade, Exception ex)
 	{
 		String[] placeholder;
@@ -221,7 +265,13 @@ public class ExceptionToTextConverter
 	}
 
 
-
+	/**
+	 * Inner class for converting exception to placeholder. Needed for
+	 * {@link ExceptionToTextConverter#exceptionToPlaceholderConverterMap}.
+	 *
+	 * @author 9045534
+	 * @version 1.0
+	 */
 	private interface ExToPlaceholderConverter
 	{
 

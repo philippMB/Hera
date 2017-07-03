@@ -8,10 +8,14 @@ import java.awt.*;
 import java.nio.file.Path;
 
 /**
- * Ist ein Erzeugungsmuster Builder, der komplexere Zusammenhaenge fuer andere Klassen baut.
- * Hier sollen also Text: Textfield und Text | Button Button Button erzeugt werden koennen.
- * Rueckgabe koennen JPanels sein.
- * Quelle: https://sourcemaking.com/design_patterns/builder
+ * This class is based on {@link PanelBuilder} and adjusted to dialog views. Its {@link JPanel} layout is based on
+ * {@link GridBagLayout}. A speciality is the support to tag a image next to the dialog message. The buttons are
+ * bead horizontal.
+ * <p>
+ *     <b>CAUTION</b> - not all functions are implemented yet due to time bounds.
+ *
+ * @author 9045534
+ * @version 1.0
  */
 public class DialogBuilder
 	extends PanelBuilder
@@ -31,10 +35,15 @@ public class DialogBuilder
         myPanel.setBackground(null);
         globalRowNumber = -1;
         imageAdded = false;
-        textStyler = new DialogTextStyle();
+        textStyler = new SubWindowTextStyler();
         myLogger = ILoggerFactory.getInstance().createLogger();
     }
 
+	/**
+	 * {@inheritDoc}
+	 * The buttons are bread horizontal.
+	 */
+	@Override
     public JButton[] addButtonBar(String[] buttonNames)
 	{
 		globalRowNumber++;
@@ -68,6 +77,11 @@ public class DialogBuilder
 		return myButtons;
     }
 
+	/**
+	 * {@inheritDoc}
+	 * If a image was added before the text will be placed next to it.
+	 */
+	@Override
     public JTextArea addText(String textContent)
 	{
     	if(!imageAdded)
@@ -102,7 +116,10 @@ public class DialogBuilder
 		return myText;
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     public void addTitle(String title)
 	{
 
@@ -117,7 +134,10 @@ public class DialogBuilder
 		myPanel.add(titleLabel, layoutConstraints);
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     public JTextField addNamedTextField(String name, String content, boolean isEditable)
 	{
 		globalRowNumber++;
@@ -136,27 +156,43 @@ public class DialogBuilder
 		return myTextField;
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 * @deprecated Not implemented yet
+	 */
+	@Override
     public JTextArea addNamedTextArea(String name, String content, boolean isEditable)
 	{
 		myLogger.error("This function is not implemented yet - addNamedTextArea - DialogBuilder");
         return null;
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 * @deprecated Not implemented yet
+	 */
+	@Override
     public JTable addTable(String name, String[][] elements, String[] columnNames)
 	{
 		myLogger.error("This function is not implemented yet - addTable - DialogBuilder");
         return null;
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 * @deprecated Not implemented yet
+	 */
+	@Override
     public TableSelectionPanel addTableSelection(String name, String[] selectionList, String[] defaultEntries)
 	{
 		myLogger.error("This function is not implemented yet - addTableSelection - DialogBuilder");
         return null;
     }
 
+	/**
+	 * {@inheritDoc}
+	 * If a {@link DialogBuilder#addText(String)} is called after this it will be placed next to this image.
+	 */
 	@Override
 	public void addImage(Path imagePath, boolean isGIF)
 	{
@@ -171,6 +207,10 @@ public class DialogBuilder
 		imageAdded = true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @deprecated Not implemented yet
+	 */
 	@Override
 	public SliderPanel addNamedScrollBarPanel(String name, int initValue, int minimumValue, int maximumValue)
 	{
@@ -178,12 +218,20 @@ public class DialogBuilder
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @deprecated Not implemented yet
+	 */
 	@Override
 	public void addNewSection()
 	{
 		myLogger.error("This function is not implemented yet - addNewSection - DialogBuilder");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @deprecated Not implemented yet
+	 */
 	@Override
 	public JComboBox<String> addNamedDropdownList(String name, String[] options)
 	{
@@ -191,12 +239,23 @@ public class DialogBuilder
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @deprecated Not implemented yet
+	 */
 	@Override
 	public void addPanel(JPanel newPanel)
 	{
 		myLogger.error("This function is not implemented yet - addPanel - DialogBuilder");
 	}
 
+	/**
+	 * Adds a name tag for e.g. text fields. It is placed left to it. <br>
+	 * Even this function is implemented by most classes of {@link PanelBuilder} it is not usable to put it in there
+	 * because it is not constraint where the name tag has to be. In addition it is based on {@link GridBagLayout} which
+	 * is not determined by the superclass.
+	 * @param name Text which should be displayed next to the component
+	 */
 	private void addLeftNameTag(String name)
 	{
 		GridBagConstraints layoutConstraints = getDefaultConstraints();
@@ -207,6 +266,13 @@ public class DialogBuilder
 		myPanel.add(nameLabel,layoutConstraints);
 	}
 
+	/**
+	 * Creates the most likely constraints in this builder. <br>
+	 * Even this function is implemented by most classes of {@link PanelBuilder} it is not usable to put it in there
+	 * because it is not constraint where the name tag has to be. In addition it is based on {@link GridBagLayout} which
+	 * is not determined by the superclass.
+	 * @return Most likely constraints in this builder
+	 */
 	private GridBagConstraints getDefaultConstraints()
 	{
 		GridBagConstraints layoutConstraints = new GridBagConstraints();

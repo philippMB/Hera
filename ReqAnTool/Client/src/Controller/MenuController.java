@@ -4,10 +4,8 @@ import Controller_Interfaces.IMenuController;
 import Exceptions.MissingCostEstimationException;
 import LanguageAndText.DialogConstants;
 import LanguageAndText.TextNameConstants;
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.FileAccessType;
-import View_Interfaces.IFileChooser;
 
 /**
  * Created by phlippe on 18.06.17.
@@ -250,7 +248,7 @@ public class MenuController
 						{
 							try
 							{
-								myModel.adjustWeightFactor();
+								myModel.optimizeWeightFactors();
 							}
 							catch (Exception ex)
 							{
@@ -279,6 +277,19 @@ public class MenuController
 		if(myModel.getCostEstimation() != null)
 		{
 			controllerManager.createControlledActualStateEditView(null);
+		}
+		else
+		{
+			handleException(new MissingCostEstimationException());
+		}
+	}
+
+	@Override
+	protected void executeShowOptWFAction()
+	{
+		if(myModel.getCostEstimation() != null)
+		{
+			controllerManager.createControlledOptWFShowView();
 		}
 		else
 		{

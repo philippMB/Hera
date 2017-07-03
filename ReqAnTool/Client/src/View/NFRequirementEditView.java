@@ -2,13 +2,24 @@ package View;
 
 import Controller_Interfaces.ITextController;
 import LanguageAndText.TextNameConstants;
+import Model_Interfaces.IFRequirement;
 import Model_Interfaces.IModelGetData;
 import Model_Interfaces.INFRequirement;
+import View_Interfaces.IFRequirementEditView;
+import View_Interfaces.IFRequirementShowView;
 import View_Interfaces.INFRequirementEditView;
 import View_Interfaces.INFRequirementShowView;
 
 import javax.swing.*;
 
+/**
+ * This class implements {@link INFRequirementEditView} and {@link INFRequirementShowView} to add, edit or show a
+ * {@link INFRequirement}. It is based on {@link RequirementFormView}.
+ *
+ * @author 9045534
+ * @version 1.0
+ * @see RequirementFormView
+ */
 public class NFRequirementEditView
     extends RequirementFormView<INFRequirement>
     implements INFRequirementEditView, INFRequirementShowView
@@ -29,7 +40,10 @@ public class NFRequirementEditView
     	super(model,ID,isEditable);
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     protected void init()
     {
 		setResizable(false);
@@ -86,36 +100,54 @@ public class NFRequirementEditView
 		return titleText;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public String getIDEntry()
     {
         return fieldID.getText();
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected INFRequirement getReqFromModel(String ID)
 	{
 		return myModel.getNFReqByID(ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
     public String getTitleEntry()
     {
         return fieldTitle.getText();
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public String getDescriptionEntry()
     {
         return fieldDescription.getText();
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void setIDEntry(String ID)
 	{
 		fieldID.setText(ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void updateFields()
 	{

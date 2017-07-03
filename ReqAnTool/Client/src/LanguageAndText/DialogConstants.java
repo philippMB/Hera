@@ -7,8 +7,7 @@ import com.sun.istack.internal.Nullable;
 import java.util.*;
 
 /**
- * <p>
- * This class solely contains constants for the structure of common warning dialogs including
+ * This class solely contains constants for the structure of common warning dialogs. This includes:
  * <ul>
  *     <li>property names for the property file "dialog" to get language-independent message</li>
  *     <li>{@link ViewActions} of the buttons in a specific dialog</li>
@@ -20,7 +19,7 @@ import java.util.*;
  * <p>
  * Error dialogs are handled by {@link Model_Interfaces.ErrorCodes} similar to the "button"-property file.
  * The usage of all name constants is the same as for {@link TextNameConstants}.
- * </p>
+ *
  *
  * @author 9045534
  * @version 1.0

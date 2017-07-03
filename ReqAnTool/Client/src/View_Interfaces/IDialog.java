@@ -4,7 +4,7 @@ import Controller_Interfaces.ViewActions;
 
 /**
  * This interface is used for dialogs to interact with the user by blocking all other views.
- * It is based on {@link IDialog} and informs the controller that all views implementing this interface are modal.
+ * It is based on {@link IView} and informs the controller that all views implementing this interface are modal.
  *
  * <p>
  *     Subclasses of this interface provide different types of dialogs like:

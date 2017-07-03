@@ -40,8 +40,8 @@ public class TransactionFP
    */
   public TransactionFP(ITransactionFP origin)
   {
-    det = origin.getDET();
-    ftr = origin.getFTR();
+    det = origin.getDet();
+    ftr = origin.getFtr();
     referenceIDs = origin.getRequirement().getReferenceIDs();
     referenceIDs = null;
     type = origin.getType();
@@ -69,18 +69,6 @@ public class TransactionFP
 
   public ArrayList<String> getReferenceIDs() {
     return referenceIDs;
-  }
-
-  @Override
-  public int getDET()
-  {
-    return det;
-  }
-
-  @Override
-  public int getFTR()
-  {
-    return ftr;
   }
 
   public ClassOfTransactionFP getType()

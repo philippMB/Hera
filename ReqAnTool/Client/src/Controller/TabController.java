@@ -1,6 +1,5 @@
 package Controller;
 
-import Model_Interfaces.ErrorCodes;
 import Model_Interfaces.IModel;
 import View_Interfaces.ITab;
 import View_Interfaces.IView;

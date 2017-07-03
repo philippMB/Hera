@@ -60,7 +60,7 @@ public class WeightFactorEditView
 					factor.getTitle(),
 					factor.getValue(),
 					0,
-					factor.getMaxValue()
+					factor.getMaxValue() + 1
 			);
 			myScrollBarPanels.put(factor.getTitle(), sliderPanel);
 		}

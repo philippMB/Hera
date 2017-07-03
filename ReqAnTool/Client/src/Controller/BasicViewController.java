@@ -103,7 +103,7 @@ public abstract class BasicViewController<ViewType extends IView>
 		controllerManager.createControlledErrorDialog(myView, thrownException);
 	}
 
-	protected void closeView()	//TODO: Rename that also controller will be destructed
+	protected void closeView()
 	{
 		if(myView != null)
 		{

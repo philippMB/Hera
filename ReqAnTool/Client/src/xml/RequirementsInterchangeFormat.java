@@ -130,8 +130,15 @@ public class RequirementsInterchangeFormat
     return null;
   }
 
+  /**
+   * Get the Product Environment of the RequirementAnalysis.
+   *
+   * @return An IProductEnvironment object containing the ProductEnvironment.
+   *
+   * @see IProductEnvironment
+   */
   @Override
-  public IProductEnvironment getProductEnviroment()
+  public IProductEnvironment getProductEnvironment()
   {
     return null;
   }
