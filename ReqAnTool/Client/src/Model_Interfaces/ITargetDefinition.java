@@ -1,6 +1,5 @@
 package Model_Interfaces;
 
-
 /**
  * The TargetDefinition of the RequirementAnalysis.
  * Every RequirementAnalysis contains one TargetDefinition, consisiting of a description.

@@ -14,4 +14,5 @@ package Model_Interfaces;
  */
 public interface IClassOfFP
 {
+    // Nothing to implement.
 }

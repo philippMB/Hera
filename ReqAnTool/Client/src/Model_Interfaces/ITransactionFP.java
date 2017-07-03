@@ -1,16 +1,12 @@
 package Model_Interfaces;
 
-
-/**
- * Created by phlippe on 26.04.17.
- */
 /**
  * Represents a TransactionFunctionPoint of the requirement analysis.
  * Every requirement analysis can have multiple TransactionFunctionPoints, everyone consisting of a DET, FTR, type and
  * associated requirement.
  * For more detailed information please refer to the ReqAn specification.
  *
- * @author
+ * @author 7532274
  * @version 1.0
  *
  * @see IRequirementAnalysis
